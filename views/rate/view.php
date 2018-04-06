@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'area_id',
             'from_area',
             'to_are',
+            'rate',
             'date',
         ],
     ]) ?>

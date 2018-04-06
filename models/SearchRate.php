@@ -18,7 +18,7 @@ class SearchRate extends Rate
     public function rules()
     {
         return [
-            [['rate_id', 'area_id', 'from_area', 'to_are'], 'integer'],
+            [['rate_id', 'area_id', 'from_area', 'to_are', 'rate'], 'integer'],
             [['date'], 'safe'],
         ];
     }
@@ -63,6 +63,7 @@ class SearchRate extends Rate
             'area_id' => $this->area_id,
             'from_area' => $this->from_area,
             'to_are' => $this->to_are,
+            'rate' => $this->rate,
             'date' => $this->date,
         ]);
 

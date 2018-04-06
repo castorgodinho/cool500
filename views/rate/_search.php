@@ -23,7 +23,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'to_are') ?>
 
-    <?= $form->field($model, 'date') ?>
+    <?= $form->field($model, 'rate') ?>
+
+    <?php // echo $form->field($model, 'date') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'to_are')->textInput() ?>
 
+    <?= $form->field($model, 'rate')->textInput() ?>
+
     <?= $form->field($model, 'date')->textInput() ?>
 
     <div class="form-group">
