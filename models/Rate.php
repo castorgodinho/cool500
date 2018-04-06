@@ -11,6 +11,7 @@ use Yii;
  * @property integer $area_id
  * @property integer $from_area
  * @property integer $to_are
+ * @property integer $rate
  * @property string $date
  *
  * @property Invoice[] $invoices
@@ -32,8 +33,8 @@ class Rate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['area_id', 'from_area', 'to_are', 'date'], 'required'],
-            [['area_id', 'from_area', 'to_are'], 'integer'],
+            [['area_id', 'from_area', 'to_are', 'rate', 'date'], 'required'],
+            [['area_id', 'from_area', 'to_are', 'rate'], 'integer'],
             [['date'], 'safe'],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
         ];
@@ -49,6 +50,7 @@ class Rate extends \yii\db\ActiveRecord
             'area_id' => 'Area ID',
             'from_area' => 'From Area',
             'to_are' => 'To Are',
+            'rate' => 'Rate',
             'date' => 'Date',
         ];
     }
