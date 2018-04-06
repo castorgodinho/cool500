@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Plot;
+use app\models\Area;
 use app\models\SearchPlot;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,12 +65,13 @@ class PlotController extends Controller
     public function actionCreate()
     {
         $model = new Plot();
-
+        $area = Area::find()->all();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->plot_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'area' => $area,
             ]);
         }
     }
