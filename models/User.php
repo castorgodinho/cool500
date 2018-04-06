@@ -63,7 +63,6 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
                 return new static($user);
             }
         }
-
         return null;
     }
 
