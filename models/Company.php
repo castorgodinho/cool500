@@ -52,9 +52,7 @@ class Company extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function attributeLabels()
     {
         return [
@@ -74,25 +72,39 @@ class Company extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function create($user, $name, $address, $constitution, $products,
+                           $gstin, $owner_name, $owner_phone, $owner_mobile,
+                           $competent_name, $competent_email, $competent_mobile){
+          $company = new Company();
+          $company->name = $name;
+          $company->address = $address;
+          $company->constitution = $constitution;
+          $company->products = $products;
+          $company->gstin = $gstin;
+          $company->owner_name = $owner_name;
+          $company->owner_phone = $owner_phone;
+          $company->owner_mobile = $owner_mobile;
+          $company->competent_name = $competent_name;
+          $company->competent_email = $competent_email;
+          $company->competent_mobile = $competent_mobile;
+          $company->user_id = $user->user_id;
+          $company->save();
+          return $company;
+    }
+
+
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['user_id' => 'user_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getCompanyPlots()
     {
         return $this->hasMany(CompanyPlot::className(), ['company_id' => 'company_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getInvoices()
     {
         return $this->hasMany(Invoice::className(), ['company_id' => 'company_id']);

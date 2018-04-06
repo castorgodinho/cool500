@@ -16,17 +16,13 @@ use Yii;
  */
 class CompanyPlot extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
     public static function tableName()
     {
         return 'company_plot';
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
@@ -38,9 +34,7 @@ class CompanyPlot extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function attributeLabels()
     {
         return [
@@ -50,17 +44,13 @@ class CompanyPlot extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['company_id' => 'company_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getPlot()
     {
         return $this->hasOne(Plot::className(), ['plot_id' => 'plot_id']);

@@ -4,28 +4,14 @@ namespace app\models;
 
 use Yii;
 
-/**
- * This is the model class for table "users".
- *
- * @property integer $user_id
- * @property string $email
- * @property string $password
- *
- * @property Company[] $companies
- */
 class Users extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
     public static function tableName()
     {
         return 'users';
     }
 
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -35,9 +21,7 @@ class Users extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function attributeLabels()
     {
         return [
@@ -47,9 +31,15 @@ class Users extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function create($email,$password){
+      $user = new Users();
+      $user->email = $email;
+      $user->password = $password;
+      $user->save();
+      return $user;
+    }
+
+
     public function getCompanies()
     {
         return $this->hasMany(Company::className(), ['user_id' => 'user_id']);

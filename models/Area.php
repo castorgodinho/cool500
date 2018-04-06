@@ -15,17 +15,13 @@ use Yii;
  */
 class Area extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
     public static function tableName()
     {
         return 'area';
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
@@ -33,9 +29,7 @@ class Area extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function attributeLabels()
     {
         return [
@@ -44,17 +38,20 @@ class Area extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function create($name){
+      $area = new Area();
+      $area->name = $name;
+      $area->save();
+      return $area;
+    }
+
+
     public function getPlots()
     {
         return $this->hasMany(Plot::className(), ['area_id' => 'area_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getRates()
     {
         return $this->hasMany(Rate::className(), ['area_id' => 'area_id']);

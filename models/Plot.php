@@ -39,9 +39,7 @@ class Plot extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
+
     public function attributeLabels()
     {
         return [
@@ -52,25 +50,28 @@ class Plot extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+    public function create($area, $name, $area_of_plot){
+      $plot = new Plot();
+      $plot->name = $name;
+      $plot->area_of_plot = $area_of_plot;
+      $plot->area_id = $area->area_id;
+      $plot->save();
+      return $plot;
+    }
+
+
     public function getCompanyPlots()
     {
         return $this->hasMany(CompanyPlot::className(), ['plot_id' => 'plot_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getInvoices()
     {
         return $this->hasMany(Invoice::className(), ['plot_id' => 'plot_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
+
     public function getArea()
     {
         return $this->hasOne(Area::className(), ['area_id' => 'area_id']);
