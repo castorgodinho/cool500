@@ -105,6 +105,12 @@ class InvoiceController extends Controller
 
         return $this->redirect(['index']);
     }
+    
+    public function actionPrintInvoice(){
+        return $this->render(
+            'printInvoice'
+        );
+    }
 
     /**
      * Finds the Invoice model based on its primary key value.
