@@ -43,6 +43,7 @@ AppAsset::register($this);
             ['label' => 'Tax', 'url' => ['/tax/index']],
             ['label' => 'Rate', 'url' => ['/rate/index']],
             ['label' => 'User', 'url' => ['/users/index']],
+            ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

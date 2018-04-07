@@ -20,7 +20,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'rate')->textInput() ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::class, [
+    //'language' => 'ru',
+    //'dateFormat' => 'yyyy-MM-dd',
+]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
