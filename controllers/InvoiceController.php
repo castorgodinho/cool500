@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Invoice;
+use app\models\CompanyPlot;
+use app\models\Company;
 use app\models\SearchInvoice;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -107,8 +109,13 @@ class InvoiceController extends Controller
     }
     
     public function actionPrintInvoice(){
+        $company = Company::findOne(['company_id' => 1]);
+        $plots = CompanyPlot::find()->where(['company_id' => 1])->all();
         return $this->render(
-            'printInvoice'
+            'printInvoice',[
+                'company' => $company,
+                'plots' => $plots,
+            ]
         );
     }
 
