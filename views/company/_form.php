@@ -12,33 +12,76 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($user, 'email')->textInput() ?>
+      </div>
+      <div class="col-md-6">
+        <?= $form->field($user, 'password')->textInput() ?>
+      </div>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'constitution')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'products')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'gstin')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'owner_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'owner_phone')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'owner_mobile')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'competent_name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'competent_email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'competent_mobile')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+      </div>
+      <div class="col-md-6">
+        <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($model, 'constitution')->textInput(['maxlength' => true]) ?>
+      </div>
+      <div class="col-md-6">
+        <?= $form->field($model, 'products')->textInput(['maxlength' => true]) ?>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($model, 'gstin')->textInput(['maxlength' => true]) ?>
+      </div>
+      <div class="col-md-6">
+        <?= $form->field($model, 'owner_name')->textInput(['maxlength' => true]) ?>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($model, 'owner_phone')->textInput(['maxlength' => true]) ?>
+      </div>
+      <div class="col-md-6">
+        <?= $form->field($model, 'owner_mobile')->textInput(['maxlength' => true]) ?>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <?= $form->field($model, 'competent_name')->textInput(['maxlength' => true]) ?>
+      </div>
+      <div class="col-md-6">
+        <?= $form->field($model, 'competent_email')->textInput(['maxlength' => true]) ?>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+
+      </div>
+      <div class="col-md-4">
+        <?= $form->field($model, 'competent_mobile')->textInput(['maxlength' => true]) ?>
+      </div>
+      <div class="col-md-4">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <center>  <div class="form-group">
+            <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+      </center>
+
+    </div>
+
 
     <?php ActiveForm::end(); ?>
 

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'plot_id',
-            'area_id',
+            'area.name',
             'name',
             'area_of_plot',
 

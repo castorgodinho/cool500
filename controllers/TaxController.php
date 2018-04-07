@@ -65,7 +65,10 @@ class TaxController extends Controller
     {
         $model = new Tax();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            date_default_timezone_set('Asia/Kolkata');
+            $model->date = date('Y-m-d');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->tax_id]);
         } else {
             return $this->render('create', [
@@ -83,8 +86,11 @@ class TaxController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $tax = new Tax();
+        if ($tax->load(Yii::$app->request->post())) {            
+            date_default_timezone_set('Asia/Kolkata');
+            $tax->date = date('Y-m-d');
+            $tax->save();
             return $this->redirect(['view', 'id' => $model->tax_id]);
         } else {
             return $this->render('update', [

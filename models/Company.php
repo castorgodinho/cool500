@@ -44,6 +44,7 @@ class Company extends \yii\db\ActiveRecord
             [['user_id', 'name'], 'required'],
             [['user_id'], 'integer'],
             [['name', 'owner_name', 'competent_name', 'competent_email'], 'string', 'max' => 100],
+            [['competent_email'], 'email'],
             [['address'], 'string', 'max' => 500],
             [['constitution', 'products'], 'string', 'max' => 60],
             [['gstin'], 'string', 'max' => 30],
@@ -58,8 +59,8 @@ class Company extends \yii\db\ActiveRecord
         return [
             'user_id' => 'User ID',
             'company_id' => 'Company ID',
-            'name' => 'Name',
-            'address' => 'Address',
+            'name' => 'Company Name',
+            'address' => 'Company Address',
             'constitution' => 'Constitution',
             'products' => 'Products',
             'gstin' => 'Gstin',

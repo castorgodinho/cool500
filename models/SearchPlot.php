@@ -18,8 +18,8 @@ class SearchPlot extends Plot
     public function rules()
     {
         return [
-            [['plot_id', 'area_id', 'area_of_plot'], 'integer'],
-            [['name'], 'safe'],
+            [['plot_id', 'area_of_plot'], 'integer'],
+            [['name' ,'area_id'], 'safe'],
         ];
     }
 

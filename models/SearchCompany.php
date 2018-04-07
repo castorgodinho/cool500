@@ -18,8 +18,8 @@ class SearchCompany extends Company
     public function rules()
     {
         return [
-            [['user_id', 'company_id'], 'integer'],
-            [['name', 'address', 'constitution', 'products', 'gstin', 'owner_name', 'owner_phone', 'owner_mobile', 'competent_name', 'competent_email', 'competent_mobile'], 'safe'],
+            [[ 'company_id'], 'integer'],
+            [['name','user_id', 'address', 'constitution', 'products', 'gstin', 'owner_name', 'owner_phone', 'owner_mobile', 'competent_name', 'competent_email', 'competent_mobile'], 'safe'],
         ];
     }
 

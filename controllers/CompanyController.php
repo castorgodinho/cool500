@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Company;
+use app\models\Users;
 use app\models\SearchCompany;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -64,12 +65,18 @@ class CompanyController extends Controller
     public function actionCreate()
     {
         $model = new Company();
-        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $user = new Users();
+
+        if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+            $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
+            $user->save();
+            $model->user_id = $user->user_id;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->company_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'user' => $user
             ]);
         }
     }

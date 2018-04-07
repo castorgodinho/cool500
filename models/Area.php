@@ -34,7 +34,7 @@ class Area extends \yii\db\ActiveRecord
     {
         return [
             'area_id' => 'Area ID',
-            'name' => 'Name',
+            'name' => 'Area Name',
         ];
     }
 
