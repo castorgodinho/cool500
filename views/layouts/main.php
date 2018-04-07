@@ -34,29 +34,23 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
+    $link = [];
+    if(Yii::$app->user->isGuest){
+        $link[] = ['label' => 'Login', 'url' => ['/site/login']];
+    }else{
+        $link[] = ['label' => 'Area', 'url' => ['/area/index']];
+        $link[] = ['label' => 'Company', 'url' => ['/company/index']];
+        $link[] = ['label' => 'Plot', 'url' => ['/plot/index']];
+        $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
+        $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
+        $link[] = ['label' => 'User', 'url' => ['/users/index']];
+        $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']];
+        $link[] =['label' => 'Logout', 'url' => ['site/logout'],'linkOptions' => ['data-method' => 'post']];
+    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Area', 'url' => ['/area/index']],
-            ['label' => 'Company', 'url' => ['/company/index']],
-            ['label' => 'Plot', 'url' => ['/plot/index']],
-            ['label' => 'Tax', 'url' => ['/tax/index']],
-            ['label' => 'Rate', 'url' => ['/rate/index']],
-            ['label' => 'User', 'url' => ['/users/index']],
-            ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->email . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $link,
     ]);
     NavBar::end();
     ?>
