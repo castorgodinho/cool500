@@ -19,6 +19,13 @@ use yii\widgets\ActiveForm;
     <div class="plots">
         <hr>
         <div class="plot">
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="button" class="close-plot btn btn-default">x</button>
+                </div>
+            </div>
+            
+            
             <?= $form->field($model, 'plot_id[]')->dropDownList(ArrayHelper::map($plot, 'plot_id', 'name')); ?>
             <div class="row">
                 <div class="col-md-4">
@@ -38,9 +45,14 @@ use yii\widgets\ActiveForm;
     
 
     
-    <?= $form->field($model, 'start_date')->textInput() ?>
+    <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
+        'options' => [
+          'class' => 'form-control'
+        ],
+        'language' => 'en',
+        'dateFormat' => 'yyyy-MM-dd',
+    ]) ?> 
 
-    <?= $form->field($model, 'end_date')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -54,9 +66,16 @@ use yii\widgets\ActiveForm;
     $script = <<< JS
         $(document).ready(function(){
             $('.add-plot-btn').click(function(){
-                $('.plots').append($('.plot').html());
+                $('.plots').append($('.plot').clone());
+            });
+
+            $(".close-plot").on("click",function(){
+                //console.log($(this).parents('.plot'));
+                console.log("clicked..");
+                //$(this).parents('.plot').hide();
             });
         });
+
 JS;
 
     $this->registerJS($script);
