@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2018 at 05:41 AM
+-- Generation Time: Apr 10, 2018 at 08:25 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `GIDC`
+-- Database: `gidc`
 --
 
 -- --------------------------------------------------------
@@ -106,9 +106,20 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `plot_id` int(11) NOT NULL,
+  `built_area` int(11) NOT NULL,
+  `shed_area` int(11) NOT NULL,
+  `godown_area` int(11) NOT NULL,
   `start_date` date NOT NULL,
   `end_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `company_id`, `plot_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`) VALUES
+(4, 1, 3, 231, 123, 223, '2018-03-28', NULL),
+(5, 1, 1, 321, 332, 212, '2018-03-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -129,7 +140,8 @@ CREATE TABLE `plot` (
 
 INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 (1, 1, '3C', 2541),
-(2, 1, '4R', 2144);
+(2, 1, '4R', 2144),
+(3, 1, '44w', 3445);
 
 -- --------------------------------------------------------
 
@@ -272,13 +284,13 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `rate`
