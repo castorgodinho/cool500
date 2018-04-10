@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'from_area') ?>
 
-    <?= $form->field($model, 'to_are') ?>
+    <?= $form->field($model, 'to_area') ?>
 
     <?= $form->field($model, 'rate') ?>
 
