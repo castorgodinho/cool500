@@ -1,47 +1,83 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Company */
-
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Companies', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="company-view">
+<h2>Contact Details<h2>
+<div class="row">
+  <div class="col-md-3">
+    <h4> <strong>Company Owner </strong> <?= $model->owner_name ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Phone No.  </strong> <?= $model->owner_phone ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Mobile No.</strong> <?= $model->owner_mobile ?></h4>
+    <h4></h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <h4> <strong>Email </strong> <?= $model->user->email ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Competent Person</strong> <?= $model->competent_name ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Competent Person Mobile No</strong> <?= $model->competent_mobile ?></h4>
+    <h4></h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <h4><strong>Competent Email </strong> <?= $model->competent_email ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4><strong>Address</strong> <?= $model->address ?></h4>
+    <h4></h4>
+  </div>
+</div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->company_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->company_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'user_id',
-            'company_id',
-            'name',
-            'address',
-            'constitution',
-            'products',
-            'gstin',
-            'owner_name',
-            'owner_phone',
-            'owner_mobile',
-            'competent_name',
-            'competent_email:email',
-            'competent_mobile',
-        ],
-    ]) ?>
-
+<h2>Bank Details<h2>
+<div class="row">
+  <div class="col-md-3">
+    <h4> <strong>Company Owner </strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Phone No.  </strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Mobile No.</strong> <?= ?></h4>
+    <h4></h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <h4> <strong>Email </strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Competent Person</strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4> <strong>Competent Person Mobile No</strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <h4><strong>Competent Email </strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
+  <div class="col-md-3">
+    <h4><strong>Address</strong> <?=  ?></h4>
+    <h4></h4>
+  </div>
 </div>
