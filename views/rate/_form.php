@@ -19,9 +19,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'rate')->textInput() ?>
 
-
-
     <?= $form->field($model, 'date')->widget(\yii\jui\DatePicker::classname(), [
+        'options' => [
+          'class' => 'form-control'
+        ],
         'language' => 'en',
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
