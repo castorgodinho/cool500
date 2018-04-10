@@ -72,6 +72,7 @@ class OrdersController extends Controller
             for($i = 0; $i < sizeof($model->plot_id); $i++){
                 echo $model->plot_id[$i];
                 $order = new Orders();
+                $order->order_number = $model->order_number;
                 $order->company_id = $model->company_id;
                 $order->start_date = $model->start_date;
                 $order->plot_id = $model->plot_id[$i];

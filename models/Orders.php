@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "orders".
  *
  * @property integer $order_id
+ * @property string $order_number
  * @property integer $company_id
  * @property integer $plot_id
  * @property integer $built_area
@@ -35,9 +36,10 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['company_id', 'plot_id', 'built_area', 'shed_area', 'godown_area', 'start_date'], 'required'],
+            [['order_number', 'company_id', 'plot_id', 'built_area', 'shed_area', 'godown_area', 'start_date'], 'required'],
             [['company_id', 'plot_id', 'built_area', 'shed_area', 'godown_area'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
+            [['order_number'], 'string', 'max' => 20],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'company_id']],
             [['plot_id'], 'exist', 'skipOnError' => true, 'targetClass' => Plot::className(), 'targetAttribute' => ['plot_id' => 'plot_id']],
         ];
@@ -50,6 +52,7 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'order_id' => 'Order ID',
+            'order_number' => 'Order Number',
             'company_id' => 'Company ID',
             'plot_id' => 'Plot ID',
             'built_area' => 'Built Area',

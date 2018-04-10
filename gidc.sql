@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2018 at 08:25 AM
+-- Generation Time: Apr 10, 2018 at 08:48 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -104,6 +104,7 @@ CREATE TABLE `invoice` (
 
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
+  `order_number` varchar(20) NOT NULL,
   `company_id` int(11) NOT NULL,
   `plot_id` int(11) NOT NULL,
   `built_area` int(11) NOT NULL,
@@ -117,9 +118,9 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `company_id`, `plot_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`) VALUES
-(4, 1, 3, 231, 123, 223, '2018-03-28', NULL),
-(5, 1, 1, 321, 332, 212, '2018-03-28', NULL);
+INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `plot_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`) VALUES
+(7, 'GIDC3098M67Verna', 1, 2, 123, 234, 4234, '2018-03-28', NULL),
+(8, 'GIDC3098M67Verna', 1, 1, 4233, 32422, 2344, '2018-03-28', NULL);
 
 -- --------------------------------------------------------
 
@@ -284,7 +285,7 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `plot`

@@ -25,10 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'order_id',
-            'company_id',
-            'plot_id',
-            'built_area',
-            'shed_area',
+            'company.name',
+            /* 'plot_id', */
+            /* 'built_area',*/
+            /* 'shed_area', */
             // 'godown_area',
              'start_date',
             // 'end_date',

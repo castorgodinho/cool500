@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 <div class="orders-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?= $form->field($model, 'order_number')->textInput() ?>
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
     
     <button type="button" class="add-plot-btn btn btn-default">ADD + </button>
@@ -37,6 +37,7 @@ use yii\widgets\ActiveForm;
     
     
 
+    
     <?= $form->field($model, 'start_date')->textInput() ?>
 
     <?= $form->field($model, 'end_date')->textInput() ?>
