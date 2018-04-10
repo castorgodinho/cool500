@@ -42,10 +42,8 @@ class SearchOrders extends Orders
     public function search($params)
     {
         
-        $query = Orders::find()->select(['company_id', 'start_date'])->distinct();
-        /* $query = Orders::find()->where(['in', 'company_id', $orderList->company_id ])->all(); */
-        // add conditions that should always apply here
-
+        $query = Orders::find()->select('distinct(order_number), order_id, start_date, company_id')->groupBy('order_number');
+    
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

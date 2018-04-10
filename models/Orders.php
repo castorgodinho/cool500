@@ -52,13 +52,13 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'order_id' => 'Order ID',
-            'order_number' => 'Order Number',
-            'company_id' => 'Company ID',
-            'plot_id' => 'Plot ID',
-            'built_area' => 'Built Area',
-            'shed_area' => 'Shed Area',
-            'godown_area' => 'Godown Area',
-            'start_date' => 'Start Date',
+            'Order Number' => 'Order Number',
+            'Company Name' => 'Company ID',
+            'Plot No' => 'Plot ID',
+            'Built Area' => 'Built Area',
+            'Shed Area' => 'Shed Area',
+            'Godown Area' => 'Godown Area',
+            'Allotment Date' => 'Start Date',
             'end_date' => 'End Date',
         ];
     }

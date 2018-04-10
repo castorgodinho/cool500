@@ -10,6 +10,7 @@ use app\models\SearchOrders;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -53,8 +54,14 @@ class OrdersController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $plots = Orders::find()->where(['order_number' => $model->order_number]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $plots,
+        ]);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' =>  $model,
+            'plots' => $dataProvider,
         ]);
     }
 
