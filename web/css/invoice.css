@@ -36,5 +36,7 @@ p{
     padding: 40px 0px !important;
 }
 
-
-
+.panel-heading:hover{
+    cursor: pointer;
+    cursor: hand;
+}

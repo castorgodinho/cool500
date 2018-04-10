@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Company;
 use app\models\Users;
+use app\models\Orders;
 use app\models\SearchCompany;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -52,8 +53,11 @@ class CompanyController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $orders = Orders::find()->where(['company_id' => $model->company_id])->groupBy('order_number')->all();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'orders' => $orders
         ]);
     }
 
