@@ -12,12 +12,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'area_id')->textInput() ?>
+    <?= $form->field($model, 'rate')->textInput() ?>
 
-    <?= $form->field($model, 'rate_id')->textInput() ?>
+    <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
+        'options' => [
+          'class' => 'form-control'
+        ],
+        'language' => 'en',
+        'dateFormat' => 'yyyy-MM-dd',
+    ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

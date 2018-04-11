@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2018 at 08:48 AM
+-- Generation Time: Apr 10, 2018 at 12:08 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -63,6 +63,7 @@ CREATE TABLE `company` (
   `company_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `address` varchar(500) DEFAULT NULL,
+  `remark` varchar(150) NOT NULL,
   `constitution` varchar(60) DEFAULT NULL,
   `products` varchar(60) DEFAULT NULL,
   `gstin` varchar(30) DEFAULT NULL,
@@ -78,8 +79,9 @@ CREATE TABLE `company` (
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `constitution`, `products`, `gstin`, `owner_name`, `owner_phone`, `owner_mobile`, `competent_name`, `competent_email`, `competent_mobile`) VALUES
-(1, 1, 'Google Developers Group', 'Verna, Plot No. 35A, 66 B', 'Partnership', 'M. S Barrels', '78SJABSJSBBA76', 'Micheal Jackson', '2706542', '9885412565', 'John Doe', 'john@doe.com', '9865214587');
+INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `constitution`, `products`, `gstin`, `owner_name`, `owner_phone`, `owner_mobile`, `competent_name`, `competent_email`, `competent_mobile`) VALUES
+(1, 1, 'Google Developers Group', 'Verna, Plot No. 35A, 66 B', '', 'Partnership', 'M. S Barrels', '78SJABSJSBBA76', 'Micheal Jackson', '2706542', '9885412565', 'John Doe', 'john@doe.com', '9865214587'),
+(2, 2, 'Cipla', 'Plot No 23, 22 Verna Goa', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'BKJK123K1K23KB', 'James Blunt', '2706744', '9865412547', 'Jan Doe', 'jan@dow.com', '9652147852');
 
 -- --------------------------------------------------------
 
@@ -120,7 +122,9 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `plot_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`) VALUES
 (7, 'GIDC3098M67Verna', 1, 2, 123, 234, 4234, '2018-03-28', NULL),
-(8, 'GIDC3098M67Verna', 1, 1, 4233, 32422, 2344, '2018-03-28', NULL);
+(8, 'GIDC3098M67Verna', 1, 1, 4233, 32422, 2344, '2018-03-28', NULL),
+(9, 'GIDC123m3121MARGAO', 1, 3, 31231, 12312, 12323, '2018-03-29', NULL),
+(10, 'GIDC123m1121MARGAO', 2, 4, 3213, 323, 1213, '2018-04-11', NULL);
 
 -- --------------------------------------------------------
 
@@ -142,7 +146,9 @@ CREATE TABLE `plot` (
 INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 (1, 1, '3C', 2541),
 (2, 1, '4R', 2144),
-(3, 1, '44w', 3445);
+(3, 1, '44w', 3445),
+(4, 1, '44', 2131),
+(5, 2, 'f44', 123);
 
 -- --------------------------------------------------------
 
@@ -189,7 +195,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `password`) VALUES
-(1, 'castorgodinho@yahoo.in', '$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL/ZAd2a3pkkOhQvNoVwh5e.');
+(1, 'castorgodinho@yahoo.in', '$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL/ZAd2a3pkkOhQvNoVwh5e.'),
+(2, 'cipla@gmail.com', '$2y$13$2d9TMNV9H0iIKFQCAgJjIOlbVCdfVbPCH7EI05JpPrOaC5wY6KX8e');
 
 --
 -- Indexes for dumped tables
@@ -273,7 +280,7 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `invoice`
@@ -285,13 +292,13 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `rate`
@@ -309,7 +316,7 @@ ALTER TABLE `tax`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

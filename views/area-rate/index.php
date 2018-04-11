@@ -18,14 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Area Rate', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'area_id',
-            'rate_id',
+            'area_rate_id',
+            'rate',
+            'start_date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

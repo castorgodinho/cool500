@@ -14,34 +14,29 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'order_number')->textInput() ?>
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
+    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
     
-    <button type="button" class="add-plot-btn btn btn-default">ADD + </button>
-    <div class="plots">
-        <hr>
-        <div class="plot">
-            <div class="row">
-                <div class="col-md-12 text-right">
-                    <button type="button" class="close-plot btn btn-default">x</button>
-                </div>
-            </div>
-            
-            
-            <?= $form->field($model, 'plot_id[]')->dropDownList(ArrayHelper::map($plot, 'plot_id', 'name')); ?>
-            <div class="row">
-                <div class="col-md-4">
-                    <?= $form->field($model, 'built_area[]')->textInput() ?>
-                </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'shed_area[]')->textInput() ?>
-                </div>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'godown_area[]')->textInput() ?>
-                </div>
-            </div>
-            <hr>
-        </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="area" class="shed-radio" id="" value="" checked="checked">
+            Shed Area
+        </label>
+        <label>
+            <input type="radio" name="area" class="built-radio" id="" value="" checked="checked">
+            Built Area
+        </label>
+        <label>
+            <input type="radio" name="area" class="godown-radio" id="" value="" checked="checked">
+            Godown Area
+        </label>
     </div>
     
+    <div>
+        <?= $form->field($model, 'built_area')->textInput() ?>
+    </div>
+    
+    <?= $form->field($model, 'shed_area')->textInput() ?>
+    <?= $form->field($model, 'godown_area')->textInput() ?>
     
 
     

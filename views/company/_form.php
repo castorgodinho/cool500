@@ -2,10 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Company */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="company-form">
@@ -43,7 +39,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($user, 'email')->textInput() ?>
           </div>
           <div class="col-md-6">
-            <?= $form->field($user, 'password')->textInput() ?>
+            <?= $form->field($user, 'password')->passwordInput() ?>
           </div>
         </div>
         <div class="row">

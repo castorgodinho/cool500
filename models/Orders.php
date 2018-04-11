@@ -22,6 +22,8 @@ use Yii;
  */
 class Orders extends \yii\db\ActiveRecord
 {
+
+    public $area_id;
     /**
      * @inheritdoc
      */
@@ -38,7 +40,7 @@ class Orders extends \yii\db\ActiveRecord
         return [
             [['order_number', 'company_id', 'plot_id', 'built_area', 'shed_area', 'godown_area', 'start_date'], 'required'],
             [['company_id', 'plot_id', 'built_area', 'shed_area', 'godown_area'], 'integer'],
-            [['start_date', 'end_date'], 'safe'],
+            [['start_date', 'end_date', 'area_id'], 'safe'],
             [['order_number'], 'string', 'max' => 20],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'company_id']],
             [['plot_id'], 'exist', 'skipOnError' => true, 'targetClass' => Plot::className(), 'targetAttribute' => ['plot_id' => 'plot_id']],

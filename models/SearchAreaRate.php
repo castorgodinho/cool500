@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\AreaRate;
 
 /**
- * SearchAreaRate represents the model behind the search form about `app\models\AreaRate`.
+ * SearchAreaRate represents the model behind the search form of `app\models\AreaRate`.
  */
 class SearchAreaRate extends AreaRate
 {
@@ -18,7 +18,8 @@ class SearchAreaRate extends AreaRate
     public function rules()
     {
         return [
-            [['area_id', 'rate_id'], 'integer'],
+            [['area_rate_id', 'rate'], 'integer'],
+            [['start_date'], 'safe'],
         ];
     }
 
@@ -58,8 +59,9 @@ class SearchAreaRate extends AreaRate
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'area_id' => $this->area_id,
-            'rate_id' => $this->rate_id,
+            'area_rate_id' => $this->area_rate_id,
+            'rate' => $this->rate,
+            'start_date' => $this->start_date,
         ]);
 
         return $dataProvider;

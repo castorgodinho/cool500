@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\AreaRate */
 
-$this->title = 'Update Area Rate: ' . $model->area_id;
+$this->title = 'Update Area Rate: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Area Rates', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->area_id, 'url' => ['view', 'area_id' => $model->area_id, 'rate_id' => $model->rate_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->area_rate_id, 'url' => ['view', 'id' => $model->area_rate_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="area-rate-update">

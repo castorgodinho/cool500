@@ -40,6 +40,7 @@ AppAsset::register($this);
         $link[] = ['label' => 'Login', 'url' => ['/site/login']];
     }else{
         $link[] = ['label' => 'Area', 'url' => ['/area/index']];
+        $link[] = ['label' => 'Area Rates', 'url' => ['/area-rate/index']];
         $link[] = ['label' => 'Company', 'url' => ['/company/index']];
         $link[] = ['label' => 'Plot', 'url' => ['/plot/index']];
         $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Orders;
 use app\models\Company;
+use app\models\Area;
 use app\models\Plot;
 use app\models\SearchOrders;
 use yii\web\Controller;
@@ -74,6 +75,7 @@ class OrdersController extends Controller
     {
         $model = new Orders();
         $company = Company::find()->all();
+        $area = Area::find()->all();
         $plot = Plot::find()->where(['not in','plot_id', Orders::find()->all()])->all();
         if ($model->load(Yii::$app->request->post())) {
             for($i = 0; $i < sizeof($model->plot_id); $i++){
@@ -94,6 +96,7 @@ class OrdersController extends Controller
                 'model' => $model,
                 'company' => $company,
                 'plot' => $plot,
+                'area' => $area,
             ]);
         }
     }

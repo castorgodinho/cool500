@@ -7,11 +7,11 @@ use Yii;
 /**
  * This is the model class for table "area_rate".
  *
- * @property integer $area_id
- * @property integer $rate_id
+ * @property int $area_rate_id
+ * @property int $rate
+ * @property string $start_date
  *
- * @property Area $area
- * @property Rate $rate
+ * @property Area[] $areas
  */
 class AreaRate extends \yii\db\ActiveRecord
 {
@@ -29,10 +29,9 @@ class AreaRate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['area_id', 'rate_id'], 'required'],
-            [['area_id', 'rate_id'], 'integer'],
-            [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
-            [['rate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rate::className(), 'targetAttribute' => ['rate_id' => 'rate_id']],
+            [['rate'], 'required'],
+            [['rate'], 'integer'],
+            [['start_date'], 'safe'],
         ];
     }
 
@@ -42,24 +41,17 @@ class AreaRate extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'area_id' => 'Area ID',
-            'rate_id' => 'Rate ID',
+            'area_rate_id' => 'Area Rate ID',
+            'rate' => 'Rate',
+            'start_date' => 'Start Date',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getArea()
+    public function getAreas()
     {
-        return $this->hasOne(Area::className(), ['area_id' => 'area_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRate()
-    {
-        return $this->hasOne(Rate::className(), ['rate_id' => 'rate_id']);
+        return $this->hasMany(Area::className(), ['area_rate_id' => 'area_rate_id']);
     }
 }
