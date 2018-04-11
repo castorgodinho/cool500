@@ -8,10 +8,9 @@ use Yii;
  * This is the model class for table "area_rate".
  *
  * @property int $area_rate_id
- * @property int $rate
+ * @property int $area_id
+ * @property int $area_rate
  * @property string $start_date
- *
- * @property Area[] $areas
  */
 class AreaRate extends \yii\db\ActiveRecord
 {
@@ -29,8 +28,8 @@ class AreaRate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['rate'], 'required'],
-            [['rate'], 'integer'],
+            [['area_id', 'area_rate'], 'integer'],
+            [['area_rate', 'start_date'], 'required'],
             [['start_date'], 'safe'],
         ];
     }
@@ -42,16 +41,9 @@ class AreaRate extends \yii\db\ActiveRecord
     {
         return [
             'area_rate_id' => 'Area Rate ID',
-            'rate' => 'Rate',
+            'area_id' => 'Area ID',
+            'area_rate' => 'Area Rate',
             'start_date' => 'Start Date',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAreas()
-    {
-        return $this->hasMany(Area::className(), ['area_rate_id' => 'area_rate_id']);
     }
 }

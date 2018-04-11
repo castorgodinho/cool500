@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Area;
 
 /**
- * SearchArea represents the model behind the search form about `app\models\Area`.
+ * SearchArea represents the model behind the search form of `app\models\Area`.
  */
 class SearchArea extends Area
 {
@@ -18,7 +18,7 @@ class SearchArea extends Area
     public function rules()
     {
         return [
-            [['area_id'], 'integer'],
+            [['area_id', 'total_area'], 'integer'],
             [['name'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class SearchArea extends Area
         // grid filtering conditions
         $query->andFilterWhere([
             'area_id' => $this->area_id,
+            'total_area' => $this->total_area,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

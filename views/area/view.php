@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\AreaRate;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Area */
@@ -30,7 +33,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'area_id',
             'name',
+            'total_area',
         ],
     ]) ?>
+
+
+    <?php 
+        $query = AreaRate::find()->where(['area_id' => $id]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    ?>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            
+            'start_date',
+            'area_rate',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 
 </div>
