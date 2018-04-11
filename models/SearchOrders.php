@@ -18,7 +18,7 @@ class SearchOrders extends Orders
     public function rules()
     {
         return [
-            [['order_id', 'company_id', 'plot_id', 'built_area', 'shed_area', 'godown_area'], 'integer'],
+            [['order_id', 'company_id', 'built_area', 'shed_area', 'godown_area'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class SearchOrders extends Orders
         $query->andFilterWhere([
             'order_id' => $this->order_id,
             'company_id' => $this->company_id,
-            'plot_id' => $this->plot_id,
             'built_area' => $this->built_area,
             'shed_area' => $this->shed_area,
             'godown_area' => $this->godown_area,

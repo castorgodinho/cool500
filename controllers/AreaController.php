@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Area;
 use app\models\AreaRate;
+use app\models\OrderDetails;
 use app\models\SearchArea;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

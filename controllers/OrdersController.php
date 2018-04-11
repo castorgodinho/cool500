@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Orders;
 use app\models\Company;
+use app\models\OrderDetails;
 use app\models\Area;
 use app\models\Plot;
 use app\models\SearchOrders;
@@ -56,7 +57,7 @@ class OrdersController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $plots = Orders::find()->where(['order_number' => $model->order_number]);
+        $plots = OrderDetails::find()->where(['order_id' => $id]);
         $dataProvider = new ActiveDataProvider([
             'query' => $plots,
         ]);
@@ -76,27 +77,25 @@ class OrdersController extends Controller
         $model = new Orders();
         $company = Company::find()->all();
         $area = Area::find()->all();
-        $plot = Plot::find()->where(['not in','plot_id', Orders::find()->all()])->all();
-        if ($model->load(Yii::$app->request->post())) {
-            for($i = 0; $i < sizeof($model->plot_id); $i++){
-                echo $model->plot_id[$i];
-                $order = new Orders();
-                $order->order_number = $model->order_number;
-                $order->company_id = $model->company_id;
-                $order->start_date = $model->start_date;
-                $order->plot_id = $model->plot_id[$i];
-                $order->built_area = $model->built_area[$i];
-                $order->shed_area = $model->shed_area[$i];
-                $order->godown_area = $model->godown_area[$i];
-                $order->save();
+        $orderDetails = new OrderDetails();
+        if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+            $model->save();
+            for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
+                $detail = new OrderDetails();
+                $plot = new Plot();
+                $plot->name = $orderDetails->plot_id[$i];
+                $plot->save(false);
+                $detail->order_id = $model->order_id;
+                $detail->plot_id = $plot->plot_id;
+                $detail->save(false);
             }
             return $this->redirect(['orders/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'company' => $company,
-                'plot' => $plot,
                 'area' => $area,
+                'orderDetails' => $orderDetails,
             ]);
         }
     }

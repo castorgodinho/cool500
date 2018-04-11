@@ -15,30 +15,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'order_number')->textInput() ?>
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
     <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
-    
-    <div class="radio">
-        <label>
-            <input type="radio" name="area" class="shed-radio" id="" value="" checked="checked">
-            Shed Area
-        </label>
-        <label>
-            <input type="radio" name="area" class="built-radio" id="" value="" checked="checked">
-            Built Area
-        </label>
-        <label>
-            <input type="radio" name="area" class="godown-radio" id="" value="" checked="checked">
-            Godown Area
-        </label>
+    <button type="button" class="add" class="form-control" style="margin: 5px;">+</button>
+    <button type="button" class="sub" class="form-control" style="margin: 5px;">-</button>
+    <div class="row plots">
+        <div class="col-md-1 plot-input">
+            <?= $form->field($orderDetails, 'plot_id[]')->textInput() ?>
+        </div>
     </div>
     
-    <div>
-        <?= $form->field($model, 'built_area')->textInput() ?>
-    </div>
-    
-    <?= $form->field($model, 'shed_area')->textInput() ?>
-    <?= $form->field($model, 'godown_area')->textInput() ?>
-    
-
     
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [
@@ -47,7 +31,28 @@ use yii\widgets\ActiveForm;
         'language' => 'en',
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?> 
-
+    
+    <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">
+        <option value="built">Built</option>
+        <option value="shed">Shed</option>
+        <option value="godown">Godown</option>
+    </select>
+    <br>
+    
+    <div class="built hide-div">
+        <?= $form->field($model, 'built_area')->textInput() ?>
+    </div>
+    <div class="shed hide-div">
+        <?= $form->field($model, 'shed_area')->textInput() ?>
+        <?= $form->field($model, 'shed_no')->textInput() ?>
+    </div>
+    <div class="godown hide-div">
+        <?= $form->field($model, 'godown_area')->textInput() ?>
+        <?= $form->field($model, 'godown_no')->textInput() ?>
+    </div>
+    
+    
+    
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -58,16 +63,28 @@ use yii\widgets\ActiveForm;
 </div>
 
 <?php 
-    $script = <<< JS
-        $(document).ready(function(){
-            $('.add-plot-btn').click(function(){
-                $('.plots').append($('.plot').clone());
-            });
 
-            $(".close-plot").on("click",function(){
-                //console.log($(this).parents('.plot'));
-                console.log("clicked..");
-                //$(this).parents('.plot').hide();
+
+    $script = <<< JS
+        var noOfDiv = 1;
+        $(document).ready(function(){
+            $('.hide-div').hide();
+            $('.plot-div').hide();
+            $('select').change(function(){
+                $('.hide-div').hide();
+                var className = $(this).val();
+                $('.'+className).show();
+            });
+            $('.add').click(function(){
+                $('.plots').append($('.plots').children().first().clone());
+                noOfDiv++;
+            });
+            $('.sub').click(function(){
+                if(noOfDiv > 1){
+                    $('.plots').children().last().remove();
+                    noOfDiv--;
+                }
+                
             });
         });
 
