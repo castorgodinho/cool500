@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'order_number',
             'company.name',
+            'total_area',
             'start_date',
             'built_area',
             'shed_area',

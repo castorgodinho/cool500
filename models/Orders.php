@@ -18,6 +18,7 @@ use Yii;
  * @property int $shed_no
  * @property int $godown_no
  * @property int $area_id
+ * @property int $total_area
  *
  * @property OrderDetails[] $orderDetails
  * @property Plot[] $plots
@@ -40,8 +41,8 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_number', 'company_id'], 'required'],
-            [['company_id', 'built_area', 'shed_area', 'godown_area', 'shed_no', 'godown_no', 'area_id'], 'integer'],
+            [['order_number', 'company_id', 'total_area'], 'required'],
+            [['company_id', 'built_area', 'shed_area', 'godown_area', 'shed_no', 'godown_no', 'area_id', 'total_area'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['order_number'], 'string', 'max' => 20],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
@@ -66,6 +67,7 @@ class Orders extends \yii\db\ActiveRecord
             'shed_no' => 'Shed No',
             'godown_no' => 'Godown No',
             'area_id' => 'Area ID',
+            'total_area' => 'Total Area',
         ];
     }
 

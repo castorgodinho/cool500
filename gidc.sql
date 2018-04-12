@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2018 at 12:08 PM
+-- Generation Time: Apr 12, 2018 at 06:43 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -30,16 +30,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `area` (
   `area_id` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL
+  `name` varchar(100) DEFAULT NULL,
+  `total_area` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `area`
 --
 
-INSERT INTO `area` (`area_id`, `name`) VALUES
-(1, 'Verna'),
-(2, 'margao');
+INSERT INTO `area` (`area_id`, `name`, `total_area`) VALUES
+(9, 'Verna', 1200000);
 
 -- --------------------------------------------------------
 
@@ -48,9 +48,19 @@ INSERT INTO `area` (`area_id`, `name`) VALUES
 --
 
 CREATE TABLE `area_rate` (
-  `area_id` int(11) NOT NULL,
-  `rate_id` int(11) NOT NULL
+  `area_rate_id` int(11) NOT NULL,
+  `area_id` int(11) DEFAULT NULL,
+  `area_rate` int(11) NOT NULL,
+  `start_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `area_rate`
+--
+
+INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) VALUES
+(1, 9, 1500, '2018-04-11'),
+(2, 9, 2000, '2018-04-11');
 
 -- --------------------------------------------------------
 
@@ -108,23 +118,43 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `order_number` varchar(20) NOT NULL,
   `company_id` int(11) NOT NULL,
-  `plot_id` int(11) NOT NULL,
-  `built_area` int(11) NOT NULL,
-  `shed_area` int(11) NOT NULL,
-  `godown_area` int(11) NOT NULL,
-  `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL
+  `built_area` int(11) DEFAULT NULL,
+  `shed_area` int(11) DEFAULT NULL,
+  `godown_area` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `shed_no` int(11) DEFAULT NULL,
+  `godown_no` int(11) DEFAULT NULL,
+  `area_id` int(11) DEFAULT NULL,
+  `total_area` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `plot_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`) VALUES
-(7, 'GIDC3098M67Verna', 1, 2, 123, 234, 4234, '2018-03-28', NULL),
-(8, 'GIDC3098M67Verna', 1, 1, 4233, 32422, 2344, '2018-03-28', NULL),
-(9, 'GIDC123m3121MARGAO', 1, 3, 31231, 12312, 12323, '2018-03-29', NULL),
-(10, 'GIDC123m1121MARGAO', 2, 4, 3213, 323, 1213, '2018-04-11', NULL);
+INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`, `shed_no`, `godown_no`, `area_id`, `total_area`) VALUES
+(19, 'GIDC12345VERNA', 2, NULL, NULL, 121, '2018-04-30', NULL, NULL, 520, 9, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_details`
+--
+
+CREATE TABLE `order_details` (
+  `plot_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
+(7, 19),
+(8, 19),
+(9, 19);
 
 -- --------------------------------------------------------
 
@@ -144,11 +174,10 @@ CREATE TABLE `plot` (
 --
 
 INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
-(1, 1, '3C', 2541),
-(2, 1, '4R', 2144),
-(3, 1, '44w', 3445),
-(4, 1, '44', 2131),
-(5, 2, 'f44', 123);
+(6, NULL, '22', 0),
+(7, NULL, '11', 0),
+(8, NULL, '22', 0),
+(9, NULL, '33', 0);
 
 -- --------------------------------------------------------
 
@@ -212,8 +241,7 @@ ALTER TABLE `area`
 -- Indexes for table `area_rate`
 --
 ALTER TABLE `area_rate`
-  ADD PRIMARY KEY (`area_id`,`rate_id`),
-  ADD KEY `area_rate_rate_id` (`rate_id`);
+  ADD PRIMARY KEY (`area_rate_id`);
 
 --
 -- Indexes for table `company`
@@ -238,7 +266,14 @@ ALTER TABLE `invoice`
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `orders_fk_company_id` (`company_id`),
-  ADD KEY `orders_fk_plot_id` (`plot_id`);
+  ADD KEY `orders_area_id` (`area_id`);
+
+--
+-- Indexes for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD PRIMARY KEY (`plot_id`,`order_id`),
+  ADD KEY `order_details_order_id` (`order_id`);
 
 --
 -- Indexes for table `plot`
@@ -274,7 +309,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `area_rate`
+--
+ALTER TABLE `area_rate`
+  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -292,13 +333,13 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `rate`
@@ -323,13 +364,6 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `area_rate`
---
-ALTER TABLE `area_rate`
-  ADD CONSTRAINT `area_rate_area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`),
-  ADD CONSTRAINT `area_rate_rate_id` FOREIGN KEY (`rate_id`) REFERENCES `rate` (`rate_id`);
-
---
 -- Constraints for table `company`
 --
 ALTER TABLE `company`
@@ -348,8 +382,15 @@ ALTER TABLE `invoice`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_fk_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
-  ADD CONSTRAINT `orders_fk_plot_id` FOREIGN KEY (`plot_id`) REFERENCES `plot` (`plot_id`);
+  ADD CONSTRAINT `orders_area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`),
+  ADD CONSTRAINT `orders_fk_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`);
+
+--
+-- Constraints for table `order_details`
+--
+ALTER TABLE `order_details`
+  ADD CONSTRAINT `order_details_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `order_details_plot_id` FOREIGN KEY (`plot_id`) REFERENCES `plot` (`plot_id`);
 
 --
 -- Constraints for table `plot`

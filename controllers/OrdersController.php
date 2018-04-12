@@ -108,13 +108,28 @@ class OrdersController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->order_id]);
+        $model =  Orders::find()->where(['order_id' => $id])->all();
+        $company = Company::find()->all();
+        $area = Area::find()->all();
+        $orderDetails = OrderDetails::find()->where(['order_id' => $id])->all();
+        if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+            $model->save();
+            for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
+                $detail = new OrderDetails();
+                $plot = new Plot();
+                $plot->name = $orderDetails->plot_id[$i];
+                $plot->save(false);
+                $detail->order_id = $model->order_id;
+                $detail->plot_id = $plot->plot_id;
+                $detail->save(false);
+            }
+            return $this->redirect(['orders/index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'company' => $company,
+                'area' => $area,
+                'orderDetails' => $orderDetails,
             ]);
         }
     }

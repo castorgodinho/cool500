@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($orderDetails, 'plot_id[]')->textInput() ?>
         </div>
     </div>
-    
+    <?= $form->field($model, 'total_area')->textInput(); ?>
     
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [
