@@ -10,7 +10,7 @@ use app\models\SearchCompany;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\AccessControl;
+use yii\filters\AccessControl;
 /**
  * CompanyController implements the CRUD actions for Company model.
  */
@@ -28,7 +28,7 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
+            /* 'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
@@ -52,7 +52,7 @@ class CompanyController extends Controller
                         'roles' => ['deleteCompany'],
                     ],
                 ],
-            ],
+            ], */
         ];
     }
 

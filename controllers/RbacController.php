@@ -130,7 +130,7 @@ class RbacController extends Controller
         $viewUsers->description = 'View Tax';
         $auth->add($viewUsers);
 
-        
+    
         // add "updatePost" permission
         $deleteCompany = $auth->createPermission('deleteCompany');
         $deleteCompany->description = 'Delete Company';
