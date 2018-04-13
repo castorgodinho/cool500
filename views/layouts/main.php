@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Company;
 
 AppAsset::register($this);
 ?>
@@ -48,7 +49,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
         }else if(\Yii::$app->user->can('company')){
-            $link[] = ['label' => 'Profile', 'url' => ['/company/view']];
+            $link[] = ['label' => 'Profile', 'url' => ['/company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]];
             $link[] = ['label' => 'Orders', 'url' => ['/company/view']];
         }else if(\Yii::$app->user->can('staff')){
             $link[] = ['label' => 'Add Company', 'url' => ['/company/create']];

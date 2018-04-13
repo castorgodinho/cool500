@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use app\models\Orders;
+use app\models\OrderDetails;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -88,21 +89,29 @@ use yii\data\ActiveDataProvider;
       <div class="panel-heading">Order Number: <?= $order->order_number ?></div>
       <div class="panel-body">
       <?php 
-        $plots = Orders::find()->where(['order_number' => $order->order_number]);
+        $plots = OrderDetails::find()->where(['order_id' => $order->order_id]);
         $dataProvider = new ActiveDataProvider([
           'query' => $plots,
         ]);
       ?>
       <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
+      <p><b>Company: </b><?= $order->company_id ?></p><br>
+      <p><b>Industrial Area: </b><?= $order->area_id ?></p><br>
+      <p><b>Built Area: </b><?= $order->built_area ?></p><br>
+      <p><b>Shed Area: </b><?= $order->shed_area ?></p><br>
+      <p><b>Shed Number: </b><?= $order->shed_no ?></p><br>
+      <p><b>Godown Area: </b><?= $order->godown_area ?></p><br>
+      <p><b>Godown Number: </b><?= $order->godown_no ?></p><br>
+      <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+      
+
+
+      <h3>Plots of the order</h3>
       <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'plot.name',
-                'plot.area_of_plot',
-                'built_area',
-                'shed_area',
-                'godown_area',
             ],
         ]); ?>
       </div>

@@ -63,12 +63,15 @@ class OrdersController extends Controller
         if (\Yii::$app->user->can('viewOrders')){
             $model = $this->findModel($id);
             $plots = OrderDetails::find()->where(['order_id' => $id]);
+            $orders = Orders::find()->where(['order_id' => $id])->all();
+
             $dataProvider = new ActiveDataProvider([
                 'query' => $plots,
             ]);
             return $this->render('view', [
                 'model' =>  $model,
                 'plots' => $dataProvider,
+                'orders' => $orders,
             ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
