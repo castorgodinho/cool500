@@ -33,6 +33,7 @@ use yii\widgets\ActiveForm;
     ]) ?> 
     
     <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">
+        <option value="" selected disabled hidden>Choose Area</option>
         <option value="built">Built</option>
         <option value="shed">Shed</option>
         <option value="godown">Godown</option>

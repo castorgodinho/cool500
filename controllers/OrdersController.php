@@ -88,11 +88,23 @@ class OrdersController extends Controller
             $area = Area::find()->all();
             $orderDetails = new OrderDetails();
             if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+                /* echo $model->order_number.'-<br>';
+                echo $model->company_id.'-<br>';
+                echo $model->built_area.'-<br>';
+                echo $model->shed_area.'-<br>';
+                echo $model->godown_area.'-<br>';
+                echo $model->start_date.'-<br>';
+                echo $model->end_date.'-<br>';
+                echo $model->shed_no.'-<br>';
+                echo $model->godown_no.'-<br>';
+                echo $model->area_id.'-<br>';
+                echo $model->total_area.'-<br>'; */
                 $model->save();
                 for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
                     $detail = new OrderDetails();
                     $plot = new Plot();
                     $plot->name = $orderDetails->plot_id[$i];
+                    $plot->area_id = $model->area_id;
                     $plot->save(false);
                     $detail->order_id = $model->order_id;
                     $detail->plot_id = $plot->plot_id;

@@ -109,6 +109,10 @@ class CompanyController extends Controller
             if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
                 $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
                 $user->save();
+                /* Assigning company role */
+                $auth = \Yii::$app->authManager;
+                $companyRole = $auth->getRole('company');
+                $auth->assign($companyRole, $user->getId());
                 $model->user_id = $user->user_id;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);

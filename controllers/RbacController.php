@@ -185,6 +185,7 @@ class RbacController extends Controller
         // add "admin" role
         $admin = $auth->createRole('admin');
         $auth->add($admin);
+        
         //add company permissions
         $auth->addChild($admin, $createCompany);
         $auth->addChild($admin, $updateCompany);
@@ -221,6 +222,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $viewTax);
         $auth->addChild($admin, $indexTax);
         $auth->addChild($admin, $deleteTax);
+        
         //add Site permissions
         $auth->addChild($admin, $createSite);
         $auth->addChild($admin, $updateSite);
@@ -234,6 +236,11 @@ class RbacController extends Controller
         $auth->addChild($admin, $indexUsers);
         $auth->addChild($admin, $deleteUsers);
 
+        // add "Company" role
+        $company = $auth->createRole('company');
+        $auth->add($company);
+        //add company permissions
+        $auth->addChild($company, $viewCompany);
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
         /* $admin = $auth->createRole('admin');
