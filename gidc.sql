@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2018 at 06:43 AM
+-- Generation Time: Apr 12, 2018 at 12:37 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -65,6 +65,84 @@ INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('company', '1', 1523510933);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('company', 1, NULL, NULL, NULL, 1523510933, 1523510933),
+('createCompany', 2, 'Create a Company', NULL, NULL, 1523510933, 1523510933),
+('deleteCompany', 2, 'Delete Company', NULL, NULL, 1523510933, 1523510933),
+('updateCompany', 2, 'Update Company', NULL, NULL, 1523510933, 1523510933),
+('viewCompany', 2, NULL, NULL, NULL, 1523510933, 1523510933);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('company', 'updateCompany'),
+('company', 'viewCompany');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `company`
 --
 
@@ -96,17 +174,52 @@ INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `co
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `interest`
+--
+
+CREATE TABLE `interest` (
+  `interest_id` int(11) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `rate` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `invoice`
 --
 
 CREATE TABLE `invoice` (
   `invoice_id` int(11) NOT NULL,
-  `company_id` int(11) NOT NULL,
-  `plot_id` int(11) NOT NULL,
-  `rate_id` int(11) NOT NULL,
-  `tax_id` int(11) NOT NULL,
-  `date` date NOT NULL
+  `rate_id` int(11) DEFAULT NULL,
+  `tax_id` int(11) DEFAULT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `interest_id` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `total_amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migration`
+--
+
+CREATE TABLE `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1523509687),
+('m140506_102106_rbac_init', 1523509768),
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1523509768);
 
 -- --------------------------------------------------------
 
@@ -155,6 +268,20 @@ INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
 (7, 19),
 (8, 19),
 (9, 19);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `payment_id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `mode` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -244,6 +371,34 @@ ALTER TABLE `area_rate`
   ADD PRIMARY KEY (`area_rate_id`);
 
 --
+-- Indexes for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD PRIMARY KEY (`item_name`,`user_id`),
+  ADD KEY `auth_assignment_user_id_idx` (`user_id`);
+
+--
+-- Indexes for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD PRIMARY KEY (`name`),
+  ADD KEY `rule_name` (`rule_name`),
+  ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Indexes for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD PRIMARY KEY (`parent`,`child`),
+  ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `auth_rule`
+--
+ALTER TABLE `auth_rule`
+  ADD PRIMARY KEY (`name`);
+
+--
 -- Indexes for table `company`
 --
 ALTER TABLE `company`
@@ -251,14 +406,26 @@ ALTER TABLE `company`
   ADD KEY `company_fk_user_id` (`user_id`);
 
 --
+-- Indexes for table `interest`
+--
+ALTER TABLE `interest`
+  ADD PRIMARY KEY (`interest_id`);
+
+--
 -- Indexes for table `invoice`
 --
 ALTER TABLE `invoice`
   ADD PRIMARY KEY (`invoice_id`),
-  ADD KEY `invoice_pk_company_id` (`company_id`),
-  ADD KEY `invoice_pk_plot_id` (`plot_id`),
-  ADD KEY `invoice_pk_rate_id` (`rate_id`),
-  ADD KEY `invoice_pk_tax_id` (`tax_id`);
+  ADD KEY `invoice_rate_id` (`rate_id`),
+  ADD KEY `invoice_tax_id` (`tax_id`),
+  ADD KEY `invoice_order` (`order_id`),
+  ADD KEY `invoice_interest` (`interest_id`);
+
+--
+-- Indexes for table `migration`
+--
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
 
 --
 -- Indexes for table `orders`
@@ -274,6 +441,13 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD PRIMARY KEY (`plot_id`,`order_id`),
   ADD KEY `order_details_order_id` (`order_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `payment_order_id` (`order_id`);
 
 --
 -- Indexes for table `plot`
@@ -324,6 +498,12 @@ ALTER TABLE `company`
   MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `interest`
+--
+ALTER TABLE `interest`
+  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
@@ -334,6 +514,12 @@ ALTER TABLE `invoice`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `plot`
@@ -364,6 +550,25 @@ ALTER TABLE `users`
 --
 
 --
+-- Constraints for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `company`
 --
 ALTER TABLE `company`
@@ -373,10 +578,10 @@ ALTER TABLE `company`
 -- Constraints for table `invoice`
 --
 ALTER TABLE `invoice`
-  ADD CONSTRAINT `invoice_pk_company_id` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`),
-  ADD CONSTRAINT `invoice_pk_plot_id` FOREIGN KEY (`plot_id`) REFERENCES `plot` (`plot_id`),
-  ADD CONSTRAINT `invoice_pk_rate_id` FOREIGN KEY (`rate_id`) REFERENCES `rate` (`rate_id`),
-  ADD CONSTRAINT `invoice_pk_tax_id` FOREIGN KEY (`tax_id`) REFERENCES `tax` (`tax_id`);
+  ADD CONSTRAINT `invoice_interest` FOREIGN KEY (`interest_id`) REFERENCES `interest` (`interest_id`),
+  ADD CONSTRAINT `invoice_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
+  ADD CONSTRAINT `invoice_rate_id` FOREIGN KEY (`rate_id`) REFERENCES `rate` (`rate_id`),
+  ADD CONSTRAINT `invoice_tax_id` FOREIGN KEY (`tax_id`) REFERENCES `tax` (`tax_id`);
 
 --
 -- Constraints for table `orders`
@@ -391,6 +596,12 @@ ALTER TABLE `orders`
 ALTER TABLE `order_details`
   ADD CONSTRAINT `order_details_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   ADD CONSTRAINT `order_details_plot_id` FOREIGN KEY (`plot_id`) REFERENCES `plot` (`plot_id`);
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 --
 -- Constraints for table `plot`
