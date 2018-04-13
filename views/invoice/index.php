@@ -13,12 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="invoice-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Invoice', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -29,9 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'plot_id',
             'rate_id',
             'tax_id',
-            // 'date',
+            //'date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+    <?php Pjax::end(); ?>
+</div>

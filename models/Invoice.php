@@ -7,11 +7,11 @@ use Yii;
 /**
  * This is the model class for table "invoice".
  *
- * @property integer $invoice_id
- * @property integer $company_id
- * @property integer $plot_id
- * @property integer $rate_id
- * @property integer $tax_id
+ * @property int $invoice_id
+ * @property int $company_id
+ * @property int $plot_id
+ * @property int $rate_id
+ * @property int $tax_id
  * @property string $date
  *
  * @property Company $company

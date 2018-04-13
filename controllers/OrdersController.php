@@ -8,6 +8,7 @@ use app\models\Company;
 use app\models\OrderDetails;
 use app\models\Area;
 use app\models\Plot;
+use app\models\Rate;
 use app\models\SearchOrders;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -42,7 +43,7 @@ class OrdersController extends Controller
     {
         $searchModel = new SearchOrders();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -108,30 +109,46 @@ class OrdersController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model =  Orders::find()->where(['order_id' => $id])->all();
-        $company = Company::find()->all();
-        $area = Area::find()->all();
-        $orderDetails = OrderDetails::find()->where(['order_id' => $id])->all();
-        if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
-            $model->save();
-            for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
-                $detail = new OrderDetails();
-                $plot = new Plot();
-                $plot->name = $orderDetails->plot_id[$i];
-                $plot->save(false);
-                $detail->order_id = $model->order_id;
-                $detail->plot_id = $plot->plot_id;
-                $detail->save(false);
-            }
-            return $this->redirect(['orders/index']);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-                'company' => $company,
-                'area' => $area,
-                'orderDetails' => $orderDetails,
-            ]);
+        $order =  Orders::findOne($id);
+        $company = $order->company;
+        $orderPlotArray = $order->plots;
+        $totalArea = $order->total_area;
+        $area = null;
+        echo '$totalArea '.$totalArea.'<br>';
+        foreach ($orderPlotArray as $plot) {
+          echo '$plot '.$plot->name.'<br>';
+          $area = $plot->area;
         }
+        echo '$totalArea '.$totalArea.'<br>';
+        echo '$company '.$company->name.'<br>';
+        echo '$area '.$area->name.'<br>';
+        $rate = Rate::find()->where(['area_id' => $area->area_id])->one();
+        $leaseRent  = $rate->rate * $totalArea;
+        echo '$leaseRent '.$leaseRent.'<br>';
+        // $model =  Orders::find()->where(['order_id' => $id])->all();
+        // $company = Company::find()->all();
+        // $area = Area::find()->all();
+        // $orderDetails = OrderDetails::find()->where(['order_id' => $id])->all();
+        // if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+        //     $model->save();
+        //     for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
+        //         $detail = new OrderDetails();
+        //         $plot = new Plot();
+        //         $plot->name = $orderDetails->plot_id[$i];
+        //         $plot->save(false);
+        //         $detail->order_id = $model->order_id;
+        //         $detail->plot_id = $plot->plot_id;
+        //         $detail->save(false);
+        //     }
+        //     return $this->redirect(['orders/index']);
+        // } else {
+        //     return $this->render('update', [
+        //         'model' => $model,
+        //         'company' => $company,
+        //         'area' => $area,
+        //         'orderDetails' => $orderDetails,
+        //     ]);
+        // }
     }
 
     /**

@@ -46,8 +46,9 @@ AppAsset::register($this);
         $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
         $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
         $link[] = ['label' => 'User', 'url' => ['/users/index']];
+        $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */
-        
+
         $link[] =['label' => 'Logout', 'url' => ['site/logout'],'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([

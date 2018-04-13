@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Invoice;
 
 /**
- * SearchInvoice represents the model behind the search form about `app\models\Invoice`.
+ * SearchInvoice represents the model behind the search form of `app\models\Invoice`.
  */
 class SearchInvoice extends Invoice
 {
