@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'password')->passwordInput(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'role')->dropDownList(['admin' => 'Admin', 'account' => 'Accounts', 'staff' => 'Staff']); ?>
+    <?= $form->field($model, 'type')->dropDownList(['admin' => 'Admin', 'accounts' => 'Accounts', 'staff' => 'Staff']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

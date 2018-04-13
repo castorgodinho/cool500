@@ -80,6 +80,10 @@ class UsersController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
                 $model->save();
+                /* Assigning company role */
+                $auth = \Yii::$app->authManager;
+                $role = $auth->getRole($model->role);
+                $auth->assign($role, $model->user_id);
                 return $this->redirect(['view', 'id' => $model->user_id]);
             } else {
                 return $this->render('create', [

@@ -239,6 +239,12 @@ class RbacController extends Controller
         // add "Company" role
         $company = $auth->createRole('company');
         $auth->add($company);
+        // add "staff" role
+        $staff = $auth->createRole('staff');
+        $auth->add($staff);
+        // add "staff" role
+        $accounts = $auth->createRole('accounts');
+        $auth->add($accounts);
         //add company permissions
         $auth->addChild($company, $viewCompany);
         // add "admin" role and give this role the "updatePost" permission
