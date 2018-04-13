@@ -6,6 +6,7 @@ use Yii;
 
 class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $role;
 
     public static function tableName()
     {
@@ -16,8 +17,9 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['email', 'password'], 'required'],
-            [['password'], 'string'],
+            [['password', 'role'], 'string'],
             [['email'], 'string', 'max' => 100],
+            [['email'], 'unique'],
         ];
     }
 

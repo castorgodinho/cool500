@@ -73,6 +73,10 @@ class UsersController extends Controller
     {
         if (\Yii::$app->user->can('createUsers')){
             $model = new Users();
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
             if ($model->load(Yii::$app->request->post())) {
                 $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
                 $model->save();
