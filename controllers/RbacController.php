@@ -95,6 +95,27 @@ class RbacController extends Controller
         $deleteRate->description = 'Delete Rate';
         $auth->add($deleteRate);
 
+        // add "Plot" permission
+        $createPlot = $auth->createPermission('createPlot');
+        $createPlot->description = 'Create a Plot';
+        $auth->add($createPlot);
+
+        $indexPlot = $auth->createPermission('indexPlot');
+        $indexPlot->description = 'Index a Plot';
+        $auth->add($indexPlot);
+
+        $updatePlot = $auth->createPermission('updatePlot');
+        $updatePlot->description = 'Update Plot';
+        $auth->add($updatePlot);
+
+        $viewPlot = $auth->createPermission('viewPlot');
+        $viewPlot->description = 'View Plot';
+        $auth->add($viewPlot);
+
+        $deletePlot = $auth->createPermission('deletePlot');
+        $deletePlot->description = 'Delete Plot';
+        $auth->add($deletePlot);
+
         // add "Site" permission
         $createSite = $auth->createPermission('createSite');
         $createSite->description = 'Create a Site';
@@ -182,6 +203,12 @@ class RbacController extends Controller
         $auth->addChild($admin, $viewOrders);
         $auth->addChild($admin, $indexOrders);
         $auth->addChild($admin, $deleteOrders);
+        //add Plot permissions
+        $auth->addChild($admin, $createPlot);
+        $auth->addChild($admin, $updatePlot);
+        $auth->addChild($admin, $viewPlot);
+        $auth->addChild($admin, $indexPlot);
+        $auth->addChild($admin, $deletePlot);
         //add Rate permissions
         $auth->addChild($admin, $createRate);
         $auth->addChild($admin, $updateRate);
