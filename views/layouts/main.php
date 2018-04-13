@@ -39,13 +39,23 @@ AppAsset::register($this);
     if(Yii::$app->user->isGuest){
         $link[] = ['label' => 'Login', 'url' => ['/site/login']];
     }else{
-        $link[] = ['label' => 'Area', 'url' => ['/area/index']];
-        $link[] = ['label' => 'Company', 'url' => ['/company/index']];
-        $link[] = ['label' => 'Plot', 'url' => ['/plot/index']];
-        $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
-        $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
-        $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
-        $link[] = ['label' => 'User', 'url' => ['/users/index']];
+        if(\Yii::$app->user->can('admin')){
+            $link[] = ['label' => 'Area', 'url' => ['/area/index']];
+            $link[] = ['label' => 'Company', 'url' => ['/company/index']];
+            $link[] = ['label' => 'Plot', 'url' => ['/plot/index']];
+            $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+            $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
+            $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
+            $link[] = ['label' => 'User', 'url' => ['/users/index']];
+        }else if(\Yii::$app->user->can('company')){
+            $link[] = ['label' => 'Profile', 'url' => ['/company/view']];
+            $link[] = ['label' => 'Orders', 'url' => ['/company/view']];
+        }else if(\Yii::$app->user->can('staff')){
+            $link[] = ['label' => 'Add Company', 'url' => ['/company/create']];
+        }else if(\Yii::$app->user->can('accounts')){
+            $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+        }
+        
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */
         
         $link[] =['label' => 'Logout', 'url' => ['site/logout'],'linkOptions' => ['data-method' => 'post']];

@@ -82,7 +82,7 @@ class UsersController extends Controller
                 $model->save();
                 /* Assigning company role */
                 $auth = \Yii::$app->authManager;
-                $role = $auth->getRole($model->role);
+                $role = $auth->getRole($model->type);
                 $auth->assign($role, $model->user_id);
                 return $this->redirect(['view', 'id' => $model->user_id]);
             } else {
@@ -93,7 +93,6 @@ class UsersController extends Controller
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
-    
     }
 
     /**
