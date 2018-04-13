@@ -28,6 +28,10 @@ class RbacController extends Controller
         $updateCompany->description = 'View Company';
         $auth->add($viewCompany);
 
+        $deleteCompany = $auth->createPermission('deleteCompany');
+        $deleteCompany->description = 'Delete Company';
+        $auth->add($deleteCompany);
+
         // add "Area" permission
         $createArea = $auth->createPermission('createArea');
         $createArea->description = 'Create a Area';
@@ -44,6 +48,10 @@ class RbacController extends Controller
         $viewArea = $auth->createPermission('viewArea');
         $viewArea->description = 'View Area';
         $auth->add($viewArea);
+
+        $deleteArea = $auth->createPermission('deleteArea');
+        $deleteArea->description = 'Delete Area';
+        $auth->add($deleteArea);
 
         // add "Orders" permission
         $createOrders = $auth->createPermission('createOrders');
@@ -62,6 +70,10 @@ class RbacController extends Controller
         $viewOrders->description = 'View Orders';
         $auth->add($viewOrders);
 
+        $deleteOrders = $auth->createPermission('deleteOrder');
+        $deleteOrders->description = 'Delete Order';
+        $auth->add($deleteOrders);
+
         // add "Rate" permission
         $createRate = $auth->createPermission('createRate');
         $createRate->description = 'Create a Rate';
@@ -78,6 +90,10 @@ class RbacController extends Controller
         $viewRate = $auth->createPermission('viewRate');
         $viewRate->description = 'View Rate';
         $auth->add($viewRate);
+
+        $deleteRate = $auth->createPermission('deleteRate');
+        $deleteRate->description = 'Delete Rate';
+        $auth->add($deleteRate);
 
         // add "Site" permission
         $createSite = $auth->createPermission('createSite');
@@ -96,8 +112,13 @@ class RbacController extends Controller
         $viewSite->description = 'View Site';
         $auth->add($viewSite);
 
+        $deleteSite = $auth->createPermission('deleteSite');
+        $deleteSite->description = 'Delete Site';
+        $auth->add($deleteSite);
+        
+
         // add "Tax" permission
-        $createTax = $auth->createPermission('createSite');
+        $createTax = $auth->createPermission('createTax');
         $createTax->description = 'Create a Tax';
         $auth->add($createTax);
 
@@ -105,42 +126,86 @@ class RbacController extends Controller
         $indexTax->description = 'Index a Tax';
         $auth->add($indexTax);
 
-        $updateSite = $auth->createPermission('updateSite');
-        $updateSite->description = 'Update Tax';
-        $auth->add($updateSite);
+        $updateTax = $auth->createPermission('updateTax');
+        $updateTax->description = 'Update Tax';
+        $auth->add($updateTax);
 
-        $viewSite = $auth->createPermission('viewSite');
-        $viewSite->description = 'View Tax';
-        $auth->add($viewSite);
+        $viewTax = $auth->createPermission('viewTax');
+        $viewTax->description = 'View Tax';
+        $auth->add($viewTax);
+
+        $deleteTax = $auth->createPermission('deleteTax');
+        $deleteTax->description = 'Delete Site';
+        $auth->add($deleteTax);
 
         // add "Users" permission
         $createUsers = $auth->createPermission('createUsers');
-        $createUsers->description = 'Create a Tax';
+        $createUsers->description = 'Create a User';
         $auth->add($createUsers);
 
         $indexUsers = $auth->createPermission('indexUsers');
-        $indexUsers->description = 'Index a Tax';
+        $indexUsers->description = 'Index a User';
         $auth->add($indexUsers);
 
         $updateUsers = $auth->createPermission('updateUsers');
-        $updateUsers->description = 'Update Tax';
+        $updateUsers->description = 'Update User';
         $auth->add($updateUsers);
 
         $viewUsers = $auth->createPermission('viewUsers');
-        $viewUsers->description = 'View Tax';
+        $viewUsers->description = 'View User';
         $auth->add($viewUsers);
 
-    
-        // add "updatePost" permission
-        $deleteCompany = $auth->createPermission('deleteCompany');
-        $deleteCompany->description = 'Delete Company';
-        $auth->add($deleteCompany);
+        $deleteUsers = $auth->createPermission('deleteUsers');
+        $deleteUsers->description = 'Delete User';
+        $auth->add($deleteUsers);
 
-        // add "author" role and give this role the "createPost" permission
-        $company = $auth->createRole('company');
-        $auth->add($company);
-        $auth->addChild($company, $updateCompany);
-        $auth->addChild($company, $viewCompany);
+
+
+        // add "admin" role
+        $admin = $auth->createRole('admin');
+        $auth->add($admin);
+        //add company permissions
+        $auth->addChild($admin, $createCompany);
+        $auth->addChild($admin, $updateCompany);
+        $auth->addChild($admin, $viewCompany);
+        $auth->addChild($admin, $indexCompany);
+        $auth->addChild($admin, $deleteCompany);
+        //add Area permissions
+        $auth->addChild($admin, $createArea);
+        $auth->addChild($admin, $updateArea);
+        $auth->addChild($admin, $viewArea);
+        $auth->addChild($admin, $indexArea);
+        $auth->addChild($admin, $deleteArea);
+        //add Order permissions
+        $auth->addChild($admin, $createOrders);
+        $auth->addChild($admin, $updateOrders);
+        $auth->addChild($admin, $viewOrders);
+        $auth->addChild($admin, $indexOrders);
+        $auth->addChild($admin, $deleteOrders);
+        //add Rate permissions
+        $auth->addChild($admin, $createRate);
+        $auth->addChild($admin, $updateRate);
+        $auth->addChild($admin, $viewRate);
+        $auth->addChild($admin, $indexRate);
+        $auth->addChild($admin, $deleteRate);
+        //add Tax permissions
+        $auth->addChild($admin, $createTax);
+        $auth->addChild($admin, $updateTax);
+        $auth->addChild($admin, $viewTax);
+        $auth->addChild($admin, $indexTax);
+        $auth->addChild($admin, $deleteTax);
+        //add Site permissions
+        $auth->addChild($admin, $createSite);
+        $auth->addChild($admin, $updateSite);
+        $auth->addChild($admin, $viewSite);
+        $auth->addChild($admin, $indexSite);
+        $auth->addChild($admin, $deleteSite);
+        //add User permissions
+        $auth->addChild($admin, $createUsers);
+        $auth->addChild($admin, $updateUsers);
+        $auth->addChild($admin, $viewUsers);
+        $auth->addChild($admin, $indexUsers);
+        $auth->addChild($admin, $deleteUsers);
 
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
@@ -151,7 +216,7 @@ class RbacController extends Controller
 
         // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
         // usually implemented in your User model.
-        $auth->assign($company, 1);
+        $auth->assign($admin, 1);
         
     }
 }
