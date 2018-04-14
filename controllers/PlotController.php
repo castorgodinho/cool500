@@ -36,13 +36,17 @@ class PlotController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchPlot();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('indexPlot')){
+            $searchModel = new SearchPlot();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -52,9 +56,13 @@ class PlotController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('viewPlot')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -64,15 +72,19 @@ class PlotController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Plot();
-        $area = Area::find()->all();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->plot_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'area' => $area,
-            ]);
+        if (\Yii::$app->user->can('createPlot')){
+            $model = new Plot();
+            $area = Area::find()->all();
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->plot_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'area' => $area,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 

@@ -45,6 +45,7 @@ class OrdersController extends Controller
      */
     public function actionIndex()
     {
+<<<<<<< HEAD
         $searchModel = new SearchOrders();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -52,6 +53,19 @@ class OrdersController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+=======
+        if (\Yii::$app->user->can('indexOrders')){
+            $searchModel = new SearchOrders();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
+>>>>>>> e52360c34b7ee20db692f5b686f20212f7227ab3
     }
 
     /**
@@ -61,15 +75,22 @@ class OrdersController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
-        $plots = OrderDetails::find()->where(['order_id' => $id]);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $plots,
-        ]);
-        return $this->render('view', [
-            'model' =>  $model,
-            'plots' => $dataProvider,
-        ]);
+        if (\Yii::$app->user->can('viewOrders')){
+            $model = $this->findModel($id);
+            $plots = OrderDetails::find()->where(['order_id' => $id]);
+            $orders = Orders::find()->where(['order_id' => $id])->all();
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $plots,
+            ]);
+            return $this->render('view', [
+                'model' =>  $model,
+                'plots' => $dataProvider,
+                'orders' => $orders,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -79,29 +100,45 @@ class OrdersController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Orders();
-        $company = Company::find()->all();
-        $area = Area::find()->all();
-        $orderDetails = new OrderDetails();
-        if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
-            $model->save();
-            for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
-                $detail = new OrderDetails();
-                $plot = new Plot();
-                $plot->name = $orderDetails->plot_id[$i];
-                $plot->save(false);
-                $detail->order_id = $model->order_id;
-                $detail->plot_id = $plot->plot_id;
-                $detail->save(false);
+        if (\Yii::$app->user->can('createOrders')){
+            $model = new Orders();
+            $company = Company::find()->all();
+            $area = Area::find()->all();
+            $orderDetails = new OrderDetails();
+            if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+                /* echo $model->order_number.'-<br>';
+                echo $model->company_id.'-<br>';
+                echo $model->built_area.'-<br>';
+                echo $model->shed_area.'-<br>';
+                echo $model->godown_area.'-<br>';
+                echo $model->start_date.'-<br>';
+                echo $model->end_date.'-<br>';
+                echo $model->shed_no.'-<br>';
+                echo $model->godown_no.'-<br>';
+                echo $model->area_id.'-<br>';
+                echo $model->total_area.'-<br>'; */
+                $model->save();
+                for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
+                    $detail = new OrderDetails();
+                    $plot = new Plot();
+                    $plot->name = $orderDetails->plot_id[$i];
+                    $plot->area_id = $model->area_id;
+                    $plot->save(false);
+                    $detail->order_id = $model->order_id;
+                    $detail->plot_id = $plot->plot_id;
+                    $detail->save(false);
+                }
+                return $this->redirect(['orders/index']);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'company' => $company,
+                    'area' => $area,
+                    'orderDetails' => $orderDetails,
+                ]);
             }
-            return $this->redirect(['orders/index']);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'company' => $company,
-                'area' => $area,
-                'orderDetails' => $orderDetails,
-            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -113,6 +150,7 @@ class OrdersController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = new Invoice();
 
         $previousLeaseRent = 0;
@@ -218,30 +256,35 @@ class OrdersController extends Controller
             ]);
 
 
-        // $model =  Orders::find()->where(['order_id' => $id])->all();
-        // $company = Company::find()->all();
-        // $area = Area::find()->all();
-        // $orderDetails = OrderDetails::find()->where(['order_id' => $id])->all();
-        // if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
-        //     $model->save();
-        //     for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
-        //         $detail = new OrderDetails();
-        //         $plot = new Plot();
-        //         $plot->name = $orderDetails->plot_id[$i];
-        //         $plot->save(false);
-        //         $detail->order_id = $model->order_id;
-        //         $detail->plot_id = $plot->plot_id;
-        //         $detail->save(false);
+        // if (\Yii::$app->user->can('updateOrders')){
+        //     $model =  Orders::find()->where(['order_id' => $id])->all();
+        //     $company = Company::find()->all();
+        //     $area = Area::find()->all();
+        //     $orderDetails = OrderDetails::find()->where(['order_id' => $id])->all();
+        //     if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+        //         $model->save();
+        //         for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
+        //             $detail = new OrderDetails();
+        //             $plot = new Plot();
+        //             $plot->name = $orderDetails->plot_id[$i];
+        //             $plot->save(false);
+        //             $detail->order_id = $model->order_id;
+        //             $detail->plot_id = $plot->plot_id;
+        //             $detail->save(false);
+        //         }
+        //         return $this->redirect(['orders/index']);
+        //     } else {
+        //         return $this->render('update', [
+        //             'model' => $model,
+        //             'company' => $company,
+        //             'area' => $area,
+        //             'orderDetails' => $orderDetails,
+        //         ]);
         //     }
-        //     return $this->redirect(['orders/index']);
-        // } else {
-        //     return $this->render('update', [
-        //         'model' => $model,
-        //         'company' => $company,
-        //         'area' => $area,
-        //         'orderDetails' => $orderDetails,
-        //     ]);
+        // }else{
+        //     throw new \yii\web\ForbiddenHttpException;
         // }
+
     }
 
     /**
@@ -252,9 +295,12 @@ class OrdersController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('deleteOrders')){
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

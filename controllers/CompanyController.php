@@ -10,7 +10,7 @@ use app\models\SearchCompany;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\AccessControl;
+use yii\filters\AccessControl;
 /**
  * CompanyController implements the CRUD actions for Company model.
  */
@@ -28,31 +28,31 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            // 'access' => [
-            //     'class' => AccessControl::className(),
-            //     'rules' => [
-            //         [
-            //             'allow' => true,
-            //             'actions' => ['create'],
-            //             'roles' => ['createCompany'],
-            //         ],
-            //         [
-            //             'allow' => true,
-            //             'actions' => ['view'],
-            //             'roles' => ['viewCompany'],
-            //         ],
-            //         [
-            //             'allow' => true,
-            //             'actions' => ['update'],
-            //             'roles' => ['updateCompnay'],
-            //         ],
-            //         [
-            //             'allow' => true,
-            //             'actions' => ['delete'],
-            //             'roles' => ['deleteCompany'],
-            //         ],
-            //     ],
-            // ],
+            /* 'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['createCompany'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['viewCompany'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['updateCompnay'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['deleteCompany'],
+                    ],
+                ],
+            ], */
         ];
     }
 
@@ -62,13 +62,18 @@ class CompanyController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchCompany();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('indexCompany')){
+            $searchModel = new SearchCompany();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
+
     }
 
     /**
@@ -79,11 +84,17 @@ class CompanyController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $orders = Orders::find()->where(['company_id' => $model->company_id])->groupBy('order_number')->all();
-        return $this->render('view', [
-            'model' => $model,
-            'orders' => $orders
-        ]);
+        if (\Yii::$app->user->can('ViewCompany', ['company' => $model])){
+            $model = $this->findModel($id);
+            $orders = Orders::find()->where(['company_id' => $model->company_id])->all();
+
+            return $this->render('view', [
+                'model' => $model,
+                'orders' => $orders
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -93,20 +104,36 @@ class CompanyController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Company();
-        $user = new Users();
-
-        if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
-            $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
-            $user->save();
-            $model->user_id = $user->user_id;
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->company_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                'user' => $user
-            ]);
+        if (\Yii::$app->user->can('createCompany')){
+            $model = new Company();
+            $user = new Users();
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+            if (Yii::$app->request->isAjax && $user->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($user);
+            }
+            if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+                $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
+                $user->type = 'company';
+                $user->save(false);
+                /* Assigning company role */
+                $auth = \Yii::$app->authManager;
+                $companyRole = $auth->getRole('company');
+                $auth->assign($companyRole, $user->user_id);
+                $model->user_id = $user->user_id;
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->company_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                    'user' => $user
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -118,14 +145,18 @@ class CompanyController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updateCompany')){
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->company_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->company_id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -137,9 +168,12 @@ class CompanyController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('deleteCompany')){
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

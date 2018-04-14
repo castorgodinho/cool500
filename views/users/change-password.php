@@ -10,14 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="users-form">
 
-    <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
+    <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'password')->passwordInput(['rows' => 6]) ?>
+    <?= $form->field($model, 'password_repeat')->passwordInput(['rows' => 6]) ?>
+    
+   
 
-    <?= $form->field($model, 'type')->dropDownList(['admin' => 'Admin', 'accounts' => 'Accounts', 'staff' => 'Staff']); ?>
-
+   
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

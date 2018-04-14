@@ -20,10 +20,12 @@ use Yii;
  * @property int $area_id
  * @property int $total_area
  *
+ * @property Invoice[] $invoices
  * @property OrderDetails[] $orderDetails
  * @property Plot[] $plots
  * @property Area $area
  * @property Company $company
+ * @property Payment[] $payments
  */
 class Orders extends \yii\db\ActiveRecord
 {
@@ -74,6 +76,14 @@ class Orders extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getInvoices()
+    {
+        return $this->hasMany(Invoice::className(), ['order_id' => 'order_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getOrderDetails()
     {
         return $this->hasMany(OrderDetails::className(), ['order_id' => 'order_id']);
@@ -101,5 +111,13 @@ class Orders extends \yii\db\ActiveRecord
     public function getCompany()
     {
         return $this->hasOne(Company::className(), ['company_id' => 'company_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payment::className(), ['order_id' => 'order_id']);
     }
 }

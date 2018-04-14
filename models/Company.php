@@ -48,6 +48,7 @@ class Company extends \yii\db\ActiveRecord
             [['address'], 'string', 'max' => 500],
             [['constitution', 'products'], 'string', 'max' => 60],
             [['gstin'], 'string', 'max' => 30],
+            [['gstin', 'name'], 'unique'],
             [['owner_phone', 'owner_mobile', 'competent_mobile'], 'string', 'max' => 10],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'user_id']],
         ];

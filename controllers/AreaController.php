@@ -38,13 +38,17 @@ class AreaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchArea();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('indexArea')){
+            $searchModel = new SearchArea();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -55,10 +59,14 @@ class AreaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'id' => $id,
-        ]);
+        if (\Yii::$app->user->can('viewArea')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'id' => $id,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -68,21 +76,24 @@ class AreaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Area();
-
-        if ($model->load(Yii::$app->request->post())) {
-            $rate = new AreaRate();
-            $rate->area_rate = $model->area_rate;
-            $model->save();
-            $rate->area_id = $model->area_id;
-            $rate->start_date = date('Y-m-d');
-            $rate->save(false);
-            return $this->redirect(['view', 'id' => $model->area_id]);
-        }
-        else{
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if (\Yii::$app->user->can('createArea')){
+            $model = new Area();
+            if ($model->load(Yii::$app->request->post())) {
+                $rate = new AreaRate();
+                $rate->area_rate = $model->area_rate;
+                $model->save();
+                $rate->area_id = $model->area_id;
+                $rate->start_date = date('Y-m-d');
+                $rate->save(false);
+                return $this->redirect(['view', 'id' => $model->area_id]);
+            }
+            else{
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -95,21 +106,24 @@ class AreaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updateArea')){
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post())) {
+                $rate = new AreaRate();
+                $rate->area_rate = $model->area_rate;
+                $model->save();
+                $rate->area_id = $model->area_id;
+                $rate->start_date = date('Y-m-d');
+                $rate->save(false);
+                return $this->redirect(['view', 'id' => $model->area_id]);
+            }
 
-        if ($model->load(Yii::$app->request->post())) {
-            $rate = new AreaRate();
-            $rate->area_rate = $model->area_rate;
-            $model->save();
-            $rate->area_id = $model->area_id;
-            $rate->start_date = date('Y-m-d');
-            $rate->save(false);
-            return $this->redirect(['view', 'id' => $model->area_id]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -121,9 +135,12 @@ class AreaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('deleteArea')){
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

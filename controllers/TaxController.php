@@ -35,13 +35,17 @@ class TaxController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchTax();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('indexTax')){
+            $searchModel = new SearchTax();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -51,9 +55,13 @@ class TaxController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('viewTax')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -63,17 +71,21 @@ class TaxController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Tax();
+        if (\Yii::$app->user->can('createTax')){
+            $model = new Tax();
 
-        if ($model->load(Yii::$app->request->post())) {
-            date_default_timezone_set('Asia/Kolkata');
-            $model->date = date('Y-m-d');
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->tax_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            if ($model->load(Yii::$app->request->post())) {
+                date_default_timezone_set('Asia/Kolkata');
+                $model->date = date('Y-m-d');
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->tax_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -85,17 +97,21 @@ class TaxController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $tax = new Tax();
-        if ($tax->load(Yii::$app->request->post())) {            
-            date_default_timezone_set('Asia/Kolkata');
-            $tax->date = date('Y-m-d');
-            $tax->save();
-            return $this->redirect(['view', 'id' => $model->tax_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if (\Yii::$app->user->can('updateTax')){
+            $model = $this->findModel($id);
+            $tax = new Tax();
+            if ($tax->load(Yii::$app->request->post())) {            
+                date_default_timezone_set('Asia/Kolkata');
+                $tax->date = date('Y-m-d');
+                $tax->save();
+                return $this->redirect(['view', 'id' => $model->tax_id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -107,9 +123,13 @@ class TaxController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('deleteTax')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

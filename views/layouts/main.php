@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Company;
 
 AppAsset::register($this);
 ?>
@@ -39,16 +40,25 @@ AppAsset::register($this);
     if(Yii::$app->user->isGuest){
         $link[] = ['label' => 'Login', 'url' => ['/site/login']];
     }else{
-        $link[] = ['label' => 'Area', 'url' => ['/area/index']];
-        $link[] = ['label' => 'Company', 'url' => ['/company/index']];
-        $link[] = ['label' => 'Plot', 'url' => ['/plot/index']];
-        $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
-        $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
-        $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
-        $link[] = ['label' => 'User', 'url' => ['/users/index']];
-        $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
-        $link[] = ['label' => 'Payment', 'url' => ['/payment/index']];
-        $link[] = ['label' => 'Interest', 'url' => ['/interest/index']];
+        if(\Yii::$app->user->can('admin')){
+            $link[] = ['label' => 'Area', 'url' => ['/area/index']];
+            $link[] = ['label' => 'Company', 'url' => ['/company/index']];
+            $link[] = ['label' => 'Plot', 'url' => ['/plot/index']];
+            $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+            $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
+            $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
+            $link[] = ['label' => 'User', 'url' => ['/users/index']];
+        }else if(\Yii::$app->user->can('company')){
+            $link[] = ['label' => 'Profile', 'url' => ['/company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]];
+            $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
+        }else if(\Yii::$app->user->can('staff')){
+            $link[] = ['label' => 'Add Company', 'url' => ['/company/create']];
+            $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
+        }else if(\Yii::$app->user->can('accounts')){
+            $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+            $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
+        }
+
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */
 
         $link[] =['label' => 'Logout', 'url' => ['site/logout'],'linkOptions' => ['data-method' => 'post']];

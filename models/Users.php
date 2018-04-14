@@ -4,42 +4,58 @@ namespace app\models;
 
 use Yii;
 
+/**
+ * This is the model class for table "users".
+ *
+ * @property int $user_id
+ * @property string $email
+ * @property string $password
+ * @property string $type
+ *
+ * @property Company[] $companies
+ */
 class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-
+    /**
+     * @inheritdoc
+     */
+    public $password_repeat;
     public static function tableName()
     {
         return 'users';
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['email', 'password'], 'required'],
-            [['password'], 'string'],
+            [['password', 'password_repeat'], 'string'],
+            [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'on' => 'update-password', 'message'=>"Passwords don't match"],
             [['email'], 'string', 'max' => 100],
+            [['type'], 'string', 'max' => 50],
+            [['email'], 'unique'],
         ];
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
             'user_id' => 'User ID',
             'email' => 'Email',
             'password' => 'Password',
+            'type' => 'Type',
         ];
     }
 
-    public function create($email,$password){
-      $user = new Users();
-      $user->email = $email;
-      $user->password = $password;
-      $user->save();
-      return $user;
-    }
-
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCompanies()
     {
         return $this->hasMany(Company::className(), ['user_id' => 'user_id']);

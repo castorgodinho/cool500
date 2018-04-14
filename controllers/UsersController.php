@@ -35,13 +35,17 @@ class UsersController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchUsers();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('indexUsers')){
+            $searchModel = new SearchUsers();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -51,9 +55,43 @@ class UsersController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('viewUsers')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+
+
+    public function actionChangePassword()
+    {
+        
+        if (\Yii::$app->user->can('changePassword')){
+            $model = Users::findOne(Yii::$app->user->identity->user_id);
+            $model->password = "";
+            $model->scenario = 'update-password';
+            if ($model->load(Yii::$app->request->post())) {
+                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                $model->save();
+                if (\Yii::$app->user->can('staff')){
+                    return $this->redirect(['company/create']);
+                    /* Have to change redirect */
+                }else if (\Yii::$app->user->can('accounts')){
+                    return $this->redirect(['orders/create']);
+                }else if (\Yii::$app->user->can('company')){
+                    return $this->redirect(['company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]);
+                }
+            }else{
+                return $this->render('change-password', [
+                    'model' => $model,
+                ]);
+            }
+            
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -63,16 +101,27 @@ class UsersController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Users();
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
-            $model->save();
-            return $this->redirect(['view', 'id' => $model->user_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        if (\Yii::$app->user->can('createUsers')){
+            $model = new Users();
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+            if ($model->load(Yii::$app->request->post())) {
+                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                $model->save();
+                /* Assigning company role */
+                $auth = \Yii::$app->authManager;
+                $role = $auth->getRole($model->type);
+                $auth->assign($role, $model->user_id);
+                return $this->redirect(['view', 'id' => $model->user_id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -84,14 +133,26 @@ class UsersController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->user_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        if (\Yii::$app->user->can('updateUsers')){
+            $model = $this->findModel($id);
+            $model->password = "";
+            if ($model->load(Yii::$app->request->post())) {
+                if($model->password != ""){
+                    $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                }
+                $auth = Yii::$app->authManager;
+                $auth->revokeAll($model->user_id);
+                $role = $auth->getRole($model->type);
+                $auth->assign($role, $model->user_id);
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->user_id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
     }
 
@@ -103,9 +164,13 @@ class UsersController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('deleteUsers')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
