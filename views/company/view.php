@@ -89,31 +89,30 @@ use yii\data\ActiveDataProvider;
       <div class="panel-heading">Order Number: <?= $order->order_number ?></div>
       <div class="panel-body">
       <?php 
-        $plots = OrderDetails::find()->where(['order_id' => $order->order_id]);
-        $dataProvider = new ActiveDataProvider([
-          'query' => $plots,
-        ]);
+        $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
       ?>
       <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
-      <p><b>Company: </b><?= $order->company_id ?></p><br>
-      <p><b>Industrial Area: </b><?= $order->area_id ?></p><br>
+      <p><b>Company: </b><?= $order->company->name ?></p><br>
+      <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
       <p><b>Built Area: </b><?= $order->built_area ?></p><br>
       <p><b>Shed Area: </b><?= $order->shed_area ?></p><br>
       <p><b>Shed Number: </b><?= $order->shed_no ?></p><br>
       <p><b>Godown Area: </b><?= $order->godown_area ?></p><br>
       <p><b>Godown Number: </b><?= $order->godown_no ?></p><br>
       <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+      <p><b>Plots: </b><?php
+        if(is_array($plots)){
+          foreach($plots as $plot){
+            echo $plot->plot->name. ' ';
+          }
+        }else{
+          echo $plots->plot->name;
+        }
+      ?></p><br>
       
 
 
-      <h3>Plots of the order</h3>
-      <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'plot.name',
-            ],
-        ]); ?>
+     
       </div>
     </div>    
   <?php } }else{ ?>

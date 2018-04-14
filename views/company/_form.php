@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 
 <div class="company-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
 
     <div class="panel panel-default">
       <div class="panel-heading">Unit Information</div>

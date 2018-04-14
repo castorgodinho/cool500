@@ -85,7 +85,8 @@ class CompanyController extends Controller
     {
         if (\Yii::$app->user->can('ViewCompany')){
             $model = $this->findModel($id);
-            $orders = Orders::find()->where(['company_id' => $model->company_id])->groupBy('order_number')->all();
+            $orders = Orders::find()->where(['company_id' => $model->company_id])->all();
+            
             return $this->render('view', [
                 'model' => $model,
                 'orders' => $orders
@@ -105,14 +106,22 @@ class CompanyController extends Controller
         if (\Yii::$app->user->can('createCompany')){
             $model = new Company();
             $user = new Users();
-
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+            if (Yii::$app->request->isAjax && $user->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($user);
+            }
             if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
                 $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
-                $user->save();
+                $user->type = 'company';
+                $user->save(false);
                 /* Assigning company role */
                 $auth = \Yii::$app->authManager;
                 $companyRole = $auth->getRole('company');
-                $auth->assign($companyRole, $user->getId());
+                $auth->assign($companyRole, $user->user_id);
                 $model->user_id = $user->user_id;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);

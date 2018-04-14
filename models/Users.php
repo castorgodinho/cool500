@@ -19,6 +19,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @inheritdoc
      */
+    public $password_repeat;
     public static function tableName()
     {
         return 'users';
@@ -31,7 +32,8 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['email', 'password'], 'required'],
-            [['password'], 'string'],
+            [['password', 'password_repeat'], 'string'],
+            [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'on' => 'update-password', 'message'=>"Passwords don't match"],
             [['email'], 'string', 'max' => 100],
             [['type'], 'string', 'max' => 50],
             [['email'], 'unique'],

@@ -180,6 +180,10 @@ class RbacController extends Controller
         $deleteUsers->description = 'Delete User';
         $auth->add($deleteUsers);
 
+        $changePassword = $auth->createPermission('changePassword');
+        $changePassword->description = 'Delete User';
+        $auth->add($changePassword);
+
 
 
         // add "admin" role
@@ -235,6 +239,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $viewUsers);
         $auth->addChild($admin, $indexUsers);
         $auth->addChild($admin, $deleteUsers);
+        $auth->addChild($admin, $changePassword);
 
         // add "Company" role
         $company = $auth->createRole('company');
@@ -247,6 +252,13 @@ class RbacController extends Controller
         $auth->add($accounts);
         //add company permissions
         $auth->addChild($company, $viewCompany);
+        $auth->addChild($company, $changePassword);
+        //add Staff permissions
+        $auth->addChild($staff, $createCompany);
+        $auth->addChild($staff, $viewCompany);
+        $auth->addChild($staff, $changePassword);
+
+
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
         /* $admin = $auth->createRole('admin');

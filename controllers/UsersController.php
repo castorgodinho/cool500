@@ -64,6 +64,28 @@ class UsersController extends Controller
         }
     }
 
+
+    public function actionChangePassword()
+    {
+        
+        if (\Yii::$app->user->can('changePassword')){
+            $model = Users::findOne(Yii::$app->user->identity->user_id);
+            $model->password = "";
+            $model->scenario = 'update-password';
+            if ($model->load(Yii::$app->request->post())) {
+                $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                $model->save();
+            }else{
+                return $this->render('change-password', [
+                    'model' => $model,
+                ]);
+            }
+            
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+
     /**
      * Creates a new Users model.
      * If creation is successful, the browser will be redirected to the 'view' page.

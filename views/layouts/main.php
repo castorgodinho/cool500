@@ -51,10 +51,13 @@ AppAsset::register($this);
         }else if(\Yii::$app->user->can('company')){
             $link[] = ['label' => 'Profile', 'url' => ['/company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]];
             $link[] = ['label' => 'Orders', 'url' => ['/company/view']];
+            $link[] = ['label' => 'Change Password', 'url' => ['/users/chnage-password']];
         }else if(\Yii::$app->user->can('staff')){
             $link[] = ['label' => 'Add Company', 'url' => ['/company/create']];
+            $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
         }else if(\Yii::$app->user->can('accounts')){
             $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+            $link[] = ['label' => 'Change Password', 'url' => ['/users/chnage-password']];
         }
         
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */
