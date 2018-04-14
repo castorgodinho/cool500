@@ -38,7 +38,7 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return [
             [['rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
-            [['start_date'], 'safe'],
+            [['start_date','invoice_code'], 'safe'],
             [['interest_id'], 'exist', 'skipOnError' => true, 'targetClass' => Interest::className(), 'targetAttribute' => ['interest_id' => 'interest_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
             [['rate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rate::className(), 'targetAttribute' => ['rate_id' => 'rate_id']],
