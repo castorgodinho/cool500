@@ -4,30 +4,26 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SearchInvoice */
+/* @var $model app\models\SearchInterest */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="invoice-search">
+<div class="interest-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'invoice_id') ?>
-
-    <?= $form->field($model, 'rate_id') ?>
-
-    <?= $form->field($model, 'tax_id') ?>
-
-    <?= $form->field($model, 'order_id') ?>
-
     <?= $form->field($model, 'interest_id') ?>
 
-    <?php // echo $form->field($model, 'start_date') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?php // echo $form->field($model, 'total_amount') ?>
+    <?= $form->field($model, 'type') ?>
+
+    <?= $form->field($model, 'rate') ?>
+
+    <?= $form->field($model, 'start_date') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

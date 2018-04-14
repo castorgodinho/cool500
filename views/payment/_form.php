@@ -4,25 +4,23 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Invoice */
+/* @var $model app\models\Payment */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="invoice-form">
+<div class="payment-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'rate_id')->textInput() ?>
-
-    <?= $form->field($model, 'tax_id')->textInput() ?>
-
     <?= $form->field($model, 'order_id')->textInput() ?>
 
-    <?= $form->field($model, 'interest_id')->textInput() ?>
+    <?= $form->field($model, 'amount')->textInput() ?>
 
     <?= $form->field($model, 'start_date')->textInput() ?>
 
-    <?= $form->field($model, 'total_amount')->textInput() ?>
+    <?= $form->field($model, 'mode')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'invoice_id')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

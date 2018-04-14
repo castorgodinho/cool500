@@ -8,6 +8,10 @@ use app\models\Company;
 use app\models\OrderDetails;
 use app\models\Area;
 use app\models\Plot;
+use app\models\Tax;
+use app\models\Invoice;
+use app\models\Interest;
+use app\models\Payment;
 use app\models\Rate;
 use app\models\SearchOrders;
 use yii\web\Controller;
@@ -109,22 +113,111 @@ class OrdersController extends Controller
      */
     public function actionUpdate($id)
     {
+        $model = new Invoice();
+
+        $previousLeaseRent = 0;
+        $previousCGST = 0;
+        $previousSGST = 0;
+        $previousCGSTAmount = 0;
+        $previousSGSTAmount = 0;
+        $previousTotalTax = 0;
+        $previousDueTotal = 0;
+        $penalInterest = 0;
+
+        $currentLeaseRent = 0;
+        $currentCGSTAmount = 0;
+        $currentSGSTAmount = 0;
+        $currentSGST = 0;
+        $currentSGST = 0;
+        $currentTotalTax = 0;
+        $currentDueTotal = 0;
+
         $order =  Orders::findOne($id);
+
         $company = $order->company;
         $orderPlotArray = $order->plots;
         $totalArea = $order->total_area;
+        $tax = Tax::find()->one(); #TODO
+        $interest = Interest::find()->one(); #TODO
         $area = null;
-        echo '$totalArea '.$totalArea.'<br>';
         foreach ($orderPlotArray as $plot) {
-          echo '$plot '.$plot->name.'<br>';
           $area = $plot->area;
         }
-        echo '$totalArea '.$totalArea.'<br>';
-        echo '$company '.$company->name.'<br>';
-        echo '$area '.$area->name.'<br>';
-        $rate = Rate::find()->where(['area_id' => $area->area_id])->one();
-        $leaseRent  = $rate->rate * $totalArea;
-        echo '$leaseRent '.$leaseRent.'<br>';
+        $rate = Rate::find()->where(['area_id' => $area->area_id])->one(); #TODO
+        $currentLeaseRent   = $rate->rate * $totalArea;
+        $taxAmout = $currentLeaseRent * ($tax->rate/100);
+
+        $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+        $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+        $currentSGST = ($tax->rate/2);
+        $currentSGST = ($tax->rate/2);
+        $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
+        $currentDueTotal = $currentLeaseRent + $currentTotalTax;
+
+        $paymentCount = Payment::find()->where(['order_id' => $id])->count();
+        $invoiceArray = Invoice::find()->where(['order_id' => $id])->all();
+        if($paymentCount == 0){
+          $previousDueTotal = 0;
+        } else{
+            $invoiceRate = $invoiceArray[0]->rate->rate;
+            $invoiceTax = $invoiceArray[0]->tax->rate;
+            $previousLeaseRent = $invoiceRate * $totalArea;
+            $previousCGSTAmount = $previousLeaseRent * (($invoiceTax/2)/100);
+            $previousSGSTAmount = $previousLeaseRent * (($invoiceTax/2)/100);
+            $previousSGST = ($invoiceTax/2);
+            $previousCGST = ($invoiceTax/2);
+            $previousTotalTax =  $previousCGSTAmount + $previousCGSTAmount;
+            foreach ($invoiceArray as $invoice) {
+              $paymentArray = $invoice->payments;
+              $invoiceTax = $invoice->tax->rate;
+              $invoiceTotal = $invoiceRate * $totalArea;
+              $invoiceTotal = $invoiceTotal + ( $invoiceTotal * ($invoiceTax/100));
+              $previousDueTotal = $invoiceTotal;
+              foreach ($paymentArray as $payment) {
+                $previousDueTotal = $previousDueTotal - $payment->amount;
+              }
+            }
+        }
+        $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+        $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+        $currentSGST = ($tax->rate/2);
+        $currentCGST = ($tax->rate/2);
+        $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
+        $currentDueTotal = $currentLeaseRent + $currentTotalTax;
+
+        $penalInterest = ($interest->rate/100) * $previousDueTotal;
+        $previousDueTotal = $previousDueTotal + $penalInterest;
+
+        date_default_timezone_set('Asia/Kolkata');
+        $start_date = date('Y-m-d');
+
+        return $this->render('update', [
+                  'previousLeaseRent' => $previousLeaseRent,
+                  'previousTotalTax' => $previousTotalTax,
+                  'previousDueTotal' => $previousDueTotal,
+                  'previousCGSTAmount' => $previousCGSTAmount,
+                'previousSGSTAmount' => $previousSGSTAmount,
+                'previousSGST' => $previousSGST,
+                'previousCGST' => $previousCGST,
+                'penalInterest' => $penalInterest,
+                'currentLeaseRent' => $currentLeaseRent,
+                'currentTotalTax' => $currentTotalTax,
+                'currentDueTotal' => $currentDueTotal,
+                'currentCGSTAmount' => $currentCGSTAmount,
+                'currentSGSTAmount' => $currentSGSTAmount,
+                'currentSGST' => $currentSGST,
+                'currentCGST' => $currentCGST,
+
+                'rate' => $rate,
+                'tax' => $tax,
+                'order_id' => $id,
+                'interest' => $interest,
+                'start_date' => $start_date,
+
+                'model' => $model,
+            ]);
+
+
         // $model =  Orders::find()->where(['order_id' => $id])->all();
         // $company = Company::find()->all();
         // $area = Area::find()->all();

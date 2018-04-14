@@ -28,31 +28,31 @@ class CompanyController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['create'],
-                        'roles' => ['createCompany'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['view'],
-                        'roles' => ['viewCompany'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['update'],
-                        'roles' => ['updateCompnay'],
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => ['delete'],
-                        'roles' => ['deleteCompany'],
-                    ],
-                ],
-            ],
+            // 'access' => [
+            //     'class' => AccessControl::className(),
+            //     'rules' => [
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['create'],
+            //             'roles' => ['createCompany'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['view'],
+            //             'roles' => ['viewCompany'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['update'],
+            //             'roles' => ['updateCompnay'],
+            //         ],
+            //         [
+            //             'allow' => true,
+            //             'actions' => ['delete'],
+            //             'roles' => ['deleteCompany'],
+            //         ],
+            //     ],
+            // ],
         ];
     }
 

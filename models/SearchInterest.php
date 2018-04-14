@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Invoice;
+use app\models\Interest;
 
 /**
- * SearchInvoice represents the model behind the search form of `app\models\Invoice`.
+ * SearchInterest represents the model behind the search form of `app\models\Interest`.
  */
-class SearchInvoice extends Invoice
+class SearchInterest extends Interest
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SearchInvoice extends Invoice
     public function rules()
     {
         return [
-            [['invoice_id', 'rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
-            [['start_date'], 'safe'],
+            [['interest_id', 'rate'], 'integer'],
+            [['name', 'type', 'start_date'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class SearchInvoice extends Invoice
      */
     public function search($params)
     {
-        $query = Invoice::find();
+        $query = Interest::find();
 
         // add conditions that should always apply here
 
@@ -59,14 +59,13 @@ class SearchInvoice extends Invoice
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'invoice_id' => $this->invoice_id,
-            'rate_id' => $this->rate_id,
-            'tax_id' => $this->tax_id,
-            'order_id' => $this->order_id,
             'interest_id' => $this->interest_id,
+            'rate' => $this->rate,
             'start_date' => $this->start_date,
-            'total_amount' => $this->total_amount,
         ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }
