@@ -83,7 +83,8 @@ class CompanyController extends Controller
      */
     public function actionView($id)
     {
-        if (\Yii::$app->user->can('ViewCompany')){
+        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('ViewCompany', ['company' => $model])){
             $model = $this->findModel($id);
             $orders = Orders::find()->where(['company_id' => $model->company_id])->all();
             

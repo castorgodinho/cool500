@@ -241,6 +241,17 @@ class RbacController extends Controller
         $auth->addChild($admin, $deleteUsers);
         $auth->addChild($admin, $changePassword);
 
+
+        //Create rule
+        $rule = new \app\rbac\CompanyRule;
+        $auth->add($rule);
+        $viewOwnCompany = $auth->createPermission('viewOwnCompany');
+        $viewOwnCompany->description = 'Update own post';
+        $viewOwnCompany->ruleName = $rule->name;
+        $auth->add($viewOwnCompany);
+        $auth->addChild($viewOwnCompany, $viewCompany);
+        
+
         // add "Company" role
         $company = $auth->createRole('company');
         $auth->add($company);
@@ -251,8 +262,9 @@ class RbacController extends Controller
         $accounts = $auth->createRole('accounts');
         $auth->add($accounts);
         //add company permissions
-        $auth->addChild($company, $viewCompany);
+        //$auth->addChild($company, $viewCompany);
         $auth->addChild($company, $changePassword);
+        $auth->addChild($company, $viewOwnCompany);
         //add Staff permissions
         $auth->addChild($staff, $createCompany);
         $auth->addChild($staff, $viewCompany);

@@ -75,6 +75,14 @@ class UsersController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
                 $model->save();
+                if (\Yii::$app->user->can('staff')){
+                    return $this->redirect(['company/create']);
+                    /* Have to change redirect */
+                }else if (\Yii::$app->user->can('accounts')){
+                    return $this->redirect(['orders/create']);
+                }else if (\Yii::$app->user->can('company')){
+                    return $this->redirect(['company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]);
+                }
             }else{
                 return $this->render('change-password', [
                     'model' => $model,
@@ -127,8 +135,16 @@ class UsersController extends Controller
     {
         if (\Yii::$app->user->can('updateUsers')){
             $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->password = "";
+            if ($model->load(Yii::$app->request->post())) {
+                if($model->password != ""){
+                    $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                }
+                $auth = Yii::$app->authManager;
+                $auth->revokeAll($model->user_id);
+                $role = $auth->getRole($model->type);
+                $auth->assign($role, $model->user_id);
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->user_id]);
             } else {
                 return $this->render('update', [
