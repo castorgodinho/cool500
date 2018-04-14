@@ -45,15 +45,7 @@ class OrdersController extends Controller
      */
     public function actionIndex()
     {
-<<<<<<< HEAD
-        $searchModel = new SearchOrders();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-=======
         if (\Yii::$app->user->can('indexOrders')){
             $searchModel = new SearchOrders();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -65,7 +57,7 @@ class OrdersController extends Controller
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
->>>>>>> e52360c34b7ee20db692f5b686f20212f7227ab3
+
     }
 
     /**
