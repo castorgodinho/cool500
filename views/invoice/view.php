@@ -1,41 +1,71 @@
 <?php
-
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Invoice */
-
-$this->title = $model->invoice_id;
-$this->params['breadcrumbs'][] = ['label' => 'Invoices', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\widgets\ActiveForm;
 ?>
-<div class="invoice-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->invoice_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->invoice_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+<table class="table">
+  <th></th>
+  <th></th>
+  <tr>
+    <td>Previous Lease Rent</td>
+    <td><?= $previousLeaseRent ?></td>
+  </tr>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'invoice_id',
-            'rate_id',
-            'tax_id',
-            'order_id',
-            'interest_id',
-            'start_date',
-            'total_amount',
-        ],
-    ]) ?>
+  <tr>
+    <td>Previous SGST Amount</td>
+    <td><?= $previousSGSTAmount ?></td>
+  </tr>
 
-</div>
+  <tr>
+    <td>Previous CGST Amount</td>
+    <td><?= $previousCGSTAmount ?></td>
+  </tr>
+
+  <tr>
+    <td> Previous Total Tax </td>
+    <td><?= $previousTotalTax ?></td>
+  </tr>
+
+  <tr>
+    <td> Penal Interest </td>
+    <td><?= $penalInterest ?></td>
+  </tr>
+
+  <tr>
+    <td>  Previous Due Total  </td>
+    <td> <?= $previousDueTotal ?> </td>
+  </tr>
+
+  <tr>
+    <td>  Current Lease Rent </td>
+    <td> <?= $currentLeaseRent ?> </td>
+  </tr>
+
+  <tr>
+    <td>  Current CGST Amount </td>
+    <td> <?= $currentCGSTAmount ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Current SGST Amount </td>
+    <td> <?= $currentSGSTAmount ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Current Total Tax </td>
+    <td> <?= $currentTotalTax ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Current Due Total </td>
+    <td> <?= $currentDueTotal ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Final Total ( C = A + B) </td>
+    <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
+  </tr>
+
+
+</table>

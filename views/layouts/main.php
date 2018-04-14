@@ -47,6 +47,8 @@ AppAsset::register($this);
             $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
             $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
+            $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
+            $link[] = ['label' => 'Payment', 'url' => ['/payment/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
         }else if(\Yii::$app->user->can('company')){
             $link[] = ['label' => 'Profile', 'url' => ['/company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]];
