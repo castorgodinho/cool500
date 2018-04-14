@@ -109,6 +109,11 @@ class OrdersController extends Controller
                 echo $model->godown_no.'-<br>';
                 echo $model->area_id.'-<br>';
                 echo $model->total_area.'-<br>'; */
+                $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($model->area->name);
+                while(Orders::find()->where(['order_number' => $orderNumber])->count() != 0){
+                    $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($model->area->name);
+                }
+                $model->order_number = $orderNumber;
                 $model->save();
                 for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
                     $detail = new OrderDetails();

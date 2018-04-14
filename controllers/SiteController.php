@@ -95,6 +95,10 @@ class SiteController extends Controller
 
         return $this->redirect(['site/login']);
     }
+    public function actionRandom()
+    {
+        echo sprintf("%06d", rand(1, 1000000));
+    }
 
     /**
      * Displays contact page.

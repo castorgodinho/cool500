@@ -12,7 +12,6 @@ use yii\widgets\ActiveForm;
 <div class="orders-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'order_number')->textInput() ?>
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
     <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
     <button type="button" class="add" class="form-control" style="margin: 5px;">+</button>
@@ -25,6 +24,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'total_area')->textInput(); ?>
     
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
+        'options' => [
+          'class' => 'form-control'
+        ],
+        'language' => 'en',
+        'dateFormat' => 'yyyy-MM-dd',
+    ]) ?> 
+
+    <?= $form->field($model, 'end_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [
           'class' => 'form-control'
         ],
@@ -53,8 +60,6 @@ use yii\widgets\ActiveForm;
     </div>
     
     
-    
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
