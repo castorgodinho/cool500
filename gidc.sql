@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2018 at 12:37 PM
+-- Generation Time: Apr 14, 2018 at 06:41 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -60,7 +60,8 @@ CREATE TABLE `area_rate` (
 
 INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) VALUES
 (1, 9, 1500, '2018-04-11'),
-(2, 9, 2000, '2018-04-11');
+(2, 9, 2000, '2018-04-11'),
+(3, 9, 2500, '2018-04-12');
 
 -- --------------------------------------------------------
 
@@ -79,7 +80,9 @@ CREATE TABLE `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('company', '1', 1523510933);
+('admin', '1', 1523677267),
+('company', '22', 1523677340),
+('staff', '23', 1523677950);
 
 -- --------------------------------------------------------
 
@@ -102,11 +105,52 @@ CREATE TABLE `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('company', 1, NULL, NULL, NULL, 1523510933, 1523510933),
-('createCompany', 2, 'Create a Company', NULL, NULL, 1523510933, 1523510933),
-('deleteCompany', 2, 'Delete Company', NULL, NULL, 1523510933, 1523510933),
-('updateCompany', 2, 'Update Company', NULL, NULL, 1523510933, 1523510933),
-('viewCompany', 2, NULL, NULL, NULL, 1523510933, 1523510933);
+('accounts', 1, NULL, NULL, NULL, 1523677267, 1523677267),
+('admin', 1, NULL, NULL, NULL, 1523677266, 1523677266),
+('changePassword', 2, 'Delete User', NULL, NULL, 1523677266, 1523677266),
+('company', 1, NULL, NULL, NULL, 1523677267, 1523677267),
+('createArea', 2, 'Create a Area', NULL, NULL, 1523677266, 1523677266),
+('createCompany', 2, 'Create a Company', NULL, NULL, 1523677266, 1523677266),
+('createOrders', 2, 'Create a Orders', NULL, NULL, 1523677266, 1523677266),
+('createPlot', 2, 'Create a Plot', NULL, NULL, 1523677266, 1523677266),
+('createRate', 2, 'Create a Rate', NULL, NULL, 1523677266, 1523677266),
+('createSite', 2, 'Create a Site', NULL, NULL, 1523677266, 1523677266),
+('createTax', 2, 'Create a Tax', NULL, NULL, 1523677266, 1523677266),
+('createUsers', 2, 'Create a User', NULL, NULL, 1523677266, 1523677266),
+('deleteArea', 2, 'Delete Area', NULL, NULL, 1523677266, 1523677266),
+('deleteCompany', 2, 'Delete Company', NULL, NULL, 1523677266, 1523677266),
+('deleteOrder', 2, 'Delete Order', NULL, NULL, 1523677266, 1523677266),
+('deletePlot', 2, 'Delete Plot', NULL, NULL, 1523677266, 1523677266),
+('deleteRate', 2, 'Delete Rate', NULL, NULL, 1523677266, 1523677266),
+('deleteSite', 2, 'Delete Site', NULL, NULL, 1523677266, 1523677266),
+('deleteTax', 2, 'Delete Site', NULL, NULL, 1523677266, 1523677266),
+('deleteUsers', 2, 'Delete User', NULL, NULL, 1523677266, 1523677266),
+('indexArea', 2, 'Index a Area', NULL, NULL, 1523677266, 1523677266),
+('indexCompany', 2, 'Index a Company', NULL, NULL, 1523677266, 1523677266),
+('indexOrders', 2, 'Index a Orders', NULL, NULL, 1523677266, 1523677266),
+('indexPlot', 2, 'Index a Plot', NULL, NULL, 1523677266, 1523677266),
+('indexRate', 2, 'Index a Rate', NULL, NULL, 1523677266, 1523677266),
+('indexSite', 2, 'Index a Site', NULL, NULL, 1523677266, 1523677266),
+('indexTax', 2, 'Index a Tax', NULL, NULL, 1523677266, 1523677266),
+('indexUsers', 2, 'Index a User', NULL, NULL, 1523677266, 1523677266),
+('staff', 1, NULL, NULL, NULL, 1523677267, 1523677267),
+('updateArea', 2, 'Update Area', NULL, NULL, 1523677266, 1523677266),
+('updateCompany', 2, 'Update Company', NULL, NULL, 1523677266, 1523677266),
+('updateOrders', 2, 'Update Orders', NULL, NULL, 1523677266, 1523677266),
+('updatePlot', 2, 'Update Plot', NULL, NULL, 1523677266, 1523677266),
+('updateRate', 2, 'Update Rate', NULL, NULL, 1523677266, 1523677266),
+('updateSite', 2, 'Update Site', NULL, NULL, 1523677266, 1523677266),
+('updateTax', 2, 'Update Tax', NULL, NULL, 1523677266, 1523677266),
+('updateUsers', 2, 'Update User', NULL, NULL, 1523677266, 1523677266),
+('viewArea', 2, 'View Area', NULL, NULL, 1523677266, 1523677266),
+('viewCompany', 2, NULL, NULL, NULL, 1523677266, 1523677266),
+('viewOrders', 2, 'View Orders', NULL, NULL, 1523677266, 1523677266),
+('viewOwnCompany', 2, 'Update own post', 'isCompany', NULL, 1523677267, 1523677267),
+('viewPlot', 2, 'View Plot', NULL, NULL, 1523677266, 1523677266),
+('viewRate', 2, 'View Rate', NULL, NULL, 1523677266, 1523677266),
+('viewSite', 2, 'View Site', NULL, NULL, 1523677266, 1523677266),
+('viewTax', 2, 'View Tax', NULL, NULL, 1523677266, 1523677266),
+('viewUsers', 2, 'View User', NULL, NULL, 1523677266, 1523677266);
 
 -- --------------------------------------------------------
 
@@ -124,8 +168,53 @@ CREATE TABLE `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-('company', 'updateCompany'),
-('company', 'viewCompany');
+('admin', 'changePassword'),
+('admin', 'createArea'),
+('admin', 'createCompany'),
+('admin', 'createOrders'),
+('admin', 'createPlot'),
+('admin', 'createRate'),
+('admin', 'createSite'),
+('admin', 'createTax'),
+('admin', 'createUsers'),
+('admin', 'deleteArea'),
+('admin', 'deleteCompany'),
+('admin', 'deleteOrder'),
+('admin', 'deletePlot'),
+('admin', 'deleteRate'),
+('admin', 'deleteSite'),
+('admin', 'deleteTax'),
+('admin', 'deleteUsers'),
+('admin', 'indexArea'),
+('admin', 'indexCompany'),
+('admin', 'indexOrders'),
+('admin', 'indexPlot'),
+('admin', 'indexRate'),
+('admin', 'indexSite'),
+('admin', 'indexTax'),
+('admin', 'indexUsers'),
+('admin', 'updateArea'),
+('admin', 'updateCompany'),
+('admin', 'updateOrders'),
+('admin', 'updatePlot'),
+('admin', 'updateRate'),
+('admin', 'updateSite'),
+('admin', 'updateTax'),
+('admin', 'updateUsers'),
+('admin', 'viewArea'),
+('admin', 'viewCompany'),
+('admin', 'viewOrders'),
+('admin', 'viewPlot'),
+('admin', 'viewRate'),
+('admin', 'viewSite'),
+('admin', 'viewTax'),
+('admin', 'viewUsers'),
+('company', 'changePassword'),
+('company', 'viewOwnCompany'),
+('staff', 'changePassword'),
+('staff', 'createCompany'),
+('staff', 'viewCompany'),
+('viewOwnCompany', 'viewCompany');
 
 -- --------------------------------------------------------
 
@@ -139,6 +228,13 @@ CREATE TABLE `auth_rule` (
   `created_at` int(11) DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_rule`
+--
+
+INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
+('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532333637373236373b733a393a22757064617465644174223b693a313532333637373236373b7d, 1523677267, 1523677267);
 
 -- --------------------------------------------------------
 
@@ -169,7 +265,13 @@ CREATE TABLE `company` (
 
 INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `constitution`, `products`, `gstin`, `owner_name`, `owner_phone`, `owner_mobile`, `competent_name`, `competent_email`, `competent_mobile`) VALUES
 (1, 1, 'Google Developers Group', 'Verna, Plot No. 35A, 66 B', '', 'Partnership', 'M. S Barrels', '78SJABSJSBBA76', 'Micheal Jackson', '2706542', '9885412565', 'John Doe', 'john@doe.com', '9865214587'),
-(2, 2, 'Cipla', 'Plot No 23, 22 Verna Goa', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'BKJK123K1K23KB', 'James Blunt', '2706744', '9865412547', 'Jan Doe', 'jan@dow.com', '9652147852');
+(2, 2, 'Cipla', 'Plot No 23, 22 Verna Goa', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'BKJK123K1K23KB', 'James Blunt', '2706744', '9865412547', 'Jan Doe', 'jan@dow.com', '9652147852'),
+(4, 3, 'Chowgule FOSS Club', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'asv213kkasn1231', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(11, 4, 'Chowgule FOSS Club', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', '21hkjh312hlh12l', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(16, 5, 'Cocacola', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sdasdf23wda', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(18, 6, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(19, 7, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(22, 8, 'Chowgules', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'dasdasfsa234', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696');
 
 -- --------------------------------------------------------
 
@@ -247,7 +349,26 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`, `shed_no`, `godown_no`, `area_id`, `total_area`) VALUES
-(19, 'GIDC12345VERNA', 2, NULL, NULL, 121, '2018-04-30', NULL, NULL, 520, 9, 0);
+(19, 'GIDC12345VERNA', 2, NULL, NULL, 121, '2018-04-30', NULL, NULL, 520, 9, 0),
+(20, 'GIDC12345VERNA', 1, 1500, NULL, NULL, '2018-04-13', NULL, NULL, NULL, 9, 150000),
+(21, 'GIDC1235VERNA', 2, NULL, 10000, NULL, '2018-04-12', NULL, 43, NULL, 9, 50000),
+(22, 'GIDC12345VERNA', 1, NULL, NULL, 10, '2018-04-16', NULL, NULL, 10, 9, 12000),
+(23, 'GIDC12345VERNA', 1, NULL, NULL, NULL, '2018-04-18', NULL, NULL, NULL, 9, 1500),
+(24, 'GIDC12345VERNA', 1, 5000, NULL, NULL, '2018-04-18', NULL, NULL, NULL, 9, 1500),
+(25, 'GIDC1234s5VERNA', 1, NULL, NULL, 1221, '2018-04-17', NULL, NULL, 121212, 9, 1500),
+(26, 'GIDC12345VERNA', 1, NULL, NULL, 21, '2018-04-17', NULL, NULL, 123213, 9, 123123),
+(27, 'GIDC12345VERNA', 1, NULL, NULL, 123312, '2018-04-16', NULL, NULL, 12, 9, 1500),
+(28, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
+(29, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
+(30, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
+(31, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
+(32, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
+(33, 'GIDC12345VERNAe', 1, NULL, NULL, 21323, '0000-00-00', NULL, NULL, 12, 9, 1232),
+(34, 'GIDC12345VERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
+(35, 'GIDC12345VERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
+(36, 'GIDC12345VeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
+(37, 'GIDC12345VeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
+(38, 'GIDC12345VeeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312);
 
 -- --------------------------------------------------------
 
@@ -267,7 +388,33 @@ CREATE TABLE `order_details` (
 INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
 (7, 19),
 (8, 19),
-(9, 19);
+(9, 19),
+(10, 20),
+(11, 20),
+(12, 20),
+(13, 21),
+(14, 21),
+(15, 22),
+(16, 22),
+(17, 23),
+(18, 24),
+(19, 25),
+(20, 25),
+(21, 26),
+(22, 27),
+(23, 27),
+(24, 28),
+(25, 28),
+(26, 29),
+(27, 30),
+(28, 31),
+(29, 32),
+(30, 33),
+(31, 34),
+(32, 35),
+(33, 36),
+(34, 37),
+(35, 38);
 
 -- --------------------------------------------------------
 
@@ -280,7 +427,8 @@ CREATE TABLE `payment` (
   `order_id` int(11) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
-  `mode` varchar(50) DEFAULT NULL
+  `mode` varchar(50) DEFAULT NULL,
+  `invoice_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -304,7 +452,33 @@ INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 (6, NULL, '22', 0),
 (7, NULL, '11', 0),
 (8, NULL, '22', 0),
-(9, NULL, '33', 0);
+(9, NULL, '33', 0),
+(10, NULL, '56', 0),
+(11, NULL, '44', 0),
+(12, NULL, '33', 0),
+(13, 9, '10', 0),
+(14, 9, '20', 0),
+(15, 9, '43', 0),
+(16, 9, '21', 0),
+(17, 9, '10', 0),
+(18, 9, '10', 0),
+(19, 9, '12', 0),
+(20, 9, '12', 0),
+(21, 9, '12', 0),
+(22, 9, '12', 0),
+(23, 9, '22', 0),
+(24, 9, '12', 0),
+(25, 9, '22', 0),
+(26, 9, '12', 0),
+(27, 9, '12', 0),
+(28, 9, '12', 0),
+(29, 9, '12', 0),
+(30, 9, '10', 0),
+(31, 9, '22', 0),
+(32, 9, '22', 0),
+(33, 9, '22', 0),
+(34, 9, '22', 0),
+(35, 9, '22', 0);
 
 -- --------------------------------------------------------
 
@@ -343,16 +517,32 @@ CREATE TABLE `tax` (
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` text NOT NULL
+  `password` text NOT NULL,
+  `type` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `email`, `password`) VALUES
-(1, 'castorgodinho@yahoo.in', '$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL/ZAd2a3pkkOhQvNoVwh5e.'),
-(2, 'cipla@gmail.com', '$2y$13$2d9TMNV9H0iIKFQCAgJjIOlbVCdfVbPCH7EI05JpPrOaC5wY6KX8e');
+INSERT INTO `users` (`user_id`, `email`, `password`, `type`) VALUES
+(1, 'castorgodinho@yahoo.in', '$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL/ZAd2a3pkkOhQvNoVwh5e.', NULL),
+(2, 'cipla@gmail.com', '$2y$13$2d9TMNV9H0iIKFQCAgJjIOlbVCdfVbPCH7EI05JpPrOaC5wY6KX8e', NULL),
+(3, 'castorgodinho22@gmail.com', '$2y$13$gIHTyS5ZEuV30AWnKjSuXu0gJKJZGtfGclOpoTFeNvV1mdokmmXNi', NULL),
+(4, 'castorgodinho22@gmail.com', '$2y$13$Dxlpc5szm6LNu76ysJSc2utCU8s/I0MpYdfQQa4H2/n0T5HWOEVjm', NULL),
+(5, 'castorgodinho22@gmail.com', '$2y$13$or66jg9R9DJKdYFwltaHQuTF.L0mu4xOpFypnb4cbY0EpcLpG2fcO', NULL),
+(6, 'castor@gmail.com', '$2y$13$VFTa2yVTN2M8a6BY6GQjgOj0g7l9dGwZpLTCz7f/HeFlD9MPmTKpC', NULL),
+(7, 'castorgodin@gmail.com', '$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW', 'accounts'),
+(8, 'castorgowdin@gmail.com', '$2y$13$DMNgejEusdkGS9XH.Vm2t.wXCm0uym1ouzA5cNbtLb1IbmgvZHS8m', 'staff'),
+(9, 'asd@ads', '$2y$13$f85OIWZi3s7BRuZUB/sjCuBUUmthIQx7hZXg/zImDsbT4KnbhVMjK', 'accounts'),
+(10, 'das@das', '$2y$13$sGupCVbzi4CdgbXpJkex9e91c9HswSELebazMOpwWUkh.KXXj4jT.', 'admin'),
+(11, 'castorgodinho@gmail.com', '$2y$13$13W6wQPh8LD0TU1dLoC5ZupLX/uxsQ9yWdLwZ5UyEQkDH./T.ctsi', NULL),
+(12, 'cas@gas.com', '$2y$13$Zxl3lgj4FqVQh/Nk3pK4q.oWkLYa9yWgteSpdS44BfqvdWy.MDtIi', 'accounts'),
+(16, 'coca@cola.com', '$2y$13$3lCWbr7wFuBTL5ei3U5GKeqwR8Lsaa74eRHYQWHNDXZRa8Nd223ia', NULL),
+(18, 'castorgodinho22@gmail.com', '$2y$13$AXCLnbWydKcySdqxThMA0OV1SJ.LucYeYMUd/ca0ZTr/KyK8p4VsO', NULL),
+(19, 'castorgodinho22@gmail.com', '$2y$13$KnVWvobF5gb4pa8hR5Q/luKk3Rh2DQNWNiXkiDHKjLXSl/fkbzl0S', 'company'),
+(22, 'cass@gmail.com', '$2y$13$VBqE08Wjmfa25iKqUZWgU.bbR4wx2YmUUun6gSMpX1awfxeFfpfvi', 'company'),
+(23, 'ccg003@gmail.com', '$2y$13$IpLcpvRdMi7VdWBfNpqjl.m5NEC026kdIFl4B38Q9Ym0M0uBwik0C', 'staff');
 
 --
 -- Indexes for dumped tables
@@ -447,7 +637,8 @@ ALTER TABLE `order_details`
 --
 ALTER TABLE `payment`
   ADD PRIMARY KEY (`payment_id`),
-  ADD KEY `payment_order_id` (`order_id`);
+  ADD KEY `payment_order_id` (`order_id`),
+  ADD KEY `payment_invoice_id` (`invoice_id`);
 
 --
 -- Indexes for table `plot`
@@ -489,13 +680,13 @@ ALTER TABLE `area`
 -- AUTO_INCREMENT for table `area_rate`
 --
 ALTER TABLE `area_rate`
-  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `interest`
@@ -513,7 +704,7 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -525,7 +716,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `rate`
@@ -543,7 +734,7 @@ ALTER TABLE `tax`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
@@ -601,6 +792,7 @@ ALTER TABLE `order_details`
 -- Constraints for table `payment`
 --
 ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_invoice_id` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`invoice_id`),
   ADD CONSTRAINT `payment_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 --
