@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'invoice_id',
-            'rate_id',
-            'tax_id',
+            'invoice_code',
+            'rate.rate',
+            'tax.rate',
             'order_id',
-            'interest_id',
+            'interest.rate',
             //'start_date',
             //'total_amount',
 

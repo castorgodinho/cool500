@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'start_date',
             'mode',
-            'invoice_id',
+            'invoice.invoice_code',
         ],
     ]) ?>
 

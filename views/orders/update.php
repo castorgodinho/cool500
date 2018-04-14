@@ -43,12 +43,6 @@ use yii\widgets\ActiveForm;
   <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
 
-    <table class="tables">
-      <tr>
-        <td>Name</td>
-        <td>Name</td>
-      </tr>
-    </table>
     <table class="table table-responsive">
       <tr>
         <td>Previous Lease Rent</td>

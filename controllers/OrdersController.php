@@ -164,7 +164,7 @@ class OrdersController extends Controller
             $area = $plot->area;
           }
           $areaCode = strtoupper(substr($area->name,0,3));
-          $invoiceCode = $areaCode + '/';
+          $invoiceCode = $areaCode .'/';
           date_default_timezone_set('Asia/Kolkata');
           $year = date('Y');
           $year = substr($year,2,3);
@@ -187,6 +187,7 @@ class OrdersController extends Controller
           echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = $invoiceCode;
           $model->save();
+          return $this->redirect(['invoice/index']);
         } else{
           $previousLeaseRent = 0;
           $previousCGST = 0;
@@ -286,6 +287,7 @@ class OrdersController extends Controller
                   'order_id' => $id,
                   'interest' => $interest,
                   'start_date' => $start_date,
+
                   'company' => $company,
                   'order' => $order,    
                   'model' => $model,

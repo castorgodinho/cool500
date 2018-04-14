@@ -1,21 +1,89 @@
 <?php
 
 use yii\helpers\Html;
-
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Payment */
-
-$this->title = 'Create Payment';
-$this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+use yii\widgets\ActiveForm;
 ?>
-<div class="payment-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $form = ActiveForm::begin(['action' => 'index.php?r=payment/create']); ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+<table class="table">
+  <th></th>
+  <th></th>
+  <tr>
+    <td>Previous Lease Rent</td>
+    <td><?= $previousLeaseRent ?></td>
+  </tr>
 
+  <tr>
+    <td>Previous SGST Amount</td>
+    <td><?= $previousSGSTAmount ?></td>
+  </tr>
+
+  <tr>
+    <td>Previous CGST Amount</td>
+    <td><?= $previousCGSTAmount ?></td>
+  </tr>
+
+  <tr>
+    <td> Previous Total Tax </td>
+    <td><?= $previousTotalTax ?></td>
+  </tr>
+
+  <tr>
+    <td> Penal Interest </td>
+    <td><?= $penalInterest ?></td>
+  </tr>
+
+  <tr>
+    <td>  Previous Due Total  </td>
+    <td> <?= $previousDueTotal ?> </td>
+  </tr>
+
+  <tr>
+    <td>  Current Lease Rent </td>
+    <td> <?= $currentLeaseRent ?> </td>
+  </tr>
+
+  <tr>
+    <td>  Current CGST Amount </td>
+    <td> <?= $currentCGSTAmount ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Current SGST Amount </td>
+    <td> <?= $currentSGSTAmount ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Current Total Tax </td>
+    <td> <?= $currentTotalTax ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Current Due Total </td>
+    <td> <?= $currentDueTotal ?>  </td>
+  </tr>
+
+  <tr>
+    <td>  Final Total ( C = A + B) </td>
+    <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
+  </tr>
+
+
+</table>
+
+<?= $form->field($model, 'invoice_id')->textInput() ?>
+
+<?= $form->field($model, 'amount')->textInput() ?>
+
+<?= $form->field($model, 'start_date')->textInput() ?>
+
+<?= $form->field($model, 'order_id')->textInput() ?>
+
+<?= $form->field($model, 'mode')->textInput(['maxlength' => true]) ?>
+
+<div class="form-group">
+    <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>
 </div>
+
+<?php ActiveForm::end(); ?>
