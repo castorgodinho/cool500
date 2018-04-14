@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Invoice */
 
-$this->title = 'Update Invoice: ' . $model->invoice_id;
+$this->title = 'Update Invoice: {nameAttribute}';
 $this->params['breadcrumbs'][] = ['label' => 'Invoices', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->invoice_id, 'url' => ['view', 'id' => $model->invoice_id]];
 $this->params['breadcrumbs'][] = 'Update';

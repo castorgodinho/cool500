@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
--- https://www.phpmyadmin.net/
+-- version 4.4.14
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 14, 2018 at 06:41 AM
--- Server version: 10.1.28-MariaDB
--- PHP Version: 7.1.10
+-- Generation Time: Apr 14, 2018 at 07:25 AM
+-- Server version: 5.6.26
+-- PHP Version: 5.6.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,11 +26,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `area`
 --
 
-CREATE TABLE `area` (
+CREATE TABLE IF NOT EXISTS `area` (
   `area_id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `total_area` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `area`
@@ -47,12 +45,12 @@ INSERT INTO `area` (`area_id`, `name`, `total_area`) VALUES
 -- Table structure for table `area_rate`
 --
 
-CREATE TABLE `area_rate` (
+CREATE TABLE IF NOT EXISTS `area_rate` (
   `area_rate_id` int(11) NOT NULL,
   `area_id` int(11) DEFAULT NULL,
   `area_rate` int(11) NOT NULL,
   `start_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `area_rate`
@@ -69,7 +67,7 @@ INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) V
 -- Table structure for table `auth_assignment`
 --
 
-CREATE TABLE `auth_assignment` (
+CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` int(11) DEFAULT NULL
@@ -90,7 +88,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 -- Table structure for table `auth_item`
 --
 
-CREATE TABLE `auth_item` (
+CREATE TABLE IF NOT EXISTS `auth_item` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `type` smallint(6) NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
@@ -158,7 +156,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 -- Table structure for table `auth_item_child`
 --
 
-CREATE TABLE `auth_item_child` (
+CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -169,8 +167,11 @@ CREATE TABLE `auth_item_child` (
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'changePassword'),
+('company', 'changePassword'),
+('staff', 'changePassword'),
 ('admin', 'createArea'),
 ('admin', 'createCompany'),
+('staff', 'createCompany'),
 ('admin', 'createOrders'),
 ('admin', 'createPlot'),
 ('admin', 'createRate'),
@@ -203,18 +204,15 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'updateUsers'),
 ('admin', 'viewArea'),
 ('admin', 'viewCompany'),
+('staff', 'viewCompany'),
+('viewOwnCompany', 'viewCompany'),
 ('admin', 'viewOrders'),
+('company', 'viewOwnCompany'),
 ('admin', 'viewPlot'),
 ('admin', 'viewRate'),
 ('admin', 'viewSite'),
 ('admin', 'viewTax'),
-('admin', 'viewUsers'),
-('company', 'changePassword'),
-('company', 'viewOwnCompany'),
-('staff', 'changePassword'),
-('staff', 'createCompany'),
-('staff', 'viewCompany'),
-('viewOwnCompany', 'viewCompany');
+('admin', 'viewUsers');
 
 -- --------------------------------------------------------
 
@@ -222,7 +220,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 -- Table structure for table `auth_rule`
 --
 
-CREATE TABLE `auth_rule` (
+CREATE TABLE IF NOT EXISTS `auth_rule` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `data` blob,
   `created_at` int(11) DEFAULT NULL,
@@ -242,7 +240,7 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `company`
 --
 
-CREATE TABLE `company` (
+CREATE TABLE IF NOT EXISTS `company` (
   `user_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -257,7 +255,7 @@ CREATE TABLE `company` (
   `competent_name` varchar(100) DEFAULT NULL,
   `competent_email` varchar(100) DEFAULT NULL,
   `competent_mobile` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company`
@@ -279,13 +277,20 @@ INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `co
 -- Table structure for table `interest`
 --
 
-CREATE TABLE `interest` (
+CREATE TABLE IF NOT EXISTS `interest` (
   `interest_id` int(11) NOT NULL,
   `name` varchar(20) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `rate` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `interest`
+--
+
+INSERT INTO `interest` (`interest_id`, `name`, `type`, `rate`, `start_date`) VALUES
+(1, 'Penal Interest', 'Penal Interest', 10, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -293,15 +298,27 @@ CREATE TABLE `interest` (
 -- Table structure for table `invoice`
 --
 
-CREATE TABLE `invoice` (
+CREATE TABLE IF NOT EXISTS `invoice` (
   `invoice_id` int(11) NOT NULL,
   `rate_id` int(11) DEFAULT NULL,
   `tax_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `interest_id` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
-  `total_amount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `total_amount` int(11) DEFAULT NULL,
+  `invoice_code` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `rate_id`, `tax_id`, `order_id`, `interest_id`, `start_date`, `total_amount`, `invoice_code`) VALUES
+(1, 1, 1, 38, 1, '2018-04-14', 586051, ''),
+(2, 1, 1, 38, 1, '2018-04-14', 586051, ''),
+(3, 1, 1, 38, 1, '2018-04-14', 586051, ''),
+(4, 1, 1, 38, 1, '2018-04-14', 586051, ''),
+(5, 1, 1, 38, 1, '2018-04-14', 586051, '');
 
 -- --------------------------------------------------------
 
@@ -309,7 +326,7 @@ CREATE TABLE `invoice` (
 -- Table structure for table `migration`
 --
 
-CREATE TABLE `migration` (
+CREATE TABLE IF NOT EXISTS `migration` (
   `version` varchar(180) NOT NULL,
   `apply_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -329,7 +346,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- Table structure for table `orders`
 --
 
-CREATE TABLE `orders` (
+CREATE TABLE IF NOT EXISTS `orders` (
   `order_id` int(11) NOT NULL,
   `order_number` varchar(20) NOT NULL,
   `company_id` int(11) NOT NULL,
@@ -342,7 +359,7 @@ CREATE TABLE `orders` (
   `godown_no` int(11) DEFAULT NULL,
   `area_id` int(11) DEFAULT NULL,
   `total_area` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
@@ -376,7 +393,7 @@ INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `s
 -- Table structure for table `order_details`
 --
 
-CREATE TABLE `order_details` (
+CREATE TABLE IF NOT EXISTS `order_details` (
   `plot_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -422,7 +439,7 @@ INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
 -- Table structure for table `payment`
 --
 
-CREATE TABLE `payment` (
+CREATE TABLE IF NOT EXISTS `payment` (
   `payment_id` int(11) NOT NULL,
   `order_id` int(11) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
@@ -437,12 +454,12 @@ CREATE TABLE `payment` (
 -- Table structure for table `plot`
 --
 
-CREATE TABLE `plot` (
+CREATE TABLE IF NOT EXISTS `plot` (
   `plot_id` int(11) NOT NULL,
   `area_id` int(11) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `area_of_plot` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `plot`
@@ -486,14 +503,21 @@ INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 -- Table structure for table `rate`
 --
 
-CREATE TABLE `rate` (
+CREATE TABLE IF NOT EXISTS `rate` (
   `rate_id` int(11) NOT NULL,
   `area_id` int(11) NOT NULL,
   `from_area` int(11) NOT NULL,
   `to_area` int(11) NOT NULL,
   `rate` int(11) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rate`
+--
+
+INSERT INTO `rate` (`rate_id`, `area_id`, `from_area`, `to_area`, `rate`, `date`) VALUES
+(1, 9, 0, 10000000, 40, '2018-04-02');
 
 -- --------------------------------------------------------
 
@@ -501,12 +525,19 @@ CREATE TABLE `rate` (
 -- Table structure for table `tax`
 --
 
-CREATE TABLE `tax` (
+CREATE TABLE IF NOT EXISTS `tax` (
   `tax_id` int(11) NOT NULL,
   `name` varchar(30) DEFAULT NULL,
   `rate` int(11) NOT NULL,
   `date` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tax`
+--
+
+INSERT INTO `tax` (`tax_id`, `name`, `rate`, `date`) VALUES
+(1, 'GST', 19, '2018-04-14');
 
 -- --------------------------------------------------------
 
@@ -514,12 +545,12 @@ CREATE TABLE `tax` (
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` text NOT NULL,
   `type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -674,68 +705,57 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
+  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `area_rate`
 --
 ALTER TABLE `area_rate`
-  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `interest`
 --
 ALTER TABLE `interest`
-  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
   MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
-
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tax`
 --
 ALTER TABLE `tax`
-  MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
-
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
 --
 -- Constraints for dumped tables
 --
@@ -806,7 +826,6 @@ ALTER TABLE `plot`
 --
 ALTER TABLE `rate`
   ADD CONSTRAINT `rate_fk_area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -73,7 +73,7 @@ class CompanyController extends Controller
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
-        
+
     }
 
     /**
@@ -87,7 +87,7 @@ class CompanyController extends Controller
         if (\Yii::$app->user->can('ViewCompany', ['company' => $model])){
             $model = $this->findModel($id);
             $orders = Orders::find()->where(['company_id' => $model->company_id])->all();
-            
+
             return $this->render('view', [
                 'model' => $model,
                 'orders' => $orders

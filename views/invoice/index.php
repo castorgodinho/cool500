@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchInvoice */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,20 +18,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Invoice', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'invoice_id',
-            'company_id',
-            'plot_id',
             'rate_id',
             'tax_id',
-            // 'date',
+            'order_id',
+            'interest_id',
+            //'start_date',
+            //'total_amount',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
+</div>

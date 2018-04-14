@@ -12,18 +12,20 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'company_id')->textInput() ?>
-
-    <?= $form->field($model, 'plot_id')->textInput() ?>
-
     <?= $form->field($model, 'rate_id')->textInput() ?>
 
     <?= $form->field($model, 'tax_id')->textInput() ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'order_id')->textInput() ?>
+
+    <?= $form->field($model, 'interest_id')->textInput() ?>
+
+    <?= $form->field($model, 'start_date')->textInput() ?>
+
+    <?= $form->field($model, 'total_amount')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

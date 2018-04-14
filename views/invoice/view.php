@@ -29,11 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'invoice_id',
-            'company_id',
-            'plot_id',
             'rate_id',
             'tax_id',
-            'date',
+            'order_id',
+            'interest_id',
+            'start_date',
+            'total_amount',
         ],
     ]) ?>
 

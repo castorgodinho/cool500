@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Invoice;
 
 /**
- * SearchInvoice represents the model behind the search form about `app\models\Invoice`.
+ * SearchInvoice represents the model behind the search form of `app\models\Invoice`.
  */
 class SearchInvoice extends Invoice
 {
@@ -18,8 +18,8 @@ class SearchInvoice extends Invoice
     public function rules()
     {
         return [
-            [['invoice_id', 'company_id', 'plot_id', 'rate_id', 'tax_id'], 'integer'],
-            [['date'], 'safe'],
+            [['invoice_id', 'rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
+            [['start_date'], 'safe'],
         ];
     }
 
@@ -60,11 +60,12 @@ class SearchInvoice extends Invoice
         // grid filtering conditions
         $query->andFilterWhere([
             'invoice_id' => $this->invoice_id,
-            'company_id' => $this->company_id,
-            'plot_id' => $this->plot_id,
             'rate_id' => $this->rate_id,
             'tax_id' => $this->tax_id,
-            'date' => $this->date,
+            'order_id' => $this->order_id,
+            'interest_id' => $this->interest_id,
+            'start_date' => $this->start_date,
+            'total_amount' => $this->total_amount,
         ]);
 
         return $dataProvider;
