@@ -151,12 +151,6 @@ class OrdersController extends Controller
         $model = new Invoice();
         if ($model->load(Yii::$app->request->post())) {
           $invoiceCode = '';
-          echo '$model->rate_id '.$model->rate_id.'<br>';
-          echo '$model->tax_id '.$model->tax_id.'<br>';
-          echo '$model->order_id '.$model->order_id.'<br>';
-          echo '$model->interest_id '.$model->interest_id.'<br>';
-          echo '$model->total_amount '.$model->total_amount.'<br>';
-          echo '$model->start_date '.$model->start_date.'<br>';
           $model->total_amount = round($model->total_amount);
           $order =  Orders::findOne($id);
           $orderPlotArray = $order->plots;
@@ -176,7 +170,7 @@ class OrdersController extends Controller
           echo '$areaCode '.$areaCode.'<br>';
           echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = 'hello';
-          $model->save();
+          $model->save(False);
           $invoiceID = strval($model->invoice_id);
           echo 'sizeof($invoiceID) '.sizeof($invoiceID).'<br>';
           for ($i=0; $i < 5- sizeof($invoiceID); $i++) {
@@ -186,7 +180,7 @@ class OrdersController extends Controller
           $invoiceCode = $invoiceCode . '/' . $invoiceID;
           echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = $invoiceCode;
-          $model->save();
+          $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
           $previousLeaseRent = 0;
@@ -227,31 +221,25 @@ class OrdersController extends Controller
           $currentSGST = ($tax->rate/2);
           $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
           $currentDueTotal = $currentLeaseRent + $currentTotalTax;
-
-          $paymentCount = Payment::find()->where(['order_id' => $id])->count();
-          $invoiceArray = Invoice::find()->where(['order_id' => $id])->all();
-          if($paymentCount == 0){
-            $previousDueTotal = 0;
-          } else{
-              $invoiceRate = $invoiceArray[0]->rate->rate;
-              $invoiceTax = $invoiceArray[0]->tax->rate;
-              $previousLeaseRent = $invoiceRate * $totalArea;
-              $previousCGSTAmount = $previousLeaseRent * (($invoiceTax/2)/100);
-              $previousSGSTAmount = $previousLeaseRent * (($invoiceTax/2)/100);
-              $previousSGST = ($invoiceTax/2);
-              $previousCGST = ($invoiceTax/2);
-              $previousTotalTax =  $previousCGSTAmount + $previousCGSTAmount;
-              foreach ($invoiceArray as $invoice) {
-                $paymentArray = $invoice->payments;
-                $invoiceTax = $invoice->tax->rate;
-                $invoiceTotal = $invoiceRate * $totalArea;
-                $invoiceTotal = $invoiceTotal + ( $invoiceTotal * ($invoiceTax/100));
-                $previousDueTotal = $invoiceTotal;
-                foreach ($paymentArray as $payment) {
-                  $previousDueTotal = $previousDueTotal - $payment->amount;
-                }
-              }
+          
+          $invoices = Invoice::find()->where(['order_id' => $id])->orderBy(['invoice_id' => 'SORT_DESC'])->all();
+          $invoice = null;
+          foreach($invoices as $i){
+            $invoice = $i;
           }
+          $totalPaid = Payment::find()->where(['order_id' => $id])->sum('amount');
+          $totalInvoiceAmount = Invoice::find()->where(['order_id' => $id])->sum('grand_total');
+          $totalAmount = 0;
+          if($invoice){
+          $previousLeaseRent = $invoice->current_lease_rent;
+          $previousCGST = 9;
+          $previousSGST = 9;
+          $previousCGSTAmount =  $invoice->current_tax/2;
+          $previousSGSTAmount =  $invoice->current_tax/2;
+          $previousTotalTax = $invoice->current_tax;
+          $previousDueTotal = $totalInvoiceAmount - $totalPaid;
+          }
+          
           $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
           $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
           $currentSGST = ($tax->rate/2);

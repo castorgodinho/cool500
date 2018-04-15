@@ -113,12 +113,22 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin(); ?>
 
 <tr>
-  <td> <input value="<?= $order_id ?>" id="invoice-order_id" class="form-control" name="Invoice[order_id]" type="text"> </td>
-  <td> <input value="<?= $rate->rate_id ?>" id="invoice-rate_id" class="form-control" name="Invoice[rate_id]" type="text"> </td>
-  <td> <input value="<?= $tax->tax_id ?>" id="invoice-tax_id" class="form-control" name="Invoice[tax_id]" type="text"> </td>
-  <td> <input value="<?= $start_date ?>" id="invoice-start_date" class="form-control" name="Invoice[start_date]" type="text"> </td>
-  <td> <input value="<?= $interest->interest_id ?>" id="invoice-interest_id" class="form-control" name="Invoice[interest_id]" type="text"> </td>
-  <td> <input value="<?= $currentDueTotal + $previousDueTotal ?>" id="invoice-total_amount" class="form-control" name="Invoice[total_amount]" type="text"> </td>
+  <td> <input value="<?= $order_id ?>" id="invoice-order_id" class="form-control" name="Invoice[order_id]" type="hidden"> </td>
+  <td> <input value="<?= $rate->rate_id ?>" id="invoice-rate_id" class="form-control" name="Invoice[rate_id]" type="hidden"> </td>
+  <td> <input value="<?= $tax->tax_id ?>" id="invoice-tax_id" class="form-control" name="Invoice[tax_id]" type="hidden"> </td>
+  <td> <input value="<?= $start_date ?>" id="invoice-start_date" class="form-control" name="Invoice[start_date]" type="hidden"> </td>
+  <td> <input value="<?= $interest->interest_id ?>" id="invoice-interest_id" class="form-control" name="Invoice[interest_id]" type="hidden"> </td>
+  <td> <input value="<?= $currentDueTotal + $previousDueTotal ?>" id="invoice-total_amount" class="form-control" name="Invoice[total_amount]" type="hidden"> </td>
+  <td><input value="<?= $currentDueTotal  ?>" id="invoice-current_total_dues" class="form-control" name="Invoice[current_total_dues]" aria-required="true" aria-invalid="true" type="hidden"></td>
+  <td><input value="<?= 0 ?>" id="invoice-current_interest" class="form-control" name="Invoice[current_interest]" aria-required="true" type="hidden"></td>
+  <td><input value="<?= $currentTotalTax ?>" id="invoice-current_tax" class="form-control" name="Invoice[current_tax]" aria-required="true" type="hidden"></td>
+  <td><input value="<?= $currentLeaseRent ?>" id="invoice-current_lease_rent" class="form-control" name="Invoice[current_lease_rent]" aria-required="true" type="hidden"></td>
+  <td><input value="<?= $previousDueTotal ?>" id="invoice-prev_dues_total" class="form-control" name="Invoice[prev_dues_total]" aria-required="true" type="hidden"></td>
+  <td><input value="<?= $penalInterest ?>" id="invoice-prev_interest" class="form-control" name="Invoice[prev_interest]" aria-required="true" type="hidden"></td>
+  <td><input value="<?= $previousTotalTax ?>" id="invoice-prev_tax" class="form-control" name="Invoice[prev_tax]" aria-required="true" type="hidden"></td>
+  <td><input value="<?= $currentDueTotal + $previousDueTotal ?>" id="invoice-grand_total" class="form-control" name="Invoice[grand_total]" type="hidden"></td>
+  <td><input value="<?= $previousLeaseRent?>" id="invoice-prev_lease_rent" class="form-control" name="Invoice[prev_lease_rent]" type="hidden"></td>
+
 </tr>
 
 <div class="form-group">

@@ -78,8 +78,8 @@ class PaymentController extends Controller
     {
         $model = new Payment();
 
-        if ($model->load(Yii::$app->request->post())) {
-          $model->save();
+        if ($model->load(Yii::$app->request->post())) {           
+          $model->save();          
         }
 
         return $this->render('view', [
@@ -93,88 +93,33 @@ class PaymentController extends Controller
         if ($model_invoice->load(Yii::$app->request->post())) {
           $model_payment = new Payment();
           $model = Invoice::find()->where(['invoice_code' => $model_invoice->invoice_code])->one();
+            if(!$model){
+                throw new \yii\web\ForbiddenHttpException;
+            }
+            $previousLeaseRent = $model_invoice->prev_lease_rent;
+            $previousCGST = 9;
+            $previousSGST = 9;
+            $previousCGSTAmount = $model->prev_tax/2;
+            $previousSGSTAmount = $model->prev_tax/2;
+            $previousTotalTax = $model->prev_tax;
+            $previousDueTotal = $model->prev_dues_total;
+            $penalInterest = $model->prev_interest;
 
-          $previousLeaseRent = 0;
-          $previousCGST = 0;
-          $previousSGST = 0;
-          $previousCGSTAmount = 0;
-          $previousSGSTAmount = 0;
-          $previousTotalTax = 0;
-          $previousDueTotal = 0;
-          $penalInterest = 0;
+            $currentLeaseRent = $model->current_lease_rent;
+            $currentCGSTAmount = $model->current_tax/2;
+            $currentSGSTAmount = $model->current_tax/2;
+            $currentSGST = 9;
+            $currentCGST = 9;
+            $currentTotalTax = $model->current_tax;
+            $currentDueTotal = $model->current_total_dues;
 
-          $currentLeaseRent = 0;
-          $currentCGSTAmount = 0;
-          $currentSGSTAmount = 0;
-          $currentSGST = 0;
-          $currentSGST = 0;
-          $currentTotalTax = 0;
-          $currentDueTotal = 0;
+            date_default_timezone_set('Asia/Kolkata');
+            $start_date = date('Y-m-d');
 
-          $order =  Orders::findOne($model->order_id);
-
-          $company = $order->company;
-          $orderPlotArray = $order->plots;
-          $totalArea = $order->total_area;
-          $tax = Tax::find()->one(); #TODO
-          $interest = Interest::find()->one(); #TODO
-          $area = null;
-          foreach ($orderPlotArray as $plot) {
-            $area = $plot->area;
-          }
-          $rate = Rate::find()->where(['area_id' => $area->area_id])->one(); #TODO
-          $currentLeaseRent   = $rate->rate * $totalArea;
-          $taxAmout = $currentLeaseRent * ($tax->rate/100);
-
-          $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGST = ($tax->rate/2);
-          $currentSGST = ($tax->rate/2);
-          $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
-          $currentDueTotal = $currentLeaseRent + $currentTotalTax;
-
-          $paymentCount = Payment::find()->where(['order_id' => $model->order_id])->count();
-
-          $invoiceArray = Invoice::find()->where(['order_id' => $model->order_id])->all();
-          if($paymentCount == 0){
-            $previousDueTotal = 0;
-          } else{
-              $invoiceRate = $invoiceArray[0]->rate->rate;
-              $invoiceTax = $invoiceArray[0]->tax->rate;
-              $previousLeaseRent = $invoiceRate * $totalArea;
-              $previousCGSTAmount = $previousLeaseRent * (($invoiceTax/2)/100);
-              $previousSGSTAmount = $previousLeaseRent * (($invoiceTax/2)/100);
-              $previousSGST = ($invoiceTax/2);
-              $previousCGST = ($invoiceTax/2);
-              $previousTotalTax =  $previousCGSTAmount + $previousCGSTAmount;
-              foreach ($invoiceArray as $invoice) {
-                $paymentArray = $invoice->payments;
-                $invoiceTax = $invoice->tax->rate;
-                $invoiceTotal = $invoiceRate * $totalArea;
-                $invoiceTotal = $invoiceTotal + ( $invoiceTotal * ($invoiceTax/100));
-                $previousDueTotal = $invoiceTotal;
-                foreach ($paymentArray as $payment) {
-                  $previousDueTotal = $previousDueTotal - $payment->amount;
-                }
-              }
-          }
-          $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGST = ($tax->rate/2);
-          $currentCGST = ($tax->rate/2);
-          $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
-          $currentDueTotal = $currentLeaseRent + $currentTotalTax;
-
-          $penalInterest = ($interest->rate/100) * $previousDueTotal;
-          $previousDueTotal = $previousDueTotal + $penalInterest;
-
-          date_default_timezone_set('Asia/Kolkata');
-          $start_date = date('Y-m-d');
-
-          $model_payment->start_date = $start_date;
-          $model_payment->invoice_id = $model->invoice_id;
-          $model_payment->mode = 'cash';
-          $model_payment->order_id = $order->order_id;
+            $model_payment->start_date = $start_date;
+            $model_payment->invoice_id = $model->invoice_id;
+            $model_payment->mode = 'cash';
+            $model_payment->order_id = $model->order_id;
 
           return $this->render('create', [
                   'previousLeaseRent' => $previousLeaseRent,
@@ -192,11 +137,6 @@ class PaymentController extends Controller
                   'currentSGSTAmount' => $currentSGSTAmount,
                   'currentSGST' => $currentSGST,
                   'currentCGST' => $currentCGST,
-
-                  'rate' => $rate,
-                  'tax' => $tax,
-                  'order_id' => $order->order_id,
-                  'interest' => $interest,
                   'start_date' => $start_date,
 
                   'inovice' => $model_invoice,

@@ -57,7 +57,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Add Company', 'url' => ['/company/create']];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
         }else if(\Yii::$app->user->can('accounts')){
-            $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+            $link[] = ['label' => 'Payment', 'url' => ['/payment/search']];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
         }
 
@@ -80,13 +80,7 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

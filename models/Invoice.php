@@ -14,6 +14,17 @@ use Yii;
  * @property int $interest_id
  * @property string $start_date
  * @property int $total_amount
+ * @property string $invoice_code
+ * @property int $prev_lease_rent
+ * @property int $grand_total
+ * @property int $prev_tax
+ * @property int $prev_interest
+ * @property int $prev_dues_total
+ * @property int $current_lease_rent
+ * @property int $current_tax
+ * @property int $current_interest
+ * @property int $current_dues_total
+ * @property int $current_total_dues
  *
  * @property Interest $interest
  * @property Orders $order
@@ -37,8 +48,10 @@ class Invoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
-            [['start_date','invoice_code'], 'safe'],
+            [['rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount', 'prev_lease_rent', 'grand_total', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues'], 'integer'],
+            [['start_date'], 'safe'],
+            [['invoice_code', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues'], 'required'],
+            [['invoice_code'], 'string', 'max' => 100],
             [['interest_id'], 'exist', 'skipOnError' => true, 'targetClass' => Interest::className(), 'targetAttribute' => ['interest_id' => 'interest_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
             [['rate_id'], 'exist', 'skipOnError' => true, 'targetClass' => Rate::className(), 'targetAttribute' => ['rate_id' => 'rate_id']],
@@ -59,6 +72,17 @@ class Invoice extends \yii\db\ActiveRecord
             'interest_id' => 'Interest ID',
             'start_date' => 'Start Date',
             'total_amount' => 'Total Amount',
+            'invoice_code' => 'Invoice Code',
+            'prev_lease_rent' => 'Prev Lease Rent',
+            'grand_total' => 'Grand Total',
+            'prev_tax' => 'Prev Tax',
+            'prev_interest' => 'Prev Interest',
+            'prev_dues_total' => 'Prev Dues Total',
+            'current_lease_rent' => 'Current Lease Rent',
+            'current_tax' => 'Current Tax',
+            'current_interest' => 'Current Interest',
+            'current_dues_total' => 'Current Dues Total',
+            'current_total_dues' => 'Current Total Dues',
         ];
     }
 
