@@ -103,6 +103,7 @@ class RateController extends Controller
                 date_default_timezone_set('Asia/Kolkata');
                 $rate->date = date('Y-m-d');
                 $rate->flag = 1;
+                $rate->save();
                 return $this->redirect(['index']);
             } else {
                 return $this->render('update', [

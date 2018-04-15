@@ -78,8 +78,8 @@ class PaymentController extends Controller
     {
         $model = new Payment();
 
-        if ($model->load(Yii::$app->request->post())) {           
-          $model->save();          
+        if ($model->load(Yii::$app->request->post())) {
+          $model->save();
         }
 
         return $this->render('view', [
@@ -121,6 +121,11 @@ class PaymentController extends Controller
             $model_payment->mode = 'cash';
             $model_payment->order_id = $model->order_id;
 
+            $totalPayment = Payment::find()
+            ->where(['invoice_id' => $model->invoice_id])
+            ->sum('amount');
+            $balanceAmount = $currentDueTotal + $previousDueTotal - $totalPayment;
+
           return $this->render('create', [
                   'previousLeaseRent' => $previousLeaseRent,
                   'previousTotalTax' => $previousTotalTax,
@@ -138,6 +143,7 @@ class PaymentController extends Controller
                   'currentSGST' => $currentSGST,
                   'currentCGST' => $currentCGST,
                   'start_date' => $start_date,
+                  'balanceAmount' => $balanceAmount,
 
                   'inovice' => $model_invoice,
                   'model' => $model_payment

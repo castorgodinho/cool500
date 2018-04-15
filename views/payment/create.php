@@ -69,6 +69,11 @@ use yii\widgets\ActiveForm;
     <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
   </tr>
 
+  <tr>
+    <td>  <h2>BALANCE</h2> </td>
+    <td> <h3><?= $balanceAmount ?></h3>  </td>
+  </tr>
+
 
 </table>
 
