@@ -96,9 +96,14 @@ class RateController extends Controller
     {
         if (\Yii::$app->user->can('updateRate')){
             $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->rate_id]);
+            $model->flag = 0;
+            $model->save();
+            $rate = new Rate();
+            if ($rate->load(Yii::$app->request->post())) {
+                date_default_timezone_set('Asia/Kolkata');
+                $rate->date = date('Y-m-d');
+                $rate->flag = 1;
+                return $this->redirect(['index']);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -118,8 +123,9 @@ class RateController extends Controller
     public function actionDelete($id)
     {
         if (\Yii::$app->user->can('deleteRate')){
-            $this->findModel($id)->delete();
-
+            $rate = Rate::findOne($id);;
+            $rate->flag = 0;
+            $rate->save();
             return $this->redirect(['index']);
         }else{
             throw new \yii\web\ForbiddenHttpException;

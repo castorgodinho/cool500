@@ -32,7 +32,7 @@ class Tax extends \yii\db\ActiveRecord
         return [
             [['rate'], 'required'],
             [['rate'], 'integer'],
-            [['date'], 'safe'],
+            [['date','flag'], 'safe'],
             [['name'], 'string', 'max' => 30],
         ];
     }

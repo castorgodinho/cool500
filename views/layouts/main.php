@@ -44,6 +44,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Area', 'url' => ['/area/index']];
             $link[] = ['label' => 'Company', 'url' => ['/company/index']];
             /* $link[] = ['label' => 'Plot', 'url' => ['/plot/index']]; */
+            $link[] = ['label' => 'Interest', 'url' => ['/interest/index']];
             $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
             $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];

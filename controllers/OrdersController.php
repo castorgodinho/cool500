@@ -205,81 +205,92 @@ class OrdersController extends Controller
           $company = $order->company;
           $orderPlotArray = $order->plots;
           $totalArea = $order->total_area;
-          $tax = Tax::find()->one(); #TODO
-          $interest = Interest::find()->one(); #TODO
+          $tax = Tax::find()
+          ->where(['name' => 'GST'])
+          ->where(['flag' => 1])
+          ->one();
+          $interest = Interest::find()
+          ->where(['name' => 'Penal Interest'])
+          ->andWhere(['flag' => 1])
+          ->one();
           $area = null;
           foreach ($orderPlotArray as $plot) {
             $area = $plot->area;
           }
-          $rate = Rate::find()->where(['area_id' => $area->area_id])->one(); #TODO
-          $currentLeaseRent   = $rate->rate * $totalArea;
-          $taxAmout = $currentLeaseRent * ($tax->rate/100);
-
-          $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGST = ($tax->rate/2);
-          $currentSGST = ($tax->rate/2);
-          $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
-          $currentDueTotal = $currentLeaseRent + $currentTotalTax;
-          
-          $invoices = Invoice::find()->where(['order_id' => $id])->orderBy(['invoice_id' => 'SORT_DESC'])->all();
-          $invoice = null;
-          foreach($invoices as $i){
-            $invoice = $i;
-          }
-          $totalPaid = Payment::find()->where(['order_id' => $id])->sum('amount');
-          $totalInvoiceAmount = Invoice::find()->where(['order_id' => $id])->sum('grand_total');
-          $totalAmount = 0;
-          if($invoice){
-          $previousLeaseRent = $invoice->current_lease_rent;
-          $previousCGST = 9;
-          $previousSGST = 9;
-          $previousCGSTAmount =  $invoice->current_tax/2;
-          $previousSGSTAmount =  $invoice->current_tax/2;
-          $previousTotalTax = $invoice->current_tax;
-          $previousDueTotal = $totalInvoiceAmount - $totalPaid;
-          }
-          
-          $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGST = ($tax->rate/2);
-          $currentCGST = ($tax->rate/2);
-          $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
-          $currentDueTotal = $currentLeaseRent + $currentTotalTax;
-
-          $penalInterest = ($interest->rate/100) * $previousDueTotal;
-          $previousDueTotal = $previousDueTotal + $penalInterest;
-
-          date_default_timezone_set('Asia/Kolkata');
-          $start_date = date('Y-m-d');
-
-          return $this->render('update', [
-                  'previousLeaseRent' => $previousLeaseRent,
-                  'previousTotalTax' => $previousTotalTax,
-                  'previousDueTotal' => $previousDueTotal,
-                  'previousCGSTAmount' => $previousCGSTAmount,
-                  'previousSGSTAmount' => $previousSGSTAmount,
-                  'previousSGST' => $previousSGST,
-                  'previousCGST' => $previousCGST,
-                  'penalInterest' => $penalInterest,
-                  'currentLeaseRent' => $currentLeaseRent,
-                  'currentTotalTax' => $currentTotalTax,
-                  'currentDueTotal' => $currentDueTotal,
-                  'currentCGSTAmount' => $currentCGSTAmount,
-                  'currentSGSTAmount' => $currentSGSTAmount,
-                  'currentSGST' => $currentSGST,
-                  'currentCGST' => $currentCGST,
-
-                  'rate' => $rate,
-                  'tax' => $tax,
-                  'order_id' => $id,
-                  'interest' => $interest,
-                  'start_date' => $start_date,
-
-                  'company' => $company,
-                  'order' => $order,    
-                  'model' => $model,
-              ]);
+          $rate = Rate::find()->where(['area_id' => $area->area_id])
+          ->andWhere(['<=','from_area', $totalArea])
+          ->andWhere(['>=','to_area', $totalArea])
+          ->andWhere(['flag' => 1])
+          ->one();
+          echo $rate->rate;
+          // $currentLeaseRent   = $rate->rate * $totalArea;
+          // $taxAmout = $currentLeaseRent * ($tax->rate/100);
+          //
+          // $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+          // $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+          // $currentSGST = ($tax->rate/2);
+          // $currentSGST = ($tax->rate/2);
+          // $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
+          // $currentDueTotal = $currentLeaseRent + $currentTotalTax;
+          //
+          // $invoices = Invoice::find()->where(['order_id' => $id])->orderBy(['invoice_id' => 'SORT_DESC'])->all();
+          // $invoice = null;
+          // foreach($invoices as $i){
+          //   $invoice = $i;
+          // }
+          // $totalPaid = Payment::find()->where(['order_id' => $id])->sum('amount');
+          // $totalInvoiceAmount = Invoice::find()->where(['order_id' => $id])->sum('grand_total');
+          // $totalAmount = 0;
+          // if($invoice){
+          // $previousLeaseRent = $invoice->current_lease_rent;
+          // $previousCGST = 9;
+          // $previousSGST = 9;
+          // $previousCGSTAmount =  $invoice->current_tax/2;
+          // $previousSGSTAmount =  $invoice->current_tax/2;
+          // $previousTotalTax = $invoice->current_tax;
+          // $previousDueTotal = $totalInvoiceAmount - $totalPaid;
+          // }
+          //
+          // $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+          // $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+          // $currentSGST = ($tax->rate/2);
+          // $currentCGST = ($tax->rate/2);
+          // $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
+          // $currentDueTotal = $currentLeaseRent + $currentTotalTax;
+          //
+          // $penalInterest = ($interest->rate/100) * $previousDueTotal;
+          // $previousDueTotal = $previousDueTotal + $penalInterest;
+          //
+          // date_default_timezone_set('Asia/Kolkata');
+          // $start_date = date('Y-m-d');
+          //
+          // return $this->render('update', [
+          //         'previousLeaseRent' => $previousLeaseRent,
+          //         'previousTotalTax' => $previousTotalTax,
+          //         'previousDueTotal' => $previousDueTotal,
+          //         'previousCGSTAmount' => $previousCGSTAmount,
+          //         'previousSGSTAmount' => $previousSGSTAmount,
+          //         'previousSGST' => $previousSGST,
+          //         'previousCGST' => $previousCGST,
+          //         'penalInterest' => $penalInterest,
+          //         'currentLeaseRent' => $currentLeaseRent,
+          //         'currentTotalTax' => $currentTotalTax,
+          //         'currentDueTotal' => $currentDueTotal,
+          //         'currentCGSTAmount' => $currentCGSTAmount,
+          //         'currentSGSTAmount' => $currentSGSTAmount,
+          //         'currentSGST' => $currentSGST,
+          //         'currentCGST' => $currentCGST,
+          //
+          //         'rate' => $rate,
+          //         'tax' => $tax,
+          //         'order_id' => $id,
+          //         'interest' => $interest,
+          //         'start_date' => $start_date,
+          //
+          //         'company' => $company,
+          //         'order' => $order,
+          //         'model' => $model,
+          //     ]);
         }
 
 

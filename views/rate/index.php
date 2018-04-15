@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'from_area',
             'to_area',
             'rate',
-            // 'date',
+            'date',
+            'flag',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

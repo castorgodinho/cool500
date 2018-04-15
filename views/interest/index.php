@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'type',
             'rate',
             'start_date',
+            'flag',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

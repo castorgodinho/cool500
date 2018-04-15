@@ -95,9 +95,9 @@ class InvoiceController extends Controller
             }
             $rate = Rate::find()->where(['area_id' => $area->area_id])->one(); #TODO
             $currentLeaseRent   = $rate->rate * $totalArea;
-            $taxAmout = $currentLeaseRent * ($tax->rate/100);         
-  
-            
+            $taxAmout = $currentLeaseRent * ($tax->rate/100);
+
+
 
             date_default_timezone_set('Asia/Kolkata');
             $start_date = date('Y-m-d');
@@ -119,7 +119,7 @@ class InvoiceController extends Controller
                     'currentSGST' => $currentSGST,
                     'currentCGST' => $currentCGST,
                     'company' => $company,
-                    'order' => $order, 
+                    'order' => $order,
                     'rate' => $rate,
                     'tax' => $tax,
                     'order_id' => $id,

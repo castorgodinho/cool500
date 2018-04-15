@@ -32,7 +32,7 @@ class Interest extends \yii\db\ActiveRecord
     {
         return [
             [['rate'], 'integer'],
-            [['start_date'], 'safe'],
+            [['start_date' , 'flag'], 'safe'],
             [['name', 'type'], 'string', 'max' => 20],
         ];
     }

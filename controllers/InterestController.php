@@ -85,9 +85,14 @@ class InterestController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->interest_id]);
+        $model->flag = 0;
+        $model->save();
+        $interest = new Interest();
+        if ($interest->load(Yii::$app->request->post())) {
+            date_default_timezone_set('Asia/Kolkata');
+            $interest->start_date = date('Y-m-d');
+            $interest->save();
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -104,8 +109,9 @@ class InterestController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $interest = Interest::findOne($id);
+        $interest->flag = 0;
+        $interest->save();
         return $this->redirect(['index']);
     }
 

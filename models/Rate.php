@@ -37,7 +37,7 @@ class Rate extends \yii\db\ActiveRecord
         return [
             [['area_id', 'from_area', 'to_area', 'rate', 'date'], 'required'],
             [['area_id', 'from_area', 'to_area', 'rate'], 'integer'],
-            [['date'], 'safe'],
+            [['date','flag'], 'safe'],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
         ];
     }
