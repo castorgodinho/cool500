@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use app\models\Orders;
+use app\models\Invoice;
+use app\models\Payment;
 use app\models\OrderDetails;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
@@ -109,7 +111,36 @@ use yii\data\ActiveDataProvider;
           echo $plots->plot->name;
         }
       ?></p><br>
-      
+      <h4><u>Invoices</u></h4>
+      <?php 
+        $query = Invoice::find()->where(['order_id' => $order->order_id]);
+        $provider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+              'pageSize' => 10,
+          ],
+      ]);
+      ?>
+      <?= 
+        yii\grid\GridView::widget([
+          'dataProvider' => $provider,
+      ]);
+      ?>
+      <h4><u>Payments</u></h4>
+      <?php 
+        $query = Payment::find()->where(['order_id' => $order->order_id]);
+        $provider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+              'pageSize' => 10,
+          ],
+      ]);
+      ?>
+      <?= 
+        yii\grid\GridView::widget([
+          'dataProvider' => $provider,
+      ]);
+      ?>
 
 
      
