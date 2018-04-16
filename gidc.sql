@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 15, 2018 at 01:12 PM
+-- Generation Time: Apr 16, 2018 at 12:12 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -468,7 +468,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `start_date` date DEFAULT NULL,
   `mode` varchar(50) DEFAULT NULL,
   `invoice_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
@@ -477,7 +477,9 @@ CREATE TABLE IF NOT EXISTS `payment` (
 INSERT INTO `payment` (`payment_id`, `order_id`, `amount`, `start_date`, `mode`, `invoice_id`) VALUES
 (8, 39, 66000, '2018-04-14', 'cash', 37),
 (9, 40, 50000, '2018-04-14', 'cash', 41),
-(10, 41, 22000, '2018-04-14', 'cash', 42);
+(10, 41, 22000, '2018-04-14', 'cash', 42),
+(11, 41, 22000, '2018-04-16', 'cash', 42),
+(12, 40, 492652, '2018-04-16', 'cheque', 41);
 
 -- --------------------------------------------------------
 
@@ -547,14 +549,15 @@ CREATE TABLE IF NOT EXISTS `rate` (
   `rate` int(11) NOT NULL,
   `date` date NOT NULL,
   `flag` tinyint(2) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rate`
 --
 
 INSERT INTO `rate` (`rate_id`, `area_id`, `from_area`, `to_area`, `rate`, `date`, `flag`) VALUES
-(1, 9, 0, 10000000, 40, '2018-04-02', 0);
+(1, 9, 0, 10000000, 40, '2018-04-02', 0),
+(2, 9, 0, 10000000, 55, '2018-04-15', 1);
 
 -- --------------------------------------------------------
 
@@ -777,7 +780,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `plot`
 --
@@ -787,7 +790,7 @@ ALTER TABLE `plot`
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tax`
 --
