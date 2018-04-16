@@ -77,6 +77,12 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        <?php if (Yii::$app->session->hasFlash('danger')): ?>
+        <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <?= Yii::$app->session->getFlash('danger') ?>
+        </div>
+        <?php endif; ?>
         <?= $content ?>
     </div>
 </div>

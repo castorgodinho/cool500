@@ -79,12 +79,18 @@ class PaymentController extends Controller
         $model = new Payment();
 
         if ($model->load(Yii::$app->request->post())) {
-          $model->save();
+          $totalPayment = Payment::find()
+          ->where(['invoice_id' => $model->invoice_id])
+          ->sum('amount');
+          $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount;
+          if($balanceAmount < 0){
+            Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
+          }
+          else{
+            $model->save();
+          }
         }
-
-        return $this->render('view', [
-            'model' => $this->findModel($model->payment_id),
-        ]);
+        return $this->redirect(['index']);
     }
 
     public function actionSearch()
