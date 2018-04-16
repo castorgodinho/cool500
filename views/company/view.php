@@ -124,6 +124,7 @@ use yii\data\ActiveDataProvider;
       <?= 
         yii\grid\GridView::widget([
           'dataProvider' => $provider,
+          
       ]);
       ?>
       <h4><u>Payments</u></h4>

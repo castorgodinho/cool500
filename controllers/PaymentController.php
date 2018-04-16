@@ -90,7 +90,7 @@ class PaymentController extends Controller
             $model->save();
           }
         }
-        return $this->redirect(['index']);
+        return $this->redirect(['view', 'id' => $model->payment_id ]);
     }
 
     public function actionSearch()

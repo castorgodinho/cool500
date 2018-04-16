@@ -9,20 +9,20 @@ use yii\widgets\DetailView;
 $this->title = $model->payment_id;
 $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 ?>
-<div class="payment-view">
-
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->payment_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->payment_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
+<div class="row">
+  <div class="col-md-4 col-sm-4 col-xs-4 ">
+    <h1><b>GIDC LOGO HERE</b></h1>
+  </div>
+  <div class="col-md-8 col-sm-8 col-xs-8 text-right" style="margin-bottom:10px;">
+    <h3> <b>Goa Industrial Development Corporation</b> </h3>
+    <p>(A Goverment of Goa Undertaking)</p>
+    <p>Plot No. 13-A-2, EDC Complex, Patto Plaza, Panjim-Goa 403001</p>
+    <p>Tel: (91)(832)2437470 to 73 | Fax: (91)(832)2437478 to 79</p>
+    <p>Email: goaidc1965@gmail.com | Website: http://www.goaidc.com</p>
+    <p><b>GSTIN: </b>30AAATG7792FIZR | <b>PAN No. </b>AAATG77921</p>
+  </div>
+</div>
+<hr>
     <table class="table">
      <th></th>
      <th></th>
