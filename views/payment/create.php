@@ -77,15 +77,15 @@ use yii\widgets\ActiveForm;
 
 </table>
 
-<?= $form->field($model, 'invoice_id')->textInput() ?>
+<input id="payment-invoice_id" class="form-control" name="Payment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
 
 <?= $form->field($model, 'amount')->textInput() ?>
 
-<?= $form->field($model, 'start_date')->textInput() ?>
+<input id="payment-start_date" class="form-control" name="Payment[start_date]" value="<?= $model->start_date?>" type="hidden">
 
-<?= $form->field($model, 'order_id')->textInput() ?>
+<input id="payment-order_id" class="form-control" name="Payment[order_id]" value="<?= $model->order_id?>" type="hidden">
 
-<?= $form->field($model, 'mode')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '']) ?>
 
 <div class="form-group">
     <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>
