@@ -58,12 +58,12 @@ AppAsset::register($this);
             $link[] = ['label' => 'Add Company', 'url' => ['/company/create']];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
         }else if(\Yii::$app->user->can('accounts')){
-            $link[] = ['label' => 'Payment', 'url' => ['/payment/search']];
+            $link[] = ['label' => 'Pay Lease Rent', 'url' => ['/payment/search']];
+            $link[] = ['label' => 'Payments', 'url' => ['/payment/index']];
+            $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
         }
-
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */
-
         $link[] =['label' => 'Logout', 'url' => ['site/logout'],'linkOptions' => ['data-method' => 'post']];
     }
     echo Nav::widget([
