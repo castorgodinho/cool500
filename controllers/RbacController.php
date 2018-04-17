@@ -350,9 +350,13 @@ class RbacController extends Controller
         //add accounts permissions
         $auth->addChild($accounts, $viewInvoice);
         $auth->addChild($accounts, $createInvoice);
+        $auth->addChild($accounts, $indexInvoice);
         $auth->addChild($accounts, $searchInvoice);
+        $auth->addChild($accounts, $viewPayment);
+        $auth->addChild($accounts, $indexPayment);
+        $auth->addChild($accounts, $createPayment);
         $auth->addChild($accounts, $changePassword);
-
+        
 
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
@@ -364,6 +368,7 @@ class RbacController extends Controller
         // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
         // usually implemented in your User model.
         $auth->assign($admin, 1);
+        $auth->assign($accounts, 30);
         
     }
 }
