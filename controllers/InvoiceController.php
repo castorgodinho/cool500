@@ -44,7 +44,7 @@ class InvoiceController extends Controller
      */
     public function actionIndex()
     {
-        if (\Yii::$app->user->can('viewIvoice')){
+        if (\Yii::$app->user->can('indexInvoice')){
             $searchModel = new SearchInvoice();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
