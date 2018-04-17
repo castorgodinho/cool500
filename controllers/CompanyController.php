@@ -147,12 +147,26 @@ class CompanyController extends Controller
     {
         if (\Yii::$app->user->can('updateCompany')){
             $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $user = Users::findOne($model->user_id);
+            $user->password = "";
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
+            if (Yii::$app->request->isAjax && $user->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($user);
+            }
+            if ($model->load(Yii::$app->request->post())) {
+                if($model->password != ''){
+                    $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                }
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
+                    'user' => $user,
                 ]);
             }
         }else{
