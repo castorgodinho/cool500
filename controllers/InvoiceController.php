@@ -144,7 +144,7 @@ class InvoiceController extends Controller
      */
     public function actionCreate()
     {
-        if (\Yii::$app->user->can('createArea')){
+        if (\Yii::$app->user->can('createInvoice')){
             $model = new Invoice();
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -168,7 +168,7 @@ class InvoiceController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (\Yii::$app->user->can('updateIvoice')){
+        if (\Yii::$app->user->can('updateInvoice')){
             $model = $this->findModel($id);
 
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -192,7 +192,7 @@ class InvoiceController extends Controller
      */
     public function actionDelete($id)
     {
-        if (\Yii::$app->user->can('deleteIvoice')){
+        if (\Yii::$app->user->can('deleteInvoice')){
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
         }else{
