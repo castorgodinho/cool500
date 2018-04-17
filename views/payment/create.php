@@ -76,7 +76,7 @@ use yii\widgets\ActiveForm;
 
 
 </table>
-
+<?php if($balanceAmount != -1) { ?>
 <input id="payment-invoice_id" class="form-control" name="Payment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
 
 <?= $form->field($model, 'amount')->textInput() ?>
@@ -90,5 +90,6 @@ use yii\widgets\ActiveForm;
 <div class="form-group">
     <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>
 </div>
-
 <?php ActiveForm::end(); ?>
+
+<?php  } ?>

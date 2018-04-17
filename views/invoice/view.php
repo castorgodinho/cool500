@@ -32,9 +32,9 @@ use yii\widgets\ActiveForm;
     <p>Clause 65(105) (ZZZZ)</p>
   </div>
   <div class="col-md-4 col-sm-4 col-xs-4">
-    <p><b>Tax Invoice No: </b></p>
-    <p><b>Bill Date: </b></p>
-    <p><b>Due Date: </b></p>
+    <p><b>Tax Invoice No: </b><?= $model->invoice_code ?></p>
+    <p><b>Bill Date: </b> <?= $billDate ?></p>
+    <p><b>Due Date: </b><?= $invoiceDueDate ?></p>
     <p><b>Order Number: </b><?= $order->order_number ?></p>
   </div>
 </div>
@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
   <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
 
-    
+
     <table class="table table-responsive">
       <tr>
         <td>Previous Lease Rent</td>
@@ -104,8 +104,8 @@ use yii\widgets\ActiveForm;
         <td>  Final Total ( C = A + B) </td>
         <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
       </tr>
-    
-    
+
+
     </table>
     </div>
   </div>

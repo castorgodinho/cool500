@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
   </div>
 </div>
 <hr>
+    <center> <h2>RECEIPT</h2> </center>
     <table class="table">
      <th></th>
      <th></th>
@@ -36,7 +37,16 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
      </tr>
      <tr>
        <td>Amount</td>
-       <td><?= $model->amount ?></td>
+       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+     </tr>
+     <tr>
+       <td>GST</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100)) ?></td>
+     </tr>
+
+     <tr>
+       <td>Total Amount</td>
+       <td><?= round($model->amount) ?></td>
      </tr>
      <tr>
        <td>DATE</td>

@@ -234,13 +234,27 @@ class OrdersController extends Controller
           $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
           $currentDueTotal = $currentLeaseRent + $currentTotalTax;
 
-          $invoices = Invoice::find()->where(['order_id' => $id])->orderBy(['invoice_id' => 'SORT_DESC'])->all();
+          $invoices = Invoice::find()
+          ->where(['order_id' => $id])
+          ->orderBy(['invoice_id' => 'SORT_DESC'])
+          ->all();
           $invoice = null;
           foreach($invoices as $i){
             $invoice = $i;
           }
-          $totalPaid = Payment::find()->where(['order_id' => $id])->sum('amount');
-          $totalInvoiceAmount = Invoice::find()->where(['order_id' => $id])->sum('grand_total');
+          $totalPaid = Payment::find()
+          ->where(['order_id' => $id])
+          ->sum('amount');
+
+          $totalInvoiceAmount = Invoice::find()
+          ->where(['order_id' => $id])
+          ->sum('grand_total');
+
+          echo $totalInvoiceAmount.'<br>';
+          echo $totalPaid.'<br>';
+          echo ($totalInvoiceAmount - $totalPaid);
+
+
           $totalAmount = 0;
           if($invoice){
           $previousLeaseRent = $invoice->current_lease_rent;

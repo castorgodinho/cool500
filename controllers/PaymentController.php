@@ -86,7 +86,7 @@ class PaymentController extends Controller
     {
         if (\Yii::$app->user->can('createPayment')){
             $model = new Payment();
-            
+
             if ($model->load(Yii::$app->request->post())) {
                 $totalPayment = Payment::find()
                 ->where(['invoice_id' => $model->invoice_id])
@@ -115,7 +115,7 @@ class PaymentController extends Controller
                 if(!$model){
                     throw new \yii\web\ForbiddenHttpException;
                 }
-                $previousLeaseRent = $model_invoice->prev_lease_rent;
+                $previousLeaseRent = $model->prev_lease_rent;
                 $previousCGST = 9;
                 $previousSGST = 9;
                 $previousCGSTAmount = $model->prev_tax/2;
@@ -143,7 +143,16 @@ class PaymentController extends Controller
                 $totalPayment = Payment::find()
                 ->where(['invoice_id' => $model->invoice_id])
                 ->sum('amount');
-                $balanceAmount = $currentDueTotal + $previousDueTotal - $totalPayment;
+                $in = Invoice::find()
+                ->where(['order_id' => $model->order_id])
+                ->orderBy(['invoice_id' => SORT_DESC])
+                ->one();
+
+                if($in->invoice_id != $model->invoice_id){
+                  $balanceAmount = '-1';
+                }else{
+                    $balanceAmount = $currentDueTotal + $previousDueTotal - $totalPayment;
+                }
 
             return $this->render('create', [
                     'previousLeaseRent' => $previousLeaseRent,
@@ -167,11 +176,13 @@ class PaymentController extends Controller
                     'inovice' => $model_invoice,
                     'model' => $model_payment
                 ]);
-            }
-
+          }else{
             return $this->render('search', [
                 'model' => $model_invoice,
             ]);
+          }
+
+
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }

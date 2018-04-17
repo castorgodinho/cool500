@@ -54,7 +54,7 @@ class InvoiceController extends Controller
             ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
-        } 
+        }
     }
 
     /**
@@ -66,7 +66,7 @@ class InvoiceController extends Controller
     public function actionView($id)
     {
 
-       
+
         $model = Invoice::findOne($id);
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
             $previousLeaseRent = $model->prev_lease_rent;
@@ -101,7 +101,11 @@ class InvoiceController extends Controller
             $currentLeaseRent   = $rate->rate * $totalArea;
             $taxAmout = $currentLeaseRent * ($tax->rate/100);
 
+            $time = strtotime($model->start_date);
+            $newformat = date('Y-m-d',$time);
+            $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
 
+            $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
 
             date_default_timezone_set('Asia/Kolkata');
             $start_date = date('Y-m-d');
@@ -130,11 +134,14 @@ class InvoiceController extends Controller
                     'interest' => $interest,
                     'start_date' => $start_date,
 
+                    'billDate' => $billDate,
+                    'invoiceDueDate' => $invoiceDueDate,
+
                     'model' => $model,
                 ]);
         }else{
                 throw new \yii\web\ForbiddenHttpException;
-        } 
+        }
     }
 
     /**
@@ -156,7 +163,7 @@ class InvoiceController extends Controller
             ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
-        } 
+        }
     }
 
     /**
@@ -180,7 +187,7 @@ class InvoiceController extends Controller
             ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
-        } 
+        }
     }
 
     /**
