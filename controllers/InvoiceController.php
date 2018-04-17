@@ -44,13 +44,17 @@ class InvoiceController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchInvoice();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('viewIvoice')){
+            $searchModel = new SearchInvoice();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        } 
     }
 
     /**
@@ -62,9 +66,9 @@ class InvoiceController extends Controller
     public function actionView($id)
     {
 
-
-            $model = Invoice::findOne($id);
-
+       
+        $model = Invoice::findOne($id);
+        if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
             $previousLeaseRent = $model->prev_lease_rent;
             $previousCGST = 9;
             $previousSGST = 9;
@@ -128,7 +132,9 @@ class InvoiceController extends Controller
 
                     'model' => $model,
                 ]);
-
+        }else{
+                throw new \yii\web\ForbiddenHttpException;
+        } 
     }
 
     /**
@@ -138,15 +144,19 @@ class InvoiceController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Invoice();
+        if (\Yii::$app->user->can('createArea')){
+            $model = new Invoice();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->invoice_id]);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->invoice_id]);
+            }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        } 
     }
 
     /**
@@ -158,15 +168,19 @@ class InvoiceController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updateIvoice')){
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->invoice_id]);
-        }
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->invoice_id]);
+            }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        } 
     }
 
     /**
@@ -178,9 +192,12 @@ class InvoiceController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('deleteIvoice')){
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -195,7 +212,6 @@ class InvoiceController extends Controller
         if (($model = Invoice::findOne($id)) !== null) {
             return $model;
         }
-
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

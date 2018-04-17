@@ -44,13 +44,17 @@ class PaymentController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchPayment();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if (\Yii::$app->user->can('indexPayment')){
+            $searchModel = new SearchPayment();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -62,11 +66,15 @@ class PaymentController extends Controller
     public function actionView($id)
     {
         $model = Payment::findOne($id);
-        $invoice = $model->invoice;
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'inovice' => $invoice,
-        ]);
+        if (\Yii::$app->user->can('viewPayment', ['payment' => $model])){
+            $invoice = $model->invoice;
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'inovice' => $invoice,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -76,89 +84,97 @@ class PaymentController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Payment();
-
-        if ($model->load(Yii::$app->request->post())) {
-          $totalPayment = Payment::find()
-          ->where(['invoice_id' => $model->invoice_id])
-          ->sum('amount');
-          $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount;
-          if($balanceAmount < 0){
-            Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
-          }
-          else{
-            $model->save();
-          }
+        if (\Yii::$app->user->can('createPayment')){
+            $model = new Payment();
+            
+            if ($model->load(Yii::$app->request->post())) {
+                $totalPayment = Payment::find()
+                ->where(['invoice_id' => $model->invoice_id])
+                ->sum('amount');
+                $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount;
+                if($balanceAmount < 0){
+                    Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
+                }
+                else{
+                    $model->save();
+                }
+            }
+            return $this->redirect(['view', 'id' => $model->payment_id ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
-        return $this->redirect(['view', 'id' => $model->payment_id ]);
     }
 
     public function actionSearch()
     {
-        $model_invoice = new Invoice();
-        if ($model_invoice->load(Yii::$app->request->post())) {
-          $model_payment = new Payment();
-          $model = Invoice::find()->where(['invoice_code' => $model_invoice->invoice_code])->one();
-            if(!$model){
-                throw new \yii\web\ForbiddenHttpException;
+        if (\Yii::$app->user->can('searchInvoice')){
+            $model_invoice = new Invoice();
+            if ($model_invoice->load(Yii::$app->request->post())) {
+            $model_payment = new Payment();
+            $model = Invoice::find()->where(['invoice_code' => $model_invoice->invoice_code])->one();
+                if(!$model){
+                    throw new \yii\web\ForbiddenHttpException;
+                }
+                $previousLeaseRent = $model_invoice->prev_lease_rent;
+                $previousCGST = 9;
+                $previousSGST = 9;
+                $previousCGSTAmount = $model->prev_tax/2;
+                $previousSGSTAmount = $model->prev_tax/2;
+                $previousTotalTax = $model->prev_tax;
+                $previousDueTotal = $model->prev_dues_total;
+                $penalInterest = $model->prev_interest;
+
+                $currentLeaseRent = $model->current_lease_rent;
+                $currentCGSTAmount = $model->current_tax/2;
+                $currentSGSTAmount = $model->current_tax/2;
+                $currentSGST = 9;
+                $currentCGST = 9;
+                $currentTotalTax = $model->current_tax;
+                $currentDueTotal = $model->current_total_dues;
+
+                date_default_timezone_set('Asia/Kolkata');
+                $start_date = date('Y-m-d');
+
+                $model_payment->start_date = $start_date;
+                $model_payment->invoice_id = $model->invoice_id;
+                $model_payment->mode = 'cash';
+                $model_payment->order_id = $model->order_id;
+
+                $totalPayment = Payment::find()
+                ->where(['invoice_id' => $model->invoice_id])
+                ->sum('amount');
+                $balanceAmount = $currentDueTotal + $previousDueTotal - $totalPayment;
+
+            return $this->render('create', [
+                    'previousLeaseRent' => $previousLeaseRent,
+                    'previousTotalTax' => $previousTotalTax,
+                    'previousDueTotal' => $previousDueTotal,
+                    'previousCGSTAmount' => $previousCGSTAmount,
+                    'previousSGSTAmount' => $previousSGSTAmount,
+                    'previousSGST' => $previousSGST,
+                    'previousCGST' => $previousCGST,
+                    'penalInterest' => $penalInterest,
+                    'currentLeaseRent' => $currentLeaseRent,
+                    'currentTotalTax' => $currentTotalTax,
+                    'currentDueTotal' => $currentDueTotal,
+                    'currentCGSTAmount' => $currentCGSTAmount,
+                    'currentSGSTAmount' => $currentSGSTAmount,
+                    'currentSGST' => $currentSGST,
+                    'currentCGST' => $currentCGST,
+                    'start_date' => $start_date,
+                    'balanceAmount' => $balanceAmount,
+
+                    'inovice' => $model_invoice,
+                    'model' => $model_payment
+                ]);
             }
-            $previousLeaseRent = $model_invoice->prev_lease_rent;
-            $previousCGST = 9;
-            $previousSGST = 9;
-            $previousCGSTAmount = $model->prev_tax/2;
-            $previousSGSTAmount = $model->prev_tax/2;
-            $previousTotalTax = $model->prev_tax;
-            $previousDueTotal = $model->prev_dues_total;
-            $penalInterest = $model->prev_interest;
 
-            $currentLeaseRent = $model->current_lease_rent;
-            $currentCGSTAmount = $model->current_tax/2;
-            $currentSGSTAmount = $model->current_tax/2;
-            $currentSGST = 9;
-            $currentCGST = 9;
-            $currentTotalTax = $model->current_tax;
-            $currentDueTotal = $model->current_total_dues;
-
-            date_default_timezone_set('Asia/Kolkata');
-            $start_date = date('Y-m-d');
-
-            $model_payment->start_date = $start_date;
-            $model_payment->invoice_id = $model->invoice_id;
-            $model_payment->mode = 'cash';
-            $model_payment->order_id = $model->order_id;
-
-            $totalPayment = Payment::find()
-            ->where(['invoice_id' => $model->invoice_id])
-            ->sum('amount');
-            $balanceAmount = $currentDueTotal + $previousDueTotal - $totalPayment;
-
-          return $this->render('create', [
-                  'previousLeaseRent' => $previousLeaseRent,
-                  'previousTotalTax' => $previousTotalTax,
-                  'previousDueTotal' => $previousDueTotal,
-                  'previousCGSTAmount' => $previousCGSTAmount,
-                  'previousSGSTAmount' => $previousSGSTAmount,
-                  'previousSGST' => $previousSGST,
-                  'previousCGST' => $previousCGST,
-                  'penalInterest' => $penalInterest,
-                  'currentLeaseRent' => $currentLeaseRent,
-                  'currentTotalTax' => $currentTotalTax,
-                  'currentDueTotal' => $currentDueTotal,
-                  'currentCGSTAmount' => $currentCGSTAmount,
-                  'currentSGSTAmount' => $currentSGSTAmount,
-                  'currentSGST' => $currentSGST,
-                  'currentCGST' => $currentCGST,
-                  'start_date' => $start_date,
-                  'balanceAmount' => $balanceAmount,
-
-                  'inovice' => $model_invoice,
-                  'model' => $model_payment
-              ]);
+            return $this->render('search', [
+                'model' => $model_invoice,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
-
-        return $this->render('search', [
-            'model' => $model_invoice,
-        ]);
     }
 
     /**
@@ -170,15 +186,19 @@ class PaymentController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('updatePayment')){
+            $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->payment_id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->payment_id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -190,9 +210,13 @@ class PaymentController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('deletePayment')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

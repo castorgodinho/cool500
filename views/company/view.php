@@ -89,19 +89,30 @@ use yii\data\ActiveDataProvider;
   ?>
     <div class="panel panel-default">
       <div class="panel-heading">Order Number: <?= $order->order_number ?></div>
-      <div class="panel-body">
+      <div class="panel-body-order panel-body">
       <?php 
         $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
       ?>
-      <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
-      <p><b>Company: </b><?= $order->company->name ?></p><br>
-      <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
-      <p><b>Built Area: </b><?= $order->built_area ?></p><br>
-      <p><b>Shed Area: </b><?= $order->shed_area ?></p><br>
-      <p><b>Shed Number: </b><?= $order->shed_no ?></p><br>
-      <p><b>Godown Area: </b><?= $order->godown_area ?></p><br>
-      <p><b>Godown Number: </b><?= $order->godown_no ?></p><br>
-      <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+      <div class="row">
+        <div class="col-md-4">
+          <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
+          <p><b>Company: </b><?= $order->company->name ?></p><br>
+          <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
+        </div>
+        <div class="col-md-4">
+          <p><b>Built Area: </b><?= $order->built_area ?></p><br>
+          <p><b>Shed Area: </b><?= $order->shed_area ?></p><br>
+          <p><b>Shed Number: </b><?= $order->shed_no ?></p><br>
+        </div>
+        <div class="col-md-4">
+          <p><b>Godown Area: </b><?= $order->godown_area ?></p><br>
+          <p><b>Godown Number: </b><?= $order->godown_no ?></p><br>
+          <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+        </div>
+      </div>
+      
+      
+      
       <p><b>Plots: </b><?php
         if(is_array($plots)){
           foreach($plots as $plot){
@@ -124,8 +135,36 @@ use yii\data\ActiveDataProvider;
       <?= 
         yii\grid\GridView::widget([
           'dataProvider' => $provider,
-          
+          'columns' => [
+            'invoice_code',
+            'total_amount',
+            'start_date',
+            [
+              'class' => 'yii\grid\ActionColumn',
+              'header' => 'Actions',
+              'headerOptions' => ['style' => 'color:#337ab7'],
+              'template' => '{view}',
+              'buttons' => [
+                'view' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                'title' => Yii::t('app', 'lead-view'),
+                    ]);
+                },
+    
+                
+    
+              ],
+              'urlCreator' => function ($action, $provider, $key, $index) {
+                  if ($action === 'view') {
+                      $url ='index.php?r=invoice%2Fview&id='.$provider['invoice_id'];
+                      return $url;
+                  }
+      
+                  }
+          ],
+          ]
       ]);
+          
       ?>
       <h4><u>Payments</u></h4>
       <?php 
@@ -140,6 +179,37 @@ use yii\data\ActiveDataProvider;
       <?= 
         yii\grid\GridView::widget([
           'dataProvider' => $provider,
+          'columns' => [
+            'payment_id',
+            'order_id',
+            'amount',
+            'start_date',
+            'mode',
+            'invoice_id',
+            [
+              'class' => 'yii\grid\ActionColumn',
+              'header' => 'Actions',
+              'headerOptions' => ['style' => 'color:#337ab7'],
+              'template' => '{view}',
+              'buttons' => [
+                'view' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                'title' => Yii::t('app', 'lead-view'),
+                    ]);
+                },
+    
+                
+    
+              ],
+              'urlCreator' => function ($action, $provider, $key, $index) {
+                  if ($action === 'view') {
+                      $url ='index.php?r=payment%2Fview&id='.$provider['payment_id'];
+                      return $url;
+                  }
+      
+                  }
+          ],
+          ]
       ]);
       ?>
 
@@ -163,7 +233,8 @@ use yii\data\ActiveDataProvider;
 
     $script = <<< JS
       $(document).ready(function(){
-        /* $('.panel-body').hide(); */
+
+        $('.panel-body-order').hide();
         $('.panel-heading').click(function(){
           console.log("clik=cl");
           $(this).next().slideToggle();
