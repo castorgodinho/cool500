@@ -184,7 +184,51 @@ class RbacController extends Controller
         $changePassword->description = 'Delete User';
         $auth->add($changePassword);
 
+        // add "Payment" permission
+        $createPayment = $auth->createPermission('createPayment');
+        $createPayment->description = 'Create a Payment';
+        $auth->add($createPayment);
 
+        $indexPayment = $auth->createPermission('indexPayment');
+        $indexPayment->description = 'Index a Payment';
+        $auth->add($indexPayment);
+
+        $updatePayment = $auth->createPermission('updatePayment');
+        $updatePayment->description = 'Update Payment';
+        $auth->add($updatePayment);
+
+        $viewPayment = $auth->createPermission('viewPayment');
+        $viewPayment->description = 'View Payment';
+        $auth->add($viewPayment);
+
+        $deletePayment = $auth->createPermission('deletePayment');
+        $deletePayment->description = 'Delete Payment';
+        $auth->add($deletePayment);
+
+        // add "Invoice" permission
+        $createInvoice = $auth->createPermission('createInvoice');
+        $createInvoice->description = 'Create a Invoice';
+        $auth->add($createInvoice);
+
+        $indexInvoice = $auth->createPermission('indexInvoice');
+        $indexInvoice->description = 'Index a Invoice';
+        $auth->add($indexInvoice);
+
+        $updateInvoice = $auth->createPermission('updateInvoice');
+        $updateInvoice->description = 'Update Invoice';
+        $auth->add($updateInvoice);
+
+        $viewInvoice = $auth->createPermission('viewInvoice');
+        $viewInvoice->description = 'View Invoice';
+        $auth->add($viewInvoice);
+
+        $deleteInvoice = $auth->createPermission('deleteInvoice');
+        $deleteInvoice->description = 'Delete Invoice';
+        $auth->add($deleteInvoice);
+
+        $searchInvoice = $auth->createPermission('searchInvoice');
+        $searchInvoice->description = 'Delete Invoice';
+        $auth->add($searchInvoice);
 
         // add "admin" role
         $admin = $auth->createRole('admin');
@@ -240,16 +284,46 @@ class RbacController extends Controller
         $auth->addChild($admin, $indexUsers);
         $auth->addChild($admin, $deleteUsers);
         $auth->addChild($admin, $changePassword);
+        //add Invoice permissions
+        $auth->addChild($admin, $createInvoice);
+        $auth->addChild($admin, $updateInvoice);
+        $auth->addChild($admin, $viewInvoice);
+        $auth->addChild($admin, $indexInvoice);
+        $auth->addChild($admin, $deleteInvoice);
+        $auth->addChild($admin, $searchInvoice);
+        //add Payment permissions
+        $auth->addChild($admin, $createPayment);
+        $auth->addChild($admin, $updatePayment);
+        $auth->addChild($admin, $viewPayment);
+        $auth->addChild($admin, $indexPayment);
+        $auth->addChild($admin, $deletePayment);
 
-
-        //Create rule
+        //Create view own company rule
         $rule = new \app\rbac\CompanyRule;
         $auth->add($rule);
         $viewOwnCompany = $auth->createPermission('viewOwnCompany');
-        $viewOwnCompany->description = 'Update own post';
+        $viewOwnCompany->description = 'Update own Company';
         $viewOwnCompany->ruleName = $rule->name;
         $auth->add($viewOwnCompany);
         $auth->addChild($viewOwnCompany, $viewCompany);
+
+        //Create view own payment rule
+        $rule = new \app\rbac\PaymentRule;
+        $auth->add($rule);
+        $viewOwnPayment = $auth->createPermission('viewOwnPayment');
+        $viewOwnPayment->description = 'View own Payment';
+        $viewOwnPayment->ruleName = $rule->name;
+        $auth->add($viewOwnPayment);
+        $auth->addChild($viewOwnPayment, $viewPayment);
+
+        //Create view own invoice rule
+        $rule = new \app\rbac\InvoiceRule;
+        $auth->add($rule);
+        $viewOwnInvoice = $auth->createPermission('viewOwnInvoice');
+        $viewOwnInvoice->description = 'View own Invoice';
+        $viewOwnInvoice->ruleName = $rule->name;
+        $auth->add($viewOwnInvoice);
+        $auth->addChild($viewOwnInvoice, $viewInvoice);
         
 
         // add "Company" role
@@ -261,10 +335,13 @@ class RbacController extends Controller
         // add "staff" role
         $accounts = $auth->createRole('accounts');
         $auth->add($accounts);
+
         //add company permissions
-        //$auth->addChild($company, $viewCompany);
         $auth->addChild($company, $changePassword);
         $auth->addChild($company, $viewOwnCompany);
+        $auth->addChild($company, $viewOwnPayment);
+        $auth->addChild($company, $viewOwnInvoice);
+
         //add Staff permissions
         $auth->addChild($staff, $createCompany);
         $auth->addChild($staff, $viewCompany);
