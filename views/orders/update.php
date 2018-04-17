@@ -33,8 +33,8 @@ use yii\widgets\ActiveForm;
   </div>
   <div class="col-md-4 col-sm-4 col-xs-4">
     <p><b>Tax Invoice No: </b></p>
-    <p><b>Bill Date: </b></p>
-    <p><b>Due Date: </b></p>
+    <p><b>Bill Date: <?= $billDate ?></b></p>
+    <p><b>Due Date: <?= $invoiceDueDate ?></b></p>
     <p><b>Order Number: </b><?= $order->order_number ?></p>
   </div>
 </div>
@@ -103,8 +103,8 @@ use yii\widgets\ActiveForm;
         <td>  Final Total ( C = A + B) </td>
         <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
       </tr>
-    
-    
+
+
     </table>
     </div>
   </div>
@@ -116,7 +116,7 @@ use yii\widgets\ActiveForm;
   <td> <input value="<?= $order_id ?>" id="invoice-order_id" class="form-control" name="Invoice[order_id]" type="hidden"> </td>
   <td> <input value="<?= $rate->rate_id ?>" id="invoice-rate_id" class="form-control" name="Invoice[rate_id]" type="hidden"> </td>
   <td> <input value="<?= $tax->tax_id ?>" id="invoice-tax_id" class="form-control" name="Invoice[tax_id]" type="hidden"> </td>
-  <td> <input value="<?= $start_date ?>" id="invoice-start_date" class="form-control" name="Invoice[start_date]" type="hidden"> </td>
+  <td> <input value="<?= $invoiceDueDate ?>" id="invoice-start_date" class="form-control" name="Invoice[start_date]" type="hidden"> </td>
   <td> <input value="<?= $interest->interest_id ?>" id="invoice-interest_id" class="form-control" name="Invoice[interest_id]" type="hidden"> </td>
   <td> <input value="<?= $currentDueTotal + $previousDueTotal ?>" id="invoice-total_amount" class="form-control" name="Invoice[total_amount]" type="hidden"> </td>
   <td><input value="<?= $currentDueTotal  ?>" id="invoice-current_total_dues" class="form-control" name="Invoice[current_total_dues]" aria-required="true" aria-invalid="true" type="hidden"></td>

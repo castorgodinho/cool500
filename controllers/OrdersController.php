@@ -154,8 +154,6 @@ class OrdersController extends Controller
           $model->total_amount = round($model->total_amount);
           $order =  Orders::findOne($id);
           $time = strtotime($order->start_date);
-          $newformat = date('Y-m-d',$time);
-          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
           $orderPlotArray = $order->plots;
           foreach ($orderPlotArray as $plot) {
             $area = $plot->area;
@@ -183,7 +181,6 @@ class OrdersController extends Controller
           $invoiceCode = $invoiceCode . '/' . $invoiceID;
           echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = $invoiceCode;
-          $model->start_date =$invoiceDueDate;
           $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
@@ -265,6 +262,12 @@ class OrdersController extends Controller
           $penalInterest = ($interest->rate/100) * $previousDueTotal;
           $previousDueTotal = $previousDueTotal + $penalInterest;
 
+          $time = strtotime($invoice->start_date);
+          $newformat = date('Y-m-d',$time);
+          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
+
+          $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
+
           date_default_timezone_set('Asia/Kolkata');
           $start_date = date('Y-m-d');
 
@@ -284,6 +287,9 @@ class OrdersController extends Controller
                   'currentSGSTAmount' => $currentSGSTAmount,
                   'currentSGST' => $currentSGST,
                   'currentCGST' => $currentCGST,
+
+                  'billDate' => $billDate,
+                  'invoiceDueDate' => $invoiceDueDate,
 
                   'rate' => $rate,
                   'tax' => $tax,
