@@ -347,6 +347,12 @@ class RbacController extends Controller
         $auth->addChild($staff, $viewCompany);
         $auth->addChild($staff, $changePassword);
 
+        //add accounts permissions
+        $auth->addChild($accounts, $viewInvoice);
+        $auth->addChild($accounts, $createInvoice);
+        $auth->addChild($accounts, $searchInvoice);
+        $auth->addChild($accounts, $changePassword);
+
 
         // add "admin" role and give this role the "updatePost" permission
         // as well as the permissions of the "author" role
