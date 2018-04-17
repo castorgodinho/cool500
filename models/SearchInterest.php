@@ -67,6 +67,8 @@ class SearchInterest extends Interest
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'type', $this->type]);
 
+        $query->orderBy(['flag' => SORT_DESC]);
+
         return $dataProvider;
     }
 }

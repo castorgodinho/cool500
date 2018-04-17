@@ -67,6 +67,8 @@ class SearchRate extends Rate
             'date' => $this->date,
         ]);
 
+        $query->orderBy(['flag' => SORT_DESC  ]);
+
         return $dataProvider;
     }
 }
