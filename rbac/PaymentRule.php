@@ -2,7 +2,7 @@
     namespace app\rbac;
 
     use yii\rbac\Rule;
-    use app\models\Order;
+    use app\models\Orders;
     
     /**
      * Checks if authorID matches user passed via params
@@ -20,8 +20,8 @@
         public function execute($user, $item, $params)
         {
             $order_id = $params['payment']->order_id;
-            $order = Order::findOne($order_id);
-            return $order->company->user_id = $user;
+            $order = Orders::findOne($order_id);
+            return $order->company->user_id == $user;
             //return isset($params['payment']) ? $params['company']->user_id == $user : false;
         }
     }

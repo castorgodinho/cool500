@@ -350,6 +350,7 @@ class RbacController extends Controller
         //add accounts permissions
         $auth->addChild($accounts, $viewInvoice);
         $auth->addChild($accounts, $createInvoice);
+        $auth->addChild($accounts, $searchInvoice);
         $auth->addChild($accounts, $changePassword);
 
 
