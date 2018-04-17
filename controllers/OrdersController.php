@@ -153,6 +153,9 @@ class OrdersController extends Controller
           $invoiceCode = '';
           $model->total_amount = round($model->total_amount);
           $order =  Orders::findOne($id);
+          $time = strtotime($order->start_date);
+          $newformat = date('Y-m-d',$time);
+          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
           $orderPlotArray = $order->plots;
           foreach ($orderPlotArray as $plot) {
             $area = $plot->area;
@@ -180,6 +183,7 @@ class OrdersController extends Controller
           $invoiceCode = $invoiceCode . '/' . $invoiceID;
           echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = $invoiceCode;
+          $model->start_date =$invoiceDueDate;
           $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
