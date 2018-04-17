@@ -102,6 +102,7 @@ class UsersController extends Controller
     public function actionCreate()
     {
         if (\Yii::$app->user->can('createUsers')){
+            $model->scenario = 'create';
             $model = new Users();
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
@@ -136,14 +137,21 @@ class UsersController extends Controller
         if (\Yii::$app->user->can('updateUsers')){
             $model = $this->findModel($id);
             $model->password = "";
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+                return \yii\widgets\ActiveForm::validate($model);
+            }
             if ($model->load(Yii::$app->request->post())) {
                 if($model->password != ""){
                     $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                }else{
+                    $model->password = Users::findOne($model->user_id)->password;
                 }
                 $auth = Yii::$app->authManager;
                 $auth->revokeAll($model->user_id);
                 $role = $auth->getRole($model->type);
                 $auth->assign($role, $model->user_id);
+                echo $model->type;
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->user_id]);
             } else {

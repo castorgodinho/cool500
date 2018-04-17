@@ -31,7 +31,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'password'], 'required'],
+            [['email', 'password'], 'required', 'on' => 'create'],
             [['password', 'password_repeat'], 'string'],
             [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'on' => 'update-password', 'message'=>"Passwords don't match"],
             [['email'], 'string', 'max' => 100],

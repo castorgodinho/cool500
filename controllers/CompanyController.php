@@ -158,8 +158,10 @@ class CompanyController extends Controller
                 return \yii\widgets\ActiveForm::validate($user);
             }
             if ($model->load(Yii::$app->request->post())) {
-                if($model->password != ''){
-                    $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+                if($user->password != ''){
+                    $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
+                }else{
+                    $user->password = Users::findOne($user->user_id);
                 }
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);
