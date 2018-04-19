@@ -46,11 +46,16 @@ AppAsset::register($this);
             /* $link[] = ['label' => 'Plot', 'url' => ['/plot/index']]; */
             $link[] = ['label' => 'Interest', 'url' => ['/interest/index']];
             $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
-            $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
-            $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
             $link[] = ['label' => 'Payment', 'url' => ['/payment/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
+            $link[] = [
+                'label' => 'Taxation',
+                'items' => [
+                     ['label' => 'Tax', 'url' => ['/tax/index']],
+                     ['label' => 'Rate', 'url' => ['/rate/index']],
+                ],
+            ];
         }else if(\Yii::$app->user->can('company')){
             $link[] = ['label' => 'Profile', 'url' => ['/company/view', 'id' => Company::find()->where(['user_id' => Yii::$app->user->identity->user_id])->one()->company_id]];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
@@ -88,7 +93,15 @@ AppAsset::register($this);
 </div>
 
 
-
+<?php 
+    $script = <<< JS
+    $( "a[aria-label='Delete']" ).hide();
+        $(document).ready(function(){
+            
+        });
+JS;
+    $this->registerJS($script);
+?>
 <?php $this->endBody() ?>
 </body>
 </html>
