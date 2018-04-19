@@ -52,7 +52,7 @@ class Rate extends \yii\db\ActiveRecord
             'area_id' => 'Area ID',
             'from_area' => 'From Area',
             'to_area' => 'To Area',
-            'rate' => 'Rate',
+            'rate' => 'Lease Rate',
             'date' => 'Date',
         ];
     }

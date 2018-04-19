@@ -45,7 +45,7 @@ class Tax extends \yii\db\ActiveRecord
         return [
             'tax_id' => 'Tax ID',
             'name' => 'Name',
-            'rate' => 'Rate',
+            'rate' => 'TAX (GST) Rate',
             'date' => 'Date',
         ];
     }

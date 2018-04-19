@@ -46,8 +46,8 @@ class Interest extends \yii\db\ActiveRecord
             'interest_id' => 'Interest ID',
             'name' => 'Name',
             'type' => 'Type',
-            'rate' => 'Rate',
-            'start_date' => 'Start Date',
+            'rate' => 'Interest Rate',
+            'start_date' => 'Date',
         ];
     }
 

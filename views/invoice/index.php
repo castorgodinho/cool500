@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'invoice_code',
             'rate.rate',
             'tax.rate',
-            'order_id',
             'interest.rate',
             //'start_date',
             //'total_amount',

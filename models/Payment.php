@@ -50,7 +50,7 @@ class Payment extends \yii\db\ActiveRecord
             'payment_id' => 'Payment ID',
             'order_id' => 'Order ID',
             'amount' => 'Amount',
-            'start_date' => 'Start Date',
+            'start_date' => 'Date',
             'mode' => 'Mode',
             'invoice_id' => 'Invoice ID',
         ];

@@ -206,18 +206,22 @@ class OrdersController extends Controller
           $company = $order->company;
           $orderPlotArray = $order->plots;
           $totalArea = $order->total_area;
+
           $tax = Tax::find()
           ->where(['name' => 'GST'])
           ->where(['flag' => 1])
           ->one();
+
           $interest = Interest::find()
           ->where(['name' => 'Penal Interest'])
           ->andWhere(['flag' => 1])
           ->one();
+
           $area = null;
           foreach ($orderPlotArray as $plot) {
             $area = $plot->area;
           }
+
           $rate = Rate::find()->where(['area_id' => $area->area_id])
           ->andWhere(['<=','from_area', $totalArea])
           ->andWhere(['>=','to_area', $totalArea])
@@ -226,7 +230,6 @@ class OrdersController extends Controller
 
           $currentLeaseRent   = $rate->rate * $totalArea;
           $taxAmout = $currentLeaseRent * ($tax->rate/100);
-
           $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
           $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
           $currentSGST = ($tax->rate/2);
@@ -238,22 +241,22 @@ class OrdersController extends Controller
           ->where(['order_id' => $id])
           ->orderBy(['invoice_id' => 'SORT_DESC'])
           ->all();
+
           $invoice = null;
           foreach($invoices as $i){
             $invoice = $i;
           }
-          $totalPaid = Payment::find()
-          ->where(['order_id' => $id])
-          ->sum('amount');
+
+          if($invoice){
+            $totalPaid = Payment::find()
+            ->where(['invoice_id' => $invoice->invoice_id])
+            ->sum('amount');
+            $previousDueTotal = $invoice->grand_total - $totalPaid;
+          }
 
           $totalInvoiceAmount = Invoice::find()
           ->where(['order_id' => $id])
           ->sum('grand_total');
-
-          echo $totalInvoiceAmount.'<br>';
-          echo $totalPaid.'<br>';
-          echo ($totalInvoiceAmount - $totalPaid);
-
 
           $totalAmount = 0;
           if($invoice){
@@ -263,8 +266,21 @@ class OrdersController extends Controller
           $previousCGSTAmount =  $invoice->current_tax/2;
           $previousSGSTAmount =  $invoice->current_tax/2;
           $previousTotalTax = $invoice->current_tax;
-          $previousDueTotal = $totalInvoiceAmount - $totalPaid;
-          }
+
+          $order =  Orders::findOne($id);
+          $time = strtotime($invoice->start_date);
+          $newformat = date('Y-m-d',$time);
+          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
+          $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
+
+          }else{
+
+          $time = strtotime($order->start_date);
+          $newformat = date('Y-m-d',$time);
+          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
+
+          $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
+        }
 
           $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
           $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
@@ -275,12 +291,6 @@ class OrdersController extends Controller
 
           $penalInterest = ($interest->rate/100) * $previousDueTotal;
           $previousDueTotal = $previousDueTotal + $penalInterest;
-
-          $time = strtotime($invoice->start_date);
-          $newformat = date('Y-m-d',$time);
-          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
-
-          $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
 
           date_default_timezone_set('Asia/Kolkata');
           $start_date = date('Y-m-d');

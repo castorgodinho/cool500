@@ -11,62 +11,62 @@ use yii\widgets\ActiveForm;
   <th></th>
   <tr>
     <td>Previous Lease Rent</td>
-    <td><?= $previousLeaseRent ?></td>
+    <td><?= $invoice->prev_lease_rent ?></td>
   </tr>
 
   <tr>
     <td>Previous SGST Amount</td>
-    <td><?= $previousSGSTAmount ?></td>
+    <td><?= $invoice->prev_tax/2 ?></td>
   </tr>
 
   <tr>
     <td>Previous CGST Amount</td>
-    <td><?= $previousCGSTAmount ?></td>
+    <td><?= $invoice->prev_tax/2 ?></td>
   </tr>
 
   <tr>
     <td> Previous Total Tax </td>
-    <td><?= $previousTotalTax ?></td>
+    <td><?= $invoice->prev_tax ?></td>
   </tr>
 
   <tr>
     <td> Penal Interest </td>
-    <td><?= $penalInterest ?></td>
+    <td><?= $invoice->prev_interest ?></td>
   </tr>
 
   <tr>
     <td>  Previous Due Total  </td>
-    <td> <?= $previousDueTotal ?> </td>
+    <td> <?= $invoice->prev_dues_total ?> </td>
   </tr>
 
   <tr>
     <td>  Current Lease Rent </td>
-    <td> <?= $currentLeaseRent ?> </td>
+    <td> <?= $invoice->current_lease_rent  ?> </td>
   </tr>
 
   <tr>
     <td>  Current CGST Amount </td>
-    <td> <?= $currentCGSTAmount ?>  </td>
+    <td> <?= $invoice->current_tax/2 ?>  </td>
   </tr>
 
   <tr>
     <td>  Current SGST Amount </td>
-    <td> <?= $currentSGSTAmount ?>  </td>
+    <td> <?= $invoice->current_tax/2 ?>  </td>
   </tr>
 
   <tr>
     <td>  Current Total Tax </td>
-    <td> <?= $currentTotalTax ?>  </td>
+    <td> <?= $invoice->current_tax ?>  </td>
   </tr>
 
   <tr>
     <td>  Current Due Total </td>
-    <td> <?= $currentDueTotal ?>  </td>
+    <td> <?= $invoice->current_total_dues ?>  </td>
   </tr>
 
   <tr>
     <td>  Final Total ( C = A + B) </td>
-    <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
+    <td> <?= $invoice->grand_total?>  </td>
   </tr>
 
   <tr>

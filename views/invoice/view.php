@@ -18,6 +18,7 @@ use yii\widgets\ActiveForm;
 <hr>
 <div class="row">
   <div class="col-md-4 col-sm-4 col-xs-4">
+    <?php $company = $model->order->company;?>
     <p><b>To. </b> <?= $company->name ?></p>
     <p><b>Utility Plot No. </b></p>
     <p><?= $company->address ?></p>
@@ -35,7 +36,7 @@ use yii\widgets\ActiveForm;
     <p><b>Tax Invoice No: </b><?= $model->invoice_code ?></p>
     <p><b>Bill Date: </b> <?= $billDate ?></p>
     <p><b>Due Date: </b><?= $invoiceDueDate ?></p>
-    <p><b>Order Number: </b><?= $order->order_number ?></p>
+    <p><b>Order Number: </b><?= $model->order->order_number ?></p>
   </div>
 </div>
 <h3 class="text-center"><b>Lease Rent Invoice</b></h3>
@@ -47,62 +48,62 @@ use yii\widgets\ActiveForm;
     <table class="table table-responsive">
       <tr>
         <td>Previous Lease Rent</td>
-        <td><?= $previousLeaseRent ?></td>
+        <td><?= $model->prev_lease_rent ?></td>
       </tr>
 
       <tr>
         <td>Previous SGST Amount</td>
-        <td><?= $previousSGSTAmount ?></td>
+        <td><?= $model->prev_tax/2 ?></td>
       </tr>
 
       <tr>
         <td>Previous CGST Amount</td>
-        <td><?= $previousCGSTAmount ?></td>
+        <td><?= $model->prev_tax/2 ?></td>
       </tr>
 
       <tr>
         <td> Previous Total Tax </td>
-        <td><?= $previousTotalTax ?></td>
+        <td><?= $model->prev_tax ?></td>
       </tr>
 
       <tr>
         <td> Penal Interest </td>
-        <td><?= $penalInterest ?></td>
+        <td><?= $model->prev_interest ?></td>
       </tr>
 
       <tr>
         <td>  Previous Due Total  </td>
-        <td> <?= $previousDueTotal ?> </td>
+        <td> <?= $model->prev_dues_total ?> </td>
       </tr>
 
       <tr>
         <td>  Current Lease Rent </td>
-        <td> <?= $currentLeaseRent ?> </td>
+        <td> <?= $model->current_lease_rent  ?> </td>
       </tr>
 
       <tr>
         <td>  Current CGST Amount </td>
-        <td> <?= $currentCGSTAmount ?>  </td>
+        <td> <?= $model->current_tax/2 ?>  </td>
       </tr>
 
       <tr>
         <td>  Current SGST Amount </td>
-        <td> <?= $currentSGSTAmount ?>  </td>
+        <td> <?= $model->current_tax/2 ?>  </td>
       </tr>
 
       <tr>
         <td>  Current Total Tax </td>
-        <td> <?= $currentTotalTax ?>  </td>
+        <td> <?= $model->current_tax ?>  </td>
       </tr>
 
       <tr>
         <td>  Current Due Total </td>
-        <td> <?= $currentDueTotal ?>  </td>
+        <td> <?= $model->current_total_dues ?>  </td>
       </tr>
 
       <tr>
         <td>  Final Total ( C = A + B) </td>
-        <td> <?= $currentDueTotal + $previousDueTotal ?>  </td>
+        <td> <?= $model->grand_total?>  </td>
       </tr>
 
 

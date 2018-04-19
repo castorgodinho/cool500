@@ -65,41 +65,8 @@ class InvoiceController extends Controller
      */
     public function actionView($id)
     {
-
-
         $model = Invoice::findOne($id);
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
-            $previousLeaseRent = $model->prev_lease_rent;
-            $previousCGST = 9;
-            $previousSGST = 9;
-            $previousCGSTAmount = $model->prev_tax/2;
-            $previousSGSTAmount = $model->prev_tax/2;
-            $previousTotalTax = $model->prev_tax;
-            $previousDueTotal = $model->prev_dues_total;
-            $penalInterest = $model->prev_interest;
-
-            $currentLeaseRent = $model->current_lease_rent;
-            $currentCGSTAmount = $model->current_tax/2;
-            $currentSGSTAmount = $model->current_tax/2;
-            $currentSGST = 9;
-            $currentCGST = 9;
-            $currentTotalTax = $model->current_tax;
-            $currentDueTotal = $model->current_total_dues;
-
-            $order =  Orders::findOne($model->order_id);
-
-            $company = $order->company;
-            $orderPlotArray = $order->plots;
-            $totalArea = $order->total_area;
-            $tax = Tax::find()->one(); #TODO
-            $interest = Interest::find()->one(); #TODO
-            $area = null;
-            foreach ($orderPlotArray as $plot) {
-              $area = $plot->area;
-            }
-            $rate = Rate::find()->where(['area_id' => $area->area_id])->one(); #TODO
-            $currentLeaseRent   = $rate->rate * $totalArea;
-            $taxAmout = $currentLeaseRent * ($tax->rate/100);
 
             $time = strtotime($model->start_date);
             $newformat = date('Y-m-d',$time);
@@ -111,29 +78,6 @@ class InvoiceController extends Controller
             $start_date = date('Y-m-d');
 
             return $this->render('view', [
-                    'previousLeaseRent' => $previousLeaseRent,
-                    'previousTotalTax' => $previousTotalTax,
-                    'previousDueTotal' => $previousDueTotal,
-                    'previousCGSTAmount' => $previousCGSTAmount,
-                    'previousSGSTAmount' => $previousSGSTAmount,
-                    'previousSGST' => $previousSGST,
-                    'previousCGST' => $previousCGST,
-                    'penalInterest' => $penalInterest,
-                    'currentLeaseRent' => $currentLeaseRent,
-                    'currentTotalTax' => $currentTotalTax,
-                    'currentDueTotal' => $currentDueTotal,
-                    'currentCGSTAmount' => $currentCGSTAmount,
-                    'currentSGSTAmount' => $currentSGSTAmount,
-                    'currentSGST' => $currentSGST,
-                    'currentCGST' => $currentCGST,
-                    'company' => $company,
-                    'order' => $order,
-                    'rate' => $rate,
-                    'tax' => $tax,
-                    'order_id' => $id,
-                    'interest' => $interest,
-                    'start_date' => $start_date,
-
                     'billDate' => $billDate,
                     'invoiceDueDate' => $invoiceDueDate,
 

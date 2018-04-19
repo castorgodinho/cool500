@@ -112,25 +112,10 @@ class PaymentController extends Controller
             if ($model_invoice->load(Yii::$app->request->post())) {
             $model_payment = new Payment();
             $model = Invoice::find()->where(['invoice_code' => $model_invoice->invoice_code])->one();
+
                 if(!$model){
                     throw new \yii\web\ForbiddenHttpException;
                 }
-                $previousLeaseRent = $model->prev_lease_rent;
-                $previousCGST = 9;
-                $previousSGST = 9;
-                $previousCGSTAmount = $model->prev_tax/2;
-                $previousSGSTAmount = $model->prev_tax/2;
-                $previousTotalTax = $model->prev_tax;
-                $previousDueTotal = $model->prev_dues_total;
-                $penalInterest = $model->prev_interest;
-
-                $currentLeaseRent = $model->current_lease_rent;
-                $currentCGSTAmount = $model->current_tax/2;
-                $currentSGSTAmount = $model->current_tax/2;
-                $currentSGST = 9;
-                $currentCGST = 9;
-                $currentTotalTax = $model->current_tax;
-                $currentDueTotal = $model->current_total_dues;
 
                 date_default_timezone_set('Asia/Kolkata');
                 $start_date = date('Y-m-d');
@@ -143,6 +128,7 @@ class PaymentController extends Controller
                 $totalPayment = Payment::find()
                 ->where(['invoice_id' => $model->invoice_id])
                 ->sum('amount');
+
                 $in = Invoice::find()
                 ->where(['order_id' => $model->order_id])
                 ->orderBy(['invoice_id' => SORT_DESC])
@@ -151,29 +137,14 @@ class PaymentController extends Controller
                 if($in->invoice_id != $model->invoice_id){
                   $balanceAmount = '-1';
                 }else{
-                    $balanceAmount = $currentDueTotal + $previousDueTotal - $totalPayment;
+                    $balanceAmount = $model->grand_total - $totalPayment;
                 }
 
             return $this->render('create', [
-                    'previousLeaseRent' => $previousLeaseRent,
-                    'previousTotalTax' => $previousTotalTax,
-                    'previousDueTotal' => $previousDueTotal,
-                    'previousCGSTAmount' => $previousCGSTAmount,
-                    'previousSGSTAmount' => $previousSGSTAmount,
-                    'previousSGST' => $previousSGST,
-                    'previousCGST' => $previousCGST,
-                    'penalInterest' => $penalInterest,
-                    'currentLeaseRent' => $currentLeaseRent,
-                    'currentTotalTax' => $currentTotalTax,
-                    'currentDueTotal' => $currentDueTotal,
-                    'currentCGSTAmount' => $currentCGSTAmount,
-                    'currentSGSTAmount' => $currentSGSTAmount,
-                    'currentSGST' => $currentSGST,
-                    'currentCGST' => $currentCGST,
                     'start_date' => $start_date,
                     'balanceAmount' => $balanceAmount,
 
-                    'inovice' => $model_invoice,
+                    'invoice' => $model,
                     'model' => $model_payment
                 ]);
           }else{

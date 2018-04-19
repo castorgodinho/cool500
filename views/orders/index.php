@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'order_id',
             'order_number',
             'company.name',
             /* 'plot_id', */
@@ -31,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             /* 'shed_area', */
             // 'godown_area',
              'start_date',
-            // 'end_date',
+             'end_date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
