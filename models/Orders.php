@@ -59,12 +59,12 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'order_id' => 'Order ID',
-            'order_number' => 'Order Number',
+            'order_number' => 'Unit Number',
             'company_id' => 'Company ID',
             'built_area' => 'Built Area',
             'shed_area' => 'Shed Area',
             'godown_area' => 'Godown Area',
-            'start_date' => 'From Date',
+            'start_date' => 'Allotted Date',
             'end_date' => 'To Date',
             'shed_no' => 'Shed No',
             'godown_no' => 'Godown No',

@@ -15,12 +15,20 @@ use yii\widgets\ActiveForm;
   </tr>
 
   <tr>
-    <td>Previous SGST Amount</td>
-    <td><?= $invoice->prev_tax/2 ?></td>
+    <?php if($invoice->prev_lease_rent != 0) { ?>
+    <td>Previous SGST <?= round($invoice->prev_tax/2 * 100/$invoice->prev_lease_rent,1) ?>% (INR)</td>
+    <?php } else { ?>
+    <td>Previous SGST (INR)</td>
+    <?php } ?>
+    <td><?= $invoice->prev_tax ?></td>
   </tr>
 
   <tr>
-    <td>Previous CGST Amount</td>
+    <?php if($invoice->prev_lease_rent != 0) { ?>
+    <td>Previous CGST <?= round($invoice->prev_tax/2 * 100/$invoice->prev_lease_rent,1) ?>% (INR)</td>
+    <?php } else { ?>
+    <td>Previous CGST (INR)</td>
+    <?php } ?>
     <td><?= $invoice->prev_tax/2 ?></td>
   </tr>
 
@@ -30,7 +38,7 @@ use yii\widgets\ActiveForm;
   </tr>
 
   <tr>
-    <td> Penal Interest </td>
+    <td> Penal  Interest  <?= $invoice->interest->rate ?>% (INR) </td>
     <td><?= $invoice->prev_interest ?></td>
   </tr>
 
@@ -45,12 +53,12 @@ use yii\widgets\ActiveForm;
   </tr>
 
   <tr>
-    <td>  Current CGST Amount </td>
+    <td>  Current CGST <?= $invoice->tax->rate/2 ?>% (INR) Amount </td>
     <td> <?= $invoice->current_tax/2 ?>  </td>
   </tr>
 
   <tr>
-    <td>  Current SGST Amount </td>
+    <td>  Current SGST <?= $invoice->tax->rate/2 ?>% (INR) Amount </td>
     <td> <?= $invoice->current_tax/2 ?>  </td>
   </tr>
 

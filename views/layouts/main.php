@@ -41,11 +41,11 @@ AppAsset::register($this);
         $link[] = ['label' => 'Login', 'url' => ['/site/login']];
     }else{
         if(\Yii::$app->user->can('admin')){
-            $link[] = ['label' => 'Area', 'url' => ['/area/index']];
+            $link[] = ['label' => 'Industrial Area', 'url' => ['/area/index']];
             $link[] = ['label' => 'Company', 'url' => ['/company/index']];
             /* $link[] = ['label' => 'Plot', 'url' => ['/plot/index']]; */
             $link[] = ['label' => 'Interest', 'url' => ['/interest/index']];
-            $link[] = ['label' => 'Orders', 'url' => ['/orders/index']];
+            $link[] = ['label' => 'Unit List', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Tax', 'url' => ['/tax/index']];
             $link[] = ['label' => 'Rate', 'url' => ['/rate/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];

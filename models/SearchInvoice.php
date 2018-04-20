@@ -68,6 +68,8 @@ class SearchInvoice extends Invoice
             'total_amount' => $this->total_amount,
         ]);
 
+        $query->orderBy(['invoice_id' => SORT_DESC]);
+
         return $dataProvider;
     }
 }

@@ -98,13 +98,21 @@ class InvoiceController extends Controller
         if (\Yii::$app->user->can('createInvoice')){
             $model = new Invoice();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->invoice_id]);
+            if ($model->load(Yii::$app->request->post())) {
+                $order = Orders::find()->where(['order_number' => $model->order_id])->one();
+                if($order){
+                  $model->order_id = $order->order_id;
+                  $model->save();
+                }
+                else{
+                  echo 'hello';
+                }
+                return $this->redirect(['index']);
             }
 
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+             return $this->render('create', [
+                 'model' => $model,
+             ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }

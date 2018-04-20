@@ -68,6 +68,8 @@ class SearchOrders extends Orders
             'end_date' => $this->end_date,
         ]);
 
+        $query->orderBy(['order_id' => SORT_DESC]);
+
         return $dataProvider;
     }
 }

@@ -48,9 +48,9 @@ class Invoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount', 'prev_lease_rent', 'grand_total', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues'], 'integer'],
-            [['start_date'], 'safe'],
-            [['invoice_code', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues'], 'required'],
+            [['rate_id', 'tax_id', 'interest_id', 'prev_lease_rent', 'grand_total', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_total_dues'], 'integer'],
+            [['start_date' ,'order_id'], 'safe'],
+            [['invoice_code', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_total_dues'], 'required'],
             [['invoice_code'], 'string', 'max' => 100],
             [['interest_id'], 'exist', 'skipOnError' => true, 'targetClass' => Interest::className(), 'targetAttribute' => ['interest_id' => 'interest_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
@@ -66,23 +66,23 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return [
             'invoice_id' => 'Invoice ID',
-            'rate_id' => 'Rate ID',
-            'tax_id' => 'Tax ID',
-            'order_id' => 'Order ID',
-            'interest_id' => 'Interest ID',
-            'start_date' => 'Start Date',
+            'rate_id' => 'Lease Rate',
+            'tax_id' => 'Tax',
+            'order_id' => 'Unit ID',
+            'interest_id' => 'Penal Interest',
+            'start_date' => 'Bill Date',
             'total_amount' => 'Total Amount',
             'invoice_code' => 'Invoice Code',
-            'prev_lease_rent' => 'Prev Lease Rent',
-            'grand_total' => 'Grand Total',
-            'prev_tax' => 'Prev Tax',
-            'prev_interest' => 'Prev Interest',
-            'prev_dues_total' => 'Prev Dues Total',
-            'current_lease_rent' => 'Current Lease Rent',
-            'current_tax' => 'Current Tax',
-            'current_interest' => 'Current Interest',
-            'current_dues_total' => 'Current Dues Total',
-            'current_total_dues' => 'Current Total Dues',
+            'prev_lease_rent' => 'Previous Lease Rent (INR) ',
+            'grand_total' => 'Grand Total ( C = A + B ) (INR)',
+            'prev_tax' => 'Previous Tax Total (INR)',
+            'prev_interest' => 'Previous Interest (INR)',
+            'prev_dues_total' => 'Previous Dues Total (A) (INR)',
+            'current_lease_rent' => 'Current Lease Rent (INR)',
+            'current_tax' => 'Current Tax Total (INR)',
+            'current_interest' => 'Current Interest (INR)',
+            'current_dues_total' => 'hello',
+            'current_total_dues' => 'Current Total Dues (B) (INR)',
         ];
     }
 
