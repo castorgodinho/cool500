@@ -45,17 +45,25 @@ use yii\widgets\ActiveForm;
 
     <table class="table table-responsive">
       <tr>
-        <td>Previous Lease Rent</td>
+        <td>Previous Lease Rent (INR) </td>
         <td><?= $previousLeaseRent ?></td>
       </tr>
 
       <tr>
-        <td>Previous SGST Amount</td>
-        <td><?= $previousSGSTAmount ?></td>
+        <?php if($previousLeaseRent != 0) { ?>
+        <td>Previous SGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+        <?php } else { ?>
+        <td>Previous SGST (INR)</td>
+        <?php } ?>
+        <td><?= $previousCGSTAmount ?></td>
       </tr>
 
       <tr>
-        <td>Previous CGST Amount</td>
+        <?php if($previousLeaseRent != 0) { ?>
+        <td>Previous CGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+        <?php } else { ?>
+        <td>Previous CGST (INR)</td>
+        <?php } ?>
         <td><?= $previousCGSTAmount ?></td>
       </tr>
 
@@ -65,37 +73,37 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td> Penal Interest </td>
+        <td> Penal Interest <?= $interest->rate ?>% (INR) </td>
         <td><?= $penalInterest ?></td>
       </tr>
 
       <tr>
-        <td>  Previous Due Total  </td>
+        <td>  Previous Due Total (INR) </td>
         <td> <?= $previousDueTotal ?> </td>
       </tr>
 
       <tr>
-        <td>  Current Lease Rent </td>
+        <td>  Current Lease Rent (INR) </td>
         <td> <?= $currentLeaseRent ?> </td>
       </tr>
 
       <tr>
-        <td>  Current CGST Amount </td>
+        <td>  Current CGST <?= $tax->rate/2 ?>% (INR)  </td>
         <td> <?= $currentCGSTAmount ?>  </td>
       </tr>
 
       <tr>
-        <td>  Current SGST Amount </td>
+        <td>  Current SGST <?= $tax->rate/2 ?>% (INR)  </td>
         <td> <?= $currentSGSTAmount ?>  </td>
       </tr>
 
       <tr>
-        <td>  Current Total Tax </td>
+        <td>  Current Total Tax (INR) </td>
         <td> <?= $currentTotalTax ?>  </td>
       </tr>
 
       <tr>
-        <td>  Current Due Total </td>
+        <td>  Current Due Total (B) (INR) </td>
         <td> <?= $currentDueTotal ?>  </td>
       </tr>
 
