@@ -6,6 +6,8 @@ use Yii;
 use app\models\Area;
 use app\models\AreaRate;
 use app\models\OrderDetails;
+use app\models\Log;
+use yii\helpers\Json;
 use app\models\SearchArea;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -108,13 +110,21 @@ class AreaController extends Controller
     {
         if (\Yii::$app->user->can('updateArea')){
             $model = $this->findModel($id);
+            $model->area_rate = AreaRate::find()->orderBy('start_date DESC')->one()->area_rate;
             if ($model->load(Yii::$app->request->post())) {
                 $rate = new AreaRate();
                 $rate->area_rate = $model->area_rate;
-                $model->save();
                 $rate->area_id = $model->area_id;
                 $rate->start_date = date('Y-m-d');
+                $log = new Log();
+                $log->old_value = Json::encode(Area::find()->joinWith('area-rate')->where(['area_id' => $model->area_id])->all(), $asArray = true) ;
                 $rate->save(false);
+                $model->save();
+                $log->new_value = Json::encode(Area::find()->joinWith('area-rate')->where(['area_id' => $model->area_id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Area';
+                $log->save();
+                
                 return $this->redirect(['view', 'id' => $model->area_id]);
             }
 

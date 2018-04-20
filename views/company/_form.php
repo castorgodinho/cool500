@@ -70,6 +70,9 @@ use yii\widgets\ActiveForm;
           <div class="col-md-6">
             <?= $form->field($model, 'competent_mobile')->textInput(['maxlength' => true]) ?>
           </div>
+          <div class="col-md-6">
+            <?= $form->field($model, 'remark')->textarea(['maxlength' => true]) ?>
+          </div>
           
         </div>
 

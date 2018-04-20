@@ -29,6 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'rate.rate',
             'tax.rate',
             'interest.rate',
+            'order.order_number',
+            'order.company.name',
             //'start_date',
             //'total_amount',
 

@@ -77,6 +77,10 @@ use yii\data\ActiveDataProvider;
     <p><strong>Address</strong> <?= $model->address ?></p>
     <h4></h4>
   </div>
+  <div class="col-md-3">
+    <p><strong>Remark</strong> <?= $model->remark ?></p>
+    <h4></h4>
+  </div>.
 </div>
   </div>
 </div>
@@ -100,14 +104,15 @@ use yii\data\ActiveDataProvider;
           <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
         </div>
         <div class="col-md-4">
-          <p><b>Built Area: </b><?= $order->built_area ?></p><br>
-          <p><b>Shed Area: </b><?= $order->shed_area ?></p><br>
-          <p><b>Shed Number: </b><?= $order->shed_no ?></p><br>
+          <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+          <?php if ($order->built_area != ""){ ?><p><b>Built Area: </b><?php  $order->built_area ?></p><?php } ?><br>
+          <?php if ($order->shed_area != ""){ ?><p><b>Shed Area: </b><?= $order->shed_area ?></p><?php } ?><br>
+         
         </div>
         <div class="col-md-4">
-          <p><b>Godown Area: </b><?= $order->godown_area ?></p><br>
-          <p><b>Godown Number: </b><?= $order->godown_no ?></p><br>
-          <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+        <?php if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
+        <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
+        <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>  
         </div>
       </div>
       

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use app\models\AreaRate;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SearchArea */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -27,6 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'name',
             'total_area',
+            [
+                'label' => 'Rate',
+                'value' => function ($dataProvider) {
+                     return  AreaRate::find()->orderBy('start_date DESC')->one()->area_rate;
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

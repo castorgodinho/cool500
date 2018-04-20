@@ -6,6 +6,8 @@ use Yii;
 use app\models\Company;
 use app\models\Users;
 use app\models\Orders;
+use app\models\Log;
+use yii\helpers\Json;
 use app\models\SearchCompany;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -125,6 +127,7 @@ class CompanyController extends Controller
                 $auth->assign($companyRole, $user->user_id);
                 $model->user_id = $user->user_id;
                 $model->save();
+
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {
                 return $this->render('create', [
@@ -163,7 +166,14 @@ class CompanyController extends Controller
                 }else{
                     $user->password = Users::findOne($user->user_id);
                 }
+                $log = new Log();
+                $log->old_value = Json::encode(Company::find()->joinWith('user')->where(['company_id' => $model->company_id])->all(), $asArray = true) ;
                 $model->save();
+                $user->save();
+                $log->new_value = Json::encode(Company::find()->joinWith('user')->where(['company_id' => $model->company_id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Company';
+                $log->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {
                 return $this->render('update', [

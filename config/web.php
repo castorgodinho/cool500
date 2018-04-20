@@ -8,6 +8,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             // uncomment if you want to cache RBAC items hierarchy
