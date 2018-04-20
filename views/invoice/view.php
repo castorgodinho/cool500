@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
+<div class="cover" style="border: 2px solid black; padding: 10px;">
 <div class="row">
   <div class="col-md-4 col-sm-4 col-xs-4 ">
     <h1><b>GIDC LOGO HERE</b></h1>
@@ -116,6 +117,11 @@ use yii\widgets\ActiveForm;
 
 
     </table>
+    <hr>
+    <p><b>Penal Interest @ 15% will apply on total dues adter due date</b></p>
+    <p>This is a computer-generated document and it does not require a signature</p>
+    <p><b>Disclaimer: </b>The data belongs to Goa IDC. For any communication related to the published data, Please contact at the above address</p>
     </div>
   </div>
+</div>
 </div>

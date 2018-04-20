@@ -9,7 +9,7 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 ?>
-
+<a href="index.php?r=company/update-gst&id=<?= $model->company_id ?>" >Update GSTIN</a>
 <div class="panel panel-default">
   <div class="panel-heading">Unit Details</div>
   <div class="panel-body">

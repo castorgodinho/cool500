@@ -32,6 +32,10 @@ class RbacController extends Controller
         $deleteCompany->description = 'Delete Company';
         $auth->add($deleteCompany);
 
+        $updateGst = $auth->createPermission('updateGst');
+        $updateGst->description = 'Update GST';
+        $auth->add($updateGst);
+
         // add "Area" permission
         $createArea = $auth->createPermission('createArea');
         $createArea->description = 'Create a Area';
@@ -205,6 +209,27 @@ class RbacController extends Controller
         $deletePayment->description = 'Delete Payment';
         $auth->add($deletePayment);
 
+        // add "Interest" permission
+        $createInterest = $auth->createPermission('createInterest');
+        $createInterest->description = 'Create a Interest';
+        $auth->add($createInterest);
+
+        $indexInterest = $auth->createPermission('indexInterest');
+        $indexInterest->description = 'Index a Interest';
+        $auth->add($indexInterest);
+
+        $updateInterest = $auth->createPermission('updateInterest');
+        $updateInterest->description = 'Update Interest';
+        $auth->add($updateInterest);
+
+        $viewInterest = $auth->createPermission('viewInterest');
+        $viewInterest->description = 'View Interest';
+        $auth->add($viewInterest);
+
+        $deleteInterest = $auth->createPermission('deleteInterest');
+        $deleteInterest->description = 'Delete Interest';
+        $auth->add($deleteInterest);
+
         // add "Invoice" permission
         $createInvoice = $auth->createPermission('createInvoice');
         $createInvoice->description = 'Create a Invoice';
@@ -240,6 +265,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $viewCompany);
         $auth->addChild($admin, $indexCompany);
         $auth->addChild($admin, $deleteCompany);
+        $auth->addChild($admin, $updateGst);
         //add Area permissions
         $auth->addChild($admin, $createArea);
         $auth->addChild($admin, $updateArea);
@@ -297,6 +323,12 @@ class RbacController extends Controller
         $auth->addChild($admin, $viewPayment);
         $auth->addChild($admin, $indexPayment);
         $auth->addChild($admin, $deletePayment);
+        //add Payment permissions
+        $auth->addChild($admin, $createInterest);
+        $auth->addChild($admin, $updateInterest);
+        $auth->addChild($admin, $viewInterest);
+        $auth->addChild($admin, $indexInterest);
+        $auth->addChild($admin, $deleteInterest);
 
         //Create view own company rule
         $rule = new \app\rbac\CompanyRule;
@@ -324,6 +356,15 @@ class RbacController extends Controller
         $viewOwnInvoice->ruleName = $rule->name;
         $auth->add($viewOwnInvoice);
         $auth->addChild($viewOwnInvoice, $viewInvoice);
+
+        //update own gst
+        $rule = new \app\rbac\GstRule;
+        $auth->add($rule);
+        $updateOwnGst = $auth->createPermission('updateOwnGst');
+        $updateOwnGst->description = 'Update own GST';
+        $updateOwnGst->ruleName = $rule->name;
+        $auth->add($updateOwnGst);
+        $auth->addChild($updateOwnGst, $updateGst);
         
 
         // add "Company" role
@@ -341,6 +382,7 @@ class RbacController extends Controller
         $auth->addChild($company, $viewOwnCompany);
         $auth->addChild($company, $viewOwnPayment);
         $auth->addChild($company, $viewOwnInvoice);
+        $auth->addChild($company, $updateOwnGst);
 
         //add Staff permissions
         $auth->addChild($staff, $createCompany);
