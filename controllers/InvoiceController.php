@@ -69,18 +69,22 @@ class InvoiceController extends Controller
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
 
             $time = strtotime($model->start_date);
-            $newformat = date('Y-m-d',$time);
-            $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
+            $start_date = date('d-m-Y',$time);
+            $invoiceDueDate = date('d-m-Y', strtotime($start_date. ' + 1 month'));
 
-            $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
+            $leasePeriodFrom = $invoiceDueDate;
+            $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
 
-            date_default_timezone_set('Asia/Kolkata');
-            $start_date = date('Y-m-d');
+            $prevPeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ' - 1 year'));
+            $prevPeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' - 1 day'));
 
             return $this->render('view', [
-                    'billDate' => $billDate,
+                    'start_date' => $start_date,
                     'invoiceDueDate' => $invoiceDueDate,
-
+                    'leasePeriodFrom' => $leasePeriodFrom,
+                    'leasePeriodTo' => $leasePeriodTo,
+                    'prevPeriodFrom' => $prevPeriodFrom,
+                    'prevPeriodTo' => $prevPeriodTo,
                     'model' => $model,
                 ]);
         }else{
@@ -99,14 +103,7 @@ class InvoiceController extends Controller
             $model = new Invoice();
 
             if ($model->load(Yii::$app->request->post())) {
-                $order = Orders::find()->where(['order_number' => $model->order_id])->one();
-                if($order){
-                  $model->order_id = $order->order_id;
                   $model->save();
-                }
-                else{
-                  echo 'hello';
-                }
                 return $this->redirect(['index']);
             }
 

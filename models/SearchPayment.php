@@ -68,6 +68,8 @@ class SearchPayment extends Payment
 
         $query->andFilterWhere(['like', 'mode', $this->mode]);
 
+        $query->orderBy(['payment_id' => SORT_DESC]);
+
         return $dataProvider;
     }
 }

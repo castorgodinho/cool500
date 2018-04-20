@@ -84,7 +84,7 @@ use yii\widgets\ActiveForm;
 
 
 </table>
-<?php if($balanceAmount != -1) { ?>
+<?php if($balanceAmount != 0) { ?>
 <input id="payment-invoice_id" class="form-control" name="Payment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
 
 <?= $form->field($model, 'amount')->textInput() ?>
@@ -94,6 +94,15 @@ use yii\widgets\ActiveForm;
 <input id="payment-order_id" class="form-control" name="Payment[order_id]" value="<?= $model->order_id?>" type="hidden">
 
 <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '']) ?>
+
+<?php if($tds_amount == 0 ) { ?>
+  <label for="">TDS RATE</label>
+  <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
+  <br>
+<?php  } else { ?>
+  <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="hidden">
+  <br>
+<?php  } ?>
 
 <div class="form-group">
     <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>

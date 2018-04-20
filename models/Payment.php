@@ -13,6 +13,8 @@ use Yii;
  * @property string $start_date
  * @property string $mode
  * @property int $invoice_id
+ * @property int $tds_rate
+ * @property int $tds_amount
  *
  * @property Invoice $invoice
  * @property Orders $order
@@ -33,7 +35,7 @@ class Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'amount', 'invoice_id'], 'integer'],
+            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount'], 'integer'],
             [['start_date'], 'safe'],
             [['mode'], 'string', 'max' => 50],
             [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'invoice_id']],
@@ -50,9 +52,11 @@ class Payment extends \yii\db\ActiveRecord
             'payment_id' => 'Payment ID',
             'order_id' => 'Order ID',
             'amount' => 'Amount',
-            'start_date' => 'Date',
+            'start_date' => 'Start Date',
             'mode' => 'Mode',
             'invoice_id' => 'Invoice ID',
+            'tds_rate' => 'Tds Rate',
+            'tds_amount' => 'Tds Amount',
         ];
     }
 

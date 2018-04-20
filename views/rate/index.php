@@ -8,7 +8,6 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Rates';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rate-index">
 

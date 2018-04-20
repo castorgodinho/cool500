@@ -5,10 +5,13 @@ use yii\helpers\ArrayHelper;
 use app\models\Rate;
 use app\models\Tax;
 use app\models\Interest;
+use app\models\Orders;
+use kartik\select2\Select2;
 
 $rate = Rate::find()->all();
 $tax = Tax::find()->all();
 $interest = Interest::find()->all();
+$order = Orders::find()->all();
 
 ?>
 <div class="invoice-create">
@@ -36,7 +39,7 @@ $interest = Interest::find()->all();
       ]) ?>
     </div>
     <div class="col-md-6">
-      <?= $form->field($model, 'order_id')->textInput() ?>
+        <?= $form->field($model, 'order_id')->dropDownList(ArrayHelper::map($order, 'order_id', 'order_number')); ?>
     </div>
   </div>
   <div class="row">

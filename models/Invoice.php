@@ -68,7 +68,7 @@ class Invoice extends \yii\db\ActiveRecord
             'invoice_id' => 'Invoice ID',
             'rate_id' => 'Lease Rate',
             'tax_id' => 'Tax',
-            'order_id' => 'Unit ID',
+            'order_id' => 'Unit No',
             'interest_id' => 'Penal Interest',
             'start_date' => 'Bill Date',
             'total_amount' => 'Total Amount',

@@ -97,6 +97,10 @@ class PaymentController extends Controller
                 }
                 else{
                     $model->save();
+                    $lr = $model->invoice->current_lease_rent;
+                    $tds_amount = ($lr * ($model->tds_rate/100));
+                    $model->tds_amount = $tds_amount;
+                    $model->save();
                 }
             }
             return $this->redirect(['view', 'id' => $model->payment_id ]);
@@ -135,15 +139,19 @@ class PaymentController extends Controller
                 ->one();
 
                 if($in->invoice_id != $model->invoice_id){
-                  $balanceAmount = '-1';
+                  $balanceAmount = 0;
                 }else{
                     $balanceAmount = $model->grand_total - $totalPayment;
                 }
 
+                $tds_amount = Payment::find()
+                ->where(['invoice_id' => $model->invoice_id])
+                ->sum('tds_amount');
+
             return $this->render('create', [
                     'start_date' => $start_date,
                     'balanceAmount' => $balanceAmount,
-
+                    'tds_amount' => $tds_amount,
                     'invoice' => $model,
                     'model' => $model_payment
                 ]);
