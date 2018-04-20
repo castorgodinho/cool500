@@ -92,11 +92,35 @@ use yii\data\ActiveDataProvider;
       foreach($orders as $order){
   ?>
     <div class="panel panel-default">
-      <div class="panel-heading">Order Number: <?= $order->order_number ?></div>
-      <div class="panel-body-order panel-body">
       <?php 
         $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
       ?>
+      <div class="panel-heading"> 
+      
+      <div class="row">
+        <div class="col-md-8">
+        <b> Plots:</b> <?php
+        if(is_array($plots)){
+          foreach($plots as $plot){
+            echo $plot->plot->name. ' ';
+          }
+        }else{
+          echo $plots->plot->name;
+        }
+      ?>
+        <?php if ($order->shed_no != ""){ ?><b>Shed Number: </b><?= $order->shed_no ?><?php } ?>
+          <?php if ($order->godown_no != ""){ ?><b>Godown Number: </b><?= $order->godown_no ?><?php } ?>
+        </div>
+        <div class="col-md-4">
+        <div class="text-right"> <b> Order Number:</b>  <?= $order->order_number ?> </div>
+        </div>
+      </div>
+      
+      
+       
+       </div>
+      <div class="panel-body-order panel-body">
+      
       <div class="row">
         <div class="col-md-4">
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
