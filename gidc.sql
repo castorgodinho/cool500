@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.14
--- http://www.phpmyadmin.net
+-- version 4.7.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 16, 2018 at 12:12 PM
--- Server version: 5.6.26
--- PHP Version: 5.6.12
+-- Generation Time: Apr 20, 2018 at 08:46 AM
+-- Server version: 10.1.28-MariaDB
+-- PHP Version: 7.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,11 +28,11 @@ SET time_zone = "+00:00";
 -- Table structure for table `area`
 --
 
-CREATE TABLE IF NOT EXISTS `area` (
+CREATE TABLE `area` (
   `area_id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `total_area` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `area`
@@ -45,12 +47,12 @@ INSERT INTO `area` (`area_id`, `name`, `total_area`) VALUES
 -- Table structure for table `area_rate`
 --
 
-CREATE TABLE IF NOT EXISTS `area_rate` (
+CREATE TABLE `area_rate` (
   `area_rate_id` int(11) NOT NULL,
   `area_id` int(11) DEFAULT NULL,
   `area_rate` int(11) NOT NULL,
   `start_date` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `area_rate`
@@ -59,7 +61,12 @@ CREATE TABLE IF NOT EXISTS `area_rate` (
 INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) VALUES
 (1, 9, 1500, '2018-04-11'),
 (2, 9, 2000, '2018-04-11'),
-(3, 9, 2500, '2018-04-12');
+(3, 9, 2500, '2018-04-12'),
+(4, 9, 3000, '2018-04-20'),
+(5, 9, 3500, '2018-04-20'),
+(6, 9, 35000, '2018-04-20'),
+(7, 9, 500, '2018-04-20'),
+(8, 9, 3000, '2018-04-20');
 
 -- --------------------------------------------------------
 
@@ -67,7 +74,7 @@ INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) V
 -- Table structure for table `auth_assignment`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_assignment` (
+CREATE TABLE `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` int(11) DEFAULT NULL
@@ -78,10 +85,12 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('accounts', '23', 1523703891),
-('admin', '1', 1523677267),
-('company', '22', 1523677340),
-('staff', '24', 1523706218);
+('accounts', '26', 1523949777),
+('accounts', '30', 1523949915),
+('accounts', '8', 1523949557),
+('admin', '1', 1523949314),
+('admin', '7', 1524205497),
+('company', '31', 1524137936);
 
 -- --------------------------------------------------------
 
@@ -89,7 +98,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 -- Table structure for table `auth_item`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_item` (
+CREATE TABLE `auth_item` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `type` smallint(6) NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
@@ -104,52 +113,65 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('accounts', 1, NULL, NULL, NULL, 1523677267, 1523677267),
-('admin', 1, NULL, NULL, NULL, 1523677266, 1523677266),
-('changePassword', 2, 'Delete User', NULL, NULL, 1523677266, 1523677266),
-('company', 1, NULL, NULL, NULL, 1523677267, 1523677267),
-('createArea', 2, 'Create a Area', NULL, NULL, 1523677266, 1523677266),
-('createCompany', 2, 'Create a Company', NULL, NULL, 1523677266, 1523677266),
-('createOrders', 2, 'Create a Orders', NULL, NULL, 1523677266, 1523677266),
-('createPlot', 2, 'Create a Plot', NULL, NULL, 1523677266, 1523677266),
-('createRate', 2, 'Create a Rate', NULL, NULL, 1523677266, 1523677266),
-('createSite', 2, 'Create a Site', NULL, NULL, 1523677266, 1523677266),
-('createTax', 2, 'Create a Tax', NULL, NULL, 1523677266, 1523677266),
-('createUsers', 2, 'Create a User', NULL, NULL, 1523677266, 1523677266),
-('deleteArea', 2, 'Delete Area', NULL, NULL, 1523677266, 1523677266),
-('deleteCompany', 2, 'Delete Company', NULL, NULL, 1523677266, 1523677266),
-('deleteOrder', 2, 'Delete Order', NULL, NULL, 1523677266, 1523677266),
-('deletePlot', 2, 'Delete Plot', NULL, NULL, 1523677266, 1523677266),
-('deleteRate', 2, 'Delete Rate', NULL, NULL, 1523677266, 1523677266),
-('deleteSite', 2, 'Delete Site', NULL, NULL, 1523677266, 1523677266),
-('deleteTax', 2, 'Delete Site', NULL, NULL, 1523677266, 1523677266),
-('deleteUsers', 2, 'Delete User', NULL, NULL, 1523677266, 1523677266),
-('indexArea', 2, 'Index a Area', NULL, NULL, 1523677266, 1523677266),
-('indexCompany', 2, 'Index a Company', NULL, NULL, 1523677266, 1523677266),
-('indexOrders', 2, 'Index a Orders', NULL, NULL, 1523677266, 1523677266),
-('indexPlot', 2, 'Index a Plot', NULL, NULL, 1523677266, 1523677266),
-('indexRate', 2, 'Index a Rate', NULL, NULL, 1523677266, 1523677266),
-('indexSite', 2, 'Index a Site', NULL, NULL, 1523677266, 1523677266),
-('indexTax', 2, 'Index a Tax', NULL, NULL, 1523677266, 1523677266),
-('indexUsers', 2, 'Index a User', NULL, NULL, 1523677266, 1523677266),
-('staff', 1, NULL, NULL, NULL, 1523677267, 1523677267),
-('updateArea', 2, 'Update Area', NULL, NULL, 1523677266, 1523677266),
-('updateCompany', 2, 'Update Company', NULL, NULL, 1523677266, 1523677266),
-('updateOrders', 2, 'Update Orders', NULL, NULL, 1523677266, 1523677266),
-('updatePlot', 2, 'Update Plot', NULL, NULL, 1523677266, 1523677266),
-('updateRate', 2, 'Update Rate', NULL, NULL, 1523677266, 1523677266),
-('updateSite', 2, 'Update Site', NULL, NULL, 1523677266, 1523677266),
-('updateTax', 2, 'Update Tax', NULL, NULL, 1523677266, 1523677266),
-('updateUsers', 2, 'Update User', NULL, NULL, 1523677266, 1523677266),
-('viewArea', 2, 'View Area', NULL, NULL, 1523677266, 1523677266),
-('viewCompany', 2, NULL, NULL, NULL, 1523677266, 1523677266),
-('viewOrders', 2, 'View Orders', NULL, NULL, 1523677266, 1523677266),
-('viewOwnCompany', 2, 'Update own post', 'isCompany', NULL, 1523677267, 1523677267),
-('viewPlot', 2, 'View Plot', NULL, NULL, 1523677266, 1523677266),
-('viewRate', 2, 'View Rate', NULL, NULL, 1523677266, 1523677266),
-('viewSite', 2, 'View Site', NULL, NULL, 1523677266, 1523677266),
-('viewTax', 2, 'View Tax', NULL, NULL, 1523677266, 1523677266),
-('viewUsers', 2, 'View User', NULL, NULL, 1523677266, 1523677266);
+('accounts', 1, NULL, NULL, NULL, 1523949314, 1523949314),
+('admin', 1, NULL, NULL, NULL, 1523949313, 1523949313),
+('changePassword', 2, 'Delete User', NULL, NULL, 1523949313, 1523949313),
+('company', 1, NULL, NULL, NULL, 1523949314, 1523949314),
+('createArea', 2, 'Create a Area', NULL, NULL, 1523949313, 1523949313),
+('createCompany', 2, 'Create a Company', NULL, NULL, 1523949313, 1523949313),
+('createInvoice', 2, 'Create a Invoice', NULL, NULL, 1523949313, 1523949313),
+('createOrders', 2, 'Create a Orders', NULL, NULL, 1523949313, 1523949313),
+('createPayment', 2, 'Create a Payment', NULL, NULL, 1523949313, 1523949313),
+('createPlot', 2, 'Create a Plot', NULL, NULL, 1523949313, 1523949313),
+('createRate', 2, 'Create a Rate', NULL, NULL, 1523949313, 1523949313),
+('createSite', 2, 'Create a Site', NULL, NULL, 1523949313, 1523949313),
+('createTax', 2, 'Create a Tax', NULL, NULL, 1523949313, 1523949313),
+('createUsers', 2, 'Create a User', NULL, NULL, 1523949313, 1523949313),
+('deleteArea', 2, 'Delete Area', NULL, NULL, 1523949313, 1523949313),
+('deleteCompany', 2, 'Delete Company', NULL, NULL, 1523949313, 1523949313),
+('deleteInvoice', 2, 'Delete Invoice', NULL, NULL, 1523949313, 1523949313),
+('deleteOrder', 2, 'Delete Order', NULL, NULL, 1523949313, 1523949313),
+('deletePayment', 2, 'Delete Payment', NULL, NULL, 1523949313, 1523949313),
+('deletePlot', 2, 'Delete Plot', NULL, NULL, 1523949313, 1523949313),
+('deleteRate', 2, 'Delete Rate', NULL, NULL, 1523949313, 1523949313),
+('deleteSite', 2, 'Delete Site', NULL, NULL, 1523949313, 1523949313),
+('deleteTax', 2, 'Delete Site', NULL, NULL, 1523949313, 1523949313),
+('deleteUsers', 2, 'Delete User', NULL, NULL, 1523949313, 1523949313),
+('indexArea', 2, 'Index a Area', NULL, NULL, 1523949313, 1523949313),
+('indexCompany', 2, 'Index a Company', NULL, NULL, 1523949313, 1523949313),
+('indexInvoice', 2, 'Index a Invoice', NULL, NULL, 1523949313, 1523949313),
+('indexOrders', 2, 'Index a Orders', NULL, NULL, 1523949313, 1523949313),
+('indexPayment', 2, 'Index a Payment', NULL, NULL, 1523949313, 1523949313),
+('indexPlot', 2, 'Index a Plot', NULL, NULL, 1523949313, 1523949313),
+('indexRate', 2, 'Index a Rate', NULL, NULL, 1523949313, 1523949313),
+('indexSite', 2, 'Index a Site', NULL, NULL, 1523949313, 1523949313),
+('indexTax', 2, 'Index a Tax', NULL, NULL, 1523949313, 1523949313),
+('indexUsers', 2, 'Index a User', NULL, NULL, 1523949313, 1523949313),
+('searchInvoice', 2, 'Delete Invoice', NULL, NULL, 1523949313, 1523949313),
+('staff', 1, NULL, NULL, NULL, 1523949314, 1523949314),
+('updateArea', 2, 'Update Area', NULL, NULL, 1523949313, 1523949313),
+('updateCompany', 2, 'Update Company', NULL, NULL, 1523949313, 1523949313),
+('updateInvoice', 2, 'Update Invoice', NULL, NULL, 1523949313, 1523949313),
+('updateOrders', 2, 'Update Orders', NULL, NULL, 1523949313, 1523949313),
+('updatePayment', 2, 'Update Payment', NULL, NULL, 1523949313, 1523949313),
+('updatePlot', 2, 'Update Plot', NULL, NULL, 1523949313, 1523949313),
+('updateRate', 2, 'Update Rate', NULL, NULL, 1523949313, 1523949313),
+('updateSite', 2, 'Update Site', NULL, NULL, 1523949313, 1523949313),
+('updateTax', 2, 'Update Tax', NULL, NULL, 1523949313, 1523949313),
+('updateUsers', 2, 'Update User', NULL, NULL, 1523949313, 1523949313),
+('viewArea', 2, 'View Area', NULL, NULL, 1523949313, 1523949313),
+('viewCompany', 2, NULL, NULL, NULL, 1523949313, 1523949313),
+('viewInvoice', 2, 'View Invoice', NULL, NULL, 1523949313, 1523949313),
+('viewOrders', 2, 'View Orders', NULL, NULL, 1523949313, 1523949313),
+('viewOwnCompany', 2, 'Update own Company', 'isCompany', NULL, 1523949314, 1523949314),
+('viewOwnInvoice', 2, 'View own Invoice', 'isInvoice', NULL, 1523949314, 1523949314),
+('viewOwnPayment', 2, 'View own Payment', 'isPayment', NULL, 1523949314, 1523949314),
+('viewPayment', 2, 'View Payment', NULL, NULL, 1523949313, 1523949313),
+('viewPlot', 2, 'View Plot', NULL, NULL, 1523949313, 1523949313),
+('viewRate', 2, 'View Rate', NULL, NULL, 1523949313, 1523949313),
+('viewSite', 2, 'View Site', NULL, NULL, 1523949313, 1523949313),
+('viewTax', 2, 'View Tax', NULL, NULL, 1523949313, 1523949313),
+('viewUsers', 2, 'View User', NULL, NULL, 1523949313, 1523949313);
 
 -- --------------------------------------------------------
 
@@ -157,7 +179,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 -- Table structure for table `auth_item_child`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_item_child` (
+CREATE TABLE `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -167,13 +189,20 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('accounts', 'changePassword'),
+('accounts', 'createInvoice'),
+('accounts', 'createPayment'),
+('accounts', 'indexInvoice'),
+('accounts', 'indexPayment'),
+('accounts', 'searchInvoice'),
+('accounts', 'viewInvoice'),
+('accounts', 'viewPayment'),
 ('admin', 'changePassword'),
-('company', 'changePassword'),
-('staff', 'changePassword'),
 ('admin', 'createArea'),
 ('admin', 'createCompany'),
-('staff', 'createCompany'),
+('admin', 'createInvoice'),
 ('admin', 'createOrders'),
+('admin', 'createPayment'),
 ('admin', 'createPlot'),
 ('admin', 'createRate'),
 ('admin', 'createSite'),
@@ -181,7 +210,9 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'createUsers'),
 ('admin', 'deleteArea'),
 ('admin', 'deleteCompany'),
+('admin', 'deleteInvoice'),
 ('admin', 'deleteOrder'),
+('admin', 'deletePayment'),
 ('admin', 'deletePlot'),
 ('admin', 'deleteRate'),
 ('admin', 'deleteSite'),
@@ -189,15 +220,20 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'deleteUsers'),
 ('admin', 'indexArea'),
 ('admin', 'indexCompany'),
+('admin', 'indexInvoice'),
 ('admin', 'indexOrders'),
+('admin', 'indexPayment'),
 ('admin', 'indexPlot'),
 ('admin', 'indexRate'),
 ('admin', 'indexSite'),
 ('admin', 'indexTax'),
 ('admin', 'indexUsers'),
+('admin', 'searchInvoice'),
 ('admin', 'updateArea'),
 ('admin', 'updateCompany'),
+('admin', 'updateInvoice'),
 ('admin', 'updateOrders'),
+('admin', 'updatePayment'),
 ('admin', 'updatePlot'),
 ('admin', 'updateRate'),
 ('admin', 'updateSite'),
@@ -205,15 +241,24 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'updateUsers'),
 ('admin', 'viewArea'),
 ('admin', 'viewCompany'),
-('staff', 'viewCompany'),
-('viewOwnCompany', 'viewCompany'),
+('admin', 'viewInvoice'),
 ('admin', 'viewOrders'),
-('company', 'viewOwnCompany'),
+('admin', 'viewPayment'),
 ('admin', 'viewPlot'),
 ('admin', 'viewRate'),
 ('admin', 'viewSite'),
 ('admin', 'viewTax'),
-('admin', 'viewUsers');
+('admin', 'viewUsers'),
+('company', 'changePassword'),
+('company', 'viewOwnCompany'),
+('company', 'viewOwnInvoice'),
+('company', 'viewOwnPayment'),
+('staff', 'changePassword'),
+('staff', 'createCompany'),
+('staff', 'viewCompany'),
+('viewOwnCompany', 'viewCompany'),
+('viewOwnInvoice', 'viewInvoice'),
+('viewOwnPayment', 'viewPayment');
 
 -- --------------------------------------------------------
 
@@ -221,7 +266,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 -- Table structure for table `auth_rule`
 --
 
-CREATE TABLE IF NOT EXISTS `auth_rule` (
+CREATE TABLE `auth_rule` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `data` blob,
   `created_at` int(11) DEFAULT NULL,
@@ -233,7 +278,9 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 --
 
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
-('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532333637373236373b733a393a22757064617465644174223b693a313532333637373236373b7d, 1523677267, 1523677267);
+('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532333934393331343b733a393a22757064617465644174223b693a313532333934393331343b7d, 1523949314, 1523949314),
+('isInvoice', 0x4f3a32303a226170705c726261635c496e766f69636552756c65223a333a7b733a343a226e616d65223b733a393a226973496e766f696365223b733a393a22637265617465644174223b693a313532333934393331343b733a393a22757064617465644174223b693a313532333934393331343b7d, 1523949314, 1523949314),
+('isPayment', 0x4f3a32303a226170705c726261635c5061796d656e7452756c65223a333a7b733a343a226e616d65223b733a393a2269735061796d656e74223b733a393a22637265617465644174223b693a313532333934393331343b733a393a22757064617465644174223b693a313532333934393331343b7d, 1523949314, 1523949314);
 
 -- --------------------------------------------------------
 
@@ -241,7 +288,7 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `company`
 --
 
-CREATE TABLE IF NOT EXISTS `company` (
+CREATE TABLE `company` (
   `user_id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -256,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `competent_name` varchar(100) DEFAULT NULL,
   `competent_email` varchar(100) DEFAULT NULL,
   `competent_mobile` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company`
@@ -270,7 +317,10 @@ INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `co
 (16, 5, 'Cocacola', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sdasdf23wda', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
 (18, 6, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
 (19, 7, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(22, 8, 'Chowgules', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'dasdasfsa234', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696');
+(22, 8, 'Chowgules', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'dasdasfsa234', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(25, 9, 'MI', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Mobile Phone', 'BKJK123K1K23KsB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(26, 10, 'Nokia', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Mobile Phones', 'BKJK12sK1K23KB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
+(31, 11, 'ICC', 'Colmorod Residential Complex, Flat S2', 'International Cricket ', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696');
 
 -- --------------------------------------------------------
 
@@ -278,14 +328,14 @@ INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `co
 -- Table structure for table `interest`
 --
 
-CREATE TABLE IF NOT EXISTS `interest` (
+CREATE TABLE `interest` (
   `interest_id` int(11) NOT NULL,
   `name` varchar(20) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `rate` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `flag` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `interest`
@@ -293,7 +343,10 @@ CREATE TABLE IF NOT EXISTS `interest` (
 
 INSERT INTO `interest` (`interest_id`, `name`, `type`, `rate`, `start_date`, `flag`) VALUES
 (1, 'Penal Interest', 'Penal Interest', 10, '0000-00-00', 0),
-(2, 'Penal Interest', 'Penal Interest', 20, '2018-04-15', 1);
+(2, 'Penal Interest', 'Penal Interest', 20, '2018-04-15', 0),
+(3, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 1),
+(4, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 1),
+(5, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 1);
 
 -- --------------------------------------------------------
 
@@ -301,7 +354,7 @@ INSERT INTO `interest` (`interest_id`, `name`, `type`, `rate`, `start_date`, `fl
 -- Table structure for table `invoice`
 --
 
-CREATE TABLE IF NOT EXISTS `invoice` (
+CREATE TABLE `invoice` (
   `invoice_id` int(11) NOT NULL,
   `rate_id` int(11) DEFAULT NULL,
   `tax_id` int(11) DEFAULT NULL,
@@ -320,7 +373,7 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `current_interest` int(11) NOT NULL,
   `current_dues_total` int(11) NOT NULL,
   `current_total_dues` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `invoice`
@@ -332,7 +385,48 @@ INSERT INTO `invoice` (`invoice_id`, `rate_id`, `tax_id`, `order_id`, `interest_
 (39, 1, 2, 39, 1, '2018-04-14', 138600, 'VER/18-19/000039', 60000, 138600, 6000, 6600, 72600, 60000, 6000, 0, 0, 66000),
 (40, 1, 2, 39, 1, '2018-04-14', 291060, 'VER/18-19/000040', 60000, 291060, 6000, 20460, 225060, 60000, 6000, 0, 0, 66000),
 (41, 1, 2, 40, 1, '2018-04-14', 542652, 'VER/18-19/000041', 0, 542652, 0, 0, 0, 493320, 49332, 0, 0, 542652),
-(42, 1, 2, 41, 1, '2018-04-14', 44000, 'VER/18-19/000042', 0, 44000, 0, 0, 0, 40000, 4000, 0, 0, 44000);
+(42, 1, 2, 41, 1, '2018-04-14', 44000, 'VER/18-19/000042', 0, 44000, 0, 0, 0, 40000, 4000, 0, 0, 44000),
+(43, 2, 5, 42, 2, '2018-04-16', 3327500, 'VER/18-19/000043', 0, 3327500, 0, 0, 0, 2750000, 577500, 0, 0, 3327500),
+(44, 2, 5, 42, 2, '2018-04-16', 3327500, 'VER/18-19/000044', 2750000, 3327500, 577500, 0, 0, 2750000, 577500, 0, 0, 3327500),
+(45, 2, 5, 42, 2, '2018-04-16', 3327500, 'VER/18-19/000045', 2750000, 3327500, 577500, 0, 0, 2750000, 577500, 0, 0, 3327500),
+(46, 2, 5, 43, 2, '2018-04-17', 998250, 'VER/18-19/000046', 0, 998250, 0, 0, 0, 825000, 173250, 0, 0, 998250),
+(47, 2, 5, 44, 2, '2018-04-17', 3327500, 'VER/18-19/000047', 0, 3327500, 0, 0, 0, 2750000, 577500, 0, 0, 3327500);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `log_id` int(11) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `old_value` text,
+  `new_value` text,
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`log_id`, `type`, `create_date`, `updated_date`, `old_value`, `new_value`, `user_id`) VALUES
+(2, 'asdass', '2018-04-20 10:29:45', '2018-04-20 05:00:01', 'dasd', 'asdasd', 1),
+(3, 'Company', '2018-04-20 10:49:28', '2018-04-20 05:19:28', '[{\"user_id\":25,\"company_id\":9,\"name\":\"MI\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Mobile Phones\",\"gstin\":\"BKJK123K1K23KsB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\"}]', '[{\"user_id\":25,\"company_id\":9,\"name\":\"MI\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Mobile Phone\",\"gstin\":\"BKJK123K1K23KsB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\"}]', 1),
+(4, 'Area', '2018-04-20 10:59:25', '2018-04-20 05:29:25', '[{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}]', '[{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}]', 1),
+(5, 'Area', '2018-04-20 11:18:26', '2018-04-20 05:48:26', '[{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}]', '[{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}]', 1),
+(6, 'Area', '2018-04-20 11:19:15', '2018-04-20 05:49:15', '[{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}]', '[{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}]', 1),
+(7, 'Area', '2018-04-20 11:22:02', '2018-04-20 05:52:02', '{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}', '{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}', 1),
+(8, 'Area', '2018-04-20 11:23:34', '2018-04-20 05:53:34', '{\"area_id\":9,\"name\":\"Vernw\",\"total_area\":1200000}', '{\"area_id\":9,\"name\":\"Verna\",\"total_area\":1200000}', 1),
+(9, 'Rate', '2018-04-20 11:27:25', '2018-04-20 05:57:25', '[{\"rate_id\":2,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":55,\"date\":\"2018-04-15\",\"flag\":0}]', '[{\"rate_id\":2,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":55,\"date\":\"2018-04-15\",\"flag\":0}]', 1),
+(10, 'Rate', '2018-04-20 11:30:04', '2018-04-20 06:00:04', '[{\"rate_id\":3,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":150,\"date\":\"2018-04-20\",\"flag\":0}]', '[{\"rate_id\":3,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":150,\"date\":\"2018-04-20\",\"flag\":0}]', 1),
+(11, 'Rate', '2018-04-20 11:31:30', '2018-04-20 06:01:30', '[{\"rate_id\":5,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":200,\"date\":\"2018-04-20\",\"flag\":0}]', '[{\"rate_id\":5,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":200,\"date\":\"2018-04-20\",\"flag\":0}]', 1),
+(12, 'Rate', '2018-04-20 11:34:48', '2018-04-20 06:04:48', '[{\"rate_id\":4,\"area_id\":9,\"from_area\":10000000,\"to_area\":20000000,\"rate\":20,\"date\":\"2018-04-23\",\"flag\":1}]', '[{\"rate_id\":4,\"area_id\":9,\"from_area\":10000000,\"to_area\":20000000,\"rate\":20,\"date\":\"2018-04-23\",\"flag\":0}]', 1),
+(13, 'Rate', '2018-04-20 11:36:27', '2018-04-20 06:06:27', '[{\"rate_id\":6,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":140,\"date\":\"2018-04-20\",\"flag\":0}]', '[{\"rate_id\":9,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":150,\"date\":\"2018-04-20\",\"flag\":1}]', 1),
+(14, 'Interest', '2018-04-20 11:43:02', '2018-04-20 06:13:02', '[{\"interest_id\":2,\"name\":\"Penal Interest\",\"type\":\"Penal Interest\",\"rate\":20,\"start_date\":\"2018-04-15\",\"flag\":0}]', '[{\"interest_id\":5,\"name\":\"Penal Interest\",\"type\":\"Penal Interest\",\"rate\":30,\"start_date\":\"2018-04-20\",\"flag\":1}]', 1),
+(15, 'Users', '2018-04-20 11:54:57', '2018-04-20 06:24:57', '[{\"user_id\":7,\"email\":\"castorgodin@gmail.com\",\"password\":\"$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW\",\"type\":\"accounts\"}]', '[{\"user_id\":7,\"email\":\"castorgodin@gmail.com\",\"password\":\"$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW\",\"type\":\"admin\"}]', 1);
 
 -- --------------------------------------------------------
 
@@ -340,7 +434,7 @@ INSERT INTO `invoice` (`invoice_id`, `rate_id`, `tax_id`, `order_id`, `interest_
 -- Table structure for table `migration`
 --
 
-CREATE TABLE IF NOT EXISTS `migration` (
+CREATE TABLE `migration` (
   `version` varchar(180) NOT NULL,
   `apply_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -360,7 +454,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- Table structure for table `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
+CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `order_number` varchar(20) NOT NULL,
   `company_id` int(11) NOT NULL,
@@ -373,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `godown_no` int(11) DEFAULT NULL,
   `area_id` int(11) DEFAULT NULL,
   `total_area` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
@@ -402,7 +496,10 @@ INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `s
 (38, 'GIDC12345VeeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
 (39, 'GIDC239827VERNA', 2, 900, NULL, NULL, '2018-04-30', '2018-04-30', NULL, NULL, 9, 1500),
 (40, 'GIDC906524VERNA', 8, NULL, 2000, NULL, '2018-04-18', '2018-04-25', 12, NULL, 9, 12333),
-(41, 'GIDC760726VERNA', 1, NULL, 200, NULL, '2018-04-27', '2018-04-30', 12, NULL, 9, 1000);
+(41, 'GIDC760726VERNA', 1, NULL, 200, NULL, '2018-04-27', '2018-04-30', 12, NULL, 9, 1000),
+(42, 'GIDC578191VERNA', 5, NULL, 500, NULL, '2018-04-16', NULL, 10, NULL, 9, 50000),
+(43, 'GIDC125539VERNA', 9, 2000, NULL, NULL, '2018-04-18', '2019-11-11', NULL, NULL, 9, 15000),
+(44, 'GIDC954226VERNA', 10, NULL, 1200, NULL, '2018-04-18', '2019-10-24', 11, NULL, 9, 50000);
 
 -- --------------------------------------------------------
 
@@ -410,7 +507,7 @@ INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `s
 -- Table structure for table `order_details`
 --
 
-CREATE TABLE IF NOT EXISTS `order_details` (
+CREATE TABLE `order_details` (
   `plot_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -453,7 +550,14 @@ INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
 (37, 39),
 (38, 40),
 (39, 40),
-(40, 41);
+(40, 41),
+(41, 42),
+(42, 42),
+(43, 42),
+(44, 43),
+(45, 43),
+(46, 44),
+(47, 44);
 
 -- --------------------------------------------------------
 
@@ -461,25 +565,39 @@ INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
 -- Table structure for table `payment`
 --
 
-CREATE TABLE IF NOT EXISTS `payment` (
+CREATE TABLE `payment` (
   `payment_id` int(11) NOT NULL,
   `order_id` int(11) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `mode` varchar(50) DEFAULT NULL,
-  `invoice_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+  `invoice_id` int(11) DEFAULT NULL,
+  `tds_rate` int(11) DEFAULT '0',
+  `tds_amount` int(11) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`payment_id`, `order_id`, `amount`, `start_date`, `mode`, `invoice_id`) VALUES
-(8, 39, 66000, '2018-04-14', 'cash', 37),
-(9, 40, 50000, '2018-04-14', 'cash', 41),
-(10, 41, 22000, '2018-04-14', 'cash', 42),
-(11, 41, 22000, '2018-04-16', 'cash', 42),
-(12, 40, 492652, '2018-04-16', 'cheque', 41);
+INSERT INTO `payment` (`payment_id`, `order_id`, `amount`, `start_date`, `mode`, `invoice_id`, `tds_rate`, `tds_amount`) VALUES
+(8, 39, 66000, '2018-04-14', 'cash', 37, 0, 0),
+(9, 40, 50000, '2018-04-14', 'cash', 41, 0, 0),
+(10, 41, 22000, '2018-04-14', 'cash', 42, 0, 0),
+(11, 41, 22000, '2018-04-16', 'cash', 42, 0, 0),
+(12, 40, 492652, '2018-04-16', 'cheque', 41, 0, 0),
+(13, 42, 3000000, '2018-04-16', 'cash', 43, 0, 0),
+(14, 42, 327500, '2018-04-16', 'cash', 43, 0, 0),
+(15, 42, 3327500, '2018-04-16', 'cash', 44, 0, 0),
+(16, 42, 27500, '2018-04-16', 'cash', 45, 0, 0),
+(17, 42, 5000, '2018-04-16', 'cash', 45, 0, 0),
+(18, 42, 10, '2018-04-16', 'cash', 45, 0, 0),
+(19, 43, 500000, '2018-04-17', 'cheque', 46, 0, 0),
+(20, 43, 400000, '2018-04-17', 'cash', 46, 0, 0),
+(21, 43, 98250, '2018-04-17', 'cash', 46, 0, 0),
+(22, 44, 3000000, '2018-04-17', 'cash', 47, 0, 0),
+(23, 44, 100000, '2018-04-17', 'cash', 47, 0, 0),
+(24, 44, 10000, '2018-04-17', 'cash', 47, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -487,12 +605,12 @@ INSERT INTO `payment` (`payment_id`, `order_id`, `amount`, `start_date`, `mode`,
 -- Table structure for table `plot`
 --
 
-CREATE TABLE IF NOT EXISTS `plot` (
+CREATE TABLE `plot` (
   `plot_id` int(11) NOT NULL,
   `area_id` int(11) DEFAULT NULL,
   `name` varchar(100) NOT NULL,
   `area_of_plot` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `plot`
@@ -533,7 +651,14 @@ INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 (37, 9, '54', 0),
 (38, 9, '11', 0),
 (39, 9, '12', 0),
-(40, 9, '10', 0);
+(40, 9, '10', 0),
+(41, 9, '10', 0),
+(42, 9, '20', 0),
+(43, 9, '30', 0),
+(44, 9, '50', 0),
+(45, 9, '60', 0),
+(46, 9, '33', 0),
+(47, 9, '22', 0);
 
 -- --------------------------------------------------------
 
@@ -541,7 +666,7 @@ INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 -- Table structure for table `rate`
 --
 
-CREATE TABLE IF NOT EXISTS `rate` (
+CREATE TABLE `rate` (
   `rate_id` int(11) NOT NULL,
   `area_id` int(11) NOT NULL,
   `from_area` int(11) NOT NULL,
@@ -549,7 +674,7 @@ CREATE TABLE IF NOT EXISTS `rate` (
   `rate` int(11) NOT NULL,
   `date` date NOT NULL,
   `flag` tinyint(2) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rate`
@@ -557,7 +682,14 @@ CREATE TABLE IF NOT EXISTS `rate` (
 
 INSERT INTO `rate` (`rate_id`, `area_id`, `from_area`, `to_area`, `rate`, `date`, `flag`) VALUES
 (1, 9, 0, 10000000, 40, '2018-04-02', 0),
-(2, 9, 0, 10000000, 55, '2018-04-15', 1);
+(2, 9, 0, 10000000, 55, '2018-04-15', 0),
+(3, 9, 0, 10000000, 150, '2018-04-20', 0),
+(4, 9, 10000000, 20000000, 20, '2018-04-23', 0),
+(5, 9, 0, 10000000, 200, '2018-04-20', 0),
+(6, 9, 0, 10000000, 140, '2018-04-20', 0),
+(7, 9, 10000000, 20000000, 200, '2018-04-20', 1),
+(8, 9, 0, 10000000, 150, '2018-04-20', 1),
+(9, 9, 0, 10000000, 150, '2018-04-20', 1);
 
 -- --------------------------------------------------------
 
@@ -565,13 +697,13 @@ INSERT INTO `rate` (`rate_id`, `area_id`, `from_area`, `to_area`, `rate`, `date`
 -- Table structure for table `tax`
 --
 
-CREATE TABLE IF NOT EXISTS `tax` (
+CREATE TABLE `tax` (
   `tax_id` int(11) NOT NULL,
   `name` varchar(30) DEFAULT NULL,
   `rate` int(11) NOT NULL,
   `date` date DEFAULT NULL,
   `flag` tinyint(2) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tax`
@@ -581,7 +713,8 @@ INSERT INTO `tax` (`tax_id`, `name`, `rate`, `date`, `flag`) VALUES
 (2, 'GST', 10, '2018-04-14', 0),
 (3, 'GST', 18, '2018-04-15', 0),
 (4, 'GST', 20, '2018-04-15', 0),
-(5, 'GST', 21, '2018-04-15', 1);
+(5, 'GST', 21, '2018-04-15', 0),
+(6, 'GST', 18, '2018-04-20', 1);
 
 -- --------------------------------------------------------
 
@@ -589,12 +722,12 @@ INSERT INTO `tax` (`tax_id`, `name`, `rate`, `date`, `flag`) VALUES
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` text NOT NULL,
   `type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -607,7 +740,7 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `type`) VALUES
 (4, 'castorgodinho22@gmail.com', '$2y$13$Dxlpc5szm6LNu76ysJSc2utCU8s/I0MpYdfQQa4H2/n0T5HWOEVjm', NULL),
 (5, 'castorgodinho22@gmail.com', '$2y$13$or66jg9R9DJKdYFwltaHQuTF.L0mu4xOpFypnb4cbY0EpcLpG2fcO', NULL),
 (6, 'castor@gmail.com', '$2y$13$VFTa2yVTN2M8a6BY6GQjgOj0g7l9dGwZpLTCz7f/HeFlD9MPmTKpC', NULL),
-(7, 'castorgodin@gmail.com', '$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW', 'accounts'),
+(7, 'castorgodin@gmail.com', '$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW', 'admin'),
 (8, 'castorgowdin@gmail.com', '$2y$13$DMNgejEusdkGS9XH.Vm2t.wXCm0uym1ouzA5cNbtLb1IbmgvZHS8m', 'staff'),
 (9, 'asd@ads', '$2y$13$f85OIWZi3s7BRuZUB/sjCuBUUmthIQx7hZXg/zImDsbT4KnbhVMjK', 'accounts'),
 (10, 'das@das', '$2y$13$sGupCVbzi4CdgbXpJkex9e91c9HswSELebazMOpwWUkh.KXXj4jT.', 'admin'),
@@ -618,7 +751,11 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `type`) VALUES
 (19, 'castorgodinho22@gmail.com', '$2y$13$KnVWvobF5gb4pa8hR5Q/luKk3Rh2DQNWNiXkiDHKjLXSl/fkbzl0S', 'company'),
 (22, 'cass@gmail.com', '$2y$13$VBqE08Wjmfa25iKqUZWgU.bbR4wx2YmUUun6gSMpX1awfxeFfpfvi', 'company'),
 (23, 'ccg003@gmail.com', '$2y$13$IpLcpvRdMi7VdWBfNpqjl.m5NEC026kdIFl4B38Q9Ym0M0uBwik0C', 'staff'),
-(24, 'ccg002@gmail.com', '$2y$13$R7WJAdMqipZZ4giCKe90GeDie3t1oXVlV64bvIoauMsOzMfddBjlq', 'staff');
+(24, 'ccg002@gmail.com', '$2y$13$R7WJAdMqipZZ4giCKe90GeDie3t1oXVlV64bvIoauMsOzMfddBjlq', 'staff'),
+(25, 'mi@gmail.com', '$2y$13$vQ8UBSaX13y3sIkJ.txko.Tirp3RKua.pEL/oR6auw40lbkHROTNC', 'company'),
+(26, 'nokia@gmail.com', '', 'accounts'),
+(30, 'accounts@gmail.com', '$2y$13$lPyJLwA6fAppMas8aElDXuy9zk9hXKYmmGZMec/2/ijWYu1qOXyue', 'accounts'),
+(31, 'icc@gmail.com', '$2y$13$ejpDHeqFkVJDcOehPn4GreXdVqp/kcsLrhgKHrrWEDLzDzGjUr07q', 'company');
 
 --
 -- Indexes for dumped tables
@@ -688,6 +825,13 @@ ALTER TABLE `invoice`
   ADD KEY `invoice_interest` (`interest_id`);
 
 --
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `log_user_id` (`user_id`);
+
+--
 -- Indexes for table `migration`
 --
 ALTER TABLE `migration`
@@ -750,57 +894,74 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `area_rate`
 --
 ALTER TABLE `area_rate`
-  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `interest`
 --
 ALTER TABLE `interest`
-  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
+--
+-- AUTO_INCREMENT for table `log`
+--
+ALTER TABLE `log`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
 --
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `tax`
 --
 ALTER TABLE `tax`
-  MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
 --
 -- Constraints for dumped tables
 --
@@ -840,6 +1001,12 @@ ALTER TABLE `invoice`
   ADD CONSTRAINT `invoice_tax_id` FOREIGN KEY (`tax_id`) REFERENCES `tax` (`tax_id`);
 
 --
+-- Constraints for table `log`
+--
+ALTER TABLE `log`
+  ADD CONSTRAINT `log_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
@@ -871,6 +1038,7 @@ ALTER TABLE `plot`
 --
 ALTER TABLE `rate`
   ADD CONSTRAINT `rate_fk_area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`area_id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
