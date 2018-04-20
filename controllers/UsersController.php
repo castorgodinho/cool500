@@ -8,6 +8,8 @@ use app\models\SearchUsers;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Log;
+use yii\helpers\Json;
 
 /**
  * UsersController implements the CRUD actions for Users model.
@@ -152,7 +154,14 @@ class UsersController extends Controller
                 $role = $auth->getRole($model->type);
                 $auth->assign($role, $model->user_id);
                 echo $model->type;
+                $log = new Log();
+                $log->old_value = Json::encode(Users::find()->where(['user_id' => $model->user_id])->all(), $asArray = true) ;
                 $model->save();
+                $log->new_value = Json::encode(Users::find()->where(['user_id' => $model->user_id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Users';
+                $log->save();
+
                 return $this->redirect(['view', 'id' => $model->user_id]);
             } else {
                 return $this->render('update', [

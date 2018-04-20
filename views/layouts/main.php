@@ -47,6 +47,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Unit List', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
             $link[] = ['label' => 'Payment', 'url' => ['/payment/index']];
+            $link[] = ['label' => 'Logs', 'url' => ['/log/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
             $link[] = [
                 'label' => 'Taxation',

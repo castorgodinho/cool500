@@ -117,17 +117,15 @@ class AreaController extends Controller
                 $rate->area_id = $model->area_id;
                 $rate->start_date = date('Y-m-d');
                 $log = new Log();
-                $log->old_value = Json::encode(Area::find()->joinWith('area-rate')->where(['area_id' => $model->area_id])->all(), $asArray = true) ;
+                $log->old_value = Json::encode(Area::find()->where(['area_id' => $model->area_id])->one(), $asArray = true) ;
                 $rate->save(false);
                 $model->save();
-                $log->new_value = Json::encode(Area::find()->joinWith('area-rate')->where(['area_id' => $model->area_id])->all(), $asArray = true) ;
+                $log->new_value = Json::encode(Area::find()->where(['area_id' => $model->area_id])->one(), $asArray = true) ;
                 $log->user_id = Yii::$app->user->identity->user_id;
                 $log->type = 'Area';
                 $log->save();
-                
                 return $this->redirect(['view', 'id' => $model->area_id]);
             }
-
             return $this->render('update', [
                 'model' => $model,
             ]);
