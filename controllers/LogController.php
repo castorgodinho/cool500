@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Interest;
-use app\models\SearchInterest;
+use app\models\Log;
+use app\models\SearchLog;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Log;
-use yii\helpers\Json;
 
 /**
- * InterestController implements the CRUD actions for Interest model.
+ * LogController implements the CRUD actions for Log model.
  */
-class InterestController extends Controller
+class LogController extends Controller
 {
     /**
      * @inheritdoc
@@ -32,12 +30,12 @@ class InterestController extends Controller
     }
 
     /**
-     * Lists all Interest models.
+     * Lists all Log models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SearchInterest();
+        $searchModel = new SearchLog();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +45,7 @@ class InterestController extends Controller
     }
 
     /**
-     * Displays a single Interest model.
+     * Displays a single Log model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,16 +58,16 @@ class InterestController extends Controller
     }
 
     /**
-     * Creates a new Interest model.
+     * Creates a new Log model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Interest();
+        $model = new Log();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->interest_id]);
+            return $this->redirect(['view', 'id' => $model->log_id]);
         }
 
         return $this->render('create', [
@@ -78,7 +76,7 @@ class InterestController extends Controller
     }
 
     /**
-     * Updates an existing Interest model.
+     * Updates an existing Log model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -87,22 +85,9 @@ class InterestController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $interest = new Interest();
-        if ($interest->load(Yii::$app->request->post())) {
-            $model = $this->findModel($id);
-            $model->flag = 0;
-            $model->save();
-            date_default_timezone_set('Asia/Kolkata');
-            $interest->start_date = date('Y-m-d');
-            $log = new Log();
-            $log->old_value = Json::encode(Interest::find()->where(['interest_id' => $model->interest_id])->all(), $asArray = true) ;
-            $interest->save();
-            
-            $log->new_value = Json::encode(Interest::find()->where(['interest_id' => $interest->interest_id])->all(), $asArray = true) ;
-            $log->user_id = Yii::$app->user->identity->user_id;
-            $log->type = 'Interest';
-            $log->save();
-            return $this->redirect(['index']);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->log_id]);
         }
 
         return $this->render('update', [
@@ -111,7 +96,7 @@ class InterestController extends Controller
     }
 
     /**
-     * Deletes an existing Interest model.
+     * Deletes an existing Log model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -119,22 +104,21 @@ class InterestController extends Controller
      */
     public function actionDelete($id)
     {
-        $interest = Interest::findOne($id);
-        $interest->flag = 0;
-        $interest->save();
+        $this->findModel($id)->delete();
+
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Interest model based on its primary key value.
+     * Finds the Log model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Interest the loaded model
+     * @return Log the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Interest::findOne($id)) !== null) {
+        if (($model = Log::findOne($id)) !== null) {
             return $model;
         }
 

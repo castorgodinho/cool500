@@ -9,7 +9,7 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 ?>
-
+<a href="index.php?r=company/update-gst&id=<?= $model->company_id ?>" >Update GSTIN</a>
 <div class="panel panel-default">
   <div class="panel-heading">Unit Details</div>
   <div class="panel-body">
@@ -77,6 +77,10 @@ use yii\data\ActiveDataProvider;
     <p><strong>Address</strong> <?= $model->address ?></p>
     <h4></h4>
   </div>
+  <div class="col-md-3">
+    <p><strong>Remark</strong> <?= $model->remark ?></p>
+    <h4></h4>
+  </div>.
 </div>
   </div>
 </div>
@@ -88,11 +92,35 @@ use yii\data\ActiveDataProvider;
       foreach($orders as $order){
   ?>
     <div class="panel panel-default">
-      <div class="panel-heading">Order Number: <?= $order->order_number ?></div>
-      <div class="panel-body-order panel-body">
       <?php 
         $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
       ?>
+      <div class="panel-heading"> 
+      
+      <div class="row">
+        <div class="col-md-8">
+        <b> Plots:</b> <?php
+        if(is_array($plots)){
+          foreach($plots as $plot){
+            echo $plot->plot->name. ' ';
+          }
+        }else{
+          echo $plots->plot->name;
+        }
+      ?>
+        <?php if ($order->shed_no != ""){ ?><b>Shed Number: </b><?= $order->shed_no ?><?php } ?>
+          <?php if ($order->godown_no != ""){ ?><b>Godown Number: </b><?= $order->godown_no ?><?php } ?>
+        </div>
+        <div class="col-md-4">
+        <div class="text-right"> <b> Order Number:</b>  <?= $order->order_number ?> </div>
+        </div>
+      </div>
+      
+      
+       
+       </div>
+      <div class="panel-body-order panel-body">
+      
       <div class="row">
         <div class="col-md-4">
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
@@ -100,14 +128,15 @@ use yii\data\ActiveDataProvider;
           <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
         </div>
         <div class="col-md-4">
-          <p><b>Built Area: </b><?= $order->built_area ?></p><br>
-          <p><b>Shed Area: </b><?= $order->shed_area ?></p><br>
-          <p><b>Shed Number: </b><?= $order->shed_no ?></p><br>
+          <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+          <?php if ($order->built_area != ""){ ?><p><b>Built Area: </b><?php  $order->built_area ?></p><?php } ?><br>
+          <?php if ($order->shed_area != ""){ ?><p><b>Shed Area: </b><?= $order->shed_area ?></p><?php } ?><br>
+         
         </div>
         <div class="col-md-4">
-          <p><b>Godown Area: </b><?= $order->godown_area ?></p><br>
-          <p><b>Godown Number: </b><?= $order->godown_no ?></p><br>
-          <p><b>Total Area: </b><?= $order->total_area ?></p><br>
+        <?php if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
+        <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
+        <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>  
         </div>
       </div>
       

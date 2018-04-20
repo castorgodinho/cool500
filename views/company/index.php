@@ -22,8 +22,6 @@ $this->title = 'Companies';
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'user.email',
             'name',
             'address',
             'constitution',

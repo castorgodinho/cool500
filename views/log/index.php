@@ -4,18 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\SearchInvoice */
+/* @var $searchModel app\models\SearchLog */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Invoices';
+$this->title = 'Logs';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="invoice-index">
+<div class="log-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Invoice', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Log', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -23,15 +24,13 @@ $this->title = 'Invoices';
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'invoice_code',
-            'rate.rate',
-            'tax.rate',
-            'interest.rate',
-            'order.order_number',
-            'order.company.name',
-            //'start_date',
-            //'total_amount',
+            'user.email',
+            'type',
+            'create_date',
+            'updated_date',
+            //'old_value:ntext',
+            //'new_value:ntext',
+            //'user_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

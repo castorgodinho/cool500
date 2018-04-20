@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Rate;
 use app\models\SearchRate;
+use app\models\Log;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -97,13 +99,19 @@ class RateController extends Controller
         if (\Yii::$app->user->can('updateRate')){
             $model = $this->findModel($id);
             $model->flag = 0;
-            $model->save();
             $rate = new Rate();
             if ($rate->load(Yii::$app->request->post())) {
                 date_default_timezone_set('Asia/Kolkata');
                 $rate->date = date('Y-m-d');
                 $rate->flag = 1;
+                $log = new Log();
+                $log->old_value = Json::encode(Rate::find()->where(['rate_id' => $model->rate_id])->all(), $asArray = true) ;
                 $rate->save();
+                $model->save();
+                $log->new_value = Json::encode(Rate::find()->where(['rate_id' => $rate->rate_id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Rate';
+                $log->save();
                 return $this->redirect(['index']);
             } else {
                 return $this->render('update', [

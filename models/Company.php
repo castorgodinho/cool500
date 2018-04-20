@@ -7,10 +7,11 @@ use Yii;
 /**
  * This is the model class for table "company".
  *
- * @property integer $user_id
- * @property integer $company_id
+ * @property int $user_id
+ * @property int $company_id
  * @property string $name
  * @property string $address
+ * @property string $remark
  * @property string $constitution
  * @property string $products
  * @property string $gstin
@@ -22,8 +23,7 @@ use Yii;
  * @property string $competent_mobile
  *
  * @property Users $user
- * @property CompanyPlot[] $companyPlots
- * @property Invoice[] $invoices
+ * @property Orders[] $orders
  */
 class Company extends \yii\db\ActiveRecord
 {
@@ -44,24 +44,26 @@ class Company extends \yii\db\ActiveRecord
             [['user_id', 'name'], 'required'],
             [['user_id'], 'integer'],
             [['name', 'owner_name', 'competent_name', 'competent_email'], 'string', 'max' => 100],
-            [['competent_email'], 'email'],
             [['address'], 'string', 'max' => 500],
+            [['remark'], 'string', 'max' => 150],
             [['constitution', 'products'], 'string', 'max' => 60],
             [['gstin'], 'string', 'max' => 30],
-            [['gstin', 'name'], 'unique'],
             [['owner_phone', 'owner_mobile', 'competent_mobile'], 'string', 'max' => 10],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'user_id']],
         ];
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
             'user_id' => 'User ID',
             'company_id' => 'Company ID',
-            'name' => 'Company Name',
-            'address' => 'Company Address',
+            'name' => 'Name',
+            'address' => 'Address',
+            'remark' => 'Remark',
             'constitution' => 'Constitution',
             'products' => 'Products',
             'gstin' => 'Gstin',
@@ -74,41 +76,19 @@ class Company extends \yii\db\ActiveRecord
         ];
     }
 
-    public function create($user, $name, $address, $constitution, $products,
-                           $gstin, $owner_name, $owner_phone, $owner_mobile,
-                           $competent_name, $competent_email, $competent_mobile){
-          $company = new Company();
-          $company->name = $name;
-          $company->address = $address;
-          $company->constitution = $constitution;
-          $company->products = $products;
-          $company->gstin = $gstin;
-          $company->owner_name = $owner_name;
-          $company->owner_phone = $owner_phone;
-          $company->owner_mobile = $owner_mobile;
-          $company->competent_name = $competent_name;
-          $company->competent_email = $competent_email;
-          $company->competent_mobile = $competent_mobile;
-          $company->user_id = $user->user_id;
-          $company->save();
-          return $company;
-    }
-
-
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getUser()
     {
         return $this->hasOne(Users::className(), ['user_id' => 'user_id']);
     }
 
-
-    public function getCompanyPlots()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
     {
-        return $this->hasMany(CompanyPlot::className(), ['company_id' => 'company_id']);
-    }
-
-
-    public function getInvoices()
-    {
-        return $this->hasMany(Invoice::className(), ['company_id' => 'company_id']);
+        return $this->hasMany(Orders::className(), ['company_id' => 'company_id']);
     }
 }

@@ -15,9 +15,11 @@ use yii\widgets\ActiveForm;
           <div class="col-md-6">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
           </div>
+          <?php if($model->isNewRecord){ ?>
           <div class="col-md-6">
             <?= $form->field($model, 'gstin')->textInput(['maxlength' => true]) ?>
           </div>
+          <?php } ?>
         </div>
         <div class="row">
           <div class="col-md-6">
@@ -69,6 +71,9 @@ use yii\widgets\ActiveForm;
         <div class="row">
           <div class="col-md-6">
             <?= $form->field($model, 'competent_mobile')->textInput(['maxlength' => true]) ?>
+          </div>
+          <div class="col-md-6">
+            <?= $form->field($model, 'remark')->textarea(['maxlength' => true]) ?>
           </div>
           
         </div>

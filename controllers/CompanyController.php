@@ -6,11 +6,15 @@ use Yii;
 use app\models\Company;
 use app\models\Users;
 use app\models\Orders;
+use app\models\Log;
+use app\models\GstUpdate;
+use yii\helpers\Json;
 use app\models\SearchCompany;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 /**
  * CompanyController implements the CRUD actions for Company model.
  */
@@ -125,6 +129,7 @@ class CompanyController extends Controller
                 $auth->assign($companyRole, $user->user_id);
                 $model->user_id = $user->user_id;
                 $model->save();
+
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {
                 return $this->render('create', [
@@ -163,7 +168,14 @@ class CompanyController extends Controller
                 }else{
                     $user->password = Users::findOne($user->user_id);
                 }
+                $log = new Log();
+                $log->old_value = Json::encode(Company::find()->joinWith('user')->where(['company_id' => $model->company_id])->all(), $asArray = true) ;
                 $model->save();
+                $user->save();
+                $log->new_value = Json::encode(Company::find()->joinWith('user')->where(['company_id' => $model->company_id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Company';
+                $log->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {
                 return $this->render('update', [
@@ -189,6 +201,39 @@ class CompanyController extends Controller
             return $this->redirect(['index']);
         }else{
             throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+
+    public function actionUpdateGst($id){
+        $company = Company::findOne($id);
+        if (\Yii::$app->user->can('updateGst', ['company' => $company])){
+            
+            $model = new GstUpdate();
+            $model->gstin = $company->gstin;
+            if ($model->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if ($model->upload()) {
+                    $company = Company::findOne($id);
+                    $company->url = $model->url;
+                    $company->gstin = $model->gstin;
+
+                    $log = new Log();
+                    $log->old_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
+                    $company->save();
+                    $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
+                    $log->user_id = Yii::$app->user->identity->user_id;
+                    $log->type = 'GSTIN';
+                    $log->save();
+                    return $this->redirect(['view', 
+                        'id' => $id,
+                    ]);
+                }
+            }
+            return $this->render('update-gst',[
+                'model' => $model,
+            ]);
+        }else{
+                throw new \yii\web\ForbiddenHttpException;
         }
     }
 
