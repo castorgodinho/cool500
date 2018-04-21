@@ -5,7 +5,23 @@ use yii\widgets\DetailView;
 
 
 ?>
-<div class="cover" style="border: 1px solid black; padding: 10px;">
+<style>
+  @media print {
+  body * {
+    visibility: hidden;
+  }
+  #printableArea, #printableArea * {
+    visibility: visible;
+  }
+  #printableArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+</style>
+<input type="button" class="print-btn btn btn-default"  value="PRINT" /><br><br>
+<div class="cover" id="printableArea" style="border: 1px solid black; padding: 10px;">
 
 
 <div class="row">
@@ -60,3 +76,17 @@ use yii\widgets\DetailView;
 
 </div>
 </div>
+
+<?php 
+  $script = <<< JS
+
+    $(document).ready(function(){
+      $('.print-btn').click(function(){
+
+
+        window.print();
+          });
+        });
+JS;
+$this->registerJS($script);
+?>
