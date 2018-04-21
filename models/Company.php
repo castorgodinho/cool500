@@ -23,6 +23,7 @@ use Yii;
  * @property string $competent_mobile
  * @property string $url
  * @property string $remark_url
+ * @property string $tds_url
  *
  * @property Users $user
  * @property Orders[] $orders
@@ -41,11 +42,11 @@ class Company extends \yii\db\ActiveRecord
      * @inheritdoc
      */
     public function rules()
-    { 
+    {
         return [
             [['user_id', 'name', 'remark'], 'required'],
             [['user_id'], 'integer'],
-            [['url', 'remark_url'], 'string'],
+            [['url', 'remark_url', 'tds_url'], 'string'],
             [['name', 'owner_name', 'competent_name', 'competent_email'], 'string', 'max' => 100],
             [['address'], 'string', 'max' => 500],
             [['remark'], 'string', 'max' => 150],
@@ -78,6 +79,7 @@ class Company extends \yii\db\ActiveRecord
             'competent_mobile' => 'Competent Mobile',
             'url' => 'Url',
             'remark_url' => 'Remark Url',
+            'tds_url' => 'Tds Url',
         ];
     }
 
