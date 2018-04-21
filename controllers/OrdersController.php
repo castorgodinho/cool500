@@ -184,6 +184,9 @@ class OrdersController extends Controller
           $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
+           date_default_timezone_set('Asia/Kolkata');
+           $start_date = date('d-m-Y');
+
           $previousLeaseRent = 0;
           $previousCGST = 0;
           $previousSGST = 0;
@@ -237,15 +240,10 @@ class OrdersController extends Controller
           $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
           $currentDueTotal = $currentLeaseRent + $currentTotalTax;
 
-          $invoices = Invoice::find()
+          $invoice = Invoice::find()
           ->where(['order_id' => $id])
-          ->orderBy(['invoice_id' => 'SORT_DESC'])
-          ->all();
-
-          $invoice = null;
-          foreach($invoices as $i){
-            $invoice = $i;
-          }
+          ->orderBy(['invoice_id' => SORT_DESC])
+          ->one();
 
           if($invoice){
             $totalPaid = Payment::find()
@@ -269,18 +267,25 @@ class OrdersController extends Controller
 
           $order =  Orders::findOne($id);
           $time = strtotime($invoice->start_date);
-          $newformat = date('Y-m-d',$time);
-          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
-          $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
+          $newformat = date('d-m-Y',$time);
+          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 1 month'));
+          $billDate = date('d-m-Y', strtotime($newformat. ' 1 year'));
+
+          $date1 = $invoiceDueDate;
+          $date2 = $start_date;
+          $diff = strtotime($date2) - strtotime($date1);
+          $diffDate  = $diff / (60*60*24);
+          echo $date1.'<br>';
+          echo $date2.'<br>';
+          echo $diffDate.'<br>';
 
           }else{
 
           $time = strtotime($order->start_date);
-          $newformat = date('Y-m-d',$time);
-          $invoiceDueDate = date('Y-m-d', strtotime($newformat. ' + 366 days'));
-
-          $billDate = date('Y-m-d', strtotime($invoiceDueDate. ' - 15 days'));
-        }
+          $newformat = date('d-m-Y',$time);
+          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 month'));
+          $billDate = $newformat;
+         }
 
           $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
           $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
@@ -289,11 +294,24 @@ class OrdersController extends Controller
           $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
           $currentDueTotal = $currentLeaseRent + $currentTotalTax;
 
-          $penalInterest = ($interest->rate/100) * $previousDueTotal;
-          $previousDueTotal = $previousDueTotal + $penalInterest;
+          $penalInterest = round((($diffDate  * $interest->rate/100) * $previousLeaseRent ) / 365);
+          if($penalInterest < 0 ){
+            $penalInterest = 0;
+          }
 
-          date_default_timezone_set('Asia/Kolkata');
-          $start_date = date('Y-m-d');
+          $leftOverAmount = $previousDueTotal;
+          $previousDueTotal = $leftOverAmount + $penalInterest;
+
+          $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
+          $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
+
+          if($previousLeaseRent == 0){
+            $prevPeriodFrom = '00-00-0000';
+            $prevPeriodTo = '00-00-0000';
+          }else{
+            $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
+            $prevPeriodTo   = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 day  '));
+          }
 
           return $this->render('update', [
                   'previousLeaseRent' => $previousLeaseRent,
@@ -311,6 +329,13 @@ class OrdersController extends Controller
                   'currentSGSTAmount' => $currentSGSTAmount,
                   'currentSGST' => $currentSGST,
                   'currentCGST' => $currentCGST,
+                  'prevNotPaid' => $leftOverAmount,
+
+                  'leasePeriodFrom' => $leasePeriodFrom,
+                  'leasePeriodTo' => $leasePeriodTo,
+
+                  'prevPeriodFrom' => $prevPeriodFrom,
+                  'prevPeriodTo' => $prevPeriodTo,
 
                   'billDate' => $billDate,
                   'invoiceDueDate' => $invoiceDueDate,

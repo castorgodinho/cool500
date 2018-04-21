@@ -95,6 +95,9 @@ class PaymentController extends Controller
                 if($balanceAmount < 0){
                     Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
                 }
+                else if($model->tds_rate > 10.10 ){
+                  Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
+                }
                 else{
                     $model->save();
                     $lr = $model->invoice->current_lease_rent;
