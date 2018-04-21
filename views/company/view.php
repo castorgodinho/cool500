@@ -9,7 +9,10 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 ?>
-<a href="index.php?r=company/update-gst&id=<?= $model->company_id ?>" >Update GSTIN</a>
+
+<?php if(Yii::$app->user->can('admin')){ ?>
+  <a href="index.php?r=company/upload-remark-image&id=<?= $model->company_id ?>" >Upload Remark</a>
+<?php } ?>
 <div class="panel panel-default">
   <div class="panel-heading">Unit Details</div>
   <div class="panel-body">
@@ -19,7 +22,7 @@ use yii\data\ActiveDataProvider;
         <p></p>
       </div>
       <div class="col-md-4">
-        <p> <strong>GSTIN  </strong> <?= $model->gstin ?></p>
+        <p> <strong>GSTIN  </strong> <?= $model->gstin ?> <a href="index.php?r=company/update-gst&id=<?= $model->company_id ?>" >Edit</a></p>
         <p></p>
       </div>
       <div class="col-md-4">
@@ -32,6 +35,28 @@ use yii\data\ActiveDataProvider;
         <p> <strong>Products </strong> <?= $model->products ?></p>
         <p></p>
       </div>
+      <div class="col-md-4">
+          
+            
+            <?php 
+              if($model->url != ''){
+                echo "<a href='$model->url'>Download GSTIN file</a>";
+              }
+            ?>
+
+      </div>
+      <div class="col-md-4">
+          
+            <?php 
+              if($model->remark_url != ''){
+                echo "<a href='$model->remark_url'>Download Remark</a>";
+              }
+            ?>
+
+      </div>
+    </div> 
+    <div class="row">
+      
     </div> 
   </div>
 </div>

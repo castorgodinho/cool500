@@ -22,7 +22,8 @@ class GstUpdate extends \yii\base\Model
             [['file'], 'file'],
             [
                 [
-                    'gstin'
+                    'gstin',
+                    'url',
                 ],
                 'string'
             ],

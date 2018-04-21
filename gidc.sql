@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 20, 2018 at 08:46 AM
+-- Generation Time: Apr 21, 2018 at 06:28 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -85,12 +85,9 @@ CREATE TABLE `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('accounts', '26', 1523949777),
-('accounts', '30', 1523949915),
-('accounts', '8', 1523949557),
-('admin', '1', 1523949314),
-('admin', '7', 1524205497),
-('company', '31', 1524137936);
+('accounts', '30', 1524219307),
+('admin', '1', 1524219307),
+('company', '33', 1524219559);
 
 -- --------------------------------------------------------
 
@@ -113,65 +110,72 @@ CREATE TABLE `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('accounts', 1, NULL, NULL, NULL, 1523949314, 1523949314),
-('admin', 1, NULL, NULL, NULL, 1523949313, 1523949313),
-('changePassword', 2, 'Delete User', NULL, NULL, 1523949313, 1523949313),
-('company', 1, NULL, NULL, NULL, 1523949314, 1523949314),
-('createArea', 2, 'Create a Area', NULL, NULL, 1523949313, 1523949313),
-('createCompany', 2, 'Create a Company', NULL, NULL, 1523949313, 1523949313),
-('createInvoice', 2, 'Create a Invoice', NULL, NULL, 1523949313, 1523949313),
-('createOrders', 2, 'Create a Orders', NULL, NULL, 1523949313, 1523949313),
-('createPayment', 2, 'Create a Payment', NULL, NULL, 1523949313, 1523949313),
-('createPlot', 2, 'Create a Plot', NULL, NULL, 1523949313, 1523949313),
-('createRate', 2, 'Create a Rate', NULL, NULL, 1523949313, 1523949313),
-('createSite', 2, 'Create a Site', NULL, NULL, 1523949313, 1523949313),
-('createTax', 2, 'Create a Tax', NULL, NULL, 1523949313, 1523949313),
-('createUsers', 2, 'Create a User', NULL, NULL, 1523949313, 1523949313),
-('deleteArea', 2, 'Delete Area', NULL, NULL, 1523949313, 1523949313),
-('deleteCompany', 2, 'Delete Company', NULL, NULL, 1523949313, 1523949313),
-('deleteInvoice', 2, 'Delete Invoice', NULL, NULL, 1523949313, 1523949313),
-('deleteOrder', 2, 'Delete Order', NULL, NULL, 1523949313, 1523949313),
-('deletePayment', 2, 'Delete Payment', NULL, NULL, 1523949313, 1523949313),
-('deletePlot', 2, 'Delete Plot', NULL, NULL, 1523949313, 1523949313),
-('deleteRate', 2, 'Delete Rate', NULL, NULL, 1523949313, 1523949313),
-('deleteSite', 2, 'Delete Site', NULL, NULL, 1523949313, 1523949313),
-('deleteTax', 2, 'Delete Site', NULL, NULL, 1523949313, 1523949313),
-('deleteUsers', 2, 'Delete User', NULL, NULL, 1523949313, 1523949313),
-('indexArea', 2, 'Index a Area', NULL, NULL, 1523949313, 1523949313),
-('indexCompany', 2, 'Index a Company', NULL, NULL, 1523949313, 1523949313),
-('indexInvoice', 2, 'Index a Invoice', NULL, NULL, 1523949313, 1523949313),
-('indexOrders', 2, 'Index a Orders', NULL, NULL, 1523949313, 1523949313),
-('indexPayment', 2, 'Index a Payment', NULL, NULL, 1523949313, 1523949313),
-('indexPlot', 2, 'Index a Plot', NULL, NULL, 1523949313, 1523949313),
-('indexRate', 2, 'Index a Rate', NULL, NULL, 1523949313, 1523949313),
-('indexSite', 2, 'Index a Site', NULL, NULL, 1523949313, 1523949313),
-('indexTax', 2, 'Index a Tax', NULL, NULL, 1523949313, 1523949313),
-('indexUsers', 2, 'Index a User', NULL, NULL, 1523949313, 1523949313),
-('searchInvoice', 2, 'Delete Invoice', NULL, NULL, 1523949313, 1523949313),
-('staff', 1, NULL, NULL, NULL, 1523949314, 1523949314),
-('updateArea', 2, 'Update Area', NULL, NULL, 1523949313, 1523949313),
-('updateCompany', 2, 'Update Company', NULL, NULL, 1523949313, 1523949313),
-('updateInvoice', 2, 'Update Invoice', NULL, NULL, 1523949313, 1523949313),
-('updateOrders', 2, 'Update Orders', NULL, NULL, 1523949313, 1523949313),
-('updatePayment', 2, 'Update Payment', NULL, NULL, 1523949313, 1523949313),
-('updatePlot', 2, 'Update Plot', NULL, NULL, 1523949313, 1523949313),
-('updateRate', 2, 'Update Rate', NULL, NULL, 1523949313, 1523949313),
-('updateSite', 2, 'Update Site', NULL, NULL, 1523949313, 1523949313),
-('updateTax', 2, 'Update Tax', NULL, NULL, 1523949313, 1523949313),
-('updateUsers', 2, 'Update User', NULL, NULL, 1523949313, 1523949313),
-('viewArea', 2, 'View Area', NULL, NULL, 1523949313, 1523949313),
-('viewCompany', 2, NULL, NULL, NULL, 1523949313, 1523949313),
-('viewInvoice', 2, 'View Invoice', NULL, NULL, 1523949313, 1523949313),
-('viewOrders', 2, 'View Orders', NULL, NULL, 1523949313, 1523949313),
-('viewOwnCompany', 2, 'Update own Company', 'isCompany', NULL, 1523949314, 1523949314),
-('viewOwnInvoice', 2, 'View own Invoice', 'isInvoice', NULL, 1523949314, 1523949314),
-('viewOwnPayment', 2, 'View own Payment', 'isPayment', NULL, 1523949314, 1523949314),
-('viewPayment', 2, 'View Payment', NULL, NULL, 1523949313, 1523949313),
-('viewPlot', 2, 'View Plot', NULL, NULL, 1523949313, 1523949313),
-('viewRate', 2, 'View Rate', NULL, NULL, 1523949313, 1523949313),
-('viewSite', 2, 'View Site', NULL, NULL, 1523949313, 1523949313),
-('viewTax', 2, 'View Tax', NULL, NULL, 1523949313, 1523949313),
-('viewUsers', 2, 'View User', NULL, NULL, 1523949313, 1523949313);
+('accounts', 1, NULL, NULL, NULL, 1524219307, 1524219307),
+('admin', 1, NULL, NULL, NULL, 1524219307, 1524219307),
+('changePassword', 2, 'Delete User', NULL, NULL, 1524219307, 1524219307),
+('company', 1, NULL, NULL, NULL, 1524219307, 1524219307),
+('createArea', 2, 'Create a Area', NULL, NULL, 1524219306, 1524219306),
+('createCompany', 2, 'Create a Company', NULL, NULL, 1524219306, 1524219306),
+('createInterest', 2, 'Create a Interest', NULL, NULL, 1524219307, 1524219307),
+('createInvoice', 2, 'Create a Invoice', NULL, NULL, 1524219307, 1524219307),
+('createOrders', 2, 'Create a Orders', NULL, NULL, 1524219306, 1524219306),
+('createPayment', 2, 'Create a Payment', NULL, NULL, 1524219307, 1524219307),
+('createPlot', 2, 'Create a Plot', NULL, NULL, 1524219306, 1524219306),
+('createRate', 2, 'Create a Rate', NULL, NULL, 1524219306, 1524219306),
+('createSite', 2, 'Create a Site', NULL, NULL, 1524219306, 1524219306),
+('createTax', 2, 'Create a Tax', NULL, NULL, 1524219307, 1524219307),
+('createUsers', 2, 'Create a User', NULL, NULL, 1524219307, 1524219307),
+('deleteArea', 2, 'Delete Area', NULL, NULL, 1524219306, 1524219306),
+('deleteCompany', 2, 'Delete Company', NULL, NULL, 1524219306, 1524219306),
+('deleteInterest', 2, 'Delete Interest', NULL, NULL, 1524219307, 1524219307),
+('deleteInvoice', 2, 'Delete Invoice', NULL, NULL, 1524219307, 1524219307),
+('deleteOrder', 2, 'Delete Order', NULL, NULL, 1524219306, 1524219306),
+('deletePayment', 2, 'Delete Payment', NULL, NULL, 1524219307, 1524219307),
+('deletePlot', 2, 'Delete Plot', NULL, NULL, 1524219306, 1524219306),
+('deleteRate', 2, 'Delete Rate', NULL, NULL, 1524219306, 1524219306),
+('deleteSite', 2, 'Delete Site', NULL, NULL, 1524219307, 1524219307),
+('deleteTax', 2, 'Delete Site', NULL, NULL, 1524219307, 1524219307),
+('deleteUsers', 2, 'Delete User', NULL, NULL, 1524219307, 1524219307),
+('indexArea', 2, 'Index a Area', NULL, NULL, 1524219306, 1524219306),
+('indexCompany', 2, 'Index a Company', NULL, NULL, 1524219306, 1524219306),
+('indexInterest', 2, 'Index a Interest', NULL, NULL, 1524219307, 1524219307),
+('indexInvoice', 2, 'Index a Invoice', NULL, NULL, 1524219307, 1524219307),
+('indexOrders', 2, 'Index a Orders', NULL, NULL, 1524219306, 1524219306),
+('indexPayment', 2, 'Index a Payment', NULL, NULL, 1524219307, 1524219307),
+('indexPlot', 2, 'Index a Plot', NULL, NULL, 1524219306, 1524219306),
+('indexRate', 2, 'Index a Rate', NULL, NULL, 1524219306, 1524219306),
+('indexSite', 2, 'Index a Site', NULL, NULL, 1524219307, 1524219307),
+('indexTax', 2, 'Index a Tax', NULL, NULL, 1524219307, 1524219307),
+('indexUsers', 2, 'Index a User', NULL, NULL, 1524219307, 1524219307),
+('searchInvoice', 2, 'Delete Invoice', NULL, NULL, 1524219307, 1524219307),
+('staff', 1, NULL, NULL, NULL, 1524219307, 1524219307),
+('updateArea', 2, 'Update Area', NULL, NULL, 1524219306, 1524219306),
+('updateCompany', 2, 'Update Company', NULL, NULL, 1524219306, 1524219306),
+('updateGst', 2, 'Update GST', NULL, NULL, 1524219306, 1524219306),
+('updateInterest', 2, 'Update Interest', NULL, NULL, 1524219307, 1524219307),
+('updateInvoice', 2, 'Update Invoice', NULL, NULL, 1524219307, 1524219307),
+('updateOrders', 2, 'Update Orders', NULL, NULL, 1524219306, 1524219306),
+('updateOwnGst', 2, 'Update own GST', 'isGst', NULL, 1524219307, 1524219307),
+('updatePayment', 2, 'Update Payment', NULL, NULL, 1524219307, 1524219307),
+('updatePlot', 2, 'Update Plot', NULL, NULL, 1524219306, 1524219306),
+('updateRate', 2, 'Update Rate', NULL, NULL, 1524219306, 1524219306),
+('updateSite', 2, 'Update Site', NULL, NULL, 1524219307, 1524219307),
+('updateTax', 2, 'Update Tax', NULL, NULL, 1524219307, 1524219307),
+('updateUsers', 2, 'Update User', NULL, NULL, 1524219307, 1524219307),
+('viewArea', 2, 'View Area', NULL, NULL, 1524219306, 1524219306),
+('viewCompany', 2, NULL, NULL, NULL, 1524219306, 1524219306),
+('viewInterest', 2, 'View Interest', NULL, NULL, 1524219307, 1524219307),
+('viewInvoice', 2, 'View Invoice', NULL, NULL, 1524219307, 1524219307),
+('viewOrders', 2, 'View Orders', NULL, NULL, 1524219306, 1524219306),
+('viewOwnCompany', 2, 'Update own Company', 'isCompany', NULL, 1524219307, 1524219307),
+('viewOwnInvoice', 2, 'View own Invoice', 'isInvoice', NULL, 1524219307, 1524219307),
+('viewOwnPayment', 2, 'View own Payment', 'isPayment', NULL, 1524219307, 1524219307),
+('viewPayment', 2, 'View Payment', NULL, NULL, 1524219307, 1524219307),
+('viewPlot', 2, 'View Plot', NULL, NULL, 1524219306, 1524219306),
+('viewRate', 2, 'View Rate', NULL, NULL, 1524219306, 1524219306),
+('viewSite', 2, 'View Site', NULL, NULL, 1524219307, 1524219307),
+('viewTax', 2, 'View Tax', NULL, NULL, 1524219307, 1524219307),
+('viewUsers', 2, 'View User', NULL, NULL, 1524219307, 1524219307);
 
 -- --------------------------------------------------------
 
@@ -200,6 +204,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'changePassword'),
 ('admin', 'createArea'),
 ('admin', 'createCompany'),
+('admin', 'createInterest'),
 ('admin', 'createInvoice'),
 ('admin', 'createOrders'),
 ('admin', 'createPayment'),
@@ -210,6 +215,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'createUsers'),
 ('admin', 'deleteArea'),
 ('admin', 'deleteCompany'),
+('admin', 'deleteInterest'),
 ('admin', 'deleteInvoice'),
 ('admin', 'deleteOrder'),
 ('admin', 'deletePayment'),
@@ -220,6 +226,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'deleteUsers'),
 ('admin', 'indexArea'),
 ('admin', 'indexCompany'),
+('admin', 'indexInterest'),
 ('admin', 'indexInvoice'),
 ('admin', 'indexOrders'),
 ('admin', 'indexPayment'),
@@ -231,6 +238,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'searchInvoice'),
 ('admin', 'updateArea'),
 ('admin', 'updateCompany'),
+('admin', 'updateGst'),
+('admin', 'updateInterest'),
 ('admin', 'updateInvoice'),
 ('admin', 'updateOrders'),
 ('admin', 'updatePayment'),
@@ -241,6 +250,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'updateUsers'),
 ('admin', 'viewArea'),
 ('admin', 'viewCompany'),
+('admin', 'viewInterest'),
 ('admin', 'viewInvoice'),
 ('admin', 'viewOrders'),
 ('admin', 'viewPayment'),
@@ -250,12 +260,14 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'viewTax'),
 ('admin', 'viewUsers'),
 ('company', 'changePassword'),
+('company', 'updateOwnGst'),
 ('company', 'viewOwnCompany'),
 ('company', 'viewOwnInvoice'),
 ('company', 'viewOwnPayment'),
 ('staff', 'changePassword'),
 ('staff', 'createCompany'),
 ('staff', 'viewCompany'),
+('updateOwnGst', 'updateGst'),
 ('viewOwnCompany', 'viewCompany'),
 ('viewOwnInvoice', 'viewInvoice'),
 ('viewOwnPayment', 'viewPayment');
@@ -278,9 +290,10 @@ CREATE TABLE `auth_rule` (
 --
 
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
-('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532333934393331343b733a393a22757064617465644174223b693a313532333934393331343b7d, 1523949314, 1523949314),
-('isInvoice', 0x4f3a32303a226170705c726261635c496e766f69636552756c65223a333a7b733a343a226e616d65223b733a393a226973496e766f696365223b733a393a22637265617465644174223b693a313532333934393331343b733a393a22757064617465644174223b693a313532333934393331343b7d, 1523949314, 1523949314),
-('isPayment', 0x4f3a32303a226170705c726261635c5061796d656e7452756c65223a333a7b733a343a226e616d65223b733a393a2269735061796d656e74223b733a393a22637265617465644174223b693a313532333934393331343b733a393a22757064617465644174223b693a313532333934393331343b7d, 1523949314, 1523949314);
+('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532343231393330373b733a393a22757064617465644174223b693a313532343231393330373b7d, 1524219307, 1524219307),
+('isGst', 0x4f3a31363a226170705c726261635c47737452756c65223a333a7b733a343a226e616d65223b733a353a226973477374223b733a393a22637265617465644174223b693a313532343231393330373b733a393a22757064617465644174223b693a313532343231393330373b7d, 1524219307, 1524219307),
+('isInvoice', 0x4f3a32303a226170705c726261635c496e766f69636552756c65223a333a7b733a343a226e616d65223b733a393a226973496e766f696365223b733a393a22637265617465644174223b693a313532343231393330373b733a393a22757064617465644174223b693a313532343231393330373b7d, 1524219307, 1524219307),
+('isPayment', 0x4f3a32303a226170705c726261635c5061796d656e7452756c65223a333a7b733a343a226e616d65223b733a393a2269735061796d656e74223b733a393a22637265617465644174223b693a313532343231393330373b733a393a22757064617465644174223b693a313532343231393330373b7d, 1524219307, 1524219307);
 
 -- --------------------------------------------------------
 
@@ -302,25 +315,29 @@ CREATE TABLE `company` (
   `owner_mobile` varchar(10) DEFAULT NULL,
   `competent_name` varchar(100) DEFAULT NULL,
   `competent_email` varchar(100) DEFAULT NULL,
-  `competent_mobile` varchar(10) DEFAULT NULL
+  `competent_mobile` varchar(10) DEFAULT NULL,
+  `url` text,
+  `remark_url` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `company`
 --
 
-INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `constitution`, `products`, `gstin`, `owner_name`, `owner_phone`, `owner_mobile`, `competent_name`, `competent_email`, `competent_mobile`) VALUES
-(1, 1, 'Google Developers Group', 'Verna, Plot No. 35A, 66 B', '', 'Partnership', 'M. S Barrels', '78SJABSJSBBA76', 'Micheal Jackson', '2706542', '9885412565', 'John Doe', 'john@doe.com', '9865214587'),
-(2, 2, 'Cipla', 'Plot No 23, 22 Verna Goa', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'BKJK123K1K23KB', 'James Blunt', '2706744', '9865412547', 'Jan Doe', 'jan@dow.com', '9652147852'),
-(4, 3, 'Chowgule FOSS Club', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'asv213kkasn1231', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(11, 4, 'Chowgule FOSS Club', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', '21hkjh312hlh12l', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(16, 5, 'Cocacola', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sdasdf23wda', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(18, 6, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(19, 7, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(22, 8, 'Chowgules', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'dasdasfsa234', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(25, 9, 'MI', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Mobile Phone', 'BKJK123K1K23KsB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(26, 10, 'Nokia', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Mobile Phones', 'BKJK12sK1K23KB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696'),
-(31, 11, 'ICC', 'Colmorod Residential Complex, Flat S2', 'International Cricket ', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696');
+INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `constitution`, `products`, `gstin`, `owner_name`, `owner_phone`, `owner_mobile`, `competent_name`, `competent_email`, `competent_mobile`, `url`, `remark_url`) VALUES
+(1, 1, 'Google Developers Group', 'Verna, Plot No. 35A, 66 B', '', 'Partnership', 'M. S Barrels', '78SJABSJSBBA40', 'Micheal Jackson', '2706542', '9885412565', 'John Doe', 'john@doe.com', '9865214587', 'gstfiles/GOA-IDC.pdf', NULL),
+(2, 2, 'Cipla', 'Plot No 23, 22 Verna Goa', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'BKJK123K1K23KB', 'James Blunt', '2706744', '9865412547', 'Jan Doe', 'jan@dow.com', '9652147852', NULL, NULL),
+(4, 3, 'Chowgule FOSS Club', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'asv213kkasn1231', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(11, 4, 'Chowgule FOSS Club', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', '21hkjh312hlh12l', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(16, 5, 'Cocacola', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sdasdf23wda', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(18, 6, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(19, 7, 'Lays Chips', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(22, 8, 'Chowgules', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'dasdasfsa222', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', 'gstfiles/Data structures set b.pdf', 'remarkfiles/FOSS consultancy work.pdf'),
+(25, 9, 'MI', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Mobile Phone', 'BKJK123K1K23KsB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(26, 10, 'Nokia', 'Colmorod Residential Complex, Flat S2', '', 'Pvt. Ltd', 'Mobile Phones', 'BKJK12sK1K23KB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(31, 11, 'ICC', 'Colmorod Residential Complex, Flat S2', 'International Cricket ', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(32, 12, 'Lenovo', 'Colmorod Residential Complex, Flat S2', 'asd', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asdd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL),
+(33, 13, 'HDFC', 'Colmorod Residential Complex, Flat S2', 'asd', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -426,7 +443,19 @@ INSERT INTO `log` (`log_id`, `type`, `create_date`, `updated_date`, `old_value`,
 (12, 'Rate', '2018-04-20 11:34:48', '2018-04-20 06:04:48', '[{\"rate_id\":4,\"area_id\":9,\"from_area\":10000000,\"to_area\":20000000,\"rate\":20,\"date\":\"2018-04-23\",\"flag\":1}]', '[{\"rate_id\":4,\"area_id\":9,\"from_area\":10000000,\"to_area\":20000000,\"rate\":20,\"date\":\"2018-04-23\",\"flag\":0}]', 1),
 (13, 'Rate', '2018-04-20 11:36:27', '2018-04-20 06:06:27', '[{\"rate_id\":6,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":140,\"date\":\"2018-04-20\",\"flag\":0}]', '[{\"rate_id\":9,\"area_id\":9,\"from_area\":0,\"to_area\":10000000,\"rate\":150,\"date\":\"2018-04-20\",\"flag\":1}]', 1),
 (14, 'Interest', '2018-04-20 11:43:02', '2018-04-20 06:13:02', '[{\"interest_id\":2,\"name\":\"Penal Interest\",\"type\":\"Penal Interest\",\"rate\":20,\"start_date\":\"2018-04-15\",\"flag\":0}]', '[{\"interest_id\":5,\"name\":\"Penal Interest\",\"type\":\"Penal Interest\",\"rate\":30,\"start_date\":\"2018-04-20\",\"flag\":1}]', 1),
-(15, 'Users', '2018-04-20 11:54:57', '2018-04-20 06:24:57', '[{\"user_id\":7,\"email\":\"castorgodin@gmail.com\",\"password\":\"$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW\",\"type\":\"accounts\"}]', '[{\"user_id\":7,\"email\":\"castorgodin@gmail.com\",\"password\":\"$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW\",\"type\":\"admin\"}]', 1);
+(15, 'Users', '2018-04-20 11:54:57', '2018-04-20 06:24:57', '[{\"user_id\":7,\"email\":\"castorgodin@gmail.com\",\"password\":\"$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW\",\"type\":\"accounts\"}]', '[{\"user_id\":7,\"email\":\"castorgodin@gmail.com\",\"password\":\"$2y$13$1ZrtybbgMgiz5vn4I0bGE.R731p41YSo8GNxQ0kAovKV64REZ4zvW\",\"type\":\"admin\"}]', 1),
+(16, 'GSTIN', '2018-04-20 15:07:48', '2018-04-20 09:37:48', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA88\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/Invoice.pdf\"}]', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\"}]', 1),
+(17, 'Company', '2018-04-21 09:30:49', '2018-04-21 04:00:49', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\",\"remark_url\":null}]', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\",\"remark_url\":null}]', 1),
+(18, 'Company', '2018-04-21 09:36:06', '2018-04-21 04:06:06', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\",\"remark_url\":null}]', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\",\"remark_url\":null}]', 1),
+(19, 'Company', '2018-04-21 09:39:09', '2018-04-21 04:09:09', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', 1),
+(20, 'Company', '2018-04-21 09:45:12', '2018-04-21 04:15:12', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', 1),
+(21, 'Company', '2018-04-21 09:46:13', '2018-04-21 04:16:13', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', 1),
+(22, 'Company', '2018-04-21 09:46:32', '2018-04-21 04:16:32', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
+(23, 'GSTIN', '2018-04-21 09:52:16', '2018-04-21 04:22:16', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
+(24, 'GSTIN', '2018-04-21 09:52:50', '2018-04-21 04:22:50', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
+(25, 'GSTIN', '2018-04-21 09:53:25', '2018-04-21 04:23:25', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
+(26, 'GSTIN', '2018-04-21 09:54:08', '2018-04-21 04:24:08', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
+(27, 'GSTIN', '2018-04-21 09:54:38', '2018-04-21 04:24:38', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa234\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', '[{\"user_id\":22,\"company_id\":8,\"name\":\"Chowgules\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasdasfsa222\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"gstfiles\\/Data structures set b.pdf\",\"remark_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1);
 
 -- --------------------------------------------------------
 
@@ -755,7 +784,9 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `type`) VALUES
 (25, 'mi@gmail.com', '$2y$13$vQ8UBSaX13y3sIkJ.txko.Tirp3RKua.pEL/oR6auw40lbkHROTNC', 'company'),
 (26, 'nokia@gmail.com', '', 'accounts'),
 (30, 'accounts@gmail.com', '$2y$13$lPyJLwA6fAppMas8aElDXuy9zk9hXKYmmGZMec/2/ijWYu1qOXyue', 'accounts'),
-(31, 'icc@gmail.com', '$2y$13$ejpDHeqFkVJDcOehPn4GreXdVqp/kcsLrhgKHrrWEDLzDzGjUr07q', 'company');
+(31, 'icc@gmail.com', '$2y$13$ejpDHeqFkVJDcOehPn4GreXdVqp/kcsLrhgKHrrWEDLzDzGjUr07q', 'company'),
+(32, 'lenovo@gmail.com', '$2y$13$b3Lelc9KNWe402PeHINxIOj5Qd/S.sCv/cY4PWnQ3a9oAZVElaEYy', 'company'),
+(33, 'hdfc@gmail.com', '$2y$13$5QRj7PKAV6btTGTHtnuNmeS5XdSgf4VbWyPtc3re2c57FQRqFtcHC', 'company');
 
 --
 -- Indexes for dumped tables
@@ -906,7 +937,7 @@ ALTER TABLE `area_rate`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `interest`
@@ -924,7 +955,7 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -960,7 +991,7 @@ ALTER TABLE `tax`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables
