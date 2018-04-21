@@ -13,6 +13,9 @@ use yii\data\ActiveDataProvider;
 <?php if(Yii::$app->user->can('admin')){ ?>
   <a href="index.php?r=company/upload-remark-image&id=<?= $model->company_id ?>" >Upload Remark</a>
 <?php } ?>
+<?php if(Yii::$app->user->can('admin') || Yii::$app->user->can('company')){ ?>
+  <a href="index.php?r=company/upload-tds-image&id=<?= $model->company_id ?>" >Upload TDS Document</a>
+<?php } ?>
 <div class="panel panel-default">
   <div class="panel-heading">Unit Details</div>
   <div class="panel-body">
@@ -56,7 +59,15 @@ use yii\data\ActiveDataProvider;
       </div>
     </div> 
     <div class="row">
-      
+      <div class="col-md-4">
+            
+            <?php 
+              if($model->tds_url != ''){
+                echo "<p><a href='$model->tds_url'>Download TDS Document</a></p>";
+              }
+            ?>
+
+      </div>
     </div> 
   </div>
 </div>

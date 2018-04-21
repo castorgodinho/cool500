@@ -36,6 +36,14 @@ class RbacController extends Controller
         $updateGst->description = 'Update GST';
         $auth->add($updateGst);
 
+        $uploadReport = $auth->createPermission('uploadReport');
+        $uploadReport->description = 'Upload Report file';
+        $auth->add($uploadReport);
+
+        $uploadtds = $auth->createPermission('uploadtds');
+        $uploadtds->description = 'Upload tds file';
+        $auth->add($uploadtds);
+
         // add "Area" permission
         $createArea = $auth->createPermission('createArea');
         $createArea->description = 'Create a Area';
@@ -266,6 +274,8 @@ class RbacController extends Controller
         $auth->addChild($admin, $indexCompany);
         $auth->addChild($admin, $deleteCompany);
         $auth->addChild($admin, $updateGst);
+        $auth->addChild($admin, $uploadReport);
+        $auth->addChild($admin, $uploadtds);
         //add Area permissions
         $auth->addChild($admin, $createArea);
         $auth->addChild($admin, $updateArea);
@@ -365,6 +375,15 @@ class RbacController extends Controller
         $updateOwnGst->ruleName = $rule->name;
         $auth->add($updateOwnGst);
         $auth->addChild($updateOwnGst, $updateGst);
+
+        //update own gst
+        $rule = new \app\rbac\TdsRule;
+        $auth->add($rule);
+        $updateOwntds = $auth->createPermission('updateOwntds');
+        $updateOwntds->description = 'Update own TDS';
+        $updateOwntds->ruleName = $rule->name;
+        $auth->add($updateOwntds);
+        $auth->addChild($updateOwntds, $uploadtds);
         
 
         // add "Company" role
@@ -383,6 +402,7 @@ class RbacController extends Controller
         $auth->addChild($company, $viewOwnPayment);
         $auth->addChild($company, $viewOwnInvoice);
         $auth->addChild($company, $updateOwnGst);
+        $auth->addChild($company, $updateOwntds);
 
         //add Staff permissions
         $auth->addChild($staff, $createCompany);

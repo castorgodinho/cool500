@@ -3,12 +3,27 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Payment */
 
-$this->title = $model->payment_id;
-$this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 ?>
+<style>
+  @media print {
+  body * {
+    visibility: hidden;
+  }
+  #printableArea, #printableArea * {
+    visibility: visible;
+  }
+  #printableArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+</style>
+<input type="button" class="print-btn btn btn-default"  value="PRINT" /><br><br>
+<div class="cover" id="printableArea" style="border: 1px solid black; padding: 10px;">
+
+
 <div class="row">
   <div class="col-md-4 col-sm-4 col-xs-4 ">
     <h1><b>GIDC LOGO HERE</b></h1>
@@ -27,10 +42,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
     <table class="table">
      <th></th>
      <th></th>
-     <tr>
-       <td>Payment ID</td>
-       <td><?= $model->payment_id ?></td>
-     </tr>
      <tr>
        <td>Company</td>
        <td><?= $model->invoice->order->company->name ?></td>
@@ -68,3 +79,18 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 
 
 </div>
+</div>
+
+<?php 
+  $script = <<< JS
+
+    $(document).ready(function(){
+      $('.print-btn').click(function(){
+
+
+        window.print();
+          });
+        });
+JS;
+$this->registerJS($script);
+?>

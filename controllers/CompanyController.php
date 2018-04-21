@@ -239,7 +239,7 @@ class CompanyController extends Controller
     }
     public function actionUploadRemarkImage($id){
         $company = Company::findOne($id);
-        if (\Yii::$app->user->can('admin')){
+        if (\Yii::$app->user->can('uploadReport')){
             $model = new RemarkImage();
             if ($model->load(Yii::$app->request->post())) {
                 $model->file = UploadedFile::getInstance($model, 'file');
@@ -259,6 +259,37 @@ class CompanyController extends Controller
                 }
             }else{
                 return $this->render('upload-remark-image',[
+                    'model' => $model,
+                ]);
+            }
+            
+        }else{
+                throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+
+    public function actionUploadTdsImage($id){
+        $company = Company::findOne($id);
+        if (\Yii::$app->user->can('uploadtds', ['company' => $company])){
+            $model = new RemarkImage();
+            if ($model->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if ($model->upload()) {
+                    $company = Company::findOne($id);
+                    $company->tds_url = $model->url;
+                    $log = new Log();
+                    $log->old_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
+                    $company->save(false);
+                    $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
+                    $log->user_id = Yii::$app->user->identity->user_id;
+                    $log->type = 'Company';
+                    $log->save();
+                    return $this->redirect(['view', 
+                        'id' => $id,
+                    ]);
+                }
+            }else{
+                return $this->render('upload-tds-image',[
                     'model' => $model,
                 ]);
             }
