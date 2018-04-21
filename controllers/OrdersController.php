@@ -173,8 +173,9 @@ class OrdersController extends Controller
           $model->invoice_code = 'hello';
           $model->save(False);
           $invoiceID = strval($model->invoice_id);
-          echo 'sizeof($invoiceID) '.sizeof($invoiceID).'<br>';
-          for ($i=0; $i < 5- sizeof($invoiceID); $i++) {
+          echo 'sizeof($invoiceID) '.strlen($invoiceID).'<br>';
+          echo '$invoiceID'.$invoiceID.'<br>';
+          for ($i=0; $i < 5 - strlen($invoiceID); $i++) {
             $invoiceID = '0'. $invoiceID;
             echo '$invoiceCode '.$invoiceID.'<br>';
           }
@@ -184,8 +185,9 @@ class OrdersController extends Controller
           $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
-           date_default_timezone_set('Asia/Kolkata');
-           $start_date = date('d-m-Y');
+         date_default_timezone_set('Asia/Kolkata');
+         $start_date = date('d-m-Y');
+         $diffDate = 0;
 
           $previousLeaseRent = 0;
           $previousCGST = 0;

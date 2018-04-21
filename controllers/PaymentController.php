@@ -93,10 +93,12 @@ class PaymentController extends Controller
                 ->sum('amount');
                 $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount;
                 if($balanceAmount < 0){
-                    Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
+                    Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
+                    return $this->redirect(['index']);
                 }
                 else if($model->tds_rate > 10.10 ){
                   Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
+                  return $this->redirect(['index']);
                 }
                 else{
                     $model->save();
