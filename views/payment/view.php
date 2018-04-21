@@ -3,12 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Payment */
 
-$this->title = $model->payment_id;
-$this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 ?>
+<div class="cover" style="border: 1px solid black; padding: 10px;">
+
+
 <div class="row">
   <div class="col-md-4 col-sm-4 col-xs-4 ">
     <h1><b>GIDC LOGO HERE</b></h1>
@@ -27,10 +26,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
     <table class="table">
      <th></th>
      <th></th>
-     <tr>
-       <td>Payment ID</td>
-       <td><?= $model->payment_id ?></td>
-     </tr>
      <tr>
        <td>Company</td>
        <td><?= $model->invoice->order->company->name ?></td>
@@ -63,4 +58,5 @@ $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
     </table>
 
 
+</div>
 </div>
