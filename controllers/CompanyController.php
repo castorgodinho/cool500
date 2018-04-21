@@ -8,6 +8,7 @@ use app\models\Users;
 use app\models\Orders;
 use app\models\Log;
 use app\models\GstUpdate;
+use app\models\RemarkImage;
 use yii\helpers\Json;
 use app\models\SearchCompany;
 use yii\web\Controller;
@@ -219,7 +220,7 @@ class CompanyController extends Controller
 
                     $log = new Log();
                     $log->old_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
-                    $company->save();
+                    $company->save(false);
                     $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
                     $log->user_id = Yii::$app->user->identity->user_id;
                     $log->type = 'GSTIN';
@@ -232,6 +233,36 @@ class CompanyController extends Controller
             return $this->render('update-gst',[
                 'model' => $model,
             ]);
+        }else{
+                throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+    public function actionUploadRemarkImage($id){
+        $company = Company::findOne($id);
+        if (\Yii::$app->user->can('admin')){
+            $model = new RemarkImage();
+            if ($model->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if ($model->upload()) {
+                    $company = Company::findOne($id);
+                    $company->remark_url = $model->url;
+                    $log = new Log();
+                    $log->old_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
+                    $company->save(false);
+                    $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
+                    $log->user_id = Yii::$app->user->identity->user_id;
+                    $log->type = 'Company';
+                    $log->save();
+                    return $this->redirect(['view', 
+                        'id' => $id,
+                    ]);
+                }
+            }else{
+                return $this->render('upload-remark-image',[
+                    'model' => $model,
+                ]);
+            }
+            
         }else{
                 throw new \yii\web\ForbiddenHttpException;
         }
