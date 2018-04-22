@@ -12,6 +12,7 @@ use app\models\OrderDetails;
 use app\models\Area;
 use app\models\Plot;
 use app\models\Tax;
+use app\models\ReportSearch;
 use app\models\Interest;
 use app\models\Rate;
 use app\models\Invoice;
@@ -215,6 +216,19 @@ class PaymentController extends Controller
             $this->findModel($id)->delete();
 
             return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+
+    public function actionReports(){
+        if (\Yii::$app->user->can('indexPayment')){
+            $searchModel = new ReportSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            return $this->render('reports', [
+                'dataProvider' => $dataProvider,
+            ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }

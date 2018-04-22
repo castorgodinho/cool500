@@ -43,6 +43,7 @@ AppAsset::register($this);
         if(\Yii::$app->user->can('admin')){
             $link[] = ['label' => 'Industrial Estate', 'url' => ['/area/index']];
             $link[] = ['label' => 'Company', 'url' => ['/company/index']];
+            $link[] = ['label' => 'Reports', 'url' => ['/report/invoice-report']];
             /* $link[] = ['label' => 'Plot', 'url' => ['/plot/index']]; */
             $link[] = ['label' => 'Unit List', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
@@ -67,6 +68,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Pay Lease Rent', 'url' => ['/payment/search']];
             $link[] = ['label' => 'Payments', 'url' => ['/payment/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
+            $link[] = ['label' => 'Reports', 'url' => ['/report/invoice-report']];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
         }
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */

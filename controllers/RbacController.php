@@ -263,6 +263,14 @@ class RbacController extends Controller
         $searchInvoice->description = 'Delete Invoice';
         $auth->add($searchInvoice);
 
+
+        // add "Report" permission
+        $viewInvoiceReport = $auth->createPermission('viewInvoiceReport');
+        $viewInvoiceReport->description = 'Create a Report';
+        $auth->add($viewInvoiceReport);
+
+        
+
         // add "admin" role
         $admin = $auth->createRole('admin');
         $auth->add($admin);
@@ -339,6 +347,8 @@ class RbacController extends Controller
         $auth->addChild($admin, $viewInterest);
         $auth->addChild($admin, $indexInterest);
         $auth->addChild($admin, $deleteInterest);
+        //add Report Permissions
+        $auth->addChild($admin, $viewInvoiceReport);
 
         //Create view own company rule
         $rule = new \app\rbac\CompanyRule;
@@ -418,6 +428,7 @@ class RbacController extends Controller
         $auth->addChild($accounts, $indexPayment);
         $auth->addChild($accounts, $createPayment);
         $auth->addChild($accounts, $changePassword);
+        $auth->addChild($accounts, $viewInvoiceReport);
         
 
         // add "admin" role and give this role the "updatePost" permission
@@ -431,6 +442,6 @@ class RbacController extends Controller
         // usually implemented in your User model.
         $auth->assign($admin, 1);
         $auth->assign($accounts, 30);
-        
+        echo 'Success. Roles are successfully created.';
     }
 }
