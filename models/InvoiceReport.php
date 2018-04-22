@@ -60,9 +60,6 @@ class InvoiceReport extends Invoice
             // $query->where('0=1');
             return $dataProvider;
         }
-        if(($this->from_date == '' && $this->to_date != '') || ($this->from_date != '' && $this->to_date == '')){
-            $this->from_date = ("Y-m-d");
-        }
         if($this->to_date == ''){
             $this->to_date = ("Y-m-d");
         }

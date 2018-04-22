@@ -20,7 +20,7 @@ use app\models\InvoiceSearchData;
 class ReportController extends Controller
 {
     public function actionInvoiceReport(){
-        if (\Yii::$app->user->can('indexInvoice')){
+        if (\Yii::$app->user->can('viewInvoiceReport')){
             $model = new InvoiceSearchData();
             if($model->load(Yii::$app->request->post())){
                 $dataProvider = '';

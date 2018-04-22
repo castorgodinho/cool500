@@ -156,8 +156,8 @@ use yii\data\ActiveDataProvider;
        
        </div>
       <div class="panel-body-order panel-body">
-      
-      <div class="row">
+      <p><a href="index.php?r=orders%2Fupdate&id=<?= $order->order_id; ?>" class="btn btn-default">Generate Invoice</a></p>
+      <br><div class="row">
         <div class="col-md-4">
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
           <p><b>Company: </b><?= $order->company->name ?></p><br>

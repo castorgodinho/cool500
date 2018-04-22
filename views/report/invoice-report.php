@@ -60,6 +60,17 @@ use yii\widgets\ActiveForm;
                         return $amount;
                 },
             ],
+            [
+                'label' => 'Balance',
+                'value' => function ($dataProvider) {
+                    $amount = Payment::find()->where(['invoice_id' => $dataProvider->invoice_id])->sum('amount');
+                    
+                    if($amount == '')
+                     return $dataProvider->grand_total;
+                    else
+                        return $dataProvider->grand_total - $amount;
+                },
+            ],
             //'start_date',
             //'total_amount',
 
