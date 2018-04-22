@@ -174,10 +174,11 @@ class OrdersController extends Controller
           $model->save(False);
           $invoiceID = strval($model->invoice_id);
           echo 'sizeof($invoiceID) '.strlen($invoiceID).'<br>';
-          echo '$invoiceID'.$invoiceID.'<br>';
-          for ($i=0; $i < 5 - strlen($invoiceID); $i++) {
-            $invoiceID = '0'. $invoiceID;
+          echo '5 - strlen($invoiceID) '.(5 - strlen($invoiceID)).'<br>';
+          $len = strlen($invoiceID);
+          for ($i=0; $i < (4 - $len); $i++) {
             echo '$invoiceCode '.$invoiceID.'<br>';
+            $invoiceID = '0'. $invoiceID;
           }
           $invoiceCode = $invoiceCode . '/' . $invoiceID;
           echo '$invoiceCode '.$invoiceCode.'<br>';
@@ -270,7 +271,7 @@ class OrdersController extends Controller
           $order =  Orders::findOne($id);
           $time = strtotime($invoice->start_date);
           $newformat = date('d-m-Y',$time);
-          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 1 month'));
+          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
           $billDate = date('d-m-Y', strtotime($newformat. ' 1 year'));
 
           $date1 = $invoiceDueDate;
@@ -282,10 +283,9 @@ class OrdersController extends Controller
           echo $diffDate.'<br>';
 
           }else{
-
           $time = strtotime($order->start_date);
           $newformat = date('d-m-Y',$time);
-          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 month'));
+          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
           $billDate = $newformat;
          }
 
@@ -296,7 +296,7 @@ class OrdersController extends Controller
           $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
           $currentDueTotal = $currentLeaseRent + $currentTotalTax;
 
-          $penalInterest = round((($diffDate  * $interest->rate/100) * $previousLeaseRent ) / 365);
+          $penalInterest = round((($diffDate  * ($interest->rate + 100 )/100) * $previousDueTotal ) / 365);
           if($penalInterest < 0 ){
             $penalInterest = 0;
           }

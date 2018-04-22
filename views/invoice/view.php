@@ -69,11 +69,15 @@ use yii\widgets\ActiveForm;
 
       <tr>
         <td>  Previous Lease Period  </td>
+        <?php if($model->prev_lease_rent = 0 ) { ?>
         <td> <?= $prevPeriodFrom  ?> to <?= $prevPeriodTo ?></td>
+        <?php } else {  ?>
+        <td> 00-00-0000  to  00-00-0000 </td>
+        <?php }   ?>
       </tr>
 
       <tr>
-        <td>Previous Lease Rent</td>
+        <td>Previous Lease Rent (INR)</td>
         <td><?= $model->prev_lease_rent ?></td>
       </tr>
 
@@ -106,7 +110,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Previous Due Total  </td>
+        <td>  Previous Due Total  (INR) </td>
         <td> <?= $model->prev_dues_total ?> </td>
       </tr>
 
@@ -116,7 +120,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Current Lease Rent </td>
+        <td>  Current Lease Rent (INR) </td>
         <td> <?= $model->current_lease_rent  ?> </td>
       </tr>
 
@@ -155,7 +159,7 @@ use yii\widgets\ActiveForm;
   </div>
 </div>
 </div>
-<?php 
+<?php
   $script = <<< JS
 
     $(document).ready(function(){

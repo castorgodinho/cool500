@@ -17,6 +17,7 @@ use app\models\Rate;
 use app\models\Invoice;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PaymentController implements the CRUD actions for Payment model.
@@ -101,11 +102,16 @@ class PaymentController extends Controller
                   return $this->redirect(['index']);
                 }
                 else{
-                    $model->save();
+                    $model->save(False);
+                    $model->file = UploadedFile::getInstance($model, 'file');
+                    if($model->file){
+                      $model->tds_file = 'gstfiles/' . $model->payment_id . '.' . $model->file->extension;
+                      $model->file->saveAs('gstfiles/' . $model->payment_id . '.' . $model->file->extension);
+                    }                  
                     $lr = $model->invoice->current_lease_rent;
                     $tds_amount = ($lr * ($model->tds_rate/100));
                     $model->tds_amount = $tds_amount;
-                    $model->save();
+                    $model->save(False);
                 }
             }
             return $this->redirect(['view', 'id' => $model->payment_id ]);

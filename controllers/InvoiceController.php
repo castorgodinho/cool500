@@ -70,7 +70,7 @@ class InvoiceController extends Controller
 
             $time = strtotime($model->start_date);
             $start_date = date('d-m-Y',$time);
-            $invoiceDueDate = date('d-m-Y', strtotime($start_date. ' + 1 month'));
+            $invoiceDueDate = date('d-m-Y', strtotime($start_date. ' + 15 days'));
 
             $leasePeriodFrom = $invoiceDueDate;
             $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));

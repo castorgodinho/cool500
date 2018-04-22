@@ -24,7 +24,6 @@ $this->title = 'Company Units';
             ['class' => 'yii\grid\SerialColumn'],
             'order_number',
             'company.name',
-            //'end_date',
             /* 'plot_id', */
             /* 'built_area',*/
             /* 'shed_area', */

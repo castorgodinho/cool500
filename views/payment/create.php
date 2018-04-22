@@ -96,8 +96,16 @@ use yii\widgets\ActiveForm;
 <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '']) ?>
 
 <?php if($tds_amount == 0 ) { ?>
+
+  <label for="">TDS</label>
+  <select id='tds_triger' class="form-control" name="tds">
+    <option value="tds">NO TDS</option>
+    <option value="tds">TDS</option>
+  </select>
+
   <label for="">TDS RATE</label>
   <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
+  <?= $form->field($model, 'file')->fileInput() ?>
   <br>
 <?php  } else { ?>
   <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="hidden">
