@@ -43,6 +43,7 @@ AppAsset::register($this);
         if(\Yii::$app->user->can('admin')){
             $link[] = ['label' => 'Industrial Area', 'url' => ['/area/index']];
             $link[] = ['label' => 'Company', 'url' => ['/company/index']];
+            $link[] = ['label' => 'Reports', 'url' => ['/report/invoice-report']];
             /* $link[] = ['label' => 'Plot', 'url' => ['/plot/index']]; */
             $link[] = ['label' => 'Unit List', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
