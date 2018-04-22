@@ -8,7 +8,6 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Company Units';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-index">
 
@@ -30,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
             /* 'shed_area', */
             // 'godown_area',
              'start_date',
-             'end_date',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

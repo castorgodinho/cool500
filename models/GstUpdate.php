@@ -27,8 +27,8 @@ class GstUpdate extends \yii\base\Model
                 ],
                 'string'
             ],
-            
-            
+
+
         ];
     }
 

@@ -47,17 +47,21 @@ use yii\widgets\DetailView;
        <td><?= $model->invoice->order->company->name ?></td>
      </tr>
      <tr>
-       <td>Amount</td>
+       <td>Amount (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
      <tr>
-       <td>GST</td>
+       <td>GST (INR)</td>
        <td><?= round($amount * ($model->invoice->tax->rate/100)) ?></td>
+     </tr>
+     <tr>
+       <td>TDS (INR)</td>
+       <td><?= round( ($model->tds_amount )) ?></td>
      </tr>
 
      <tr>
-       <td>Total Amount</td>
-       <td><?= round($model->amount) ?></td>
+       <td>Total Amount </td>
+       <td><?= round($model->amount + $model->tds_amount) ?></td>
      </tr>
      <tr>
        <td>DATE</td>

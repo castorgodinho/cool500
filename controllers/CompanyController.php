@@ -208,7 +208,7 @@ class CompanyController extends Controller
     public function actionUpdateGst($id){
         $company = Company::findOne($id);
         if (\Yii::$app->user->can('updateGst', ['company' => $company])){
-            
+
             $model = new GstUpdate();
             $model->gstin = $company->gstin;
             if ($model->load(Yii::$app->request->post())) {
@@ -225,7 +225,7 @@ class CompanyController extends Controller
                     $log->user_id = Yii::$app->user->identity->user_id;
                     $log->type = 'GSTIN';
                     $log->save();
-                    return $this->redirect(['view', 
+                    return $this->redirect(['view',
                         'id' => $id,
                     ]);
                 }
@@ -253,7 +253,7 @@ class CompanyController extends Controller
                     $log->user_id = Yii::$app->user->identity->user_id;
                     $log->type = 'Company';
                     $log->save();
-                    return $this->redirect(['view', 
+                    return $this->redirect(['view',
                         'id' => $id,
                     ]);
                 }
@@ -262,7 +262,7 @@ class CompanyController extends Controller
                     'model' => $model,
                 ]);
             }
-            
+
         }else{
                 throw new \yii\web\ForbiddenHttpException;
         }
@@ -284,7 +284,7 @@ class CompanyController extends Controller
                     $log->user_id = Yii::$app->user->identity->user_id;
                     $log->type = 'Company';
                     $log->save();
-                    return $this->redirect(['view', 
+                    return $this->redirect(['view',
                         'id' => $id,
                     ]);
                 }
@@ -293,7 +293,7 @@ class CompanyController extends Controller
                     'model' => $model,
                 ]);
             }
-            
+
         }else{
                 throw new \yii\web\ForbiddenHttpException;
         }

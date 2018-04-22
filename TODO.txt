@@ -1,0 +1,1 @@
+ALTER TABLE `payment` ADD `tds_rate` INT NULL DEFAULT '0' AFTER `invoice_id`, ADD `tds_amount` INT NULL DEFAULT '0' AFTER `tds_rate`;

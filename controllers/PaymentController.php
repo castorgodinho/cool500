@@ -18,6 +18,7 @@ use app\models\Rate;
 use app\models\Invoice;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PaymentController implements the CRUD actions for Payment model.
@@ -94,11 +95,24 @@ class PaymentController extends Controller
                 ->sum('amount');
                 $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount;
                 if($balanceAmount < 0){
-                    Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
+                    Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
+                    return $this->redirect(['index']);
+                }
+                else if($model->tds_rate > 10.10 ){
+                  Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
+                  return $this->redirect(['index']);
                 }
                 else{
-
-                    $model->save();
+                    $model->save(False);
+                    $model->file = UploadedFile::getInstance($model, 'file');
+                    if($model->file){
+                      $model->tds_file = 'gstfiles/' . $model->payment_id . '.' . $model->file->extension;
+                      $model->file->saveAs('gstfiles/' . $model->payment_id . '.' . $model->file->extension);
+                    }                  
+                    $lr = $model->invoice->current_lease_rent;
+                    $tds_amount = ($lr * ($model->tds_rate/100));
+                    $model->tds_amount = $tds_amount;
+                    $model->save(False);
                 }
             }
             return $this->redirect(['view', 'id' => $model->payment_id ]);
@@ -137,15 +151,19 @@ class PaymentController extends Controller
                 ->one();
 
                 if($in->invoice_id != $model->invoice_id){
-                  $balanceAmount = '-1';
+                  $balanceAmount = 0;
                 }else{
                     $balanceAmount = $model->grand_total - $totalPayment;
                 }
 
+                $tds_amount = Payment::find()
+                ->where(['invoice_id' => $model->invoice_id])
+                ->sum('tds_amount');
+
             return $this->render('create', [
                     'start_date' => $start_date,
                     'balanceAmount' => $balanceAmount,
-
+                    'tds_amount' => $tds_amount,
                     'invoice' => $model,
                     'model' => $model_payment
                 ]);

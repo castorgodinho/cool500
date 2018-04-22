@@ -54,7 +54,7 @@ use yii\widgets\ActiveForm;
   </div>
   <div class="col-md-4 col-sm-4 col-xs-4">
     <p><b>Tax Invoice No: </b><?= $model->invoice_code ?></p>
-    <p><b>Bill Date: </b> <?= $billDate ?></p>
+    <p><b>Bill Date: </b> <?= $start_date  ?></p>
     <p><b>Due Date: </b><?= $invoiceDueDate ?></p>
     <p><b>Order Number: </b><?= $model->order->order_number ?></p>
   </div>
@@ -66,8 +66,18 @@ use yii\widgets\ActiveForm;
 
 
     <table class="table table-responsive">
+
       <tr>
-        <td>Previous Lease Rent</td>
+        <td>  Previous Lease Period  </td>
+        <?php if($model->prev_lease_rent = 0 ) { ?>
+        <td> <?= $prevPeriodFrom  ?> to <?= $prevPeriodTo ?></td>
+        <?php } else {  ?>
+        <td> 00-00-0000  to  00-00-0000 </td>
+        <?php }   ?>
+      </tr>
+
+      <tr>
+        <td>Previous Lease Rent (INR)</td>
         <td><?= $model->prev_lease_rent ?></td>
       </tr>
 
@@ -100,12 +110,17 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Previous Due Total  </td>
+        <td>  Previous Due Total  (INR) </td>
         <td> <?= $model->prev_dues_total ?> </td>
       </tr>
 
       <tr>
-        <td>  Current Lease Rent </td>
+        <td>  Current Lease Period  </td>
+        <td> <?= $leasePeriodFrom  ?> to <?= $leasePeriodTo ?></td>
+      </tr>
+
+      <tr>
+        <td>  Current Lease Rent (INR) </td>
         <td> <?= $model->current_lease_rent  ?> </td>
       </tr>
 
@@ -144,7 +159,7 @@ use yii\widgets\ActiveForm;
   </div>
 </div>
 </div>
-<?php 
+<?php
   $script = <<< JS
 
     $(document).ready(function(){
