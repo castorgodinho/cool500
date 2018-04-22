@@ -46,7 +46,11 @@ class SearchInterest extends Interest
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+            'query' => $query,'sort' => [
+                'defaultOrder' => [
+                    'interest_id' => SORT_DESC,
+                ]
+            ]
         ]);
 
         $this->load($params);

@@ -47,6 +47,11 @@ class SearchCompany extends Company
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'company_id' => SORT_DESC,
+                ]
+            ]
         ]);
 
         $this->load($params);

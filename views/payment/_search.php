@@ -25,6 +25,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'mode') ?>
 
+    
+
     <?php // echo $form->field($model, 'invoice_id') ?>
 
     <div class="form-group">

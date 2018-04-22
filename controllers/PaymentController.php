@@ -97,6 +97,7 @@ class PaymentController extends Controller
                     Yii::$app->session->setFlash('danger', "Trying To Pay Extra Amount");
                 }
                 else{
+
                     $model->save();
                 }
             }
@@ -197,19 +198,6 @@ class PaymentController extends Controller
             $this->findModel($id)->delete();
 
             return $this->redirect(['index']);
-        }else{
-            throw new \yii\web\ForbiddenHttpException;
-        }
-    }
-
-    public function actionReports(){
-        if (\Yii::$app->user->can('indexPayment')){
-            $searchModel = new ReportSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-            return $this->render('reports', [
-                'dataProvider' => $dataProvider,
-            ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }

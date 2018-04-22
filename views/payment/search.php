@@ -8,6 +8,8 @@ use yii\widgets\ActiveForm;
 
 <?= $form->field($model, 'invoice_code')->textInput() ?>
 
+
+
 <div class="form-group">
     <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>
 </div>

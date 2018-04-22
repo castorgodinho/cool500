@@ -72,8 +72,6 @@ use yii\widgets\DetailView;
        <td><?= $model->invoice->invoice_code ?></td>
      </tr>
     </table>
-
-
 </div>
 </div>
 

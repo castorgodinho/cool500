@@ -47,6 +47,11 @@ class SearchArea extends Area
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'area_id' => SORT_DESC,
+                ]
+            ]
         ]);
 
         $this->load($params);
