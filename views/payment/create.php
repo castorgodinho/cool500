@@ -100,21 +100,35 @@ use yii\widgets\ActiveForm;
   <label for="">TDS</label>
   <select id='tds_triger' class="form-control" name="tds">
     <option value="tds">NO TDS</option>
-    <option value="tds">TDS</option>
+    <option value="no-tds">TDS</option>
   </select>
 
   
   <div class="hide-div">
   <label for="">TDS RATE</label>
     <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
-    <?= $form->field($model, 'file')->fileInput() ?>
+ 
   </div>
   <?php 
   $script = <<< JS
     $(document).ready(function(){
+      var div = "<div class=\"form-group field-payment-file required\">"+
+              "<label class=\"control-label\" for=\"payment-file\">File</label>"+
+              "<input type=\"hidden\" name=\"Payment[file]\" value=\"\"><input type=\"file\" id=\"payment-file\" name=\"Payment[file]\" aria-required=\"true\">"+
+
+              "<div class=\"help-block\"></div>"+
+              "</div>";
+      console.log(div);
       $('.hide-div').hide();
       $('#tds_triger').change(function(){
-        $('.hide-div').slideToggle();
+        if($('#tds_triger').val()=='tds'){
+          $('.hide-div').slideUp();
+          $('.field-payment-file').remove();
+        }else{
+          $('.hide-div').slideDown();
+          $('.hide-div').append(div);
+        }
+        
       });
     });
 JS;
