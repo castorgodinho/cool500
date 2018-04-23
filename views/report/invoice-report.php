@@ -32,6 +32,9 @@ use yii\widgets\ActiveForm;
         'dateFormat' => 'yyyy-MM-dd',
     ])  ?>
         </div>
+        <div class="col-md-2">
+            <?= $form->field($model, 'search_key')->textInput(); ?>
+        </div>
     </div>
     
     <div class="form-group">
@@ -41,7 +44,6 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

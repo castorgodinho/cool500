@@ -39,11 +39,12 @@ class InvoiceSearchData extends \yii\base\Model
      */
     public $to_date;
     public $from_date;
+    public $search_key;
 
     public function rules()
     {
         return [
-            [['to_date', 'from_date'], 'safe'],
+            [['to_date', 'from_date', 'search_key'], 'safe'],
             [['to_date', 'from_date'], 'string'],
         ];
     }

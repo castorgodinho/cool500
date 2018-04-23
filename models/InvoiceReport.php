@@ -17,12 +17,12 @@ class InvoiceReport extends Invoice
      */
     public $from_date;
     public $to_date;
-    public $invoice_code;
+    public $search_key;
     public function rules()
     {
         return [
-            [['invoice_id', 'rate_id', 'invoice_code', 'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
-            [['start_date', 'from_date', 'to_date'], 'safe'],
+            [['invoice_id', 'rate_id',  'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
+            [['start_date', 'from_date','invoice_code', 'to_date', 'search_key'], 'safe'],
         ];
     }
 
@@ -60,26 +60,26 @@ class InvoiceReport extends Invoice
             // $query->where('0=1');
             return $dataProvider;
         }
-        if($this->to_date == ''){
-            $this->to_date = ("Y-m-d");
-        }
+        $query->joinWith(['order']);
         if($this->from_date == $this->to_date){
             $this->start_date = $this->from_date;
         }
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'invoice_id' => $this->invoice_id,
-            'rate_id' => $this->rate_id,
-            'tax_id' => $this->tax_id,
-            'order_id' => $this->order_id,
-            'interest_id' => $this->interest_id,
-            'start_date' => $this->start_date,
-            'total_amount' => $this->total_amount,
-        ]);
-        if($this->from_date != $this->to_date){
-            $query->andFilterWhere(['between', 'start_date', $this->from_date, $this->to_date ]);
+
+        if($this->from_date != "" && $this->to_date != ""){
+            if($this->from_date != $this->to_date){
+                $query->andFilterWhere(['between', 'start_date', $this->from_date, $this->to_date ]);
+            }
         }
-       
+
+        echo '=> '.$this->search_key;
+        // grid filtering conditions
+        $query->andFilterWhere(['like', 'invoice_code', $this->search_key])
+         ->orFilterWhere(['like', 'orders.order_number', $this->search_key])
+       /* ->orFilterWhere(['like', 'orders.company.name', $this->search_key])
+        ->andFilterWhere(['like', 'competent_mobile', $this->competent_mobile]) */;
+        
+        
+        
         $query->orderBy(['invoice_id' => SORT_DESC]);
 
         return $dataProvider;

@@ -27,6 +27,7 @@ class ReportController extends Controller
                 $searchModel = new InvoiceReport();
                 $searchModel->from_date = $model->from_date;
                 $searchModel->to_date = $model->to_date;
+                $searchModel->search_key = $model->search_key;
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
                 
             }else{
