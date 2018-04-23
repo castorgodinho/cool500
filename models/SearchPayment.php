@@ -18,8 +18,8 @@ class SearchPayment extends Payment
     public function rules()
     {
         return [
-            [['payment_id', 'order_id', 'amount', 'invoice_id'], 'integer'],
-            [['start_date', 'mode'], 'safe'],
+            [['order_id', 'amount', ], 'integer'],
+            [['start_date', 'mode', 'invoice_id'], 'safe'],
         ];
     }
 
@@ -57,16 +57,18 @@ class SearchPayment extends Payment
             return $dataProvider;
         }
 
+        $query->joinWith('invoice');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'payment_id' => $this->payment_id,
             'order_id' => $this->order_id,
             'amount' => $this->amount,
             'start_date' => $this->start_date,
-            'invoice_id' => $this->invoice_id,
         ]);
 
         $query->andFilterWhere(['like', 'mode', $this->mode]);
+        $query->andFilterWhere(['like', 'invoice.invoice_code', $this->invoice_id]);
 
         $query->orderBy(['payment_id' => SORT_DESC]);
 
