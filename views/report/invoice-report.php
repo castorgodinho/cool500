@@ -41,6 +41,7 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

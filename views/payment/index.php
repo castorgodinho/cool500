@@ -23,8 +23,11 @@ $this->title = 'Payments';
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'invoice.invoice_code',
+            [
+                'label' => 'Invoice Code',
+                'attribute' => 'invoice_id',
+                'value' => 'invoice.invoice_code',
+            ],
             'amount',
             'start_date',
             'mode',

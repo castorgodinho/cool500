@@ -24,8 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'user.email',
-            'user.type',
+            [
+                'label' => 'Email',
+                'attribute' => 'user_id',
+                'value' => 'user.email',
+            ],
+            [
+                'label' => 'Role',
+                'attribute' => 'user.type'
+            ],
+            [
+                'label' => 'Type of action',
+                'attribute' => 'type'
+            ],
             'type',
             'create_date',
             'updated_date',

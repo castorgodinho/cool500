@@ -18,8 +18,8 @@ class SearchLog extends Log
     public function rules()
     {
         return [
-            [['log_id', 'user_id'], 'integer'],
-            [['type', 'create_date', 'updated_date', 'old_value', 'new_value'], 'safe'],
+            [['log_id'], 'integer'],
+            [['type', 'create_date', 'updated_date', 'old_value', 'new_value', 'user_id'], 'safe'],
         ];
     }
 
@@ -47,6 +47,11 @@ class SearchLog extends Log
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'log_id' => SORT_DESC,
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -57,17 +62,19 @@ class SearchLog extends Log
             return $dataProvider;
         }
 
+        $query->joinWith('user');
+
         // grid filtering conditions
         $query->andFilterWhere([
             'log_id' => $this->log_id,
             'create_date' => $this->create_date,
             'updated_date' => $this->updated_date,
-            'user_id' => $this->user_id,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'old_value', $this->old_value])
-            ->andFilterWhere(['like', 'new_value', $this->new_value]);
+            ->andFilterWhere(['like', 'new_value', $this->new_value])
+            ->andFilterWhere(['like', 'users.email', $this->user_id]);
 
         return $dataProvider;
     }

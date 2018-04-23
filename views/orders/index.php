@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\SearchOrders */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Company Units';
+$this->title = 'Unit List';
 ?>
 <div class="orders-index">
 
@@ -15,7 +15,7 @@ $this->title = 'Company Units';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Orders', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('New Unit', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
