@@ -72,7 +72,7 @@ use yii\widgets\ActiveForm;
         <?php if($model->prev_lease_rent = 0 ) { ?>
         <td> <?= $prevPeriodFrom  ?> to <?= $prevPeriodTo ?></td>
         <?php } else {  ?>
-        <td> 00-00-0000  to  00-00-0000 </td>
+        <td> - </td>
         <?php }   ?>
       </tr>
 

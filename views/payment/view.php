@@ -43,16 +43,28 @@ use yii\widgets\DetailView;
      <th></th>
      <th></th>
      <tr>
+       <td>DATE</td>
+       <td><?= $model->start_date?></td>
+     </tr>
+     <tr>
        <td>Company</td>
        <td><?= $model->invoice->order->company->name ?></td>
      </tr>
      <tr>
-       <td>Amount (INR) </td>
+       <td>Amount  (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
      <tr>
-       <td>GST (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100)) ?></td>
+       <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2 ,1)  ?></td>
+     </tr>
+     <tr>
+       <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2,1)?></td>
+     </tr>
+     <tr>
+       <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) )?></td>
      </tr>
      <tr>
        <td>TDS (INR)</td>
@@ -63,10 +75,7 @@ use yii\widgets\DetailView;
        <td>Total Amount </td>
        <td><?= round($model->amount + $model->tds_amount) ?></td>
      </tr>
-     <tr>
-       <td>DATE</td>
-       <td><?= $model->start_date?></td>
-     </tr>
+
      <tr>
        <td>Payment Mode</td>
        <td><?= $model->mode ?></td>
@@ -79,7 +88,7 @@ use yii\widgets\DetailView;
 </div>
 </div>
 
-<?php 
+<?php
   $script = <<< JS
 
     $(document).ready(function(){

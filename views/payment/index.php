@@ -28,6 +28,7 @@ $this->title = 'Payments';
             'amount',
             'start_date',
             'mode',
+            'invoice.order.company.name',
             //'invoice_id',
 
             ['class' => 'yii\grid\ActionColumn'],

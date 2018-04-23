@@ -32,16 +32,16 @@ use yii\data\ActiveDataProvider;
         <p> <strong>Constitution.</strong> <?= $model->constitution ?></p>
         <h4></h4>
       </div>
-    </div> 
+    </div>
     <div class="row">
       <div class="col-md-4">
         <p> <strong>Products </strong> <?= $model->products ?></p>
         <p></p>
       </div>
       <div class="col-md-4">
-          
-            
-            <?php 
+
+
+            <?php
               if($model->url != ''){
                 echo "<a href='$model->url'>Download GSTIN file</a>";
               }
@@ -49,26 +49,26 @@ use yii\data\ActiveDataProvider;
 
       </div>
       <div class="col-md-4">
-          
-            <?php 
+
+            <?php
               if($model->remark_url != ''){
                 echo "<a href='$model->remark_url'>Download Remark</a>";
               }
             ?>
 
       </div>
-    </div> 
+    </div>
     <div class="row">
       <div class="col-md-4">
-            
-            <?php 
+
+            <?php
               if($model->tds_url != ''){
                 echo "<p><a href='$model->tds_url'>Download TDS Document</a></p>";
               }
             ?>
 
       </div>
-    </div> 
+    </div>
   </div>
 </div>
 
@@ -123,16 +123,16 @@ use yii\data\ActiveDataProvider;
 
 
 <div class="order-info">
-  <?php 
+  <?php
     if(is_array($orders)){
       foreach($orders as $order){
   ?>
     <div class="panel panel-default">
-      <?php 
+      <?php
         $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
       ?>
-      <div class="panel-heading"> 
-      
+      <div class="panel-heading">
+
       <div class="row">
         <div class="col-md-8">
         <b> Plots:</b> <?php
@@ -151,9 +151,9 @@ use yii\data\ActiveDataProvider;
         <div class="text-right"> <b> Order Number:</b>  <?= $order->order_number ?> </div>
         </div>
       </div>
-      
-      
-       
+
+
+
        </div>
       <div class="panel-body-order panel-body">
       <?php if(Yii::$app->user->can('admin')){ ?>
@@ -170,17 +170,17 @@ use yii\data\ActiveDataProvider;
           <p><b>Total Area: </b><?= $order->total_area ?></p><br>
           <?php if ($order->built_area != ""){ ?><p><b>Built Area: </b><?php  $order->built_area ?></p><?php } ?><br>
           <?php if ($order->shed_area != ""){ ?><p><b>Shed Area: </b><?= $order->shed_area ?></p><?php } ?><br>
-         
+
         </div>
         <div class="col-md-4">
         <?php if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
         <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
-        <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>  
+        <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
         </div>
       </div>
-      
-      
-      
+
+
+
       <p><b>Plots: </b><?php
         if(is_array($plots)){
           foreach($plots as $plot){
@@ -191,7 +191,7 @@ use yii\data\ActiveDataProvider;
         }
       ?></p><br>
       <h4><u>Invoices</u></h4>
-      <?php 
+      <?php
         $query = Invoice::find()->where(['order_id' => $order->order_id]);
         $provider = new ActiveDataProvider([
           'query' => $query,
@@ -200,12 +200,12 @@ use yii\data\ActiveDataProvider;
           ],
       ]);
       ?>
-      <?= 
+      <?=
         yii\grid\GridView::widget([
           'dataProvider' => $provider,
           'columns' => [
             'invoice_code',
-            'total_amount',
+            'grand_total',
             'start_date',
             [
               'class' => 'yii\grid\ActionColumn',
@@ -218,24 +218,24 @@ use yii\data\ActiveDataProvider;
                                 'title' => Yii::t('app', 'lead-view'),
                     ]);
                 },
-    
-                
-    
+
+
+
               ],
               'urlCreator' => function ($action, $provider, $key, $index) {
                   if ($action === 'view') {
                       $url ='index.php?r=invoice%2Fview&id='.$provider['invoice_id'];
                       return $url;
                   }
-      
+
                   }
           ],
           ]
       ]);
-          
+
       ?>
       <h4><u>Payments</u></h4>
-      <?php 
+      <?php
         $query = Payment::find()->where(['order_id' => $order->order_id]);
         $provider = new ActiveDataProvider([
           'query' => $query,
@@ -244,7 +244,7 @@ use yii\data\ActiveDataProvider;
           ],
       ]);
       ?>
-      <?= 
+      <?=
         yii\grid\GridView::widget([
           'dataProvider' => $provider,
           'columns' => [
@@ -253,7 +253,7 @@ use yii\data\ActiveDataProvider;
             'amount',
             'start_date',
             'mode',
-            'invoice_id',
+            'invoice.invoice_code',
             [
               'class' => 'yii\grid\ActionColumn',
               'header' => 'Actions',
@@ -265,16 +265,16 @@ use yii\data\ActiveDataProvider;
                                 'title' => Yii::t('app', 'lead-view'),
                     ]);
                 },
-    
-                
-    
+
+
+
               ],
               'urlCreator' => function ($action, $provider, $key, $index) {
                   if ($action === 'view') {
                       $url ='index.php?r=payment%2Fview&id='.$provider['payment_id'];
                       return $url;
                   }
-      
+
                   }
           ],
           ]
@@ -282,22 +282,22 @@ use yii\data\ActiveDataProvider;
       ?>
 
 
-     
+
       </div>
-    </div>    
+    </div>
   <?php } }else{ ?>
     <div class="panel panel-default">
       <div class="panel-heading">Order Number: <?= $orders->order_number ?></div>
       <div class="panel-body">
         Panel content
       </div>
-    </div> 
+    </div>
   <?php } ?>
-  
+
 </div>
 
 
-<?php 
+<?php
 
     $script = <<< JS
       $(document).ready(function(){

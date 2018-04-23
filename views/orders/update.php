@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
     <p>Clause 65(105) (ZZZZ)</p>
   </div>
   <div class="col-md-4 col-sm-4 col-xs-4">
-    <p><b>Tax Invoice No: </b></p>
+    <!-- <p><b>Tax Invoice No: </b></p> -->
     <p><b>Bill Date: <?= $billDate ?></b></p>
     <p><b>Due Date: <?= $invoiceDueDate ?></b></p>
     <p><b>Order Number: </b><?= $order->order_number ?></p>

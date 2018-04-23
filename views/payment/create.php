@@ -103,13 +103,13 @@ use yii\widgets\ActiveForm;
     <option value="no-tds">TDS</option>
   </select>
 
-  
+
   <div class="hide-div">
   <label for="">TDS RATE</label>
     <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
- 
+
   </div>
-  <?php 
+  <?php
   $script = <<< JS
     $(document).ready(function(){
       var div = "<div class=\"form-group field-payment-file required\">"+
@@ -128,7 +128,7 @@ use yii\widgets\ActiveForm;
           $('.hide-div').slideDown();
           $('.hide-div').append(div);
         }
-        
+
       });
     });
 JS;
