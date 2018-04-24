@@ -105,17 +105,18 @@ class PaymentController extends Controller
                 else{
                     $model->save(False);
                     $model->file = UploadedFile::getInstance($model, 'file');
+                    echo $model->file;
                     if($model->file){
                       $model->tds_file = 'gstfiles/' . $model->payment_id . '.' . $model->file->extension;
                       $model->file->saveAs('gstfiles/' . $model->payment_id . '.' . $model->file->extension);
-                    }                  
+                    }
                     $lr = $model->invoice->current_lease_rent;
                     $tds_amount = ($lr * ($model->tds_rate/100));
                     $model->tds_amount = $tds_amount;
                     $model->save(False);
                 }
             }
-            return $this->redirect(['view', 'id' => $model->payment_id ]);
+             return $this->redirect(['view', 'id' => $model->payment_id ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }

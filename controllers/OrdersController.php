@@ -187,14 +187,8 @@ class OrdersController extends Controller
           return $this->redirect(['invoice/index']);
         } else{
 
-          $invoice = Invoice::find()
-          ->where(['order_id' => $id])
-          ->orderBy(['invoice_id' => SORT_DESC])
-          ->one();
 
-          if($invoice){
-            return $this->redirect(['index']);
-          }else{
+
             date_default_timezone_set('Asia/Kolkata');
             $start_date = date('d-m-Y');
             $diffDate = 0;
@@ -268,6 +262,9 @@ class OrdersController extends Controller
              ->where(['order_id' => $id])
              ->sum('grand_total');
 
+             date_default_timezone_set('Asia/Kolkata');
+             $currentDate = date('d-m-Y');
+
              $totalAmount = 0;
              if($invoice){
              $previousLeaseRent = $invoice->current_lease_rent;
@@ -277,11 +274,14 @@ class OrdersController extends Controller
              $previousSGSTAmount =  $invoice->current_tax/2;
              $previousTotalTax = $invoice->current_tax;
 
+
+
              $order =  Orders::findOne($id);
              $time = strtotime($invoice->start_date);
              $newformat = date('d-m-Y',$time);
              $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
-             $billDate = date('d-m-Y', strtotime($newformat. ' 1 year'));
+             $billDate = $currentDate;
+             // $billDate = date('d-m-Y', strtotime($newformat. ' 1 year'));
 
              $date1 = $invoiceDueDate;
              $date2 = $start_date;
@@ -295,7 +295,7 @@ class OrdersController extends Controller
              $time = strtotime($order->start_date);
              $newformat = date('d-m-Y',$time);
              $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
-             $billDate = $newformat;
+             $billDate = $currentDate;
             }
 
              $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
@@ -361,7 +361,7 @@ class OrdersController extends Controller
                      'order' => $order,
                      'model' => $model,
                  ]);
-          }
+
 
         }
 

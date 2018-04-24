@@ -110,7 +110,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Previous Due Total  (INR) </td>
+        <td>  Previous Due Total (A) (INR) </td>
         <td> <?= $model->prev_dues_total ?> </td>
       </tr>
 
@@ -140,7 +140,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Current Due Total (INR) </td>
+        <td>  Current Due Total (B) (INR) </td>
         <td> <?= $model->current_total_dues ?>  </td>
       </tr>
 

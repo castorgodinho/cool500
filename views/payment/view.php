@@ -56,11 +56,11 @@ use yii\widgets\DetailView;
      </tr>
      <tr>
        <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2 ,1)  ?></td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
      </tr>
      <tr>
        <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2,1)?></td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2)?></td>
      </tr>
      <tr>
        <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
@@ -80,6 +80,12 @@ use yii\widgets\DetailView;
        <td>Payment Mode</td>
        <td><?= $model->mode ?></td>
      </tr>
+     <?php if($model->cheque_no) {?>
+       <tr>
+         <td>Cheque  No</td>
+         <td><?= $model->cheque_no ?></td>
+       </tr>
+    <?php } ?>
      <tr>
        <td>Invoice ID</td>
        <td><?= $model->invoice->invoice_code ?></td>

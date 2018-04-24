@@ -89,7 +89,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Previous Due Total (INR) </td>
+        <td>  Previous Due Total (A) (INR) </td>
         <td> <?= $previousDueTotal ?> </td>
       </tr>
 
