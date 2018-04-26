@@ -20,7 +20,7 @@ use yii\widgets\DetailView;
   }
 }
 </style>
-<input type="button" class="print-btn btn btn-default"  value="PRINT" /><br><br>
+<input type="button" class="print-btn btn-success"  value="PRINT" /><br><br>
 <div class="cover" id="printableArea" style="border: 1px solid black; padding: 10px;">
 
 

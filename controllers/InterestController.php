@@ -100,7 +100,7 @@ class InterestController extends Controller
             
             $log->new_value = Json::encode(Interest::find()->where(['interest_id' => $interest->interest_id])->all(), $asArray = true) ;
             $log->user_id = Yii::$app->user->identity->user_id;
-            $log->type = 'Interest';
+            $log->type = 'Edited Interest';
             $log->save();
             return $this->redirect(['index']);
         }

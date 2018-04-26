@@ -110,7 +110,7 @@ class RateController extends Controller
                 $model->save();
                 $log->new_value = Json::encode(Rate::find()->where(['rate_id' => $rate->rate_id])->all(), $asArray = true) ;
                 $log->user_id = Yii::$app->user->identity->user_id;
-                $log->type = 'Rate';
+                $log->type = 'Edited Rate';
                 $log->save();
                 return $this->redirect(['index']);
             } else {

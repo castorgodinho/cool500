@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
     </div>
     
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -73,6 +73,12 @@ use yii\widgets\ActiveForm;
                     else
                         return $dataProvider->grand_total - $amount;
                 },
+            ],
+            [
+                'label' => 'Email',
+                'value' => function ($dataProvider){
+                    return 'Not Sent';
+                }
             ],
             //'start_date',
             //'total_amount',

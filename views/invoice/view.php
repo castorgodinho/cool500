@@ -4,9 +4,18 @@ use yii\widgets\ActiveForm;
 ?>
 
 <style>
+  @page 
+    {
+        size:  auto;   /* auto is the initial value */
+        margin: 20px;  /* this affects the margin in the printer settings */
+    }
+    .bold-text{
+      font-weight: bold;
+    }
   @media print {
   body * {
     visibility: hidden;
+    
   }
   #printableArea, #printableArea * {
     visibility: visible;
@@ -16,17 +25,35 @@ use yii\widgets\ActiveForm;
     left: 0;
     top: 0;
   }
+
+  body{
+    border: 2px solid black;
+  }
+
+  
+}
+
+
+    body{
+        
+    }
+
+.invoice-company-details p{
+  line-height: 18px;
+}
+.cover p{
+  line-height: 18px;
 }
 </style>
 
-<input type="button" class="print-btn btn btn-default"  value="PRINT" /><br><br>
+<input type="button" class="print-btn btn-success"  value="PRINT" /><br><br>
 
-<div class="cover" id="printableArea" style="border: 2px solid black; padding: 10px;">
+<div class="cover" id="printableArea" style=" padding: 10px;">
 <div class="row">
-  <div class="col-md-4 col-sm-4 col-xs-4 ">
+  <div class="col-md-2 col-sm-2 col-xs-2 ">
     <h1><b>GIDC LOGO HERE</b></h1>
   </div>
-  <div class="col-md-8 col-sm-8 col-xs-8 text-right" style="margin-bottom:10px;">
+  <div class="col-md-10 col-sm-10 col-xs-10 text-right" style="">
     <h3> <b>Goa Industrial Development Corporation</b> </h3>
     <p>(A Goverment of Goa Undertaking)</p>
     <p>Plot No. 13-A-2, EDC Complex, Patto Plaza, Panjim-Goa 403001</p>
@@ -36,7 +63,7 @@ use yii\widgets\ActiveForm;
   </div>
 </div>
 <hr>
-<div class="row">
+<div class="row invoice-company-details">
   <div class="col-md-4 col-sm-4 col-xs-4">
     <?php $company = $model->order->company;?>
     <p><b>To. </b> <?= $company->name ?></p>
@@ -68,7 +95,7 @@ use yii\widgets\ActiveForm;
     <table class="table table-responsive">
 
       <tr>
-        <td>  Previous Lease Period  </td>
+        <td class='bold-text'>  Previous Lease Period  </td>
         <?php if($model->prev_lease_rent = 0 ) { ?>
         <td> <?= $prevPeriodFrom  ?> to <?= $prevPeriodTo ?></td>
         <?php } else {  ?>
@@ -77,75 +104,75 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>Previous Lease Rent (INR)</td>
+        <td class='bold-text'>Previous Lease Rent (INR)</td>
         <td><?= $model->prev_lease_rent ?></td>
       </tr>
 
       <tr>
         <?php if($model->prev_lease_rent != 0) { ?>
-        <td>Previous CGST <?= round($model->prev_tax/2 * 100/$model->prev_lease_rent,1) ?>% (INR)</td>
+        <td class='bold-text'>Previous CGST <?= round($model->prev_tax/2 * 100/$model->prev_lease_rent,1) ?>% (INR)</td>
         <?php } else { ?>
-        <td>Previous CGST (INR)</td>
+        <td class='bold-text'>Previous CGST (INR)</td>
         <?php } ?>
         <td><?= $model->prev_tax/2 ?></td>
       </tr>
 
       <tr>
         <?php if($model->prev_lease_rent != 0) { ?>
-        <td>Previous SGST <?= round($model->prev_tax/2 * 100/$model->prev_lease_rent,1) ?>% (INR)</td>
+        <td class='bold-text'>Previous SGST <?= round($model->prev_tax/2 * 100/$model->prev_lease_rent,1) ?>% (INR)</td>
         <?php } else { ?>
-        <td>Previous SGST (INR)</td>
+        <td class='bold-text'>Previous SGST (INR)</td>
         <?php } ?>
         <td><?= $model->prev_tax/2 ?></td>
       </tr>
 
       <tr>
-        <td> Previous Total Tax (INR)</td>
+        <td class='bold-text'> Previous Total Tax (INR)</td>
         <td><?= $model->prev_tax ?></td>
       </tr>
 
       <tr>
-        <td> Penal Interest <?= $model->interest->rate ?>% (INR) </td>
+        <td class='bold-text'> Penal Interest <?= $model->interest->rate ?>% (INR) </td>
         <td><?= $model->prev_interest ?></td>
       </tr>
 
       <tr>
-        <td>  Previous Due Total  (INR) </td>
+        <td class='bold-text'>  Previous Due Total  (INR) </td>
         <td> <?= $model->prev_dues_total ?> </td>
       </tr>
 
       <tr>
-        <td>  Current Lease Period  </td>
+        <td class='bold-text'>  Current Lease Period  </td>
         <td> <?= $leasePeriodFrom  ?> to <?= $leasePeriodTo ?></td>
       </tr>
 
       <tr>
-        <td>  Current Lease Rent (INR) </td>
+        <td class='bold-text'>  Current Lease Rent (INR) </td>
         <td> <?= $model->current_lease_rent  ?> </td>
       </tr>
 
       <tr>
-        <td>  Current CGST <?= $model->tax->rate/2 ?>% (INR) </td>
+        <td class='bold-text'>  Current CGST <?= $model->tax->rate/2 ?>% (INR) </td>
         <td> <?= $model->current_tax/2 ?>  </td>
       </tr>
 
       <tr>
-        <td>  Current SGST <?= $model->tax->rate/2 ?>% (INR) </td>
+        <td class='bold-text'>  Current SGST <?= $model->tax->rate/2 ?>% (INR) </td>
         <td> <?= $model->current_tax/2 ?>  </td>
       </tr>
 
       <tr>
-        <td>  Current Total Tax (INR) </td>
+        <td class='bold-text'>  Current Total Tax (INR) </td>
         <td> <?= $model->current_tax ?>  </td>
       </tr>
 
       <tr>
-        <td>  Current Due Total (INR) </td>
+        <td class='bold-text'>  Current Due Total (INR) </td>
         <td> <?= $model->current_total_dues ?>  </td>
       </tr>
 
       <tr>
-        <td>  Final Total ( C = A + B) (INR) </td>
+        <td class='bold-text'>  Final Total ( C = A + B) (INR) </td>
         <td> <?= $model->grand_total?>  </td>
       </tr>
 

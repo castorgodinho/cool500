@@ -24,8 +24,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'area_of_plot') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
