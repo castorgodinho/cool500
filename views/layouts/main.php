@@ -43,12 +43,10 @@ AppAsset::register($this);
         if(\Yii::$app->user->can('admin')){
             $link[] = ['label' => 'Industrial Estate', 'url' => ['/area/index']];
             $link[] = ['label' => 'Company', 'url' => ['/company/index']];
-            $link[] = ['label' => 'Reports', 'url' => ['/report/invoice-report']];
             /* $link[] = ['label' => 'Plot', 'url' => ['/plot/index']]; */
             $link[] = ['label' => 'Unit List', 'url' => ['/orders/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
             $link[] = ['label' => 'Payment', 'url' => ['/payment/index']];
-            $link[] = ['label' => 'Logs', 'url' => ['/log/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
             $link[] = [
                 'label' => 'Taxation',
@@ -56,6 +54,13 @@ AppAsset::register($this);
                      ['label' => 'Tax', 'url' => ['/tax/index']],
                      ['label' => 'Rate', 'url' => ['/rate/index']],
                      ['label' => 'Interest', 'url' => ['/interest/index']],
+                ],
+            ];
+            $link[] = [
+                'label' => 'Reports',
+                'items' => [
+                     ['label' => 'Invoice Report', 'url' => ['/report/invoice-report']],
+                     ['label' => 'Logs', 'url' => ['/log/index']],
                 ],
             ];
         }else if(\Yii::$app->user->can('company')){

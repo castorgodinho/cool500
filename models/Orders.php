@@ -15,8 +15,8 @@ use Yii;
  * @property int $godown_area
  * @property string $start_date
  * @property string $end_date
- * @property int $shed_no
- * @property int $godown_no
+ * @property string $shed_no
+ * @property string $godown_no
  * @property int $area_id
  * @property int $total_area
  *
@@ -44,9 +44,10 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             [['order_number', 'company_id', 'total_area'], 'required'],
-            [['company_id', 'built_area', 'shed_area', 'godown_area', 'shed_no', 'godown_no', 'area_id', 'total_area'], 'integer'],
+            [['company_id', 'built_area', 'shed_area', 'godown_area', 'area_id', 'total_area'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['order_number'], 'string', 'max' => 20],
+            [['shed_no', 'godown_no'], 'string', 'max' => 50],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'company_id']],
         ];
@@ -59,13 +60,13 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'order_id' => 'Order ID',
-            'order_number' => 'Unit Number',
+            'order_number' => 'Order Number',
             'company_id' => 'Company ID',
             'built_area' => 'Built Area',
             'shed_area' => 'Shed Area',
             'godown_area' => 'Godown Area',
-            'start_date' => 'Allotted Date',
-            'end_date' => 'To Date',
+            'start_date' => 'Start Date',
+            'end_date' => 'End Date',
             'shed_no' => 'Shed No',
             'godown_no' => 'Godown No',
             'area_id' => 'Area ID',

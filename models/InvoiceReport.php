@@ -67,7 +67,7 @@ class InvoiceReport extends Invoice
 
         if($this->from_date != "" && $this->to_date != ""){
             if($this->from_date != $this->to_date){
-                $query->andFilterWhere(['between', 'start_date', $this->from_date, $this->to_date ]);
+                $query->andFilterWhere(['between', 'invoice.start_date', $this->from_date, $this->to_date ]);
             }
         }
 

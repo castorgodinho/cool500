@@ -51,7 +51,15 @@ use yii\widgets\ActiveForm;
             'start_date',
             'order.order_number',
             'order.company.name',
-            'grand_total',
+            [
+                'label' => 'Lease Rent (INR)',
+                'attribute' => 'current_lease_rent',
+            ],
+            [
+                'label' => 'Grand Total (INR)',
+                'attribute' => 'grand_total',
+            ],
+            
             [
                 'label' => 'Amount Paid',
                 'value' => function ($dataProvider) {
