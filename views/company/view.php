@@ -134,7 +134,7 @@ use yii\data\ActiveDataProvider;
       <div class="panel-heading">
 
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6">
         <b> Plots:</b> <?php
         if(is_array($plots)){
           foreach($plots as $plot){
@@ -147,8 +147,13 @@ use yii\data\ActiveDataProvider;
         <?php if ($order->shed_no != ""){ ?><b>Shed Number: </b><?= $order->shed_no ?><?php } ?>
           <?php if ($order->godown_no != ""){ ?><b>Godown Number: </b><?= $order->godown_no ?><?php } ?>
         </div>
-        <div class="col-md-4">
-        <div class="text-right"> <b> Order Number:</b>  <?= $order->order_number ?> </div>
+        <div class="col-md-6">
+          <div class="text-right"> 
+            <p><?php if(Yii::$app->user->can('admin')){ ?>
+            <a href="index.php?r=orders%2Fupdate&id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
+            <?php }?> 
+            <b> Unit No:</b>  <?= $order->order_number ?> </p>
+          </div>
         </div>
       </div>
 
@@ -156,10 +161,7 @@ use yii\data\ActiveDataProvider;
 
        </div>
       <div class="panel-body-order panel-body">
-      <?php if(Yii::$app->user->can('admin')){ ?>
-      <p><a href="index.php?r=orders%2Fupdate&id=<?= $order->order_id; ?>" class="btn btn-default">Generate Invoice</a></p>
-      <br>
-      <?php }?>
+      
       <div class="row">
         <div class="col-md-4">
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
@@ -287,7 +289,7 @@ use yii\data\ActiveDataProvider;
     </div>
   <?php } }else{ ?>
     <div class="panel panel-default">
-      <div class="panel-heading">Order Number: <?= $orders->order_number ?></div>
+      <div class="panel-heading">Unit No: <?= $orders->order_number ?></div>
       <div class="panel-body">
         Panel content
       </div>

@@ -28,18 +28,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Email',
                 'attribute' => 'user_id',
                 'value' => 'user.email',
-            ],
+            ],/* 
             [
                 'label' => 'Role',
                 'attribute' => 'user.type'
-            ],
-            [
+            ], */
+            /* [
                 'label' => 'Type of action',
                 'attribute' => 'type'
-            ],
+            ], */
             'type',
-            'create_date',
-            'updated_date',
+            [
+                'label' => 'Created Date',
+                'value' => function($dataProvider){
+                    return date('F d Y h:m:s', strtotime($dataProvider->create_date));
+                },
+            ],
+            [
+                'label' => 'Updated Date',
+                'value' => function($dataProvider){
+                    return date('F d Y h:m:s', strtotime($dataProvider->updated_date));
+                },
+            ],
+            
+
+            /* 'create_date', */
+            /* 'updated_date', */
             //'old_value:ntext',
             //'new_value:ntext',
             //'user_id',

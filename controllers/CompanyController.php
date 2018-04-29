@@ -175,7 +175,7 @@ class CompanyController extends Controller
                 $user->save();
                 $log->new_value = Json::encode(Company::find()->joinWith('user')->where(['company_id' => $model->company_id])->all(), $asArray = true) ;
                 $log->user_id = Yii::$app->user->identity->user_id;
-                $log->type = 'Company';
+                $log->type = 'Edited Company';
                 $log->save();
                 return $this->redirect(['view', 'id' => $model->company_id]);
             } else {

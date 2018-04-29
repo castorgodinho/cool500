@@ -105,7 +105,13 @@ class TaxController extends Controller
             if ($tax->load(Yii::$app->request->post())) {
                 date_default_timezone_set('Asia/Kolkata');
                 $tax->date = date('Y-m-d');
+                $log = new Log();
+                $log->old_value = Json::encode(Rate::find()->where(['tax_id' => $model->tax_id])->all(), $asArray = true) ;
                 $tax->save();
+                $log->new_value = Json::encode(Rate::find()->where(['tax_id' => $model->tax_id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Edited Tax';
+                $log->save();
                 return $this->redirect(['index']);
             } else {
                 return $this->render('update', [

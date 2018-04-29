@@ -122,7 +122,7 @@ class AreaController extends Controller
                 $model->save();
                 $log->new_value = Json::encode(Area::find()->where(['area_id' => $model->area_id])->one(), $asArray = true) ;
                 $log->user_id = Yii::$app->user->identity->user_id;
-                $log->type = 'Industrial Area';
+                $log->type = 'Edited Industrial Area';
                 $log->save();
                 return $this->redirect(['view', 'id' => $model->area_id]);
             }
