@@ -54,6 +54,12 @@ use yii\widgets\DetailView;
        <td>Amount  (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
+    <?php if($model->penal != 0) {?>
+     <tr>
+       <td>Penal Interest  (INR) </td>
+       <td><?= $model->penal ?></td>
+     </tr>
+         <?php } ?>
      <tr>
        <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
        <td><?= round($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>

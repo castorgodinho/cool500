@@ -74,7 +74,7 @@ class Invoice extends \yii\db\ActiveRecord
             'total_amount' => 'Total Amount',
             'invoice_code' => 'Invoice No.',
             'prev_lease_rent' => 'Previous Lease Rent (INR) ',
-            'grand_total' => 'Grand Total ( C = A + B ) (INR)',
+            'grand_total' => 'Grand Total',
             'prev_tax' => 'Previous Tax Total (INR)',
             'prev_interest' => 'Previous Interest (INR)',
             'prev_dues_total' => 'Previous Dues Total (A) (INR)',

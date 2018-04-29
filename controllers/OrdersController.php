@@ -98,17 +98,6 @@ class OrdersController extends Controller
             $area = Area::find()->all();
             $orderDetails = new OrderDetails();
             if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
-                /* echo $model->order_number.'-<br>';
-                echo $model->company_id.'-<br>';
-                echo $model->built_area.'-<br>';
-                echo $model->shed_area.'-<br>';
-                echo $model->godown_area.'-<br>';
-                echo $model->start_date.'-<br>';
-                echo $model->end_date.'-<br>';
-                echo $model->shed_no.'-<br>';
-                echo $model->godown_no.'-<br>';
-                echo $model->area_id.'-<br>';
-                echo $model->total_area.'-<br>'; */
                 $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($model->area->name);
                 while(Orders::find()->where(['order_number' => $orderNumber])->count() != 0){
                     $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($model->area->name);
@@ -164,30 +153,20 @@ class OrdersController extends Controller
           $year = date('Y');
           $year = substr($year,2,3);
           $invoiceCode = $areaCode . '/' . $year;
-          echo '$invoiceCode '.$invoiceCode.'<br>';
           $year = intval($year) + 1;
           $invoiceCode = $invoiceCode . '-' . $year;
-          echo '$year '.$year.'<br>';
-          echo '$areaCode '.$areaCode.'<br>';
-          echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = 'hello';
           $model->save(False);
           $invoiceID = strval($model->invoice_id);
-          echo 'sizeof($invoiceID) '.strlen($invoiceID).'<br>';
-          echo '5 - strlen($invoiceID) '.(5 - strlen($invoiceID)).'<br>';
           $len = strlen($invoiceID);
           for ($i=0; $i < (4 - $len); $i++) {
-            echo '$invoiceCode '.$invoiceID.'<br>';
             $invoiceID = '0'. $invoiceID;
           }
           $invoiceCode = $invoiceCode . '/' . $invoiceID;
-          echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = $invoiceCode;
           $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
-
-
 
             date_default_timezone_set('Asia/Kolkata');
             $start_date = date('d-m-Y');
@@ -255,7 +234,12 @@ class OrdersController extends Controller
                $totalPaid = Payment::find()
                ->where(['invoice_id' => $invoice->invoice_id])
                ->sum('amount');
-               $previousDueTotal = $invoice->grand_total - $totalPaid;
+
+               $pi = Payment::find()
+               ->where(['invoice_id' => $invoice->invoice_id])
+               ->sum('penal');
+
+               $previousDueTotal = $invoice->grand_total - $totalPaid + $pi;
              }
 
              $totalInvoiceAmount = Invoice::find()
@@ -274,8 +258,6 @@ class OrdersController extends Controller
              $previousSGSTAmount =  $invoice->current_tax/2;
              $previousTotalTax = $invoice->current_tax;
 
-
-
              $order =  Orders::findOne($id);
              $time = strtotime($invoice->start_date);
              $newformat = date('d-m-Y',$time);
@@ -287,9 +269,6 @@ class OrdersController extends Controller
              $date2 = $start_date;
              $diff = strtotime($date2) - strtotime($date1);
              $diffDate  = $diff / (60*60*24);
-             echo $date1.'<br>';
-             echo $date2.'<br>';
-             echo $diffDate.'<br>';
 
              }else{
              $time = strtotime($order->start_date);

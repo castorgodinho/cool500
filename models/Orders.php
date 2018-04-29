@@ -58,14 +58,14 @@ class Orders extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'order_id' => 'Order ID',
+            'order_id' => 'Unit ID',
             'order_number' => 'Unit Number',
             'company_id' => 'Company ID',
             'built_area' => 'Built Area',
             'shed_area' => 'Shed Area',
             'godown_area' => 'Godown Area',
             'start_date' => 'Allotted Date',
-            'end_date' => 'To Date',
+            'end_date' => 'Renewal Date',
             'shed_no' => 'Shed No',
             'godown_no' => 'Godown No',
             'area_id' => 'Area ID',
