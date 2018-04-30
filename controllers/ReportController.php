@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Rate;
+use app\models\Payment;
 use app\models\SearchRate;
 use app\models\Log;
 use yii\helpers\Json;
@@ -50,5 +51,44 @@ class ReportController extends Controller
         return $this->redirect([
             'invoice/view', 'id' => $id
         ]);
+    }
+
+    public function actionLedger()
+    {
+        $invoice = '';
+        $payment = '';
+        $to = 'Records';
+        $from = 'All';
+        if(Yii::$app->request->post()){
+            echo "Here";
+            $to = Yii::$app->request->post('to_date');
+            $from = Yii::$app->request->post('from_date');
+            if($to != '' && $from != ''){
+                echo 'Query with dates';
+                $invoice = Invoice::find()->orderBy('start_date')
+                ->where(['between', 'start_date', $from, $to ])->all();
+                $payment = Payment::find()->orderBy('start_date')
+                ->where(['between', 'start_date', $from, $to ])->all();
+            }else{
+                echo 'Query without dates';
+                $invoice = Invoice::find()->orderBy('start_date')->all();
+                $payment = Payment::find()->orderBy('start_date')->all(); 
+            }
+        }else{
+            echo 'Normal';
+            $invoice = Invoice::find()->orderBy('start_date')->all();
+            $payment = Payment::find()->orderBy('start_date')->all();
+        }
+        return $this->render(
+            'ledger',
+            [
+                'invoice' => $invoice,
+                'payment' => $payment,
+                'to' => $to,
+                'from' => $from,
+            ]
+        );
+        
+        
     }
 }

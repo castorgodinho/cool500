@@ -15,7 +15,7 @@ $this->title = 'Industrial Estate';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Area', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Industrial Estate', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

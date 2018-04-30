@@ -28,22 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'start_date',
             'built_area',
             'shed_area',
+            'plots',
             'shed_no',
             'godown_no',
             'godown_area',
             /* 'end_date', */
         ],
     ]) ?>
-
-    <h3>Plots</h3>
-
-    <?= GridView::widget([
-        'dataProvider' => $plots,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'plot.name',
-        ],
-    ]); ?>
 
 
     

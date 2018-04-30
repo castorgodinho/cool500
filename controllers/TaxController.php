@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Tax;
 use app\models\SearchTax;
+use app\models\Log;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -100,15 +102,16 @@ class TaxController extends Controller
         if (\Yii::$app->user->can('updateTax')){
             $model = $this->findModel($id);
             $model->flag = 0;
-            $model->save();
+            
             $tax = new Tax();
             if ($tax->load(Yii::$app->request->post())) {
                 date_default_timezone_set('Asia/Kolkata');
                 $tax->date = date('Y-m-d');
                 $log = new Log();
-                $log->old_value = Json::encode(Rate::find()->where(['tax_id' => $model->tax_id])->all(), $asArray = true) ;
+                $log->old_value = Json::encode(Tax::find()->where(['tax_id' => $model->tax_id])->all(), $asArray = true) ;
                 $tax->save();
-                $log->new_value = Json::encode(Rate::find()->where(['tax_id' => $model->tax_id])->all(), $asArray = true) ;
+                $model->save();
+                $log->new_value = Json::encode(Tax::find()->where(['tax_id' => $tax->tax_id])->all(), $asArray = true) ;
                 $log->user_id = Yii::$app->user->identity->user_id;
                 $log->type = 'Edited Tax';
                 $log->save();

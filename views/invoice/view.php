@@ -179,7 +179,7 @@ use yii\widgets\ActiveForm;
 
     </table>
     <hr>
-    <p><b>Penal Interest @ 15% will apply on total dues adter due date</b></p>
+    <p><b>Penal Interest @ <?= $model->interest->rate ?>% will apply on total dues adter due date</b></p>
     <p>This is a computer-generated document and it does not require a signature</p>
     <p><b>Disclaimer: </b>The data belongs to Goa IDC. For any communication related to the published data, Please contact at the above address</p>
     </div>

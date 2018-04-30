@@ -6,6 +6,14 @@ use yii\widgets\DetailView;
 
 ?>
 <style>
+@page 
+    {
+        size:  auto;   /* auto is the initial value */
+        margin: 20px;  /* this affects the margin in the printer settings */
+    }
+  table{
+    font-size: 14px;
+  }
   @media print {
   body * {
     visibility: hidden;
@@ -17,6 +25,10 @@ use yii\widgets\DetailView;
     position: absolute;
     left: 0;
     top: 0;
+  }
+
+  body{
+    border: 2px solid black;
   }
 }
 </style>
@@ -32,51 +44,119 @@ use yii\widgets\DetailView;
     <h3> <b>Goa Industrial Development Corporation</b> </h3>
     <p>(A Goverment of Goa Undertaking)</p>
     <p>Plot No. 13-A-2, EDC Complex, Patto Plaza, Panjim-Goa 403001</p>
-    <p>Tel: (91)(832)2437470 to 73 | Fax: (91)(832)2437478 to 79</p>
-    <p>Email: goaidc1965@gmail.com | Website: http://www.goaidc.com</p>
-    <p><b>GSTIN: </b>30AAATG7792FIZR | <b>PAN No. </b>AAATG77921</p>
+    <!-- <p>Tel: (91)(832)2437470 to 73 | Fax: (91)(832)2437478 to 79</p>
+    <p>Email: goaidc1965@gmail.com | Website: http://www.goaidc.com</p> -->
+    <p><b>GSTIN: </b>30AAATG7792FIZR <!-- | <b>PAN No. </b>AAATG77921 --></p>
   </div>
 </div>
 <hr>
-    <center> <h2>RECEIPT</h2> </center>
+    <center> <h3>LEASE PAYMENT RECEIPT</h3> </center>
     <table class="table">
-     <th></th>
-     <th></th>
+     
      <tr>
-       <td>Company</td>
+       <td>Unit ID</td>
+       <td><?= $model->invoice->order->order_number ?></td>
+     </tr>
+     <tr>
+       <td>Tax Invoice No</td>
+       <td><?= $model->invoice->invoice_code ?></td>
+     </tr>
+     <tr>
+       <td>Customer Name</td>
        <td><?= $model->invoice->order->company->name ?></td>
      </tr>
      <tr>
-       <td>Amount (INR) </td>
-       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+       <td>GSTIN</td>
+       <td><?= $model->invoice->order->company->gstin ?></td>
      </tr>
      <tr>
-       <td>GST (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100)) ?></td>
+       <td>Plot No</td>
+       <td><?= $model->invoice->order->plots ?></td>
+     </tr>
+     <tr>
+       <td>Industrial Area</td>
+       <td><?= $model->invoice->order->area->name ?></td>
+     </tr>
+     <tr>
+       <td>Previous Lease Rent Dues as on</td>
+       <td><?= $model->invoice->prev_lease_rent ?></td>
+     </tr>
+     <?php 
+      $previousLeaseRent = $model->invoice->prev_lease_rent;
+      $previousSGSTAmount = $model->invoice->prev_interest/2;
+     ?>
+     <tr>
+       <?php if($previousLeaseRent != 0) { ?>
+       <td>Previous CGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+       <?php } else { ?>
+       <td>Previous CGST (INR)</td>
+       <?php } ?>
+       <td><?= $previousSGSTAmount ?></td>
+     </tr>
+     <tr>
+        <?php if($previousLeaseRent != 0) { ?>
+        <td>Previous SGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+        <?php } else { ?>
+        <td>Previous SGST (INR)</td>
+        <?php } ?>
+        <td><?= $previousSGSTAmount ?></td>
+    </tr>
+     <tr>
+       <td>Penal Interest <?= $model->invoice->interest->rate ?>% (INR)</td>
+       <td><?= $model->invoice->prev_interest ?></td>
+     </tr>
+     <tr>
+       <td>Lease Rent</td>
+       <td><?= $model->invoice->current_lease_rent ?></td>
+     </tr>
+     <tr>
+        <td>  Current CGST <?= ($model->invoice->tax->rate)/2 ?>% (INR)  </td>
+        <td> <?= $model->invoice->current_tax / 2 ?>  </td>
+      </tr>
+
+      <tr>
+        <td>  Current SGST <?= ($model->invoice->tax->rate)/2 ?>% (INR)  </td>
+        <td> <?= $model->invoice->current_tax / 2 ?>  </td>
+      </tr>
+     <tr>
+       <td>Penal Interest</td>
+       <td><?= $model->invoice->current_interest ?></td>
      </tr>
      <tr>
        <td>TDS (INR)</td>
        <td><?= round( ($model->tds_amount )) ?></td>
      </tr>
-
      <tr>
-       <td>Total Amount </td>
+       <td>Total Bill Amount </td>
        <td><?= round($model->amount + $model->tds_amount) ?></td>
      </tr>
      <tr>
-       <td>DATE</td>
+       <td>Amount Paid(INR) </td>
+       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+     </tr>
+     <tr>
+       <td>Balance Amount (INR) </td>
+       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+     </tr>
+     <tr>
+       <td>Transaction No </td>
+       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+     </tr>
+
+     <tr>
+       <td>Date of Receipt</td>
        <td><?= $model->start_date?></td>
      </tr>
      <tr>
-       <td>Payment Mode</td>
+       <td>Payment Type</td>
        <td><?= $model->mode ?></td>
      </tr>
-     <tr>
-       <td>Invoice ID</td>
-       <td><?= $model->invoice->invoice_code ?></td>
-     </tr>
     </table>
+    <p><b>NOTE: </b>Receipt is valid subject to realization of your cheque. <br>
+This is a computer-generated document and it does not require a signature. <br>
+<b>Disclaimer: </b>The data belongs to Goa GIDC. For any communication related to the published data, please contact at the above address </p>
 </div>
+
 </div>
 
 <?php 

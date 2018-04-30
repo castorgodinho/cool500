@@ -223,7 +223,7 @@ class CompanyController extends Controller
                     $company->save(false);
                     $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
                     $log->user_id = Yii::$app->user->identity->user_id;
-                    $log->type = 'GSTIN';
+                    $log->type = 'Edited GSTIN';
                     $log->save();
                     return $this->redirect(['view',
                         'id' => $id,
@@ -251,7 +251,7 @@ class CompanyController extends Controller
                     $company->save(false);
                     $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
                     $log->user_id = Yii::$app->user->identity->user_id;
-                    $log->type = 'Company';
+                    $log->type = 'Edited Company Remark';
                     $log->save();
                     return $this->redirect(['view',
                         'id' => $id,
@@ -282,7 +282,7 @@ class CompanyController extends Controller
                     $company->save(false);
                     $log->new_value = Json::encode(Company::find()->where(['company_id' => $id])->all(), $asArray = true) ;
                     $log->user_id = Yii::$app->user->identity->user_id;
-                    $log->type = 'Company';
+                    $log->type = 'Edited Company';
                     $log->save();
                     return $this->redirect(['view',
                         'id' => $id,

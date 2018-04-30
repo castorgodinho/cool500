@@ -28,16 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Email',
                 'attribute' => 'user_id',
                 'value' => 'user.email',
-            ],/* 
+            ],
             [
                 'label' => 'Role',
                 'attribute' => 'user.type'
-            ], */
-            /* [
-                'label' => 'Type of action',
+            ],
+            [
+                'label' => 'Type of log',
                 'attribute' => 'type'
-            ], */
-            'type',
+            ],
             [
                 'label' => 'Created Date',
                 'value' => function($dataProvider){

@@ -60,6 +60,7 @@ AppAsset::register($this);
                 'label' => 'Reports',
                 'items' => [
                      ['label' => 'Invoice Report', 'url' => ['/report/invoice-report']],
+                     ['label' => 'Ledger', 'url' => ['/report/ledger']],
                      ['label' => 'Logs', 'url' => ['/log/index']],
                 ],
             ];
