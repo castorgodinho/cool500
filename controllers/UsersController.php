@@ -69,7 +69,7 @@ class UsersController extends Controller
 
     public function actionChangePassword()
     {
-        
+
         if (\Yii::$app->user->can('changePassword')){
             $model = Users::findOne(Yii::$app->user->identity->user_id);
             $model->password = "";
@@ -90,7 +90,7 @@ class UsersController extends Controller
                     'model' => $model,
                 ]);
             }
-            
+
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
@@ -153,7 +153,6 @@ class UsersController extends Controller
                 $auth->revokeAll($model->user_id);
                 $role = $auth->getRole($model->type);
                 $auth->assign($role, $model->user_id);
-                echo $model->type;
                 $log = new Log();
                 $log->old_value = Json::encode(Users::find()->where(['user_id' => $model->user_id])->all(), $asArray = true) ;
                 $model->save();

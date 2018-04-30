@@ -89,13 +89,19 @@ class PaymentController extends Controller
             $model = new Payment();
 
             if ($model->load(Yii::$app->request->post())) {
+              $penalAmount = 0;
+              if($model->penal != 0){
+                $penalPercent =  ($model->penal * 100 / $model->lease_rent);
+                $penalAmount = ($penalPercent/100) * $model->lease_rent;
+              }
                 $totalPayment = Payment::find()
                 ->where(['invoice_id' => $model->invoice_id])
                 ->sum('amount');
-                $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount;
+                $balanceAmount = $model->invoice->grand_total - $totalPayment - $model->amount + $penalAmount;
+                echo $balanceAmount;
                 if($balanceAmount < 0){
-                    Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
-                    return $this->redirect(['index']);
+                    // Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
+                    // return $this->redirect(['index']);
                 }
                 else if($model->tds_rate > 10.10 ){
                   Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
@@ -107,7 +113,7 @@ class PaymentController extends Controller
                     if($model->file){
                       $model->tds_file = 'gstfiles/' . $model->payment_id . '.' . $model->file->extension;
                       $model->file->saveAs('gstfiles/' . $model->payment_id . '.' . $model->file->extension);
-                    }                  
+                    }
                     $lr = $model->invoice->current_lease_rent;
                     $tds_amount = ($lr * ($model->tds_rate/100));
                     $model->tds_amount = $tds_amount;
@@ -144,6 +150,10 @@ class PaymentController extends Controller
                 ->where(['invoice_id' => $model->invoice_id])
                 ->sum('amount');
 
+                $pi = Payment::find()
+                ->where(['invoice_id' => $model->invoice_id])
+                ->sum('penal');
+
                 $in = Invoice::find()
                 ->where(['order_id' => $model->order_id])
                 ->orderBy(['invoice_id' => SORT_DESC])
@@ -152,20 +162,59 @@ class PaymentController extends Controller
                 if($in->invoice_id != $model->invoice_id){
                   $balanceAmount = 0;
                 }else{
-                    $balanceAmount = $model->grand_total - $totalPayment;
+                    $balanceAmount = $model->grand_total - $totalPayment - $pi;
                 }
 
                 $tds_amount = Payment::find()
                 ->where(['invoice_id' => $model->invoice_id])
                 ->sum('tds_amount');
 
-            return $this->render('create', [
-                    'start_date' => $start_date,
-                    'balanceAmount' => $balanceAmount,
-                    'tds_amount' => $tds_amount,
-                    'invoice' => $model,
-                    'model' => $model_payment
+                date_default_timezone_set('Asia/Kolkata');
+                $date1 = date('Y-m-d', strtotime($model->start_date. ' + 15 days'));
+                $date2 = date('Y-m-d');
+                $diff = strtotime($date1) - strtotime($date2);
+                $diffDate  = $diff / (60*60*24);
+
+                if($in->invoice_id != $model->invoice_id){
+                  $balanceAmount = 0;
+                }else{
+                    $balanceAmount = $model->grand_total - $totalPayment - $pi;
+                }
+
+                $lease_rent = $in->current_lease_rent;
+                $total_tax = $in->current_tax;
+
+                $amount = $balanceAmount;
+                if( $diffDate > 0 ){
+                  $perDayPenalInterestAmount  = $in->current_lease_rent * ($in->interest->rate/100)/365;
+                  $PenalInterestAmount  = round($perDayPenalInterestAmount * $diffDate) ;
+                  $balanceAmount = round($PenalInterestAmount + $amount);
+                  echo $perDayPenalInterestAmount.'<br>';
+                  echo $balanceAmount.'<br>';
+                  echo $amount.'<br>';
+                  echo $in->current_lease_rent.'<br>';
+                  echo ($in->interest->rate/100).'<br>';
+                  echo $PenalInterestAmount.'<br>';
+                  echo $pi;
+                }
+
+                if($balanceAmount < 0){
+                  $balanceAmount = 0;
+                }
+
+                return $this->render('create', [
+                        'start_date' => $start_date,
+                        'lease_rent' => $lease_rent,
+                        'total_tax' => $total_tax,
+                        'PenalInterestAmount' => $PenalInterestAmount,
+                        'amount' => $amount,
+                        'balanceAmount' => $balanceAmount,
+                        'tds_amount' => $tds_amount,
+                        'invoice' => $model,
+                        'model' => $model_payment,
+                        'diffDate' => $diffDate
                 ]);
+
           }else{
             return $this->render('search', [
                 'model' => $model_invoice,

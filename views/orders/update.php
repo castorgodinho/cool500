@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
     <p>Clause 65(105) (ZZZZ)</p>
   </div>
   <div class="col-md-4 col-sm-4 col-xs-4">
-    <p><b>Tax Invoice No: </b></p>
+    <!-- <p><b>Tax Invoice No: </b></p> -->
     <p><b>Bill Date: <?= $billDate ?></b></p>
     <p><b>Due Date: <?= $invoiceDueDate ?></b></p>
     <p><b>Order Number: </b><?= $order->order_number ?></p>
@@ -89,7 +89,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td>  Previous Due Total (INR) </td>
+        <td>  Previous Due Total (A) (INR) </td>
         <td> <?= $previousDueTotal ?> </td>
       </tr>
 

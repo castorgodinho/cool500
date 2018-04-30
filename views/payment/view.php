@@ -58,6 +58,7 @@ use yii\widgets\DetailView;
        <td><?= $model->invoice->order->order_number ?></td>
      </tr>
      <tr>
+<<<<<<< HEAD
        <td>Tax Invoice No</td>
        <td><?= $model->invoice->invoice_code ?></td>
      </tr>
@@ -104,8 +105,22 @@ use yii\widgets\DetailView;
      <tr>
        <td>Penal Interest <?= $model->invoice->interest->rate ?>% (INR)</td>
        <td><?= $model->invoice->prev_interest ?></td>
+=======
+       <td>DATE</td>
+       <td><?= $model->start_date?></td>
      </tr>
      <tr>
+       <td>Company</td>
+       <td><?= $model->invoice->order->company->name ?></td>
+     </tr>
+     <tr>
+       <td>Amount  (INR) </td>
+       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+>>>>>>> b74bfaf0039bd0b8d9d4e6486732f32569212853
+     </tr>
+    <?php if($model->penal != 0) {?>
+     <tr>
+<<<<<<< HEAD
        <td>Lease Rent</td>
        <td><?= $model->invoice->current_lease_rent ?></td>
      </tr>
@@ -121,6 +136,23 @@ use yii\widgets\DetailView;
      <tr>
        <td>Penal Interest</td>
        <td><?= $model->invoice->current_interest ?></td>
+=======
+       <td>Penal Interest  (INR) </td>
+       <td><?= $model->penal ?></td>
+     </tr>
+         <?php } ?>
+     <tr>
+       <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
+     </tr>
+     <tr>
+       <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2)?></td>
+     </tr>
+     <tr>
+       <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) )?></td>
+>>>>>>> b74bfaf0039bd0b8d9d4e6486732f32569212853
      </tr>
      <tr>
        <td>TDS (INR)</td>
@@ -130,14 +162,24 @@ use yii\widgets\DetailView;
        <td>Total Bill Amount </td>
        <td><?= round($model->amount + $model->tds_amount) ?></td>
      </tr>
+<<<<<<< HEAD
      <tr>
        <td>Amount Paid(INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
+=======
+
+>>>>>>> b74bfaf0039bd0b8d9d4e6486732f32569212853
      <tr>
        <td>Balance Amount (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
+     <?php if($model->cheque_no) {?>
+       <tr>
+         <td>Cheque  No</td>
+         <td><?= $model->cheque_no ?></td>
+       </tr>
+    <?php } ?>
      <tr>
        <td>Transaction No </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
@@ -159,7 +201,7 @@ This is a computer-generated document and it does not require a signature. <br>
 
 </div>
 
-<?php 
+<?php
   $script = <<< JS
 
     $(document).ready(function(){

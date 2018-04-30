@@ -93,8 +93,16 @@ use yii\widgets\ActiveForm;
 
 <input id="payment-order_id" class="form-control" name="Payment[order_id]" value="<?= $model->order_id?>" type="hidden">
 
-<?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '']) ?>
+<input id="payment-penal" class="form-control" name="Payment[penal]" value="<?= $PenalInterestAmount?>" type="text">
 
+<input id="payment-lease_rent" class="form-control" name="Payment[lease_rent]" value="<?= $lease_rent?>" type="text">
+
+<input id="payment-total_tax" class="form-control" name="Payment[total_tax]" value="<?= $total_tax ?>" type="text">
+
+<?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '', 'class' => 'mode form-control']) ?>
+<div class="cheque-div">
+
+</div>
 <?php if($tds_amount == 0 ) { ?>
 
   <label for="">TDS</label>
@@ -103,16 +111,23 @@ use yii\widgets\ActiveForm;
     <option value="no-tds">TDS</option>
   </select>
 
-  
+
   <div class="hide-div">
+    <br>
   <label for="">TDS RATE</label>
     <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
- 
   </div>
-  <?php 
+  <?php
   $script = <<< JS
     $(document).ready(function(){
-      var div = "<div class=\"form-group field-payment-file required\">"+
+      var cheque_no ="<br><div class=\"form-group field-payment-cheque_no\">"+
+"<label class=\"control-label\" for=\"payment-cheque_no\">Cheque No</label>"+
+"<input id=\"payment-cheque_no\" class=\"form-control\" name=\"Payment[cheque_no]\" type=\"text\">"+
+
+"<div class=\"help-block\"></div>"+
+"</div>";
+
+      var div = "<br><div class=\"form-group field-payment-file required\">"+
               "<label class=\"control-label\" for=\"payment-file\">File</label>"+
               "<input type=\"hidden\" name=\"Payment[file]\" value=\"\"><input type=\"file\" id=\"payment-file\" name=\"Payment[file]\" aria-required=\"true\">"+
 
@@ -128,8 +143,9 @@ use yii\widgets\ActiveForm;
           $('.hide-div').slideDown();
           $('.hide-div').append(div);
         }
-        
+
       });
+
     });
 JS;
     $this->registerJS($script);
@@ -139,7 +155,36 @@ JS;
   <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="hidden">
   <br>
 <?php  } ?>
+<?php
+$script = <<< JS
+  $(document).ready(function(){
+    var cheque_no ="<br><div class=\"form-group field-payment-cheque_no\">"+
+"<label class=\"control-label\" for=\"payment-cheque_no\">Cheque No</label>"+
+"<input id=\"payment-cheque_no\" class=\"form-control\" name=\"Payment[cheque_no]\" type=\"text\">"+
 
+"<div class=\"help-block\"></div>"+
+"</div>";
+
+    var div = "<br><div class=\"form-group field-payment-file\">"+
+            "<label class=\"control-label\" for=\"payment-file\">File</label>"+
+            "<input type=\"\" name=\"Payment[file]\" value=\"\"><input type=\"file\" id=\"payment-file\" name=\"Payment[file]\" >"+
+
+            "<div class=\"help-block\"></div>"+
+            "</div>";
+    console.log(div);
+
+
+    $('.mode').change(function(){
+      if($('.mode').val() == 'cheque'){
+        $('.cheque-div').append(cheque_no);
+      }else{
+        $('.cheque-div').children().remove();
+      }
+    });
+  });
+JS;
+  $this->registerJS($script);
+?>
 <div class="form-group">
     <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>
 </div>

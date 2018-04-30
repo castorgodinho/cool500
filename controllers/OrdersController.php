@@ -149,194 +149,195 @@ class OrdersController extends Controller
           $year = date('Y');
           $year = substr($year,2,3);
           $invoiceCode = $areaCode . '/' . $year;
-          echo '$invoiceCode '.$invoiceCode.'<br>';
           $year = intval($year) + 1;
           $invoiceCode = $invoiceCode . '-' . $year;
-          echo '$year '.$year.'<br>';
-          echo '$areaCode '.$areaCode.'<br>';
-          echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = 'hello';
           $model->save(False);
           $invoiceID = strval($model->invoice_id);
-          echo 'sizeof($invoiceID) '.strlen($invoiceID).'<br>';
-          echo '5 - strlen($invoiceID) '.(5 - strlen($invoiceID)).'<br>';
           $len = strlen($invoiceID);
           for ($i=0; $i < (4 - $len); $i++) {
-            echo '$invoiceCode '.$invoiceID.'<br>';
             $invoiceID = '0'. $invoiceID;
           }
           $invoiceCode = $invoiceCode . '/' . $invoiceID;
-          echo '$invoiceCode '.$invoiceCode.'<br>';
           $model->invoice_code = $invoiceCode;
           $model->save(False);
           return $this->redirect(['invoice/index']);
         } else{
-         date_default_timezone_set('Asia/Kolkata');
-         $start_date = date('d-m-Y');
-         $diffDate = 0;
 
-          $previousLeaseRent = 0;
-          $previousCGST = 0;
-          $previousSGST = 0;
-          $previousCGSTAmount = 0;
-          $previousSGSTAmount = 0;
-          $previousTotalTax = 0;
-          $previousDueTotal = 0;
-          $penalInterest = 0;
+            date_default_timezone_set('Asia/Kolkata');
+            $start_date = date('d-m-Y');
+            $diffDate = 0;
 
-          $currentLeaseRent = 0;
-          $currentCGSTAmount = 0;
-          $currentSGSTAmount = 0;
-          $currentSGST = 0;
-          $currentSGST = 0;
-          $currentTotalTax = 0;
-          $currentDueTotal = 0;
+             $previousLeaseRent = 0;
+             $previousCGST = 0;
+             $previousSGST = 0;
+             $previousCGSTAmount = 0;
+             $previousSGSTAmount = 0;
+             $previousTotalTax = 0;
+             $previousDueTotal = 0;
+             $penalInterest = 0;
 
-          $order =  Orders::findOne($id);
+             $currentLeaseRent = 0;
+             $currentCGSTAmount = 0;
+             $currentSGSTAmount = 0;
+             $currentSGST = 0;
+             $currentSGST = 0;
+             $currentTotalTax = 0;
+             $currentDueTotal = 0;
 
-          $company = $order->company;
-          $orderPlotArray = $order->plots;
-          $totalArea = $order->total_area;
+             $order =  Orders::findOne($id);
 
-          $tax = Tax::find()
-          ->where(['name' => 'GST'])
-          ->where(['flag' => 1])
-          ->one();
+             $company = $order->company;
+             $orderPlotArray = $order->plots;
+             $totalArea = $order->total_area;
 
-          $interest = Interest::find()
-          ->where(['name' => 'Penal Interest'])
-          ->andWhere(['flag' => 1])
-          ->one();
+             $tax = Tax::find()
+             ->where(['name' => 'GST'])
+             ->where(['flag' => 1])
+             ->one();
 
-          $area = null;
-          foreach ($orderPlotArray as $plot) {
-            $area = $plot->area;
-          }
+             $interest = Interest::find()
+             ->where(['name' => 'Penal Interest'])
+             ->andWhere(['flag' => 1])
+             ->one();
 
-          $rate = Rate::find()->where(['area_id' => $area->area_id])
-          ->andWhere(['<=','from_area', $totalArea])
-          ->andWhere(['>=','to_area', $totalArea])
-          ->andWhere(['flag' => 1])
-          ->one();
+             $area = null;
+             foreach ($orderPlotArray as $plot) {
+               $area = $plot->area;
+             }
 
-          $currentLeaseRent   = $rate->rate * $totalArea;
-          $taxAmout = $currentLeaseRent * ($tax->rate/100);
-          $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGST = ($tax->rate/2);
-          $currentSGST = ($tax->rate/2);
-          $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
-          $currentDueTotal = $currentLeaseRent + $currentTotalTax;
+             $rate = Rate::find()->where(['area_id' => $area->area_id])
+             ->andWhere(['<=','from_area', $totalArea])
+             ->andWhere(['>=','to_area', $totalArea])
+             ->andWhere(['flag' => 1])
+             ->one();
 
-          $invoice = Invoice::find()
-          ->where(['order_id' => $id])
-          ->orderBy(['invoice_id' => SORT_DESC])
-          ->one();
+             $currentLeaseRent   = $rate->rate * $totalArea;
+             $taxAmout = $currentLeaseRent * ($tax->rate/100);
+             $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+             $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+             $currentSGST = ($tax->rate/2);
+             $currentSGST = ($tax->rate/2);
+             $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
+             $currentDueTotal = $currentLeaseRent + $currentTotalTax;
 
-          if($invoice){
-            $totalPaid = Payment::find()
-            ->where(['invoice_id' => $invoice->invoice_id])
-            ->sum('amount');
-            $previousDueTotal = $invoice->grand_total - $totalPaid;
-          }
+             $invoice = Invoice::find()
+             ->where(['order_id' => $id])
+             ->orderBy(['invoice_id' => SORT_DESC])
+             ->one();
 
-          $totalInvoiceAmount = Invoice::find()
-          ->where(['order_id' => $id])
-          ->sum('grand_total');
+             if($invoice){
+               $totalPaid = Payment::find()
+               ->where(['invoice_id' => $invoice->invoice_id])
+               ->sum('amount');
 
-          $totalAmount = 0;
-          if($invoice){
-          $previousLeaseRent = $invoice->current_lease_rent;
-          $previousCGST = 9;
-          $previousSGST = 9;
-          $previousCGSTAmount =  $invoice->current_tax/2;
-          $previousSGSTAmount =  $invoice->current_tax/2;
-          $previousTotalTax = $invoice->current_tax;
+               $pi = Payment::find()
+               ->where(['invoice_id' => $invoice->invoice_id])
+               ->sum('penal');
 
-          $order =  Orders::findOne($id);
-          $time = strtotime($invoice->start_date);
-          $newformat = date('d-m-Y',$time);
-          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
-          $billDate = date('d-m-Y', strtotime($newformat. ' 1 year'));
+               $previousDueTotal = $invoice->grand_total - $totalPaid + $pi;
+             }
 
-          $date1 = $invoiceDueDate;
-          $date2 = $start_date;
-          $diff = strtotime($date2) - strtotime($date1);
-          $diffDate  = $diff / (60*60*24);
-          echo $date1.'<br>';
-          echo $date2.'<br>';
-          echo $diffDate.'<br>';
+             $totalInvoiceAmount = Invoice::find()
+             ->where(['order_id' => $id])
+             ->sum('grand_total');
 
-          }else{
-          $time = strtotime($order->start_date);
-          $newformat = date('d-m-Y',$time);
-          $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
-          $billDate = $newformat;
-         }
+             date_default_timezone_set('Asia/Kolkata');
+             $currentDate = date('d-m-Y');
 
-          $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
-          $currentSGST = ($tax->rate/2);
-          $currentCGST = ($tax->rate/2);
-          $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
-          $currentDueTotal = $currentLeaseRent + $currentTotalTax;
+             $totalAmount = 0;
+             if($invoice){
+             $previousLeaseRent = $invoice->current_lease_rent;
+             $previousCGST = 9;
+             $previousSGST = 9;
+             $previousCGSTAmount =  $invoice->current_tax/2;
+             $previousSGSTAmount =  $invoice->current_tax/2;
+             $previousTotalTax = $invoice->current_tax;
 
-          $penalInterest = round((($diffDate  * ($interest->rate + 100 )/100) * $previousDueTotal ) / 365);
-          if($penalInterest < 0 ){
-            $penalInterest = 0;
-          }
+             $order =  Orders::findOne($id);
+             $time = strtotime($invoice->start_date);
+             $newformat = date('d-m-Y',$time);
+             $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
+             $billDate = $currentDate;
+             // $billDate = date('d-m-Y', strtotime($newformat. ' 1 year'));
 
-          $leftOverAmount = $previousDueTotal;
-          $previousDueTotal = $leftOverAmount + $penalInterest;
+             $date1 = $invoiceDueDate;
+             $date2 = $start_date;
+             $diff = strtotime($date2) - strtotime($date1);
+             $diffDate  = $diff / (60*60*24);
 
-          $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
-          $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
+             }else{
+             $time = strtotime($order->start_date);
+             $newformat = date('d-m-Y',$time);
+             $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
+             $billDate = $currentDate;
+            }
 
-          if($previousLeaseRent == 0){
-            $prevPeriodFrom = '00-00-0000';
-            $prevPeriodTo = '00-00-0000';
-          }else{
-            $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
-            $prevPeriodTo   = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 day  '));
-          }
+             $currentCGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+             $currentSGSTAmount = $currentLeaseRent * (($tax->rate/2)/100);
+             $currentSGST = ($tax->rate/2);
+             $currentCGST = ($tax->rate/2);
+             $currentTotalTax = $currentSGSTAmount + $currentCGSTAmount;
+             $currentDueTotal = $currentLeaseRent + $currentTotalTax;
 
-          return $this->render('update', [
-                  'previousLeaseRent' => $previousLeaseRent,
-                  'previousTotalTax' => $previousTotalTax,
-                  'previousDueTotal' => $previousDueTotal,
-                  'previousCGSTAmount' => $previousCGSTAmount,
-                  'previousSGSTAmount' => $previousSGSTAmount,
-                  'previousSGST' => $previousSGST,
-                  'previousCGST' => $previousCGST,
-                  'penalInterest' => $penalInterest,
-                  'currentLeaseRent' => $currentLeaseRent,
-                  'currentTotalTax' => $currentTotalTax,
-                  'currentDueTotal' => $currentDueTotal,
-                  'currentCGSTAmount' => $currentCGSTAmount,
-                  'currentSGSTAmount' => $currentSGSTAmount,
-                  'currentSGST' => $currentSGST,
-                  'currentCGST' => $currentCGST,
-                  'prevNotPaid' => $leftOverAmount,
+             $penalInterest = round((($diffDate  * ($interest->rate + 100 )/100) * $previousDueTotal ) / 365);
+             if($penalInterest < 0 ){
+               $penalInterest = 0;
+             }
 
-                  'leasePeriodFrom' => $leasePeriodFrom,
-                  'leasePeriodTo' => $leasePeriodTo,
+             $leftOverAmount = $previousDueTotal;
+             $previousDueTotal = $leftOverAmount + $penalInterest;
 
-                  'prevPeriodFrom' => $prevPeriodFrom,
-                  'prevPeriodTo' => $prevPeriodTo,
+             $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
+             $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
 
-                  'billDate' => $billDate,
-                  'invoiceDueDate' => $invoiceDueDate,
+             if($previousLeaseRent == 0){
+               $prevPeriodFrom = '-';
+               $prevPeriodTo = '-';
+             }else{
+               $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
+               $prevPeriodTo   = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 day  '));
+             }
 
-                  'rate' => $rate,
-                  'tax' => $tax,
-                  'order_id' => $id,
-                  'interest' => $interest,
-                  'start_date' => $start_date,
+             return $this->render('update', [
+                     'previousLeaseRent' => $previousLeaseRent,
+                     'previousTotalTax' => $previousTotalTax,
+                     'previousDueTotal' => $previousDueTotal,
+                     'previousCGSTAmount' => $previousCGSTAmount,
+                     'previousSGSTAmount' => $previousSGSTAmount,
+                     'previousSGST' => $previousSGST,
+                     'previousCGST' => $previousCGST,
+                     'penalInterest' => $penalInterest,
+                     'currentLeaseRent' => $currentLeaseRent,
+                     'currentTotalTax' => $currentTotalTax,
+                     'currentDueTotal' => $currentDueTotal,
+                     'currentCGSTAmount' => $currentCGSTAmount,
+                     'currentSGSTAmount' => $currentSGSTAmount,
+                     'currentSGST' => $currentSGST,
+                     'currentCGST' => $currentCGST,
+                     'prevNotPaid' => $leftOverAmount,
 
-                  'company' => $company,
-                  'order' => $order,
-                  'model' => $model,
-              ]);
+                     'leasePeriodFrom' => $leasePeriodFrom,
+                     'leasePeriodTo' => $leasePeriodTo,
+
+                     'prevPeriodFrom' => $prevPeriodFrom,
+                     'prevPeriodTo' => $prevPeriodTo,
+
+                     'billDate' => $billDate,
+                     'invoiceDueDate' => $invoiceDueDate,
+
+                     'rate' => $rate,
+                     'tax' => $tax,
+                     'order_id' => $id,
+                     'interest' => $interest,
+                     'start_date' => $start_date,
+
+                     'company' => $company,
+                     'order' => $order,
+                     'model' => $model,
+                 ]);
+
+
         }
 
 

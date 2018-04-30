@@ -60,13 +60,14 @@ class SearchOrders extends Orders
         $query->andFilterWhere([
             'order_id' => $this->order_id,
             'company_id' => $this->company_id,
-            'order_number' => $this->order_number,
             'built_area' => $this->built_area,
             'shed_area' => $this->shed_area,
             'godown_area' => $this->godown_area,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
         ]);
+
+        $query->andFilterWhere(['like', 'order_number' , $this->order_number]);
 
         $query->orderBy(['order_id' => SORT_DESC]);
 

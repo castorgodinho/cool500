@@ -53,7 +53,7 @@ class InvoiceReport extends Invoice
         ]);
 
         $this->load($params);
-        
+
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -77,13 +77,13 @@ class InvoiceReport extends Invoice
          ->orFilterWhere(['like', 'orders.order_number', $this->search_key])
        /* ->orFilterWhere(['like', 'orders.company.name', $this->search_key])
         ->andFilterWhere(['like', 'competent_mobile', $this->competent_mobile]) */;
-        
-        
-        
+
+
+
         $query->orderBy(['invoice_id' => SORT_DESC]);
 
         return $dataProvider;
     }
 
-    
+
 }

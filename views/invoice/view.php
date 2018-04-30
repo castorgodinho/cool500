@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <style>
-  @page 
+  @page
     {
         size:  auto;   /* auto is the initial value */
         margin: 20px;  /* this affects the margin in the printer settings */
@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
   @media print {
   body * {
     visibility: hidden;
-    
+
   }
   #printableArea, #printableArea * {
     visibility: visible;
@@ -30,12 +30,12 @@ use yii\widgets\ActiveForm;
     border: 2px solid black;
   }
 
-  
+
 }
 
 
     body{
-        
+
     }
 
 .invoice-company-details p{
@@ -99,7 +99,7 @@ use yii\widgets\ActiveForm;
         <?php if($model->prev_lease_rent = 0 ) { ?>
         <td> <?= $prevPeriodFrom  ?> to <?= $prevPeriodTo ?></td>
         <?php } else {  ?>
-        <td> 00-00-0000  to  00-00-0000 </td>
+        <td> - </td>
         <?php }   ?>
       </tr>
 
@@ -137,7 +137,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td class='bold-text'>  Previous Due Total  (INR) </td>
+        <td class='bold-text'>  Previous Due Total (A) (INR) </td>
         <td> <?= $model->prev_dues_total ?> </td>
       </tr>
 
@@ -167,7 +167,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td class='bold-text'>  Current Due Total (INR) </td>
+        <td class='bold-text'>  Current Due Total (B) (INR) </td>
         <td> <?= $model->current_total_dues ?>  </td>
       </tr>
 

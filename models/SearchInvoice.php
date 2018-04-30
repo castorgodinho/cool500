@@ -19,6 +19,7 @@ class SearchInvoice extends Invoice
     {
         return [
             [['invoice_id', 'rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
+            [['invoice_code'], 'safe'],
             [['start_date'], 'safe'],
         ];
     }
@@ -59,7 +60,6 @@ class SearchInvoice extends Invoice
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'invoice_id' => $this->invoice_id,
             'rate_id' => $this->rate_id,
             'tax_id' => $this->tax_id,
             'order_id' => $this->order_id,
@@ -67,6 +67,8 @@ class SearchInvoice extends Invoice
             'start_date' => $this->start_date,
             'total_amount' => $this->total_amount,
         ]);
+
+        $query->andFilterWhere(['like', 'invoice_code' , $this->invoice_code]);
 
         $query->orderBy(['invoice_id' => SORT_DESC]);
 
