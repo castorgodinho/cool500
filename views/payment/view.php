@@ -120,7 +120,7 @@ use yii\widgets\DetailView;
         <td>  Current CGST <?= ($model->invoice->tax->rate)/2 ?>% (INR)  </td>
         <td> <?= $model->invoice->current_tax / 2 ?>  </td>
       </tr>
-
+    <?php } ?>
       <tr>
         <td>  Current SGST <?= ($model->invoice->tax->rate)/2 ?>% (INR)  </td>
         <td> <?= $model->invoice->current_tax / 2 ?>  </td>
@@ -155,7 +155,7 @@ use yii\widgets\DetailView;
        <td>Balance Amount (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
-     <?php if($model->cheque_no) {?>
+     <?php if($model->cheque_no) { ?>
        <tr>
          <td>Cheque  No</td>
          <td><?= $model->cheque_no ?></td>
@@ -191,5 +191,5 @@ This is a computer-generated document and it does not require a signature. <br>
           });
         });
 JS;
-  $this->registerJS($script);
+$this->registerJS($script);
 ?>
