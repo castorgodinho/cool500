@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2018 at 06:50 AM
+-- Generation Time: Apr 30, 2018 at 06:44 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.10
 
@@ -39,7 +39,8 @@ CREATE TABLE `area` (
 --
 
 INSERT INTO `area` (`area_id`, `name`, `total_area`) VALUES
-(9, 'Verna', 1200000);
+(9, 'Verna Industrial Estate', 1262332),
+(10, 'Cuncolim Industrial Estate', 14500);
 
 -- --------------------------------------------------------
 
@@ -66,7 +67,9 @@ INSERT INTO `area_rate` (`area_rate_id`, `area_id`, `area_rate`, `start_date`) V
 (5, 9, 3500, '2018-04-20'),
 (6, 9, 35000, '2018-04-20'),
 (7, 9, 500, '2018-04-20'),
-(8, 9, 3000, '2018-04-20');
+(8, 9, 3000, '2018-04-20'),
+(9, 9, 3000, '2018-04-26'),
+(10, 11, 15000, '2018-04-28');
 
 -- --------------------------------------------------------
 
@@ -85,9 +88,9 @@ CREATE TABLE `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('accounts', '30', 1524285948),
-('admin', '1', 1524285948),
-('company', '35', 1524286049);
+('accounts', '30', 1525053047),
+('accounts', '40', 1525053208),
+('admin', '1', 1525053047);
 
 -- --------------------------------------------------------
 
@@ -110,75 +113,81 @@ CREATE TABLE `auth_item` (
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
-('accounts', 1, NULL, NULL, NULL, 1524285948, 1524285948),
-('admin', 1, NULL, NULL, NULL, 1524285948, 1524285948),
-('changePassword', 2, 'Delete User', NULL, NULL, 1524285948, 1524285948),
-('company', 1, NULL, NULL, NULL, 1524285948, 1524285948),
-('createArea', 2, 'Create a Area', NULL, NULL, 1524285948, 1524285948),
-('createCompany', 2, 'Create a Company', NULL, NULL, 1524285947, 1524285947),
-('createInterest', 2, 'Create a Interest', NULL, NULL, 1524285948, 1524285948),
-('createInvoice', 2, 'Create a Invoice', NULL, NULL, 1524285948, 1524285948),
-('createOrders', 2, 'Create a Orders', NULL, NULL, 1524285948, 1524285948),
-('createPayment', 2, 'Create a Payment', NULL, NULL, 1524285948, 1524285948),
-('createPlot', 2, 'Create a Plot', NULL, NULL, 1524285948, 1524285948),
-('createRate', 2, 'Create a Rate', NULL, NULL, 1524285948, 1524285948),
-('createSite', 2, 'Create a Site', NULL, NULL, 1524285948, 1524285948),
-('createTax', 2, 'Create a Tax', NULL, NULL, 1524285948, 1524285948),
-('createUsers', 2, 'Create a User', NULL, NULL, 1524285948, 1524285948),
-('deleteArea', 2, 'Delete Area', NULL, NULL, 1524285948, 1524285948),
-('deleteCompany', 2, 'Delete Company', NULL, NULL, 1524285947, 1524285947),
-('deleteInterest', 2, 'Delete Interest', NULL, NULL, 1524285948, 1524285948),
-('deleteInvoice', 2, 'Delete Invoice', NULL, NULL, 1524285948, 1524285948),
-('deleteOrder', 2, 'Delete Order', NULL, NULL, 1524285948, 1524285948),
-('deletePayment', 2, 'Delete Payment', NULL, NULL, 1524285948, 1524285948),
-('deletePlot', 2, 'Delete Plot', NULL, NULL, 1524285948, 1524285948),
-('deleteRate', 2, 'Delete Rate', NULL, NULL, 1524285948, 1524285948),
-('deleteSite', 2, 'Delete Site', NULL, NULL, 1524285948, 1524285948),
-('deleteTax', 2, 'Delete Site', NULL, NULL, 1524285948, 1524285948),
-('deleteUsers', 2, 'Delete User', NULL, NULL, 1524285948, 1524285948),
-('indexArea', 2, 'Index a Area', NULL, NULL, 1524285948, 1524285948),
-('indexCompany', 2, 'Index a Company', NULL, NULL, 1524285947, 1524285947),
-('indexInterest', 2, 'Index a Interest', NULL, NULL, 1524285948, 1524285948),
-('indexInvoice', 2, 'Index a Invoice', NULL, NULL, 1524285948, 1524285948),
-('indexOrders', 2, 'Index a Orders', NULL, NULL, 1524285948, 1524285948),
-('indexPayment', 2, 'Index a Payment', NULL, NULL, 1524285948, 1524285948),
-('indexPlot', 2, 'Index a Plot', NULL, NULL, 1524285948, 1524285948),
-('indexRate', 2, 'Index a Rate', NULL, NULL, 1524285948, 1524285948),
-('indexSite', 2, 'Index a Site', NULL, NULL, 1524285948, 1524285948),
-('indexTax', 2, 'Index a Tax', NULL, NULL, 1524285948, 1524285948),
-('indexUsers', 2, 'Index a User', NULL, NULL, 1524285948, 1524285948),
-('searchInvoice', 2, 'Delete Invoice', NULL, NULL, 1524285948, 1524285948),
-('staff', 1, NULL, NULL, NULL, 1524285948, 1524285948),
-('updateArea', 2, 'Update Area', NULL, NULL, 1524285948, 1524285948),
-('updateCompany', 2, 'Update Company', NULL, NULL, 1524285947, 1524285947),
-('updateGst', 2, 'Update GST', NULL, NULL, 1524285947, 1524285947),
-('updateInterest', 2, 'Update Interest', NULL, NULL, 1524285948, 1524285948),
-('updateInvoice', 2, 'Update Invoice', NULL, NULL, 1524285948, 1524285948),
-('updateOrders', 2, 'Update Orders', NULL, NULL, 1524285948, 1524285948),
-('updateOwnGst', 2, 'Update own GST', 'isGst', NULL, 1524285948, 1524285948),
-('updateOwntds', 2, 'Update own TDS', 'isTds', NULL, 1524285948, 1524285948),
-('updatePayment', 2, 'Update Payment', NULL, NULL, 1524285948, 1524285948),
-('updatePlot', 2, 'Update Plot', NULL, NULL, 1524285948, 1524285948),
-('updateRate', 2, 'Update Rate', NULL, NULL, 1524285948, 1524285948),
-('updateSite', 2, 'Update Site', NULL, NULL, 1524285948, 1524285948),
-('updateTax', 2, 'Update Tax', NULL, NULL, 1524285948, 1524285948),
-('updateUsers', 2, 'Update User', NULL, NULL, 1524285948, 1524285948),
-('uploadReport', 2, 'Upload Report file', NULL, NULL, 1524285947, 1524285947),
-('uploadtds', 2, 'Upload tds file', NULL, NULL, 1524285947, 1524285947),
-('viewArea', 2, 'View Area', NULL, NULL, 1524285948, 1524285948),
-('viewCompany', 2, NULL, NULL, NULL, 1524285947, 1524285947),
-('viewInterest', 2, 'View Interest', NULL, NULL, 1524285948, 1524285948),
-('viewInvoice', 2, 'View Invoice', NULL, NULL, 1524285948, 1524285948),
-('viewOrders', 2, 'View Orders', NULL, NULL, 1524285948, 1524285948),
-('viewOwnCompany', 2, 'Update own Company', 'isCompany', NULL, 1524285948, 1524285948),
-('viewOwnInvoice', 2, 'View own Invoice', 'isInvoice', NULL, 1524285948, 1524285948),
-('viewOwnPayment', 2, 'View own Payment', 'isPayment', NULL, 1524285948, 1524285948),
-('viewPayment', 2, 'View Payment', NULL, NULL, 1524285948, 1524285948),
-('viewPlot', 2, 'View Plot', NULL, NULL, 1524285948, 1524285948),
-('viewRate', 2, 'View Rate', NULL, NULL, 1524285948, 1524285948),
-('viewSite', 2, 'View Site', NULL, NULL, 1524285948, 1524285948),
-('viewTax', 2, 'View Tax', NULL, NULL, 1524285948, 1524285948),
-('viewUsers', 2, 'View User', NULL, NULL, 1524285948, 1524285948);
+('accounts', 1, NULL, NULL, NULL, 1525053047, 1525053047),
+('admin', 1, NULL, NULL, NULL, 1525053047, 1525053047),
+('changePassword', 2, 'Delete User', NULL, NULL, 1525053046, 1525053046),
+('company', 1, NULL, NULL, NULL, 1525053047, 1525053047),
+('createArea', 2, 'Create a Area', NULL, NULL, 1525053046, 1525053046),
+('createCompany', 2, 'Create a Company', NULL, NULL, 1525053046, 1525053046),
+('createInterest', 2, 'Create a Interest', NULL, NULL, 1525053047, 1525053047),
+('createInvoice', 2, 'Create a Invoice', NULL, NULL, 1525053047, 1525053047),
+('createLog', 2, 'Create Log', NULL, NULL, 1525053047, 1525053047),
+('createOrders', 2, 'Create a Orders', NULL, NULL, 1525053046, 1525053046),
+('createPayment', 2, 'Create a Payment', NULL, NULL, 1525053047, 1525053047),
+('createPlot', 2, 'Create a Plot', NULL, NULL, 1525053046, 1525053046),
+('createRate', 2, 'Create a Rate', NULL, NULL, 1525053046, 1525053046),
+('createSite', 2, 'Create a Site', NULL, NULL, 1525053046, 1525053046),
+('createTax', 2, 'Create a Tax', NULL, NULL, 1525053046, 1525053046),
+('createUsers', 2, 'Create a User', NULL, NULL, 1525053046, 1525053046),
+('deleteArea', 2, 'Delete Area', NULL, NULL, 1525053046, 1525053046),
+('deleteCompany', 2, 'Delete Company', NULL, NULL, 1525053046, 1525053046),
+('deleteInterest', 2, 'Delete Interest', NULL, NULL, 1525053047, 1525053047),
+('deleteInvoice', 2, 'Delete Invoice', NULL, NULL, 1525053047, 1525053047),
+('deleteLog', 2, 'Delete Log', NULL, NULL, 1525053047, 1525053047),
+('deleteOrder', 2, 'Delete Order', NULL, NULL, 1525053046, 1525053046),
+('deletePayment', 2, 'Delete Payment', NULL, NULL, 1525053047, 1525053047),
+('deletePlot', 2, 'Delete Plot', NULL, NULL, 1525053046, 1525053046),
+('deleteRate', 2, 'Delete Rate', NULL, NULL, 1525053046, 1525053046),
+('deleteSite', 2, 'Delete Site', NULL, NULL, 1525053046, 1525053046),
+('deleteTax', 2, 'Delete Site', NULL, NULL, 1525053046, 1525053046),
+('deleteUsers', 2, 'Delete User', NULL, NULL, 1525053046, 1525053046),
+('indexArea', 2, 'Index a Area', NULL, NULL, 1525053046, 1525053046),
+('indexCompany', 2, 'Index a Company', NULL, NULL, 1525053046, 1525053046),
+('indexInterest', 2, 'Index a Interest', NULL, NULL, 1525053047, 1525053047),
+('indexInvoice', 2, 'Index a Invoice', NULL, NULL, 1525053047, 1525053047),
+('indexOrders', 2, 'Index a Orders', NULL, NULL, 1525053046, 1525053046),
+('indexPayment', 2, 'Index a Payment', NULL, NULL, 1525053047, 1525053047),
+('indexPlot', 2, 'Index a Plot', NULL, NULL, 1525053046, 1525053046),
+('indexRate', 2, 'Index a Rate', NULL, NULL, 1525053046, 1525053046),
+('indexSite', 2, 'Index a Site', NULL, NULL, 1525053046, 1525053046),
+('indexTax', 2, 'Index a Tax', NULL, NULL, 1525053046, 1525053046),
+('indexUsers', 2, 'Index a User', NULL, NULL, 1525053046, 1525053046),
+('searchInvoice', 2, 'Delete Invoice', NULL, NULL, 1525053047, 1525053047),
+('staff', 1, NULL, NULL, NULL, 1525053047, 1525053047),
+('updateArea', 2, 'Update Area', NULL, NULL, 1525053046, 1525053046),
+('updateCompany', 2, 'Update Company', NULL, NULL, 1525053046, 1525053046),
+('updateGst', 2, 'Update GST', NULL, NULL, 1525053046, 1525053046),
+('updateInterest', 2, 'Update Interest', NULL, NULL, 1525053047, 1525053047),
+('updateInvoice', 2, 'Update Invoice', NULL, NULL, 1525053047, 1525053047),
+('updateLog', 2, 'Update Log', NULL, NULL, 1525053047, 1525053047),
+('updateOrders', 2, 'Update Orders', NULL, NULL, 1525053046, 1525053046),
+('updateOwnGst', 2, 'Update own GST', 'isGst', NULL, 1525053047, 1525053047),
+('updateOwntds', 2, 'Update own TDS', 'isTds', NULL, 1525053047, 1525053047),
+('updatePayment', 2, 'Update Payment', NULL, NULL, 1525053047, 1525053047),
+('updatePlot', 2, 'Update Plot', NULL, NULL, 1525053046, 1525053046),
+('updateRate', 2, 'Update Rate', NULL, NULL, 1525053046, 1525053046),
+('updateSite', 2, 'Update Site', NULL, NULL, 1525053046, 1525053046),
+('updateTax', 2, 'Update Tax', NULL, NULL, 1525053046, 1525053046),
+('updateUsers', 2, 'Update User', NULL, NULL, 1525053046, 1525053046),
+('uploadReport', 2, 'Upload Report file', NULL, NULL, 1525053046, 1525053046),
+('uploadtds', 2, 'Upload tds file', NULL, NULL, 1525053046, 1525053046),
+('viewArea', 2, 'View Area', NULL, NULL, 1525053046, 1525053046),
+('viewCompany', 2, NULL, NULL, NULL, 1525053046, 1525053046),
+('viewInterest', 2, 'View Interest', NULL, NULL, 1525053047, 1525053047),
+('viewInvoice', 2, 'View Invoice', NULL, NULL, 1525053047, 1525053047),
+('viewInvoiceReport', 2, 'Create a Report', NULL, NULL, 1525053047, 1525053047),
+('viewLedgerReport', 2, 'View a ledger Report', NULL, NULL, 1525053047, 1525053047),
+('viewLogReport', 2, 'View a log Report', NULL, NULL, 1525053047, 1525053047),
+('viewOrders', 2, 'View Orders', NULL, NULL, 1525053046, 1525053046),
+('viewOwnCompany', 2, 'Update own Company', 'isCompany', NULL, 1525053047, 1525053047),
+('viewOwnInvoice', 2, 'View own Invoice', 'isInvoice', NULL, 1525053047, 1525053047),
+('viewOwnPayment', 2, 'View own Payment', 'isPayment', NULL, 1525053047, 1525053047),
+('viewPayment', 2, 'View Payment', NULL, NULL, 1525053047, 1525053047),
+('viewPlot', 2, 'View Plot', NULL, NULL, 1525053046, 1525053046),
+('viewRate', 2, 'View Rate', NULL, NULL, 1525053046, 1525053046),
+('viewSite', 2, 'View Site', NULL, NULL, 1525053046, 1525053046),
+('viewTax', 2, 'View Tax', NULL, NULL, 1525053046, 1525053046),
+('viewUsers', 2, 'View User', NULL, NULL, 1525053046, 1525053046);
 
 -- --------------------------------------------------------
 
@@ -203,12 +212,16 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('accounts', 'indexPayment'),
 ('accounts', 'searchInvoice'),
 ('accounts', 'viewInvoice'),
+('accounts', 'viewInvoiceReport'),
+('accounts', 'viewLedgerReport'),
+('accounts', 'viewLogReport'),
 ('accounts', 'viewPayment'),
 ('admin', 'changePassword'),
 ('admin', 'createArea'),
 ('admin', 'createCompany'),
 ('admin', 'createInterest'),
 ('admin', 'createInvoice'),
+('admin', 'createLog'),
 ('admin', 'createOrders'),
 ('admin', 'createPayment'),
 ('admin', 'createPlot'),
@@ -220,6 +233,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'deleteCompany'),
 ('admin', 'deleteInterest'),
 ('admin', 'deleteInvoice'),
+('admin', 'deleteLog'),
 ('admin', 'deleteOrder'),
 ('admin', 'deletePayment'),
 ('admin', 'deletePlot'),
@@ -244,6 +258,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'updateGst'),
 ('admin', 'updateInterest'),
 ('admin', 'updateInvoice'),
+('admin', 'updateLog'),
 ('admin', 'updateOrders'),
 ('admin', 'updatePayment'),
 ('admin', 'updatePlot'),
@@ -257,6 +272,9 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'viewCompany'),
 ('admin', 'viewInterest'),
 ('admin', 'viewInvoice'),
+('admin', 'viewInvoiceReport'),
+('admin', 'viewLedgerReport'),
+('admin', 'viewLogReport'),
 ('admin', 'viewOrders'),
 ('admin', 'viewPayment'),
 ('admin', 'viewPlot'),
@@ -297,11 +315,11 @@ CREATE TABLE `auth_rule` (
 --
 
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
-('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532343238353934383b733a393a22757064617465644174223b693a313532343238353934383b7d, 1524285948, 1524285948),
-('isGst', 0x4f3a31363a226170705c726261635c47737452756c65223a333a7b733a343a226e616d65223b733a353a226973477374223b733a393a22637265617465644174223b693a313532343238353934383b733a393a22757064617465644174223b693a313532343238353934383b7d, 1524285948, 1524285948),
-('isInvoice', 0x4f3a32303a226170705c726261635c496e766f69636552756c65223a333a7b733a343a226e616d65223b733a393a226973496e766f696365223b733a393a22637265617465644174223b693a313532343238353934383b733a393a22757064617465644174223b693a313532343238353934383b7d, 1524285948, 1524285948),
-('isPayment', 0x4f3a32303a226170705c726261635c5061796d656e7452756c65223a333a7b733a343a226e616d65223b733a393a2269735061796d656e74223b733a393a22637265617465644174223b693a313532343238353934383b733a393a22757064617465644174223b693a313532343238353934383b7d, 1524285948, 1524285948),
-('isTds', 0x4f3a31363a226170705c726261635c54647352756c65223a333a7b733a343a226e616d65223b733a353a226973546473223b733a393a22637265617465644174223b693a313532343238353934383b733a393a22757064617465644174223b693a313532343238353934383b7d, 1524285948, 1524285948);
+('isCompany', 0x4f3a32303a226170705c726261635c436f6d70616e7952756c65223a333a7b733a343a226e616d65223b733a393a226973436f6d70616e79223b733a393a22637265617465644174223b693a313532353035333034373b733a393a22757064617465644174223b693a313532353035333034373b7d, 1525053047, 1525053047),
+('isGst', 0x4f3a31363a226170705c726261635c47737452756c65223a333a7b733a343a226e616d65223b733a353a226973477374223b733a393a22637265617465644174223b693a313532353035333034373b733a393a22757064617465644174223b693a313532353035333034373b7d, 1525053047, 1525053047),
+('isInvoice', 0x4f3a32303a226170705c726261635c496e766f69636552756c65223a333a7b733a343a226e616d65223b733a393a226973496e766f696365223b733a393a22637265617465644174223b693a313532353035333034373b733a393a22757064617465644174223b693a313532353035333034373b7d, 1525053047, 1525053047),
+('isPayment', 0x4f3a32303a226170705c726261635c5061796d656e7452756c65223a333a7b733a343a226e616d65223b733a393a2269735061796d656e74223b733a393a22637265617465644174223b693a313532353035333034373b733a393a22757064617465644174223b693a313532353035333034373b7d, 1525053047, 1525053047),
+('isTds', 0x4f3a31363a226170705c726261635c54647352756c65223a333a7b733a343a226e616d65223b733a353a226973546473223b733a393a22637265617465644174223b693a313532353035333034373b733a393a22757064617465644174223b693a313532353035333034373b7d, 1525053047, 1525053047);
 
 -- --------------------------------------------------------
 
@@ -348,7 +366,11 @@ INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `co
 (32, 12, 'Lenovo', 'Colmorod Residential Complex, Flat S2', 'asd', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asdd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, NULL),
 (33, 13, 'HDFC', 'Colmorod Residential Complex, Flat S2', 'asd', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, NULL),
 (34, 14, 'Fosters', 'Colmorod Residential Complex, Flat S2', 'dasd', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'dasawqead221', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, 'remarkfiles/FOSS consultancy work.pdf'),
-(35, 15, 'Sony', 'Colmorod Residential Complex, Flat S2', 'asdad', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, 'remarkfiles/Data structures set b.pdf');
+(35, 15, 'Sony', 'Colmorod Residential Complex, Flat S2', 'asdad', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, 'remarkfiles/Data structures set b.pdf'),
+(36, 16, 'Fastrack', 'Colmorod Residential Complex, Flat S2', 'asdasdasd', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2wq1asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, NULL),
+(37, 17, 'Bajaj', 'Colmorod Residential Complex, Flat S2', 'this is a nice remark', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'sadasd2321a2ew', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, NULL, NULL),
+(38, 18, 'Honda', 'Colmorod Residential Complex, Flat S2', 'dssadasdasdads', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'BKJK123ds1K23KB', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', 'remarkfiles/assignment_2 (1).html', 'remarkfiles/CA 3.pdf', NULL),
+(39, 19, 'Apolo', 'Colmorod Residential Complex, Flat S2', 'asdasdad', 'Pvt. Ltd', 'Printed Corrugated Cartoons', 'saasdca2321asd', 'Aloysius', '9604107696', '9604107696', 'Jan Doe', 'castorgodinho22@gmail.com', '9604107696', NULL, 'remarkfiles/area (1).sql', NULL);
 
 -- --------------------------------------------------------
 
@@ -418,7 +440,10 @@ INSERT INTO `invoice` (`invoice_id`, `rate_id`, `tax_id`, `order_id`, `interest_
 (44, 2, 5, 42, 2, '2018-04-16', 3327500, 'VER/18-19/000044', 2750000, 3327500, 577500, 0, 0, 2750000, 577500, 0, 0, 3327500),
 (45, 2, 5, 42, 2, '2018-04-16', 3327500, 'VER/18-19/000045', 2750000, 3327500, 577500, 0, 0, 2750000, 577500, 0, 0, 3327500),
 (46, 2, 5, 43, 2, '2018-04-17', 998250, 'VER/18-19/000046', 0, 998250, 0, 0, 0, 825000, 173250, 0, 0, 998250),
-(47, 2, 5, 44, 2, '2018-04-17', 3327500, 'VER/18-19/000047', 0, 3327500, 0, 0, 0, 2750000, 577500, 0, 0, 3327500);
+(47, 2, 5, 44, 2, '2018-04-17', 3327500, 'VER/18-19/000047', 0, 3327500, 0, 0, 0, 2750000, 577500, 0, 0, 3327500),
+(48, 8, 6, 45, 3, '2019-04-18', 0, 'VER/18-19/000048', 0, 708000, 0, 0, 0, 600000, 108000, 0, 0, 708000),
+(49, 8, 6, 44, 3, '2019-04-17', 0, 'VER/18-19/0049', 2750000, 9067500, 577500, 0, 217500, 7500000, 1350000, 0, 0, 8850000),
+(50, 8, 6, 44, 3, '2019-04-17', 0, 'VER/18-19/0050', 2750000, 9067500, 577500, 0, 217500, 7500000, 1350000, 0, 0, 8850000);
 
 -- --------------------------------------------------------
 
@@ -474,7 +499,17 @@ INSERT INTO `log` (`log_id`, `type`, `create_date`, `updated_date`, `old_value`,
 (32, 'Company', '2018-04-21 10:10:10', '2018-04-21 04:40:10', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\",\"remark_url\":\"remarkfiles\\/Data structures set b.pdf\",\"tds_url\":null}]', '[{\"user_id\":1,\"company_id\":1,\"name\":\"Google Developers Group\",\"address\":\"Verna, Plot No. 35A, 66 B\",\"remark\":\"\",\"constitution\":\"Partnership\",\"products\":\"M. S Barrels\",\"gstin\":\"78SJABSJSBBA40\",\"owner_name\":\"Micheal Jackson\",\"owner_phone\":\"2706542\",\"owner_mobile\":\"9885412565\",\"competent_name\":\"John Doe\",\"competent_email\":\"john@doe.com\",\"competent_mobile\":\"9865214587\",\"url\":\"gstfiles\\/GOA-IDC.pdf\",\"remark_url\":\"remarkfiles\\/Data structures set b.pdf\",\"tds_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
 (33, 'Company', '2018-04-21 10:15:55', '2018-04-21 04:45:55', '[{\"user_id\":34,\"company_id\":14,\"name\":\"Fosters\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dasd\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasawqead221\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":null}]', '[{\"user_id\":34,\"company_id\":14,\"name\":\"Fosters\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dasd\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"dasawqead221\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":\"remarkfiles\\/FOSS consultancy work.pdf\"}]', 1),
 (34, 'Company', '2018-04-21 10:17:37', '2018-04-21 04:47:37', '[{\"user_id\":35,\"company_id\":15,\"name\":\"Sony\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdad\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2321asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":null}]', '[{\"user_id\":35,\"company_id\":15,\"name\":\"Sony\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdad\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2321asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":\"remarkfiles\\/Data structures set b.pdf\"}]', 1),
-(35, 'Company', '2018-04-21 10:18:58', '2018-04-21 04:48:58', '[{\"user_id\":35,\"company_id\":15,\"name\":\"Sony\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdad\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2321asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":\"remarkfiles\\/Data structures set b.pdf\"}]', '[{\"user_id\":35,\"company_id\":15,\"name\":\"Sony\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdad\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2321asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":\"remarkfiles\\/Data structures set b.pdf\"}]', 35);
+(35, 'Company', '2018-04-21 10:18:58', '2018-04-21 04:48:58', '[{\"user_id\":35,\"company_id\":15,\"name\":\"Sony\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdad\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2321asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":\"remarkfiles\\/Data structures set b.pdf\"}]', '[{\"user_id\":35,\"company_id\":15,\"name\":\"Sony\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdad\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2321asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":\"remarkfiles\\/Data structures set b.pdf\"}]', 35),
+(36, 'Users', '2018-04-26 07:15:35', '2018-04-26 01:45:35', '[{\"user_id\":1,\"email\":\"castorgodinho@yahoo.in\",\"password\":\"$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL\\/ZAd2a3pkkOhQvNoVwh5e.\",\"type\":null}]', '[{\"user_id\":1,\"email\":\"castorgodinho@yahoo.in\",\"password\":\"$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL\\/ZAd2a3pkkOhQvNoVwh5e.\",\"type\":\"accounts\"}]', 1),
+(37, 'Company', '2018-04-26 07:23:00', '2018-04-26 01:53:00', '[{\"user_id\":36,\"company_id\":16,\"name\":\"Fastrack\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdasdasd\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2wq1asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":null}]', '[{\"user_id\":36,\"company_id\":16,\"name\":\"Fastrack\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdasdasd\",\"constitution\":\"public. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2wq1asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":null}]', 1),
+(38, 'Edited Company', '2018-04-26 07:32:01', '2018-04-26 02:02:01', '[{\"user_id\":36,\"company_id\":16,\"name\":\"Fastrack\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdasdasd\",\"constitution\":\"public. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2wq1asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":null}]', '[{\"user_id\":36,\"company_id\":16,\"name\":\"Fastrack\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"asdasdasd\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"sadasd2wq1asd\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":null,\"remark_url\":null,\"tds_url\":null}]', 1),
+(39, 'Edited Rate', '2018-04-26 08:57:26', '2018-04-26 03:27:26', '[{\"rate_id\":7,\"area_id\":9,\"from_area\":10000000,\"to_area\":20000000,\"rate\":200,\"date\":\"2018-04-20\",\"flag\":1}]', '[{\"rate_id\":10,\"area_id\":9,\"from_area\":10000000,\"to_area\":20000000,\"rate\":250,\"date\":\"2018-04-26\",\"flag\":1}]', 1),
+(40, 'Edited Tax', '2018-04-26 08:59:41', '2018-04-26 03:29:41', '[{\"tax_id\":6,\"name\":\"GST\",\"rate\":18,\"date\":\"2018-04-20\",\"flag\":1}]', '[{\"tax_id\":6,\"name\":\"GST\",\"rate\":18,\"date\":\"2018-04-20\",\"flag\":0}]', 1),
+(41, 'Edited Tax', '2018-04-26 09:00:27', '2018-04-26 03:30:27', '[{\"tax_id\":7,\"name\":\"GST\",\"rate\":20,\"date\":\"2018-04-26\",\"flag\":1}]', '[{\"tax_id\":8,\"name\":\"GST\",\"rate\":18,\"date\":\"2018-04-26\",\"flag\":1}]', 1),
+(42, 'Edited Industrial Area', '2018-04-26 11:59:36', '2018-04-26 06:29:36', '{\"area_id\":9,\"name\":\"Verna\",\"total_area\":1200000}', '{\"area_id\":9,\"name\":\"Verna Industrial Estate\",\"total_area\":1200000}', 1),
+(43, 'Edited Company', '2018-04-30 06:41:41', '2018-04-30 01:11:41', '[{\"user_id\":38,\"company_id\":18,\"name\":\"Honda\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dasdasdsa\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"BKJK123ds1K23KB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"remarkfiles\\/assignment_2 (1).html\",\"remark_url\":\"remarkfiles\\/assignment_2 (1).html\",\"tds_url\":null}]', '[{\"user_id\":38,\"company_id\":18,\"name\":\"Honda\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dasdasdads\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"BKJK123ds1K23KB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"remarkfiles\\/assignment_2 (1).html\",\"remark_url\":\"remarkfiles\\/assignment_2 (1).html\",\"tds_url\":null}]', 1),
+(44, 'Edited Company', '2018-04-30 06:42:20', '2018-04-30 01:12:20', '[{\"user_id\":38,\"company_id\":18,\"name\":\"Honda\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dasdasdads\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"BKJK123ds1K23KB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"remarkfiles\\/assignment_2 (1).html\",\"remark_url\":\"remarkfiles\\/assignment_2 (1).html\",\"tds_url\":null}]', '[{\"user_id\":38,\"company_id\":18,\"name\":\"Honda\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dssadasdasdads\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"BKJK123ds1K23KB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"remarkfiles\\/assignment_2 (1).html\",\"remark_url\":\"remarkfiles\\/assignment_2 (1).html\",\"tds_url\":null}]', 1),
+(45, 'Edited Company', '2018-04-30 06:51:58', '2018-04-30 01:21:58', '[{\"user_id\":38,\"company_id\":18,\"name\":\"Honda\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dssadasdasdads\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"BKJK123ds1K23KB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"remarkfiles\\/assignment_2 (1).html\",\"remark_url\":\"remarkfiles\\/assignment_2 (1).html\",\"tds_url\":null}]', '[{\"user_id\":38,\"company_id\":18,\"name\":\"Honda\",\"address\":\"Colmorod Residential Complex, Flat S2\",\"remark\":\"dssadasdasdads\",\"constitution\":\"Pvt. Ltd\",\"products\":\"Printed Corrugated Cartoons\",\"gstin\":\"BKJK123ds1K23KB\",\"owner_name\":\"Aloysius\",\"owner_phone\":\"9604107696\",\"owner_mobile\":\"9604107696\",\"competent_name\":\"Jan Doe\",\"competent_email\":\"castorgodinho22@gmail.com\",\"competent_mobile\":\"9604107696\",\"url\":\"remarkfiles\\/assignment_2 (1).html\",\"remark_url\":\"remarkfiles\\/CA 3.pdf\",\"tds_url\":null}]', 1);
 
 -- --------------------------------------------------------
 
@@ -511,43 +546,56 @@ CREATE TABLE `orders` (
   `godown_area` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `shed_no` int(11) DEFAULT NULL,
-  `godown_no` int(11) DEFAULT NULL,
+  `shed_no` varchar(50) DEFAULT NULL,
+  `godown_no` varchar(50) DEFAULT NULL,
   `area_id` int(11) DEFAULT NULL,
-  `total_area` int(11) NOT NULL
+  `total_area` int(11) NOT NULL,
+  `plots` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`, `shed_no`, `godown_no`, `area_id`, `total_area`) VALUES
-(19, 'GIDC12345VERNA', 2, NULL, NULL, 121, '2018-04-30', NULL, NULL, 520, 9, 0),
-(20, 'GIDC12345VERNA', 1, 1500, NULL, NULL, '2018-04-13', NULL, NULL, NULL, 9, 150000),
-(21, 'GIDC1235VERNA', 2, NULL, 10000, NULL, '2018-04-12', NULL, 43, NULL, 9, 50000),
-(22, 'GIDC12345VERNA', 1, NULL, NULL, 10, '2018-04-16', NULL, NULL, 10, 9, 12000),
-(23, 'GIDC12345VERNA', 1, NULL, NULL, NULL, '2018-04-18', NULL, NULL, NULL, 9, 1500),
-(24, 'GIDC12345VERNA', 1, 5000, NULL, NULL, '2018-04-18', NULL, NULL, NULL, 9, 1500),
-(25, 'GIDC1234s5VERNA', 1, NULL, NULL, 1221, '2018-04-17', NULL, NULL, 121212, 9, 1500),
-(26, 'GIDC12345VERNA', 1, NULL, NULL, 21, '2018-04-17', NULL, NULL, 123213, 9, 123123),
-(27, 'GIDC12345VERNA', 1, NULL, NULL, 123312, '2018-04-16', NULL, NULL, 12, 9, 1500),
-(28, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
-(29, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
-(30, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
-(31, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
-(32, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, 212, 9, 1500),
-(33, 'GIDC12345VERNAe', 1, NULL, NULL, 21323, '0000-00-00', NULL, NULL, 12, 9, 1232),
-(34, 'GIDC12345VERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
-(35, 'GIDC12345VERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
-(36, 'GIDC12345VeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
-(37, 'GIDC12345VeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
-(38, 'GIDC12345VeeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, 12, 9, 12312),
-(39, 'GIDC239827VERNA', 2, 900, NULL, NULL, '2018-04-30', '2018-04-30', NULL, NULL, 9, 1500),
-(40, 'GIDC906524VERNA', 8, NULL, 2000, NULL, '2018-04-18', '2018-04-25', 12, NULL, 9, 12333),
-(41, 'GIDC760726VERNA', 1, NULL, 200, NULL, '2018-04-27', '2018-04-30', 12, NULL, 9, 1000),
-(42, 'GIDC578191VERNA', 5, NULL, 500, NULL, '2018-04-16', NULL, 10, NULL, 9, 50000),
-(43, 'GIDC125539VERNA', 9, 2000, NULL, NULL, '2018-04-18', '2019-11-11', NULL, NULL, 9, 15000),
-(44, 'GIDC954226VERNA', 10, NULL, 1200, NULL, '2018-04-18', '2019-10-24', 11, NULL, 9, 50000);
+INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`, `shed_no`, `godown_no`, `area_id`, `total_area`, `plots`) VALUES
+(19, 'GIDC12345VERNA', 2, NULL, NULL, 121, '2018-04-30', NULL, NULL, '520', 9, 0, ''),
+(20, 'GIDC12345VERNA', 1, 1500, NULL, NULL, '2018-04-13', NULL, NULL, NULL, 9, 150000, ''),
+(21, 'GIDC1235VERNA', 2, NULL, 10000, NULL, '2018-04-12', NULL, '43', NULL, 9, 50000, ''),
+(22, 'GIDC12345VERNA', 1, NULL, NULL, 10, '2018-04-16', NULL, NULL, '10', 9, 12000, ''),
+(23, 'GIDC12345VERNA', 1, NULL, NULL, NULL, '2018-04-18', NULL, NULL, NULL, 9, 1500, ''),
+(24, 'GIDC12345VERNA', 1, 5000, NULL, NULL, '2018-04-18', NULL, NULL, NULL, 9, 1500, ''),
+(25, 'GIDC1234s5VERNA', 1, NULL, NULL, 1221, '2018-04-17', NULL, NULL, '121212', 9, 1500, ''),
+(26, 'GIDC12345VERNA', 1, NULL, NULL, 21, '2018-04-17', NULL, NULL, '123213', 9, 123123, ''),
+(27, 'GIDC12345VERNA', 1, NULL, NULL, 123312, '2018-04-16', NULL, NULL, '12', 9, 1500, ''),
+(28, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, '212', 9, 1500, ''),
+(29, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, '212', 9, 1500, ''),
+(30, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, '212', 9, 1500, ''),
+(31, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, '212', 9, 1500, ''),
+(32, 'GIDC12345VERNA', 1, NULL, NULL, 121221, '2018-04-10', NULL, NULL, '212', 9, 1500, ''),
+(33, 'GIDC12345VERNAe', 1, NULL, NULL, 21323, '0000-00-00', NULL, NULL, '12', 9, 1232, ''),
+(34, 'GIDC12345VERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, '12', 9, 12312, ''),
+(35, 'GIDC12345VERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, '12', 9, 12312, ''),
+(36, 'GIDC12345VeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, '12', 9, 12312, ''),
+(37, 'GIDC12345VeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, '12', 9, 12312, ''),
+(38, 'GIDC12345VeeeERNA', 1, NULL, NULL, 31221, '2018-04-23', NULL, NULL, '12', 9, 12312, ''),
+(39, 'GIDC239827VERNA', 2, 900, NULL, NULL, '2018-04-30', '2018-04-30', NULL, NULL, 9, 1500, ''),
+(40, 'GIDC906524VERNA', 8, NULL, 2000, NULL, '2018-04-18', '2018-04-25', '12', NULL, 9, 12333, ''),
+(41, 'GIDC760726VERNA', 1, NULL, 200, NULL, '2018-04-27', '2018-04-30', '12', NULL, 9, 1000, ''),
+(42, 'GIDC578191VERNA', 5, NULL, 500, NULL, '2018-04-16', NULL, '10', NULL, 9, 50000, ''),
+(43, 'GIDC125539VERNA', 9, 2000, NULL, NULL, '2018-04-18', '2019-11-11', NULL, NULL, 9, 15000, ''),
+(44, 'GIDC954226VERNA', 10, NULL, 1200, NULL, '2018-04-18', '2019-10-24', '11', NULL, 9, 50000, ''),
+(45, 'GIDC618778VERNA', 1, NULL, 11000, NULL, '2018-04-17', '2018-04-30', '11', NULL, 9, 4000, ''),
+(46, 'GIDC162298VERNA', 15, 1000, NULL, NULL, '2018-03-29', '2018-04-28', NULL, NULL, 9, 12222, ''),
+(47, 'GIDC005301VERNA', 16, 21, NULL, NULL, '2018-04-17', '2018-04-30', NULL, NULL, 9, 1500, ''),
+(48, 'GIDC632229VERNA', 16, NULL, 10000, NULL, '2018-04-28', '2018-04-30', '10C', '', 9, 1500000, ''),
+(49, 'GIDC679229VERNA', 16, NULL, NULL, 12222, '2018-04-18', '2018-04-28', '', '12V', 9, 15553, ''),
+(50, 'GIDC550919CUNCOLIM', 16, NULL, NULL, 12, '2018-04-23', '2018-04-28', '', '12', 10, 1222, '12 12 12'),
+(51, 'GIDC257488CUNCOLIM', 16, NULL, NULL, 1, '2018-04-23', '2018-04-30', '', '1', 10, 1000, '12 12'),
+(52, 'GIDC129299CUNCOLIM', 16, NULL, NULL, 1, '2018-04-10', '2018-04-16', '', '1', 10, 20000, '10C, 13B'),
+(53, 'GIDC880163CUNCOLIM', 15, NULL, 1, NULL, '2018-04-23', '2018-04-16', '1', '', 10, 2000, '1 2'),
+(54, 'GIDC334202CUNCOLIM', 15, NULL, 1, NULL, '2018-04-24', '2018-04-24', '1', '', 10, 1500, '1'),
+(55, 'GIDC028287CUNCOLIM', 11, NULL, 1, NULL, '2018-04-23', '2018-04-16', '1', '', 10, 1500, '12 12'),
+(56, 'GIDC380753CUNCOLIM', 19, 1000, NULL, NULL, '2018-04-23', '2018-04-30', '', '', 10, 12000, '12 dwd');
 
 -- --------------------------------------------------------
 
@@ -605,7 +653,16 @@ INSERT INTO `order_details` (`plot_id`, `order_id`) VALUES
 (44, 43),
 (45, 43),
 (46, 44),
-(47, 44);
+(47, 44),
+(48, 45),
+(49, 46),
+(50, 46),
+(51, 47),
+(52, 47),
+(53, 48),
+(54, 48),
+(55, 49),
+(56, 49);
 
 -- --------------------------------------------------------
 
@@ -621,31 +678,34 @@ CREATE TABLE `payment` (
   `mode` varchar(50) DEFAULT NULL,
   `invoice_id` int(11) DEFAULT NULL,
   `tds_rate` int(11) DEFAULT '0',
-  `tds_amount` int(11) DEFAULT '0'
+  `tds_amount` int(11) DEFAULT '0',
+  `balance_amount` int(11) NOT NULL,
+  `payment_no` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `payment`
 --
 
-INSERT INTO `payment` (`payment_id`, `order_id`, `amount`, `start_date`, `mode`, `invoice_id`, `tds_rate`, `tds_amount`) VALUES
-(8, 39, 66000, '2018-04-14', 'cash', 37, 0, 0),
-(9, 40, 50000, '2018-04-14', 'cash', 41, 0, 0),
-(10, 41, 22000, '2018-04-14', 'cash', 42, 0, 0),
-(11, 41, 22000, '2018-04-16', 'cash', 42, 0, 0),
-(12, 40, 492652, '2018-04-16', 'cheque', 41, 0, 0),
-(13, 42, 3000000, '2018-04-16', 'cash', 43, 0, 0),
-(14, 42, 327500, '2018-04-16', 'cash', 43, 0, 0),
-(15, 42, 3327500, '2018-04-16', 'cash', 44, 0, 0),
-(16, 42, 27500, '2018-04-16', 'cash', 45, 0, 0),
-(17, 42, 5000, '2018-04-16', 'cash', 45, 0, 0),
-(18, 42, 10, '2018-04-16', 'cash', 45, 0, 0),
-(19, 43, 500000, '2018-04-17', 'cheque', 46, 0, 0),
-(20, 43, 400000, '2018-04-17', 'cash', 46, 0, 0),
-(21, 43, 98250, '2018-04-17', 'cash', 46, 0, 0),
-(22, 44, 3000000, '2018-04-17', 'cash', 47, 0, 0),
-(23, 44, 100000, '2018-04-17', 'cash', 47, 0, 0),
-(24, 44, 10000, '2018-04-17', 'cash', 47, 0, 0);
+INSERT INTO `payment` (`payment_id`, `order_id`, `amount`, `start_date`, `mode`, `invoice_id`, `tds_rate`, `tds_amount`, `balance_amount`, `payment_no`) VALUES
+(8, 39, 66000, '2018-04-14', 'cash', 37, 0, 0, 0, ''),
+(9, 40, 50000, '2018-04-14', 'cash', 41, 0, 0, 0, ''),
+(10, 41, 22000, '2018-04-14', 'cash', 42, 0, 0, 0, ''),
+(11, 41, 22000, '2018-04-16', 'cash', 42, 0, 0, 0, ''),
+(12, 40, 492652, '2018-04-16', 'cheque', 41, 0, 0, 0, ''),
+(13, 42, 3000000, '2018-04-16', 'cash', 43, 0, 0, 0, ''),
+(14, 42, 327500, '2018-04-16', 'cash', 43, 0, 0, 0, ''),
+(15, 42, 3327500, '2018-04-16', 'cash', 44, 0, 0, 0, ''),
+(16, 42, 27500, '2018-04-16', 'cash', 45, 0, 0, 0, ''),
+(17, 42, 5000, '2018-04-16', 'cash', 45, 0, 0, 0, ''),
+(18, 42, 10, '2018-04-16', 'cash', 45, 0, 0, 0, ''),
+(19, 43, 500000, '2018-04-17', 'cheque', 46, 0, 0, 0, ''),
+(20, 43, 400000, '2018-04-17', 'cash', 46, 0, 0, 0, ''),
+(21, 43, 98250, '2018-04-17', 'cash', 46, 0, 0, 0, ''),
+(22, 44, 3000000, '2018-04-17', 'cash', 47, 0, 0, 0, ''),
+(23, 44, 100000, '2018-04-17', 'cash', 47, 0, 0, 0, ''),
+(24, 44, 10000, '2018-04-17', 'cash', 47, 0, 0, 0, ''),
+(25, 45, 708000, '2018-04-22', 'cash', 48, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -706,7 +766,18 @@ INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 (44, 9, '50', 0),
 (45, 9, '60', 0),
 (46, 9, '33', 0),
-(47, 9, '22', 0);
+(47, 9, '22', 0),
+(48, 9, '10', 0),
+(49, 9, '11', 0),
+(50, 9, '22', 0),
+(51, 9, '10', 0),
+(52, 9, '10', 0),
+(53, 9, '10', 0),
+(54, 9, '11', 0),
+(55, 9, '22', 0),
+(56, 9, '12', 0),
+(57, 10, '11', 0),
+(58, 10, '12', 0);
 
 -- --------------------------------------------------------
 
@@ -717,27 +788,27 @@ INSERT INTO `plot` (`plot_id`, `area_id`, `name`, `area_of_plot`) VALUES
 CREATE TABLE `rate` (
   `rate_id` int(11) NOT NULL,
   `area_id` int(11) NOT NULL,
-  `from_area` int(11) NOT NULL,
-  `to_area` int(11) NOT NULL,
   `rate` int(11) NOT NULL,
   `date` date NOT NULL,
-  `flag` tinyint(2) NOT NULL DEFAULT '1'
+  `flag` tinyint(2) NOT NULL DEFAULT '1',
+  `extra` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `rate`
 --
 
-INSERT INTO `rate` (`rate_id`, `area_id`, `from_area`, `to_area`, `rate`, `date`, `flag`) VALUES
-(1, 9, 0, 10000000, 40, '2018-04-02', 0),
-(2, 9, 0, 10000000, 55, '2018-04-15', 0),
-(3, 9, 0, 10000000, 150, '2018-04-20', 0),
-(4, 9, 10000000, 20000000, 20, '2018-04-23', 0),
-(5, 9, 0, 10000000, 200, '2018-04-20', 0),
-(6, 9, 0, 10000000, 140, '2018-04-20', 0),
-(7, 9, 10000000, 20000000, 200, '2018-04-20', 1),
-(8, 9, 0, 10000000, 150, '2018-04-20', 1),
-(9, 9, 0, 10000000, 150, '2018-04-20', 1);
+INSERT INTO `rate` (`rate_id`, `area_id`, `rate`, `date`, `flag`, `extra`) VALUES
+(1, 9, 40, '2018-04-02', 0, 0),
+(2, 9, 55, '2018-04-15', 0, 0),
+(3, 9, 150, '2018-04-20', 0, 0),
+(4, 9, 20, '2018-04-23', 0, 0),
+(5, 9, 200, '2018-04-20', 0, 0),
+(6, 9, 140, '2018-04-20', 0, 0),
+(7, 9, 200, '2018-04-20', 0, 0),
+(8, 9, 150, '2018-04-20', 1, 0),
+(9, 9, 150, '2018-04-20', 1, 0),
+(10, 9, 250, '2018-04-26', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -762,7 +833,9 @@ INSERT INTO `tax` (`tax_id`, `name`, `rate`, `date`, `flag`) VALUES
 (3, 'GST', 18, '2018-04-15', 0),
 (4, 'GST', 20, '2018-04-15', 0),
 (5, 'GST', 21, '2018-04-15', 0),
-(6, 'GST', 18, '2018-04-20', 1);
+(6, 'GST', 18, '2018-04-20', 0),
+(7, 'GST', 20, '2018-04-26', 0),
+(8, 'GST', 18, '2018-04-26', 1);
 
 -- --------------------------------------------------------
 
@@ -782,7 +855,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `email`, `password`, `type`) VALUES
-(1, 'castorgodinho@yahoo.in', '$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL/ZAd2a3pkkOhQvNoVwh5e.', NULL),
+(1, 'castorgodinho@yahoo.in', '$2y$13$HJcuDsYRJKn5pqgpZwZ3.ekJwMT9RTL/ZAd2a3pkkOhQvNoVwh5e.', 'admin'),
 (2, 'cipla@gmail.com', '$2y$13$2d9TMNV9H0iIKFQCAgJjIOlbVCdfVbPCH7EI05JpPrOaC5wY6KX8e', NULL),
 (3, 'castorgodinho22@gmail.com', '$2y$13$gIHTyS5ZEuV30AWnKjSuXu0gJKJZGtfGclOpoTFeNvV1mdokmmXNi', NULL),
 (4, 'castorgodinho22@gmail.com', '$2y$13$Dxlpc5szm6LNu76ysJSc2utCU8s/I0MpYdfQQa4H2/n0T5HWOEVjm', NULL),
@@ -802,12 +875,16 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `type`) VALUES
 (24, 'ccg002@gmail.com', '$2y$13$R7WJAdMqipZZ4giCKe90GeDie3t1oXVlV64bvIoauMsOzMfddBjlq', 'staff'),
 (25, 'mi@gmail.com', '$2y$13$vQ8UBSaX13y3sIkJ.txko.Tirp3RKua.pEL/oR6auw40lbkHROTNC', 'company'),
 (26, 'nokia@gmail.com', '', 'accounts'),
-(30, 'accounts@gmail.com', '$2y$13$lPyJLwA6fAppMas8aElDXuy9zk9hXKYmmGZMec/2/ijWYu1qOXyue', 'accounts'),
 (31, 'icc@gmail.com', '$2y$13$ejpDHeqFkVJDcOehPn4GreXdVqp/kcsLrhgKHrrWEDLzDzGjUr07q', 'company'),
 (32, 'lenovo@gmail.com', '$2y$13$b3Lelc9KNWe402PeHINxIOj5Qd/S.sCv/cY4PWnQ3a9oAZVElaEYy', 'company'),
 (33, 'hdfc@gmail.com', '$2y$13$5QRj7PKAV6btTGTHtnuNmeS5XdSgf4VbWyPtc3re2c57FQRqFtcHC', 'company'),
 (34, 'fosters@gmail.com', '$2y$13$bq5sMdHqcLsFyXI1WXRaluPgmPDYfJXiZyYzzgvMBCKhaQOzhv/1.', 'company'),
-(35, 'sony@gmail.com', '$2y$13$lQxZrBJVc4CaVNdm.53SYeS1ZKnbHo.99cLMs3..DvGJKejzQzCx.', 'company');
+(35, 'sony@gmail.com', '$2y$13$lQxZrBJVc4CaVNdm.53SYeS1ZKnbHo.99cLMs3..DvGJKejzQzCx.', 'company'),
+(36, 'fastrack@gmail.com', '$2y$13$nJ9TY0inYcUlsKLe5gsyOeQofFl4rsHFSvYXPziQYwGipJ.rfoF5O', 'company'),
+(37, 'bajaj@gmail.com', '$2y$13$oBku9jT.30GhpU7d1qioduq/R5ypPZU1YA9TOZgBOmwRAswPCU/2e', 'company'),
+(38, 'honda@gmail.com', '$2y$13$D4n5/oudzgnWkDJzYx0qt.pnA3/ySvQhN6oMRAbjhBSnEB4apdLbW', 'company'),
+(39, 'apolo@gmail.com', '$2y$13$ghPplH8gkrMI/IxY0nYgZumuGC3ZLnI1FNM0BlxGyj4H8dl7EBAcS', 'company'),
+(40, 'accounts@gmail.com', '$2y$13$k86rDj.QyhL3s0LQn1mtgu5pDUKv7/VwTTUKJLxKi5ebuJNzn64j6', 'accounts');
 
 --
 -- Indexes for dumped tables
@@ -946,19 +1023,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `area`
 --
 ALTER TABLE `area`
-  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `area_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `area_rate`
 --
 ALTER TABLE `area_rate`
-  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `area_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `interest`
@@ -970,49 +1047,49 @@ ALTER TABLE `interest`
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `plot`
 --
 ALTER TABLE `plot`
-  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `plot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `rate`
 --
 ALTER TABLE `rate`
-  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tax`
 --
 ALTER TABLE `tax`
-  MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `tax_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Constraints for dumped tables
