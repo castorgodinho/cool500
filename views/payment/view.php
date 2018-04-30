@@ -58,6 +58,7 @@ use yii\widgets\DetailView;
        <td><?= $model->invoice->order->order_number ?></td>
      </tr>
      <tr>
+
        <td>Tax Invoice No</td>
        <td><?= $model->invoice->invoice_code ?></td>
      </tr>
@@ -96,9 +97,21 @@ use yii\widgets\DetailView;
      <tr>
 
        <td>RECEIPT No.</td>
-       <td><?= $model->payment_no ?></td>
+       <td><?= $model->payment_no?></td>
      </tr>
      <tr>
+
+        <?php if($previousLeaseRent != 0) { ?>
+        <td>Previous SGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+        <?php } else { ?>
+        <td>Previous SGST (INR)</td>
+        <?php } ?>
+        <td><?= $previousSGSTAmount ?></td>
+    </tr>
+     <tr>
+       <td>Penal Interest <?= $model->invoice->interest->rate ?>% (INR)</td>
+       <td><?= $model->invoice->prev_interest ?></td>
+
        <td>DATE</td>
        <td><?= $model->start_date?></td>
      </tr>
@@ -111,8 +124,9 @@ use yii\widgets\DetailView;
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
 
      </tr>
-    <?php if($model->penal != 0) { ?>
+    <?php if($model->penal != 0) {?>
      <tr>
+
        <td>Lease Rent</td>
        <td><?= $model->invoice->current_lease_rent ?></td>
      </tr>
@@ -128,12 +142,30 @@ use yii\widgets\DetailView;
      <tr>
        <td>Penal Interest</td>
        <td><?= $model->invoice->current_interest ?></td>
+
+       <td>Penal Interest  (INR) </td>
+       <td><?= $model->penal ?></td>
+     </tr>
+         <?php } ?>
+     <tr>
+       <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
+       <td><?= ($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
+     </tr>
+     <tr>
+       <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
+       <td><?= ($amount * ($model->invoice->tax->rate/100) / 2)?></td>
+     </tr>
+     <tr>
+       <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
+       <td><?= round($amount * ($model->invoice->tax->rate/100) )?></td>
+
      </tr>
      <tr>
        <td>TDS (INR)</td>
        <td><?= round( ($model->tds_amount )) ?></td>
      </tr>
      <tr>
+
        <td> Total Bill Amount </td>
        <td><?= round($model->balance_amount) ?></td>
      </tr>
@@ -146,11 +178,17 @@ use yii\widgets\DetailView;
      <tr>
        <td> Balance Amount </td>
        <td><?= round($model->balance_amount - $model->amount) ?></td>
+
+       <td>Total Bill Amount </td>
+       <td><?= round($model->amount + $model->tds_amount) ?></td>
+
      </tr>
+
      <tr>
        <td>Amount Paid(INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
+
      <tr>
        <td>Balance Amount (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
@@ -168,7 +206,7 @@ use yii\widgets\DetailView;
 
      <tr>
        <td>Date of Receipt</td>
-       <td><?= $model->start_date ?></td>
+       <td><?= $model->start_date?></td>
      </tr>
      <tr>
        <td>Payment Type</td>
@@ -179,7 +217,9 @@ use yii\widgets\DetailView;
 This is a computer-generated document and it does not require a signature. <br>
 <b>Disclaimer: </b>The data belongs to Goa GIDC. For any communication related to the published data, please contact at the above address </p>
 </div>
+
 </div>
+
 <?php
   $script = <<< JS
 
