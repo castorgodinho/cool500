@@ -140,10 +140,7 @@ class OrdersController extends Controller
           $model->total_amount = round($model->total_amount);
           $order =  Orders::findOne($id);
           $time = strtotime($order->start_date);
-          $orderPlotArray = $order->plots;
-          foreach ($orderPlotArray as $plot) {
-            $area = $plot->area;
-          }
+          $area = $model->order->area;
           $areaCode = strtoupper(substr($area->name,0,3));
           $invoiceCode = $areaCode .'/';
           date_default_timezone_set('Asia/Kolkata');
@@ -202,10 +199,7 @@ class OrdersController extends Controller
              ->andWhere(['flag' => 1])
              ->one();
 
-             $area = null;
-             foreach ($orderPlotArray as $plot) {
-               $area = $plot->area;
-             }
+             $area = $order->area;
 
              $rate = Rate::find()->where(['area_id' => $area->area_id])
              ->andWhere(['flag' => 1])
@@ -234,7 +228,7 @@ class OrdersController extends Controller
                ->where(['invoice_id' => $invoice->invoice_id])
                ->sum('penal');
 
-               $previousDueTotal = $invoice->grand_total - $totalPaid + $pi;
+               $previousDueTotal = $invoice->grand_total - $totalPaid;
              }
 
              $totalInvoiceAmount = Invoice::find()
@@ -285,6 +279,7 @@ class OrdersController extends Controller
              }
 
              $leftOverAmount = $previousDueTotal;
+             echo $leftOverAmount;
              $previousDueTotal = $leftOverAmount + $penalInterest;
 
              $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
