@@ -74,6 +74,7 @@ use yii\widgets\ActiveForm;
           </div>
           <div class="col-md-6">
             <?= $form->field($model, 'remark')->textarea(['maxlength' => true]) ?>
+            <?= $form->field($model, 'file')->fileInput() ?>
           </div>
           
         </div>

@@ -120,11 +120,14 @@ class CompanyController extends Controller
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
                 return \yii\widgets\ActiveForm::validate($user);
             }
+
             if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                $model->upload();
+                
                 $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
                 $user->type = 'company';
                 $user->save(false);
-                /* Assigning company role */
                 $auth = \Yii::$app->authManager;
                 $companyRole = $auth->getRole('company');
                 $auth->assign($companyRole, $user->user_id);
@@ -135,7 +138,7 @@ class CompanyController extends Controller
             } else {
                 return $this->render('create', [
                     'model' => $model,
-                    'user' => $user
+                    'user' => $user,
                 ]);
             }
         }else{
@@ -164,6 +167,8 @@ class CompanyController extends Controller
                 return \yii\widgets\ActiveForm::validate($user);
             }
             if ($model->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                $model->upload();
                 if($user->password != ''){
                     $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
                 }else{
@@ -208,7 +213,6 @@ class CompanyController extends Controller
     public function actionUpdateGst($id){
         $company = Company::findOne($id);
         if (\Yii::$app->user->can('updateGst', ['company' => $company])){
-
             $model = new GstUpdate();
             $model->gstin = $company->gstin;
             if ($model->load(Yii::$app->request->post())) {
