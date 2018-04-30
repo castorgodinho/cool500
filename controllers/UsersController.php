@@ -104,8 +104,8 @@ class UsersController extends Controller
     public function actionCreate()
     {
         if (\Yii::$app->user->can('createUsers')){
-            $model->scenario = 'create';
             $model = new Users();
+            $model->scenario = 'create';
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
                 return \yii\widgets\ActiveForm::validate($model);

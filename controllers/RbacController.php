@@ -269,7 +269,26 @@ class RbacController extends Controller
         $viewInvoiceReport->description = 'Create a Report';
         $auth->add($viewInvoiceReport);
 
-        
+        $viewLogReport = $auth->createPermission('viewLogReport');
+        $viewLogReport->description = 'View a log Report';
+        $auth->add($viewLogReport);
+
+        $viewLedgerReport = $auth->createPermission('viewLedgerReport');
+        $viewLedgerReport->description = 'View a ledger Report';
+        $auth->add($viewLedgerReport);
+
+        //Log permission
+        $createLog = $auth->createPermission('createLog');
+        $createLog->description = 'Create Log';
+        $auth->add($createLog);
+
+        $updateLog = $auth->createPermission('updateLog');
+        $updateLog->description = 'Update Log';
+        $auth->add($updateLog);
+
+        $deleteLog = $auth->createPermission('deleteLog');
+        $deleteLog->description = 'Delete Log';
+        $auth->add($deleteLog);
 
         // add "admin" role
         $admin = $auth->createRole('admin');
@@ -349,6 +368,11 @@ class RbacController extends Controller
         $auth->addChild($admin, $deleteInterest);
         //add Report Permissions
         $auth->addChild($admin, $viewInvoiceReport);
+        $auth->addChild($admin, $viewLedgerReport);
+        $auth->addChild($admin, $viewLogReport);
+        $auth->addChild($admin, $createLog);
+        $auth->addChild($admin, $updateLog);
+        $auth->addChild($admin, $deleteLog);
 
         //Create view own company rule
         $rule = new \app\rbac\CompanyRule;
@@ -429,6 +453,8 @@ class RbacController extends Controller
         $auth->addChild($accounts, $createPayment);
         $auth->addChild($accounts, $changePassword);
         $auth->addChild($accounts, $viewInvoiceReport);
+        $auth->addChild($accounts, $viewLedgerReport);
+        $auth->addChild($accounts, $viewLogReport);
         
 
         // add "admin" role and give this role the "updatePost" permission

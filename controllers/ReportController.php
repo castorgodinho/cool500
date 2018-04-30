@@ -55,40 +55,43 @@ class ReportController extends Controller
 
     public function actionLedger()
     {
-        $invoice = '';
-        $payment = '';
-        $to = 'Records';
-        $from = 'All';
-        if(Yii::$app->request->post()){
-            echo "Here";
-            $to = Yii::$app->request->post('to_date');
-            $from = Yii::$app->request->post('from_date');
-            if($to != '' && $from != ''){
-                echo 'Query with dates';
-                $invoice = Invoice::find()->orderBy('start_date')
-                ->where(['between', 'start_date', $from, $to ])->all();
-                $payment = Payment::find()->orderBy('start_date')
-                ->where(['between', 'start_date', $from, $to ])->all();
+        if (\Yii::$app->user->can('viewLedgerReport')){
+            $invoice = '';
+            $payment = '';
+            $to = 'Records';
+            $from = 'All';
+            if(Yii::$app->request->post()){
+                echo "Here";
+                $to = Yii::$app->request->post('to_date');
+                $from = Yii::$app->request->post('from_date');
+                if($to != '' && $from != ''){
+                    echo 'Query with dates';
+                    $invoice = Invoice::find()->orderBy('start_date')
+                    ->where(['between', 'start_date', $from, $to ])->all();
+                    $payment = Payment::find()->orderBy('start_date')
+                    ->where(['between', 'start_date', $from, $to ])->all();
+                }else{
+                    echo 'Query without dates';
+                    $invoice = Invoice::find()->orderBy('start_date')->all();
+                    $payment = Payment::find()->orderBy('start_date')->all(); 
+                }
             }else{
-                echo 'Query without dates';
+                echo 'Normal';
                 $invoice = Invoice::find()->orderBy('start_date')->all();
-                $payment = Payment::find()->orderBy('start_date')->all(); 
+                $payment = Payment::find()->orderBy('start_date')->all();
             }
+            return $this->render(
+                'ledger',
+                [
+                    'invoice' => $invoice,
+                    'payment' => $payment,
+                    'to' => $to,
+                    'from' => $from,
+                ]
+            );
         }else{
-            echo 'Normal';
-            $invoice = Invoice::find()->orderBy('start_date')->all();
-            $payment = Payment::find()->orderBy('start_date')->all();
+            throw new \yii\web\ForbiddenHttpException;
         }
-        return $this->render(
-            'ledger',
-            [
-                'invoice' => $invoice,
-                'payment' => $payment,
-                'to' => $to,
-                'from' => $from,
-            ]
-        );
-        
         
     }
 }

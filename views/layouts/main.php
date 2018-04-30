@@ -48,6 +48,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
             $link[] = ['label' => 'Payment', 'url' => ['/payment/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
+            
             $link[] = [
                 'label' => 'Taxation',
                 'items' => [
@@ -74,8 +75,15 @@ AppAsset::register($this);
             $link[] = ['label' => 'Pay Lease Rent', 'url' => ['/payment/search']];
             $link[] = ['label' => 'Payments', 'url' => ['/payment/index']];
             $link[] = ['label' => 'Invoice', 'url' => ['/invoice/index']];
-            $link[] = ['label' => 'Reports', 'url' => ['/report/invoice-report']];
             $link[] = ['label' => 'Change Password', 'url' => ['/users/change-password']];
+            $link[] = [
+                'label' => 'Reports',
+                'items' => [
+                     ['label' => 'Invoice Report', 'url' => ['/report/invoice-report']],
+                     ['label' => 'Ledger', 'url' => ['/report/ledger']],
+                     ['label' => 'Logs', 'url' => ['/log/index']],
+                ],
+            ];
         }
         /* $link[] = ['label' => 'Invoice', 'url' => ['/invoice/print-invoice']]; */
         $link[] =['label' => 'Logout', 'url' => ['site/logout'],'linkOptions' => ['data-method' => 'post']];

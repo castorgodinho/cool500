@@ -8,11 +8,6 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 ?>
-
-<?php if(Yii::$app->user->can('admin')){ ?>
-  <a href="index.php?r=company/upload-remark-image&id=<?= $model->company_id ?>" >Upload Remark</a>
-<?php } ?>
-
 <div class="panel panel-default">
   <div class="panel-heading">Unit Details</div>
   <div class="panel-body">
@@ -125,16 +120,8 @@ use yii\data\ActiveDataProvider;
       foreach($orders as $order){
   ?>
     <div class="panel panel-default">
-<<<<<<< HEAD
       <div class="panel-heading"> 
       
-=======
-      <?php
-        $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
-      ?>
-      <div class="panel-heading">
-
->>>>>>> b74bfaf0039bd0b8d9d4e6486732f32569212853
       <div class="row">
         <div class="col-md-6">
         <b> Plots:</b> <?= $order->plots; ?>
@@ -174,22 +161,7 @@ use yii\data\ActiveDataProvider;
         <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
         </div>
       </div>
-<<<<<<< HEAD
       
-=======
-
-
-
-      <p><b>Plots: </b><?php
-        if(is_array($plots)){
-          foreach($plots as $plot){
-            echo $plot->plot->name. ' ';
-          }
-        }else{
-          echo $plots->plot->name;
-        }
-      ?></p><br>
->>>>>>> b74bfaf0039bd0b8d9d4e6486732f32569212853
       <h4><u>Invoices</u></h4>
       <?php
         $query = Invoice::find()->where(['order_id' => $order->order_id]);
