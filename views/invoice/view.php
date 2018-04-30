@@ -127,6 +127,10 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
+        <td class='bold-text'> SAC Code </td>
+        <td>9972</td>
+      </tr>
+      <tr>
         <td class='bold-text'> Previous Total Tax (INR)</td>
         <td><?= $model->prev_tax ?></td>
       </tr>
@@ -160,7 +164,10 @@ use yii\widgets\ActiveForm;
         <td class='bold-text'>  Current SGST <?= $model->tax->rate/2 ?>% (INR) </td>
         <td> <?= $model->current_tax/2 ?>  </td>
       </tr>
-
+      <tr>
+        <td class='bold-text'> SAC Code </td>
+        <td>9972</td>
+      </tr>
       <tr>
         <td class='bold-text'>  Current Total Tax (INR) </td>
         <td> <?= $model->current_tax ?>  </td>
@@ -179,7 +186,7 @@ use yii\widgets\ActiveForm;
 
     </table>
     <hr>
-    <p><b>Penal Interest @ 15% will apply on total dues adter due date</b></p>
+    <p><b>Penal Interest @ <?= $model->interest->rate ?>% will apply on total dues adter due date</b></p>
     <p>This is a computer-generated document and it does not require a signature</p>
     <p><b>Disclaimer: </b>The data belongs to Goa IDC. For any communication related to the published data, Please contact at the above address</p>
     </div>

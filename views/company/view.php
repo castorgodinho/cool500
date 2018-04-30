@@ -4,18 +4,10 @@ use yii\helpers\Html;
 use app\models\Orders;
 use app\models\Invoice;
 use app\models\Payment;
-use app\models\OrderDetails;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
 ?>
-
-<?php if(Yii::$app->user->can('admin')){ ?>
-  <a href="index.php?r=company/upload-remark-image&id=<?= $model->company_id ?>" >Upload Remark</a>
-<?php } ?>
-<?php if(Yii::$app->user->can('admin') || Yii::$app->user->can('company')){ ?>
-  <a href="index.php?r=company/upload-tds-image&id=<?= $model->company_id ?>" >Upload TDS Document</a>
-<?php } ?>
 <div class="panel panel-default">
   <div class="panel-heading">Unit Details</div>
   <div class="panel-body">
@@ -128,22 +120,11 @@ use yii\data\ActiveDataProvider;
       foreach($orders as $order){
   ?>
     <div class="panel panel-default">
-      <?php
-        $plots = OrderDetails::find()->where(['order_id' => $order->order_id])->all();
-      ?>
-      <div class="panel-heading">
-
+      <div class="panel-heading"> 
+      
       <div class="row">
         <div class="col-md-6">
-        <b> Plots:</b> <?php
-        if(is_array($plots)){
-          foreach($plots as $plot){
-            echo $plot->plot->name. ' ';
-          }
-        }else{
-          echo $plots->plot->name;
-        }
-      ?>
+        <b> Plots:</b> <?= $order->plots; ?>
         <?php if ($order->shed_no != ""){ ?><b>Shed Number: </b><?= $order->shed_no ?><?php } ?>
           <?php if ($order->godown_no != ""){ ?><b>Godown Number: </b><?= $order->godown_no ?><?php } ?>
         </div>
@@ -180,18 +161,7 @@ use yii\data\ActiveDataProvider;
         <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
         </div>
       </div>
-
-
-
-      <p><b>Plots: </b><?php
-        if(is_array($plots)){
-          foreach($plots as $plot){
-            echo $plot->plot->name. ' ';
-          }
-        }else{
-          echo $plots->plot->name;
-        }
-      ?></p><br>
+      
       <h4><u>Invoices</u></h4>
       <?php
         $query = Invoice::find()->where(['order_id' => $order->order_id]);

@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use app\models\Orders;
 use app\models\Company;
-use app\models\OrderDetails;
 use app\models\Area;
 use app\models\Plot;
 use app\models\Tax;
@@ -69,15 +68,9 @@ class OrdersController extends Controller
     {
         if (\Yii::$app->user->can('viewOrders')){
             $model = $this->findModel($id);
-            $plots = OrderDetails::find()->where(['order_id' => $id]);
             $orders = Orders::find()->where(['order_id' => $id])->all();
-
-            $dataProvider = new ActiveDataProvider([
-                'query' => $plots,
-            ]);
             return $this->render('view', [
                 'model' =>  $model,
-                'plots' => $dataProvider,
                 'orders' => $orders,
             ]);
         }else{
@@ -96,31 +89,35 @@ class OrdersController extends Controller
             $model = new Orders();
             $company = Company::find()->all();
             $area = Area::find()->all();
-            $orderDetails = new OrderDetails();
-            if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
-                $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($model->area->name);
+            if ($model->load(Yii::$app->request->post())) {
+                $area_update = Area::find()->where(['area_id' => $model->area_id])->one();
+                $area_update->total_area = $area_update->total_area + $model->total_area;
+                $area_update->save();
+                /* echo $model->order_number.'-<br>';
+                echo $model->company_id.'-<br>';
+                echo $model->built_area.'-<br>';
+                echo $model->shed_area.'-<br>';
+                echo $model->godown_area.'-<br>';
+                echo $model->start_date.'-<br>';
+                echo $model->end_date.'-<br>';
+                echo $model->shed_no.'-<br>';
+                echo $model->godown_no.'-<br>';
+                echo $model->area_id.'-<br>';
+                echo $model->total_area.'-<br>'; */
+                $names = explode(" ", $model->area->name);
+                $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($names[0]);
                 while(Orders::find()->where(['order_number' => $orderNumber])->count() != 0){
-                    $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($model->area->name);
+                    $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($names[0]);
                 }
+                //echo $model->built_area;
                 $model->order_number = $orderNumber;
-                $model->save();
-                for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
-                    $detail = new OrderDetails();
-                    $plot = new Plot();
-                    $plot->name = $orderDetails->plot_id[$i];
-                    $plot->area_id = $model->area_id;
-                    $plot->save(false);
-                    $detail->order_id = $model->order_id;
-                    $detail->plot_id = $plot->plot_id;
-                    $detail->save(false);
-                }
+                 $model->save();
                 return $this->redirect(['orders/index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
                     'company' => $company,
                     'area' => $area,
-                    'orderDetails' => $orderDetails,
                 ]);
             }
         }else{

@@ -14,14 +14,9 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
     <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
-    <button type="button" class="add" class="form-control" style="margin: 5px;">+</button>
-    <button type="button" class="sub" class="form-control" style="margin: 5px;">-</button>
-    <div class="row plots">
-        <div class="col-md-1 plot-input">
-            <?= $form->field($orderDetails, 'plot_id[]')->textInput() ?>
-        </div>
-    </div>
+
     <?= $form->field($model, 'total_area')->textInput(); ?>
+    <?= $form->field($model, 'plots')->textInput(); ?>  
 
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [

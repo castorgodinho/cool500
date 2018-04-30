@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use app\models\Area;
 use app\models\AreaRate;
-use app\models\OrderDetails;
 use app\models\Log;
 use yii\helpers\Json;
 use app\models\SearchArea;
@@ -83,6 +82,7 @@ class AreaController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 $rate = new AreaRate();
                 $rate->area_rate = $model->area_rate;
+                $model->total_area = 0;
                 $model->save();
                 $rate->area_id = $model->area_id;
                 $rate->start_date = date('Y-m-d');

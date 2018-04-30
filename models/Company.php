@@ -30,6 +30,8 @@ use Yii;
  */
 class Company extends \yii\db\ActiveRecord
 {
+
+    public $file;
     /**
      * @inheritdoc
      */
@@ -54,6 +56,7 @@ class Company extends \yii\db\ActiveRecord
             [['gstin'], 'string', 'max' => 30],
             [['owner_phone', 'owner_mobile', 'competent_mobile'], 'string', 'max' => 10],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'user_id']],
+            [['file'], 'file'],
         ];
     }
 
@@ -97,5 +100,12 @@ class Company extends \yii\db\ActiveRecord
     public function getOrders()
     {
         return $this->hasMany(Orders::className(), ['company_id' => 'company_id']);
+    }
+
+    public function upload()
+    {
+            $this->remark_url = 'remarkfiles/' . $this->file->baseName . '.' . $this->file->extension;
+            $this->file->saveAs('remarkfiles/' . $this->file->baseName . '.' . $this->file->extension);
+            return true;
     }
 }

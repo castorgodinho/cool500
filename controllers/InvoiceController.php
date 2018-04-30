@@ -5,7 +5,6 @@ namespace app\controllers;
 use Yii;
 use app\models\Orders;
 use app\models\Company;
-use app\models\OrderDetails;
 use app\models\Area;
 use app\models\Plot;
 use app\models\Tax;

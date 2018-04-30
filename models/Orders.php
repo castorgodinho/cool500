@@ -19,10 +19,10 @@ use Yii;
  * @property string $godown_no
  * @property int $area_id
  * @property int $total_area
+ * @property string $plots
  *
  * @property Invoice[] $invoices
- * @property OrderDetails[] $orderDetails
- * @property Plot[] $plots
+ * @property Plot[] $plots0
  * @property Area $area
  * @property Company $company
  * @property Payment[] $payments
@@ -43,11 +43,12 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_number', 'company_id', 'total_area'], 'required'],
+            [['order_number', 'company_id', 'total_area', 'plots'], 'required'],
             [['company_id', 'built_area', 'shed_area', 'godown_area', 'area_id', 'total_area'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['order_number'], 'string', 'max' => 20],
             [['shed_no', 'godown_no'], 'string', 'max' => 50],
+            [['plots'], 'string', 'max' => 100],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => Company::className(), 'targetAttribute' => ['company_id' => 'company_id']],
         ];
@@ -71,6 +72,7 @@ class Orders extends \yii\db\ActiveRecord
             'godown_no' => 'Godown No',
             'area_id' => 'Area ID',
             'total_area' => 'Total Area',
+            'plots' => 'Plots',
         ];
     }
 
@@ -82,18 +84,12 @@ class Orders extends \yii\db\ActiveRecord
         return $this->hasMany(Invoice::className(), ['order_id' => 'order_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrderDetails()
-    {
-        return $this->hasMany(OrderDetails::className(), ['order_id' => 'order_id']);
-    }
+
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPlots()
+    public function getPlots0()
     {
         return $this->hasMany(Plot::className(), ['plot_id' => 'plot_id'])->viaTable('order_details', ['order_id' => 'order_id']);
     }

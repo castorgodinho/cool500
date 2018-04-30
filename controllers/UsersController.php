@@ -104,8 +104,8 @@ class UsersController extends Controller
     public function actionCreate()
     {
         if (\Yii::$app->user->can('createUsers')){
-            $model->scenario = 'create';
             $model = new Users();
+            $model->scenario = 'create';
             if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
                 return \yii\widgets\ActiveForm::validate($model);
@@ -158,7 +158,7 @@ class UsersController extends Controller
                 $model->save();
                 $log->new_value = Json::encode(Users::find()->where(['user_id' => $model->user_id])->all(), $asArray = true) ;
                 $log->user_id = Yii::$app->user->identity->user_id;
-                $log->type = 'Users';
+                $log->type = 'Edited Users';
                 $log->save();
 
                 return $this->redirect(['view', 'id' => $model->user_id]);
