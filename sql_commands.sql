@@ -1,5 +1,7 @@
 ALTER TABLE `payment` add column `balance_amount` int(11) NOT NULL;
 
+ALTER TABLE `payment` add column `penal` int(11) NOT NULL;
+
 ALTER TABLE `payment` add column `payment_no` varchar(100) NOT NULL;
 
 ALTER TABLE `rate` DROP `from_area`, DROP `to_area`;
