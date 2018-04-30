@@ -127,6 +127,10 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
+        <td class='bold-text'> SAC Code </td>
+        <td>9972</td>
+      </tr>
+      <tr>
         <td class='bold-text'> Previous Total Tax (INR)</td>
         <td><?= $model->prev_tax ?></td>
       </tr>
@@ -160,7 +164,10 @@ use yii\widgets\ActiveForm;
         <td class='bold-text'>  Current SGST <?= $model->tax->rate/2 ?>% (INR) </td>
         <td> <?= $model->current_tax/2 ?>  </td>
       </tr>
-
+      <tr>
+        <td class='bold-text'> SAC Code </td>
+        <td>9972</td>
+      </tr>
       <tr>
         <td class='bold-text'>  Current Total Tax (INR) </td>
         <td> <?= $model->current_tax ?>  </td>

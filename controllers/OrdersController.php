@@ -109,6 +109,7 @@ class OrdersController extends Controller
                 while(Orders::find()->where(['order_number' => $orderNumber])->count() != 0){
                     $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($names[0]);
                 }
+                //echo $model->built_area;
                 $model->order_number = $orderNumber;
                  $model->save();
                 return $this->redirect(['orders/index']);
