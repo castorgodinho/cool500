@@ -195,14 +195,11 @@ use yii\widgets\ActiveForm;
 </div>
 <?php
   $script = <<< JS
-
     $(document).ready(function(){
       $('.print-btn').click(function(){
-
-
         window.print();
-          });
-        });
+      });
+    });
 JS;
-$this->registerJS($script);
+  $this->registerJS($script);
 ?>

@@ -191,5 +191,5 @@ This is a computer-generated document and it does not require a signature. <br>
           });
         });
 JS;
-$this->registerJS($script);
+  $this->registerJS($script);
 ?>
