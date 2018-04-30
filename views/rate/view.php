@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'rate_id',
             'area_id',
-            'from_area',
-            'to_area',
             'rate',
             'date',
         ],

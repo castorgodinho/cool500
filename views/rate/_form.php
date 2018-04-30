@@ -5,17 +5,19 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Rate */
 /* @var $form yii\widgets\ActiveForm */
+use yii\helpers\ArrayHelper;
+use app\models\Area;
+$area = Area::find()->all();
+
 ?>
 
 <div class="rate-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'area_id')->textInput() ?>
+    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
 
-    <?= $form->field($model, 'from_area')->textInput() ?>
-
-    <?= $form->field($model, 'to_area')->textInput() ?>
+    <?= $form->field($model, 'extra')->textInput() ?>
 
     <?= $form->field($model, 'rate')->textInput() ?>
 

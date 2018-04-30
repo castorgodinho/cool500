@@ -99,6 +99,8 @@ use yii\widgets\ActiveForm;
 
 <input id="payment-total_tax" class="form-control" name="Payment[total_tax]" value="<?= $total_tax ?>" type="text">
 
+<input id="payment-balance_amount" class="form-control" name="Payment[balance_amount]" value="<?= $balanceAmount ?>" type="text">
+
 <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '', 'class' => 'mode form-control']) ?>
 <div class="cheque-div">
 

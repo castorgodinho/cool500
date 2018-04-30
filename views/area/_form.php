@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-    
+
     <?= $form->field($model, 'area_rate')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'total_area')->textInput() ?>

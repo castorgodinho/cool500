@@ -110,6 +110,15 @@ class PaymentController extends Controller
                 }
                 else{
                     $model->save(False);
+                    $payment_no = 'GIDC/';
+                    $payment_id = strval($model->payment_id);
+                    for ($i=0; $i < (7 - strlen($payment_id)); $i++) {
+                      $payment_no = $payment_no .'0';
+                    }
+                    $payment_no = $payment_no .''. $payment_id;
+                    $model->payment_no = $payment_no;
+                    $model->balance_amount = $model->balance_amount - $model->amount;
+
                     $model->file = UploadedFile::getInstance($model, 'file');
                     if($model->file){
                       $model->tds_file = 'gstfiles/' . $model->payment_id . '.' . $model->file->extension;

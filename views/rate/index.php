@@ -24,8 +24,6 @@ $this->title = 'Rates';
             ['class' => 'yii\grid\SerialColumn'],
 
             'area.name',
-            'from_area',
-            'to_area',
             'rate',
             'date',
             'flag',

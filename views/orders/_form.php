@@ -22,14 +22,14 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
     <?= $form->field($model, 'total_area')->textInput(); ?>
-    
+
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [
           'class' => 'form-control'
         ],
         'language' => 'en',
         'dateFormat' => 'yyyy-MM-dd',
-    ]) ?> 
+    ]) ?>
 
     <?= $form->field($model, 'end_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [
@@ -37,8 +37,8 @@ use yii\widgets\ActiveForm;
         ],
         'language' => 'en',
         'dateFormat' => 'yyyy-MM-dd',
-    ]) ?> 
-    
+    ]) ?>
+
     <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">
         <option value="" selected disabled hidden>Choose Area</option>
         <option value="built">Built</option>
@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
         <option value="godown">Godown</option>
     </select>
     <br>
-    
+
     <div class="built hide-div">
         <?= $form->field($model, 'built_area')->textInput() ?>
     </div>
@@ -58,8 +58,8 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'godown_area')->textInput() ?>
         <?= $form->field($model, 'godown_no')->textInput() ?>
     </div>
-    
-    
+
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
     </div>
@@ -68,7 +68,7 @@ use yii\widgets\ActiveForm;
 
 </div>
 
-<?php 
+<?php
 
 
     $script = <<< JS
@@ -90,7 +90,7 @@ use yii\widgets\ActiveForm;
                     $('.plots').children().last().remove();
                     noOfDiv--;
                 }
-                
+
             });
         });
 

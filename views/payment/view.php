@@ -43,6 +43,10 @@ use yii\widgets\DetailView;
      <th></th>
      <th></th>
      <tr>
+       <td>RECEIPT No.</td>
+       <td><?= $model->payment_no?></td>
+     </tr>
+     <tr>
        <td>DATE</td>
        <td><?= $model->start_date?></td>
      </tr>
@@ -62,11 +66,11 @@ use yii\widgets\DetailView;
          <?php } ?>
      <tr>
        <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
+       <td><?= ($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
      </tr>
      <tr>
        <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100) / 2)?></td>
+       <td><?= ($amount * ($model->invoice->tax->rate/100) / 2)?></td>
      </tr>
      <tr>
        <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
@@ -78,8 +82,18 @@ use yii\widgets\DetailView;
      </tr>
 
      <tr>
-       <td>Total Amount </td>
-       <td><?= round($model->amount + $model->tds_amount) ?></td>
+       <td> Total Bill Amount </td>
+       <td><?= round($model->balance_amount) ?></td>
+     </tr>
+
+     <tr>
+       <td> Amount Paid </td>
+       <td><?= round($model->amount) ?></td>
+     </tr>
+
+     <tr>
+       <td> Balance Amount </td>
+       <td><?= round($model->balance_amount - $model->amount) ?></td>
      </tr>
 
      <tr>

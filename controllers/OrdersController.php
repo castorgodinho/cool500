@@ -211,8 +211,6 @@ class OrdersController extends Controller
              }
 
              $rate = Rate::find()->where(['area_id' => $area->area_id])
-             ->andWhere(['<=','from_area', $totalArea])
-             ->andWhere(['>=','to_area', $totalArea])
              ->andWhere(['flag' => 1])
              ->one();
 

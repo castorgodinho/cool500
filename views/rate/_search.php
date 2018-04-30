@@ -19,13 +19,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'area_id') ?>
 
-    <?= $form->field($model, 'from_area') ?>
-
-    <?= $form->field($model, 'to_area') ?>
+    <?= $form->field($model, 'extra') ?>
 
     <?= $form->field($model, 'rate') ?>
 
-    <?php // echo $form->field($model, 'date') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-success']) ?>

@@ -7,15 +7,13 @@ use Yii;
 /**
  * This is the model class for table "rate".
  *
- * @property integer $rate_id
- * @property integer $area_id
- * @property integer $from_area
- * @property integer $to_area
- * @property integer $rate
+ * @property int $rate_id
+ * @property int $area_id
+ * @property int $rate
  * @property string $date
+ * @property int $flag
+ * @property int $extra
  *
- * @property AreaRate[] $areaRates
- * @property Area[] $areas
  * @property Invoice[] $invoices
  * @property Area $area
  */
@@ -35,9 +33,10 @@ class Rate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['area_id', 'from_area', 'to_area', 'rate', 'date'], 'required'],
-            [['area_id', 'from_area', 'to_area', 'rate'], 'integer'],
-            [['date','flag'], 'safe'],
+            [['area_id', 'rate', 'date', 'extra'], 'required'],
+            [['area_id', 'rate', 'extra'], 'integer'],
+            [['date'], 'safe'],
+            [['flag'], 'string', 'max' => 2],
             [['area_id'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['area_id' => 'area_id']],
         ];
     }
@@ -50,27 +49,11 @@ class Rate extends \yii\db\ActiveRecord
         return [
             'rate_id' => 'Rate ID',
             'area_id' => 'Area ID',
-            'from_area' => 'From Area',
-            'to_area' => 'To Area',
-            'rate' => 'Lease Rate',
+            'rate' => 'Rate',
             'date' => 'Date',
+            'flag' => 'Flag',
+            'extra' => 'Extra',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAreaRates()
-    {
-        return $this->hasMany(AreaRate::className(), ['rate_id' => 'rate_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAreas()
-    {
-        return $this->hasMany(Area::className(), ['area_id' => 'area_id'])->viaTable('area_rate', ['rate_id' => 'rate_id']);
     }
 
     /**

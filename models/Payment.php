@@ -19,18 +19,20 @@ use Yii;
  * @property string $cheque_no
  * @property int $is_debit
  * @property int $penal
+ * @property int $balance_amount
+ * @property string $payment_no
  *
  * @property Invoice $invoice
  * @property Orders $order
  */
 class Payment extends \yii\db\ActiveRecord
 {
+    public $file;
+    public $lease_rent;
+
     /**
      * @inheritdoc
      */
-     public $lease_rent;
-     public $total_tax;
-     public $file;
     public static function tableName()
     {
         return 'payment';
@@ -42,11 +44,12 @@ class Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'penal'], 'integer'],
-            [['start_date','lease_rent','total_tax'], 'safe'],
-            [['mode', 'cheque_no'], 'string', 'max' => 50],
+            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'penal', 'balance_amount'], 'integer'],
+            [['start_date', 'lease_rent', 'file'], 'safe'],
             [['file'], 'file'],
-            [['tds_file'], 'string', 'max' => 100],
+            [['balance_amount', 'payment_no'], 'required'],
+            [['mode', 'cheque_no'], 'string', 'max' => 50],
+            [['tds_file', 'payment_no'], 'string', 'max' => 100],
             [['is_debit'], 'string', 'max' => 3],
             [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'invoice_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
@@ -71,6 +74,8 @@ class Payment extends \yii\db\ActiveRecord
             'cheque_no' => 'Cheque No',
             'is_debit' => 'Is Debit',
             'penal' => 'Penal',
+            'balance_amount' => 'Balance Amount',
+            'payment_no' => 'Payment No',
         ];
     }
 

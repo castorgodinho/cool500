@@ -18,7 +18,7 @@ class SearchRate extends Rate
     public function rules()
     {
         return [
-            [['rate_id', 'area_id', 'from_area', 'to_area', 'rate'], 'integer'],
+            [['rate_id', 'area_id','extra', 'rate'], 'integer'],
             [['date'], 'safe'],
         ];
     }
@@ -61,8 +61,6 @@ class SearchRate extends Rate
         $query->andFilterWhere([
             'rate_id' => $this->rate_id,
             'area_id' => $this->area_id,
-            'from_area' => $this->from_area,
-            'to_area' => $this->to_area,
             'rate' => $this->rate,
             'date' => $this->date,
         ]);
