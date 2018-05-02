@@ -285,6 +285,14 @@ class PaymentController extends Controller
      * @return Payment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    public function actionOnline($id){
+        $invoice = Invoice::findOne($id);
+        return $this->render('online-payment',[
+            'model' => $invoice,
+        ]);
+    }
+
     protected function findModel($id)
     {
         if (($model = Payment::findOne($id)) !== null) {

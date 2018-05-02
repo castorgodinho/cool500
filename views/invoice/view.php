@@ -193,6 +193,10 @@ use yii\widgets\ActiveForm;
   </div>
 </div>
 </div>
+<br>
+<?php if(Yii::$app->user->can('company')){
+  echo "<center><a href='index.php?r=payment/online&id=". $model->invoice_id  ."' class='btn btn-primary text-center'>Pay Online</a></center>";
+} ?>
 <?php
   $script = <<< JS
     $(document).ready(function(){

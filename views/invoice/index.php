@@ -30,6 +30,12 @@ $this->title = 'Invoices';
             'interest.rate',
             'order.order_number',
             'order.company.name',
+            [
+                'label' => 'Pay',
+                'value' => function(){
+                    return 'a';
+                }
+            ],
             //'start_date',
             //'total_amount',
 
