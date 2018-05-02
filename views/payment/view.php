@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 
 ?>
 <style>
-@page
+  @page
     {
         size:  auto;   /* auto is the initial value */
         margin: 20px;  /* this affects the margin in the printer settings */
