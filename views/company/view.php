@@ -130,9 +130,7 @@ use yii\data\ActiveDataProvider;
         </div>
         <div class="col-md-6">
           <div class="text-right">
-            <p><?php if(Yii::$app->user->can('admin')){ ?>
-            <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
-            <?php }?>
+           
             <b> Unit No:</b>  <?= $order->order_number ?> </p>
           </div>
         </div>
@@ -148,6 +146,9 @@ use yii\data\ActiveDataProvider;
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
           <p><b>Company: </b><?= $order->company->name ?></p><br>
           <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
+          <p><?php if(Yii::$app->user->can('admin')){ ?>
+            <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
+            <?php }?>
         </div>
         <div class="col-md-4">
           <p><b>Total Area: </b><?= $order->total_area ?></p><br>
