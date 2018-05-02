@@ -118,7 +118,7 @@ class PaymentController extends Controller
                     $model->payment_no = $payment_no;
                     $model->balance_amount = $model->balance_amount - $model->amount;
 
-                    $model->file = UploadedFile::getInstance($model, 'file');
+                    $model->file = UploadedFile::getInstance($model, 'file'); #TODO
                     if($model->file){
                       $model->tds_file = 'gstfiles/' . $model->payment_id . '.' . $model->file->extension;
                       $model->file->saveAs('gstfiles/' . $model->payment_id . '.' . $model->file->extension);
