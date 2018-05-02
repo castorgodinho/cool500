@@ -41,6 +41,159 @@ class InvoiceController extends Controller
      * Lists all Invoice models.
      * @return mixed
      */
+
+    public function actionGenerate($order_id){
+              date_default_timezone_set('Asia/Kolkata');
+              $model = new Invoice();
+              if ($model->load(Yii::$app->request->post())) {
+                $invoiceCode = '';
+                $model->total_amount = round($model->total_amount);
+                $order =  Orders::findOne($order_id);
+                $time = strtotime($order->start_date);
+                $area = $model->order->area;
+                $areaCode = strtoupper(substr($area->name,0,3));
+                $invoiceCode = $areaCode .'/';
+
+                $year = date('Y');
+                $year = substr($year,2,3);
+                $invoiceCode = $areaCode . '/' . $year;
+                $year = intval($year) + 1;
+                $invoiceCode = $invoiceCode . '-' . $year;
+                $model->invoice_code = 'hello';
+                $model->save(False);
+                $invoiceID = strval($model->invoice_id);
+                $len = strlen($invoiceID);
+                for ($i=0; $i < (4 - $len); $i++) {
+                  $invoiceID = '0'. $invoiceID;
+                }
+                $invoiceCode = $invoiceCode . '/' . $invoiceID;
+                $model->invoice_code = $invoiceCode;
+                $model->save(False);
+                return $this->redirect(['invoice/index']);
+              } else{
+                $order =  Orders::findOne($order_id);
+
+                $tax = Tax::find()
+                ->where(['name' => 'GST'])
+                ->where(['flag' => 1])
+                ->one();
+
+                $interest = Interest::find()
+                ->where(['name' => 'Penal Interest'])
+                ->andWhere(['flag' => 1])
+                ->one();
+
+                $area = $order->area;
+                $company = $order->company;
+
+                $rate = Rate::find()->where(['area_id' => $area->area_id])
+                ->andWhere(['flag' => 1])
+                ->one();
+
+                $start_date = date('d-m-Y');
+                $diffDate = 0;
+
+                $previousCGSTAmount = 0;
+                $previousSGSTAmount = 0;
+
+                $model->prev_lease_rent=0;
+                $model->prev_tax = 0;
+                $model->prev_interest = 0;
+                $model->prev_dues_total=0;
+                $model->prev_tax=0;
+
+               $model->current_lease_rent = $rate->rate * $order->total_area;
+               $model->current_tax = $model->current_lease_rent * ($tax->rate/100);
+               $currentCGSTAmount = (($tax->rate/2)/100) * $model->current_lease_rent;
+               $currentSGSTAmount = $currentCGSTAmount;
+               $model->current_total_dues = $model->current_lease_rent + $model->current_tax;
+
+               $invoice = Invoice::find()
+               ->where(['order_id' => $order_id])
+               ->orderBy(['invoice_id' => SORT_DESC])
+               ->one();
+
+               if($invoice){
+
+                 $totalPaid = Payment::find()
+                 ->where(['invoice_id' => $invoice->invoice_id])
+                 ->sum('amount');
+
+                 $pi = Payment::find()
+                 ->where(['invoice_id' => $invoice->invoice_id])
+                 ->sum('penal');
+
+                 $model->prev_dues_total = $invoice->grand_total - $totalPaid;
+
+                 $model->prev_lease_rent = $invoice->current_lease_rent;
+                 $model->prev_tax = $invoice->current_tax;
+                 $previousCGSTAmount =  (($invoice->tax->rate/2)/100) * $invoice->current_lease_rent;
+                 $previousSGSTAmount = $previousCGSTAmount;
+
+                 $time = strtotime($invoice->start_date);
+                 $newformat = date('d-m-Y',$time);
+                 $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
+                 $billDate = $start_date;
+
+                 $date1 = $invoiceDueDate;
+                 $date2 = $start_date;
+                 $diff = strtotime($date2) - strtotime($date1);
+                 $diffDate  = $diff / (60*60*24);
+
+                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
+                 $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
+
+                 $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
+                 $prevPeriodTo   = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 day  '));
+                 }else{
+                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
+                 $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
+
+                 $prevPeriodFrom = '-';
+                 $prevPeriodTo = '-';
+
+                 $time = strtotime($order->start_date);
+                 $newformat = date('d-m-Y',$time);
+                 $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
+                 $billDate = $start_date;
+               }
+
+               $model->current_total_dues = $model->current_lease_rent + $model->current_tax;
+
+               $penalInterest = round((($diffDate  * ($interest->rate + 100 )/100) * $model->prev_dues_total ) / 365);
+               if($penalInterest < 0 ){
+                 $penalInterest = 0;
+               }
+
+               $leftOverAmount = $model->prev_dues_total;
+               $previousDueTotal = $leftOverAmount + $penalInterest;
+
+
+                 return $this->render('generate', [
+                         'previousCGSTAmount' => $previousCGSTAmount,
+                         'previousSGSTAmount' => $previousSGSTAmount,
+                         'currentCGSTAmount' => $currentCGSTAmount,
+                         'currentSGSTAmount' => $currentSGSTAmount,
+                         'prevNotPaid' => $leftOverAmount,
+                         'leasePeriodFrom' => $leasePeriodFrom,
+                         'leasePeriodTo' => $leasePeriodTo,
+                         'prevPeriodFrom' => $prevPeriodFrom,
+                         'prevPeriodTo' => $prevPeriodTo,
+                         'billDate' => $billDate,
+                         'invoiceDueDate' => $invoiceDueDate,
+                         'order_id' => $order_id,
+                         'interest' => $interest,
+                         'tax' => $tax,
+                         'rate' => $rate,
+                         'start_date' => $start_date,
+                         'company' => $company,
+                         'order' => $order,
+                         'model' => $model,
+                         'penalInterest' => $penalInterest,
+                     ]);
+              }
+    }
+
     public function actionIndex()
     {
         if (\Yii::$app->user->can('indexInvoice')){
