@@ -94,11 +94,7 @@ use yii\widgets\DetailView;
        <?php } ?>
        <td><?= $previousSGSTAmount ?></td>
      </tr>
-     <tr>
 
-       <td>RECEIPT No.</td>
-       <td><?= $model->payment_no?></td>
-     </tr>
      <tr>
 
         <?php if($previousLeaseRent != 0) { ?>
@@ -112,18 +108,16 @@ use yii\widgets\DetailView;
        <td>Penal Interest <?= $model->invoice->interest->rate ?>% (INR)</td>
        <td><?= $model->invoice->prev_interest ?></td>
 
-       <td>DATE</td>
-       <td><?= $model->start_date?></td>
      </tr>
      <tr>
-       <td>Company</td>
+       <!-- <td>Company</td>
        <td><?= $model->invoice->order->company->name ?></td>
-     </tr>
-     <tr>
+     </tr> -->
+     <!-- <tr>
        <td>Amount  (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
 
-     </tr>
+     </tr> -->
     <?php if($model->penal != 0) {?>
      <tr>
 
@@ -143,27 +137,33 @@ use yii\widgets\DetailView;
        <td>Penal Interest</td>
        <td><?= $model->invoice->current_interest ?></td>
 
-       <td>Penal Interest  (INR) </td>
-       <td><?= $model->penal ?></td>
+       <!-- <td>Penal Interest  (INR) </td>
+       <td><?= $model->penal ?></td> -->
+
      </tr>
          <?php } ?>
-     <tr>
+     <!-- <tr>
        <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
        <td><?= ($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
      </tr>
      <tr>
        <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
        <td><?= ($amount * ($model->invoice->tax->rate/100) / 2)?></td>
-     </tr>
-     <tr>
+     </tr> -->
+     <!-- <tr>
        <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
        <td><?= round($amount * ($model->invoice->tax->rate/100) )?></td>
 
-     </tr>
+     </tr> -->
      <tr>
+       <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
+       <td><?= round(($model->invoice->current_tax) )?></td>
+
+     </tr>
+     <!-- <tr>
        <td>TDS (INR)</td>
        <td><?= round( ($model->tds_amount )) ?></td>
-     </tr>
+     </tr> -->
      <tr>
 
        <td> Total Bill Amount </td>
@@ -178,15 +178,6 @@ use yii\widgets\DetailView;
      <tr>
        <td> Balance Amount </td>
        <td><?= round($model->balance_amount - $model->amount) ?></td>
-
-       <td>Total Bill Amount </td>
-       <td><?= round($model->amount + $model->tds_amount) ?></td>
-
-     </tr>
-
-     <tr>
-       <td>Amount Paid(INR) </td>
-       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
      </tr>
 
      <tr>
@@ -199,19 +190,17 @@ use yii\widgets\DetailView;
          <td><?= $model->cheque_no ?></td>
        </tr>
     <?php } ?>
+    <?php if($model->cheque_no){ ?>
      <tr>
        <td>Transaction No </td>
-       <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
+       <td><?= $model->cheque_no ?></td>
      </tr>
-
+    <?php } ?>
      <tr>
        <td>Date of Receipt</td>
        <td><?= $model->start_date?></td>
      </tr>
-     <tr>
-       <td>Payment Type</td>
-       <td><?= $model->mode ?></td>
-     </tr>
+
     </table>
     <p><b>NOTE: </b>Receipt is valid subject to realization of your cheque. <br>
 This is a computer-generated document and it does not require a signature. <br>

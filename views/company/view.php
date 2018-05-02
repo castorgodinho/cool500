@@ -120,8 +120,8 @@ use yii\data\ActiveDataProvider;
       foreach($orders as $order){
   ?>
     <div class="panel panel-default">
-      <div class="panel-heading"> 
-      
+      <div class="panel-heading">
+
       <div class="row">
         <div class="col-md-6">
         <b> Plots:</b> <?= $order->plots; ?>
@@ -129,10 +129,10 @@ use yii\data\ActiveDataProvider;
           <?php if ($order->godown_no != ""){ ?><b>Godown Number: </b><?= $order->godown_no ?><?php } ?>
         </div>
         <div class="col-md-6">
-          <div class="text-right"> 
+          <div class="text-right">
             <p><?php if(Yii::$app->user->can('admin')){ ?>
-            <a href="index.php?r=orders%2Fupdate&id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
-            <?php }?> 
+            <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
+            <?php }?>
             <b> Unit No:</b>  <?= $order->order_number ?> </p>
           </div>
         </div>
@@ -142,7 +142,7 @@ use yii\data\ActiveDataProvider;
 
        </div>
       <div class="panel-body-order panel-body">
-      
+
       <div class="row">
         <div class="col-md-4">
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
@@ -161,7 +161,7 @@ use yii\data\ActiveDataProvider;
         <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
         </div>
       </div>
-      
+
       <h4><u>Invoices</u></h4>
       <?php
         $query = Invoice::find()->where(['order_id' => $order->order_id]);

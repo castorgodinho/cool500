@@ -93,13 +93,13 @@ use yii\widgets\ActiveForm;
 
 <input id="payment-order_id" class="form-control" name="Payment[order_id]" value="<?= $model->order_id?>" type="hidden">
 
-<input id="payment-penal" class="form-control" name="Payment[penal]" value="<?= $PenalInterestAmount?>" type="text">
+<input id="payment-penal" class="form-control" name="Payment[penal]" value="<?= $PenalInterestAmount?>" type="hidden">
 
-<input id="payment-lease_rent" class="form-control" name="Payment[lease_rent]" value="<?= $lease_rent?>" type="text">
+<input id="payment-lease_rent" class="form-control" name="Payment[lease_rent]" value="<?= $lease_rent?>" type="hidden">
 
-<input id="payment-total_tax" class="form-control" name="Payment[total_tax]" value="<?= $total_tax ?>" type="text">
+<input id="payment-total_tax" class="form-control" name="Payment[total_tax]" value="<?= $total_tax ?>" type="hidden">
 
-<input id="payment-balance_amount" class="form-control" name="Payment[balance_amount]" value="<?= $balanceAmount ?>" type="text">
+<input id="payment-balance_amount" class="form-control" name="Payment[balance_amount]" value="<?= $balanceAmount ?>" type="hidden ">
 
 <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '', 'class' => 'mode form-control']) ?>
 <div class="cheque-div">
