@@ -7,6 +7,7 @@ use app\models\Orders;
 use app\models\Company;
 use app\models\Area;
 use app\models\Plot;
+use app\models\OrderRate;
 use app\models\Tax;
 use app\models\Invoice;
 use app\models\Interest;
@@ -87,9 +88,10 @@ class OrdersController extends Controller
     {
         if (\Yii::$app->user->can('createOrders')){
             $model = new Orders();
+            $orderRate = new OrderRate();
             $company = Company::find()->all();
             $area = Area::find()->all();
-            if ($model->load(Yii::$app->request->post())) {
+            if ($model->load(Yii::$app->request->post()) && $orderRate->load(Yii::$app->request->post())) {
                 $area_update = Area::find()->where(['area_id' => $model->area_id])->one();
                 $area_update->total_area = $area_update->total_area + $model->total_area;
                 $area_update->save();
@@ -100,13 +102,17 @@ class OrdersController extends Controller
                 }
                 //echo $model->built_area;
                 $model->order_number = $orderNumber;
-                 $model->save();
+                $model->save();
+                $orderRate->order_id = $model->order_id;
+                $orderRate->flag = '1';
+                $orderRate->save();
                 return $this->redirect(['orders/index']);
             } else {
                 return $this->render('create', [
                     'model' => $model,
                     'company' => $company,
                     'area' => $area,
+                    'orderRate' => $orderRate,
                 ]);
             }
         }else{
