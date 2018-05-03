@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
+use app\models\OrderRate;
+use yii\data\ActiveDataProvider;
 
 
 /* @var $this yii\web\View */
@@ -36,7 +38,35 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-
-    
+    <?php
+        $query = OrderRate::find()->where(['order_id' => $model->order_id]);
+        $provider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+              'pageSize' => 10,
+          ],
+      ]);
+      ?>
+    <?= GridView::widget([
+        'dataProvider' => $provider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'start_date',
+            'end_date',
+            'amount1',
+            'amount2',
+            [
+                'attribute' => 'flag',
+                'value' => function($dataProvider){
+                    if($dataProvider->flag == '1'){
+                        return 'Current';
+                    }else{
+                        return 'Old';
+                    }
+                }
+            ],
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
 
 </div>
