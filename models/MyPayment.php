@@ -141,7 +141,7 @@ class MyPayment extends Payment
               }
               $payment_no = $payment_no .''. $payment_id;
               $this->payment_no = $payment_no;
-              $this->balance_amount = $this->balance_amount - $this->amount;
+              $this->balance_amount = $balanceAmount;
 
               $this->file = UploadedFile::getInstance($this, 'file'); #TODO
               if($this->file){

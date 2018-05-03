@@ -155,7 +155,7 @@ use yii\data\ActiveDataProvider;
 
         </div>
         <div class="col-md-4">
-        <?php if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
+        <?php  if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
         <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
         <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
           <p><?php if(Yii::$app->user->can('admin')){ ?>

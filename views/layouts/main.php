@@ -53,7 +53,7 @@ AppAsset::register($this);
                 'label' => 'Taxation',
                 'items' => [
                      ['label' => 'Tax', 'url' => ['/tax/index']],
-                     ['label' => 'Rate', 'url' => ['/rate/index']],
+                     ['label' => 'Order Rate', 'url' => ['/order-rate/index']],
                      ['label' => 'Interest', 'url' => ['/interest/index']],
                 ],
             ];

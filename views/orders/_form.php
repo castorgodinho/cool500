@@ -34,6 +34,35 @@ use yii\widgets\ActiveForm;
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
 
+    <hr>
+
+    <div class="row">
+        <div class="col-md-3">
+            <?= $form->field($orderRate, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
+                'options' => [
+                'class' => 'form-control'
+                ],
+                'language' => 'en',
+                'dateFormat' => 'yyyy-MM-dd',
+            ]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($orderRate, 'end_date')->widget(\yii\jui\DatePicker::classname(), [
+                'options' => [
+                'class' => 'form-control'
+                ],
+                'language' => 'en',
+                'dateFormat' => 'yyyy-MM-dd',
+            ]) ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($orderRate, 'amount1')->textInput(); ?>    
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($orderRate, 'amount2')->textInput(); ?>  
+        </div>
+    </div>
+
     <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">
         <option value="" selected disabled hidden>Choose Area</option>
         <option value="built">Built</option>
