@@ -142,24 +142,24 @@ use yii\widgets\DetailView;
 
      </tr>
          <?php } ?>
-     <!-- <tr>
+     <tr>
        <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
        <td><?= ($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
      </tr>
      <tr>
        <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
        <td><?= ($amount * ($model->invoice->tax->rate/100) / 2)?></td>
-     </tr> -->
-     <!-- <tr>
+     </tr>
+     <tr>
        <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
        <td><?= round($amount * ($model->invoice->tax->rate/100) )?></td>
 
-     </tr> -->
-     <tr>
+     </tr>
+     <!-- <tr>
        <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
        <td><?= round(($model->invoice->current_tax) )?></td>
 
-     </tr>
+     </tr> -->
      <!-- <tr>
        <td>TDS (INR)</td>
        <td><?= round( ($model->tds_amount )) ?></td>
@@ -180,10 +180,10 @@ use yii\widgets\DetailView;
        <td><?= round($model->balance_amount - $model->amount) ?></td>
      </tr>
 
-     <tr>
+     <!-- <tr>
        <td>Balance Amount (INR) </td>
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
-     </tr>
+     </tr> -->
      <?php if($model->cheque_no) {?>
        <tr>
          <td>Cheque  No</td>
@@ -191,11 +191,16 @@ use yii\widgets\DetailView;
        </tr>
     <?php } ?>
     <?php if($model->cheque_no){ ?>
+
      <tr>
        <td>Transaction No </td>
        <td><?= $model->cheque_no ?></td>
      </tr>
     <?php } ?>
+    <tr>
+      <td>Payment Mode</td>
+      <td><?= $model->mode ?></td>
+    </tr>
      <tr>
        <td>Date of Receipt</td>
        <td><?= $model->start_date?></td>

@@ -85,21 +85,21 @@ use yii\widgets\ActiveForm;
 
 </table>
 <?php if($balanceAmount != 0) { ?>
-<input id="payment-invoice_id" class="form-control" name="Payment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
+<input id="mypayment-invoice_id" class="form-control" name="MyPayment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
 
 <?= $form->field($model, 'amount')->textInput() ?>
 
-<input id="payment-start_date" class="form-control" name="Payment[start_date]" value="<?= $model->start_date?>" type="hidden">
+<input id="mypayment-start_date" class="form-control" name="MyPayment[start_date]" value="<?= $model->start_date?>" type="hidden">
 
-<input id="payment-order_id" class="form-control" name="Payment[order_id]" value="<?= $model->order_id?>" type="hidden">
+<input id="mypayment-order_id" class="form-control" name="MyPayment[order_id]" value="<?= $model->order_id?>" type="hidden">
 
-<input id="payment-penal" class="form-control" name="Payment[penal]" value="<?= $PenalInterestAmount?>" type="hidden">
+<input id="mypayment-penal" class="form-control" name="MyPayment[penal]" value="<?= $PenalInterestAmount?>" type="hidden">
 
-<input id="payment-lease_rent" class="form-control" name="Payment[lease_rent]" value="<?= $lease_rent?>" type="hidden">
+<input id="mypayment-lease_rent" class="form-control" name="MyPayment[lease_rent]" value="<?= $lease_rent?>" type="hidden">
 
-<input id="payment-total_tax" class="form-control" name="Payment[total_tax]" value="<?= $total_tax ?>" type="hidden">
+<input id="mypayment-total_tax" class="form-control" name="MyPayment[total_tax]" value="<?= $total_tax ?>" type="hidden">
 
-<input id="payment-balance_amount" class="form-control" name="Payment[balance_amount]" value="<?= $balanceAmount ?>" type="hidden ">
+<input id="mypayment-balance_amount" class="form-control" name="MyPayment[balance_amount]" value="<?= $balanceAmount ?>" type="hidden">
 
 <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '', 'class' => 'mode form-control']) ?>
 <div class="cheque-div">

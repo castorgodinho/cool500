@@ -15,24 +15,21 @@ use Yii;
  * @property int $invoice_id
  * @property int $tds_rate
  * @property int $tds_amount
- * @property string $tds_file
- * @property string $cheque_no
- * @property int $is_debit
- * @property int $penal
  * @property int $balance_amount
  * @property string $payment_no
+ * @property int $penal
+ * @property string $cheque_no
+ * @property int $tax
+ * @property int $lease_rent
  *
  * @property Invoice $invoice
  * @property Orders $order
  */
 class Payment extends \yii\db\ActiveRecord
 {
-    public $file;
-    public $lease_rent;
+  public $file;
+  public $lease_rent;
 
-    /**
-     * @inheritdoc
-     */
     public static function tableName()
     {
         return 'payment';
@@ -44,13 +41,12 @@ class Payment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'penal', 'balance_amount'], 'integer'],
+            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'balance_amount', 'penal', 'tax', 'lease_rent'], 'integer'],
             [['start_date', 'lease_rent', 'file'], 'safe'],
             [['file'], 'file'],
-            [['balance_amount', 'payment_no'], 'required'],
-            [['mode', 'cheque_no'], 'string', 'max' => 50],
-            [['tds_file', 'payment_no'], 'string', 'max' => 100],
-            [['is_debit'], 'string', 'max' => 3],
+            [['balance_amount', 'payment_no', 'penal', 'cheque_no', 'tax', 'lease_rent'], 'required'],
+            [['mode'], 'string', 'max' => 50],
+            [['payment_no', 'cheque_no'], 'string', 'max' => 100],
             [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'invoice_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
         ];
@@ -70,12 +66,12 @@ class Payment extends \yii\db\ActiveRecord
             'invoice_id' => 'Invoice ID',
             'tds_rate' => 'Tds Rate',
             'tds_amount' => 'Tds Amount',
-            'tds_file' => 'Tds File',
-            'cheque_no' => 'Cheque No',
-            'is_debit' => 'Is Debit',
-            'penal' => 'Penal',
             'balance_amount' => 'Balance Amount',
             'payment_no' => 'Payment No',
+            'penal' => 'Penal',
+            'cheque_no' => 'Cheque No',
+            'tax' => 'Tax',
+            'lease_rent' => 'Lease Rent',
         ];
     }
 
