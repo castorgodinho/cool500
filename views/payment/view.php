@@ -87,22 +87,22 @@ use yii\widgets\DetailView;
       $previousSGSTAmount = $model->invoice->prev_interest/2;
      ?>
      <tr>
-       <?php if($previousLeaseRent != 0) { ?>
-       <td>Previous CGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+       <?php if($model->invoice->prev_lease_rent!= 0) { ?>
+       <td>Previous CGST <?= round(($model->invoice->prev_tax/2) * 100 / $model->invoice->prev_lease_rent,1)   ?>% (INR) </td>
        <?php } else { ?>
        <td>Previous CGST (INR)</td>
        <?php } ?>
-       <td><?= $previousSGSTAmount ?></td>
+       <td><?= $model->invoice->prev_tax/2 ?></td>
      </tr>
 
      <tr>
 
-        <?php if($previousLeaseRent != 0) { ?>
-        <td>Previous SGST <?= round($previousSGSTAmount * 100 / $previousLeaseRent,1)   ?>% (INR) </td>
+        <?php if($model->invoice->prev_lease_rent != 0) { ?>
+        <td>Previous SGST <?= round(($model->invoice->prev_tax/2) * 100 / $model->invoice->prev_lease_rent,1)   ?>% (INR) </td>
         <?php } else { ?>
         <td>Previous SGST (INR)</td>
         <?php } ?>
-        <td><?= $previousSGSTAmount ?></td>
+        <td><?= $model->invoice->prev_tax/2 ?></td>
     </tr>
      <tr>
        <td>Penal Interest <?= $model->invoice->interest->rate ?>% (INR)</td>
@@ -167,7 +167,7 @@ use yii\widgets\DetailView;
      <tr>
 
        <td> Total Bill Amount </td>
-       <td><?= round($model->balance_amount) ?></td>
+       <td><?= round($model->balance_amount + $model->amount) ?></td>
      </tr>
 
      <tr>
@@ -177,7 +177,7 @@ use yii\widgets\DetailView;
 
      <tr>
        <td> Balance Amount </td>
-       <td><?= round($model->balance_amount - $model->amount) ?></td>
+       <td><?= round($model->balance_amount) ?></td>
      </tr>
 
      <!-- <tr>

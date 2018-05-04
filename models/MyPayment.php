@@ -4,6 +4,7 @@ namespace app\models;
 use app\models\Payment;
 use app\models\Invoice;
 use yii\web\UploadedFile;
+use app\models\Debit;
 
 use Yii;
 
@@ -14,9 +15,14 @@ class MyPayment extends Payment
 
         $invoice = Invoice::findOne($this->invoice_id);
         $currentPenalInterest = $invoice->current_interest;
-        echo '$currentPenalInterest '.$currentPenalInterest.'<br>';
+        /// '$currentPenalInterest '.$currentPenalInterest.'<br>';
         $invoice->save();
-        echo '$invoice->invoice_id '.$this->invoice_id.'<br>';
+        /// '$invoice->invoice_id '.$this->invoice_id.'<br>';
+
+        $debit = new Debit();
+        $debit->penal = $this->penal;
+        $debit->invoice_id = $invoice->invoice_id;
+        $debit->save(False);
 
         $totalPreviousPayment = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
@@ -34,27 +40,27 @@ class MyPayment extends Payment
         ->where(['invoice_id' => $this->invoice_id])
         ->sum('tax');
 
-        echo '$totalPreviousPayment '.$totalPreviousPayment.'<br>';
-        echo '$totalPenalPaid '.$totalPenalPaid.'<br>';
-        echo '$totalTaxPaid '.$totalTaxPaid.'<br>';
-        echo '$totalLeaseRentPaid '.$totalLeaseRentPaid.'<br>';
-        echo '$this->amount '.$this->amount.'<br>';
+        /// '$totalPreviousPayment '.$totalPreviousPayment.'<br>';
+        /// '$totalPenalPaid '.$totalPenalPaid.'<br>';
+        /// '$totalTaxPaid '.$totalTaxPaid.'<br>';
+        /// '$totalLeaseRentPaid '.$totalLeaseRentPaid.'<br>';
+        /// '$this->amount '.$this->amount.'<br>';
 
-        $balanceAmount = $this->amount - $totalPreviousPayment;
-        echo '$balanceAmount '.$balanceAmount.'<br>';
+        $balanceAmount = round($invoice->grand_total - $this->amount - $totalPreviousPayment + $this->penal);
+        /// '$balanceAmount '.$balanceAmount.'<br>';
         $currentLeaseRent = $invoice->current_lease_rent;
-        echo '$currentLeaseRent '.$currentLeaseRent.'<br>';
+        /// '$currentLeaseRent '.$currentLeaseRent.'<br>';
         $previousLeaseRent = $invoice->prev_lease_rent;
-        echo '$previousLeaseRent '.$previousLeaseRent.'<br>';
+        /// '$previousLeaseRent '.$previousLeaseRent.'<br>';
         $previousTax = $invoice->prev_tax;
-        echo '$previousTax '.$previousTax.'<br>';
+        /// '$previousTax '.$previousTax.'<br>';
         $currentTax = $invoice->current_tax;
-        echo '$currentTax '.$currentTax.'<br>';
+        /// '$currentTax '.$currentTax.'<br>';
         $previousDuesTotal = $invoice->prev_dues_total;
-        echo '$previousDuesTotal '.$previousDuesTotal.'<br>';
+        /// '$previousDuesTotal '.$previousDuesTotal.'<br>';
         $previousPenalInterest = $invoice->prev_interest;
-        echo '$previousPenalInterest '.$previousPenalInterest.'<br>';
-        echo '$currentPenalInterest '.$currentPenalInterest.'<br>';
+        /// '$previousPenalInterest '.$previousPenalInterest.'<br>';
+        /// '$currentPenalInterest '.$currentPenalInterest.'<br>';
 
         $totalTax = 0;
         $totalLeaseRent = 0;
@@ -68,46 +74,46 @@ class MyPayment extends Payment
           $totalLeaseRent = $currentLeaseRent;
         }
         $totalRentPlusTax = $totalTax + $totalLeaseRent;
-        echo '$totalRentPlusTax '.$totalRentPlusTax.'<br>';
+        /// '$totalRentPlusTax '.$totalRentPlusTax.'<br>';
 
         $totalInvoiceAmount =  $invoice->grand_total + $totalPenalInterest;
-        echo '$totalInvoiceAmount '.$totalInvoiceAmount.'<br>';
-        echo '$totalTax '.$totalTax.'<br>';
-        echo '$totalLeaseRent '.$totalLeaseRent.'<br>';
-        echo '$totalPenalInterest '.$totalPenalInterest.'<br>';
+        /// '$totalInvoiceAmount '.$totalInvoiceAmount.'<br>';
+        /// '$totalTax '.$totalTax.'<br>';
+        /// '$totalLeaseRent '.$totalLeaseRent.'<br>';
+        /// '$totalPenalInterest '.$totalPenalInterest.'<br>';
 
         $totalTaxPending = $totalTax - $totalTaxPaid;
         $totalLeasePending = $totalLeaseRent - $totalLeaseRentPaid;
         $totalPenalPending = $totalPenalInterest - $totalPenalPaid;
 
-        echo '$totalTaxPending '.$totalTaxPending.'<br>';
-        echo '$totalPenalPending '.$totalPenalPending.'<br>';
-        echo '$totalLeasePending '.$totalLeasePending.'<br>';
+        /// '$totalTaxPending '.$totalTaxPending.'<br>';
+        /// '$totalPenalPending '.$totalPenalPending.'<br>';
+        /// '$totalLeasePending '.$totalLeasePending.'<br>';
 
         $totalPending = $totalTaxPending + $totalLeasePending;
 
-        echo '$totalPending '.$totalPending.'<br>';
+        /// '$totalPending '.$totalPending.'<br>';
 
         $amountPaying = $this->amount;
-        echo '$amountPaying '.$amountPaying.'<br>';
+        /// '$amountPaying '.$amountPaying.'<br>';
 
         $taxPerectage = ($totalTax * 100) / $totalPending;
         $leasePerectage = ($totalLeaseRent * 100) / $totalPending;
 
-        echo '$taxPerectage '.$taxPerectage.'<br>';
-        echo '$leasePerectage '.$leasePerectage.'<br>';
+        /// '$taxPerectage '.$taxPerectage.'<br>';
+        /// '$leasePerectage '.$leasePerectage.'<br>';
 
         $taxPaying = $amountPaying * ($taxPerectage/100);
         $leasePaying = $amountPaying * ($leasePerectage/100);
 
-        echo '$taxPaying '.$taxPaying.'<br>';
-        echo '$leasePaying '.$leasePaying.'<br>';
+        /// '$taxPaying '.$taxPaying.'<br>';
+        /// '$leasePaying '.$leasePaying.'<br>';
 
         $a = $amountPaying - ($taxPaying + $leasePaying) - $totalPenalPending ;
-        echo '$a '.$a.'<br>';
+        /// '$a '.$a.'<br>';
 
         $totalPaying = $taxPaying + $leasePaying;
-        echo '$totalPaying '.$totalPaying.'<br>';
+        /// '$totalPaying '.$totalPaying.'<br>';
 
         $penalPayment = 0;
         if($amountPaying > $totalRentPlusTax ){
@@ -115,9 +121,9 @@ class MyPayment extends Payment
           $taxPaying = $totalRentPlusTax * ($taxPerectage/100);
           $leasePaying = $totalRentPlusTax * ($leasePerectage/100);
           $penalPayment = $amountPaying - $totalRentPlusTax;
-          echo '$taxPaying '.$taxPaying.'<br>';
-          echo '$penalPayment '.$penalPayment.'<br>';
-          echo '$leasePaying '.$leasePaying.'<br>';
+          /// '$taxPaying '.$taxPaying.'<br>';
+          /// '$penalPayment '.$penalPayment.'<br>';
+          /// '$leasePaying '.$leasePaying.'<br>';
         }
 
         $this->penal = $penalPayment;

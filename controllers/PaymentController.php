@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Payment;
 use app\models\MyPayment;
+use app\models\Debit;
 use app\models\SearchPayment;
 use yii\web\Controller;
 use app\models\Orders;
@@ -89,7 +90,7 @@ class PaymentController extends Controller
         if (\Yii::$app->user->can('createPayment')){
             $model = new MyPayment();
             $model->generate();
-            // return $this->redirect(['view', 'id' => $model->payment_id ]);
+            return $this->redirect(['view', 'id' => $model->payment_id ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
@@ -141,7 +142,8 @@ class PaymentController extends Controller
                 date_default_timezone_set('Asia/Kolkata');
                 $date1 = date('Y-m-d', strtotime($model->start_date. ' + 15 days'));
                 $date2 = date('Y-m-d');
-                $diff = strtotime($date1) - strtotime($date2);
+                $diff = strtotime($date2) - strtotime($date1);
+                // $diff = strtotime($date1) - strtotime($date2);
                 $diffDate  = $diff / (60*60*24);
 
                 if($in->invoice_id != $model->invoice_id){
@@ -163,13 +165,14 @@ class PaymentController extends Controller
                 if( $diffDate > 0 ){
 
                   $perDayPenalInterestAmount  = ($in->current_lease_rent - $totalLeaseRentPaid) * ($in->interest->rate/100)/365;
-                  $PenalInterestAmount  = ($perDayPenalInterestAmount * $diffDate) ;
+                  $PenalInterestAmount  = round($perDayPenalInterestAmount * $diffDate) ;
+                  $model_payment->penalInterestAmount = $PenalInterestAmount;
                   $model->current_interest = $model->current_interest + $PenalInterestAmount;
                   $model->save(False);
                   $balanceAmount = round($model->current_interest + $amount);
-                  echo '$balanceAmount '.$balanceAmount.'<br>';
-                  echo '$amount '.$amount.'<br>';
-                  echo '$PenalInterestAmount '.$PenalInterestAmount.'<br>';
+                  /// '$balanceAmount '.$balanceAmount.'<br>';
+                  /// '$amount '.$amount.'<br>';
+                  /// '$PenalInterestAmount '.$PenalInterestAmount.'<br>';
                 }
 
                 if($balanceAmount < 0){
