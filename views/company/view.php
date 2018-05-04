@@ -146,9 +146,7 @@ use yii\data\ActiveDataProvider;
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
           <p><b>Company: </b><?= $order->company->name ?></p><br>
           <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
-          <p><?php if(Yii::$app->user->can('admin')){ ?>
-            <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
-            <?php }?>
+          
         </div>
         <div class="col-md-4">
           <p><b>Total Area: </b><?= $order->total_area ?></p><br>
@@ -157,9 +155,16 @@ use yii\data\ActiveDataProvider;
 
         </div>
         <div class="col-md-4">
-        <?php  if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
-        <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
-        <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
+          <?php  if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
+          <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
+          <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
+          <p><?php if(Yii::$app->user->can('admin')){ ?>
+            <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
+            <?php }?>
+          <?php if(Yii::$app->user->can('company')){ ?>
+            <a href="index.php?r=report%2Fledger&order_id=<?= $order->order_id; ?>" class="btn btn-success">View Ledger</a>
+            <?php }?>
+          </p>
         </div>
       </div>
 

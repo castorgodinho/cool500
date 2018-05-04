@@ -55,7 +55,11 @@ class ReportController extends Controller
 
     public function actionLedger()
     {
-        if (\Yii::$app->user->can('viewLedgerReport')){
+        $order_id = 0;
+        if(Yii::$app->request->get()){
+            $order_id = Yii::$app->request->get('order_id');
+        }
+        if (\Yii::$app->user->can('viewLedgerReport', ['order_id' => $order_id ])){
             $invoice = '';
             $payment = '';
             $to = 'Records';
@@ -64,17 +68,35 @@ class ReportController extends Controller
                 echo "Here";
                 $to = Yii::$app->request->post('to_date');
                 $from = Yii::$app->request->post('from_date');
+                $order_number = Yii::$app->request->post('order_number');
+                
                 if($to != '' && $from != ''){
                     echo 'Query with dates';
                     $invoice = Invoice::find()->orderBy('start_date')
-                    ->where(['between', 'start_date', $from, $to ])->all();
+                    ->where(['between', 'start_date', $from, $to ]);
                     $payment = Payment::find()->orderBy('start_date')
-                    ->where(['between', 'start_date', $from, $to ])->all();
+                    ->where(['between', 'start_date', $from, $to ]);
                 }else{
                     echo 'Query without dates';
-                    $invoice = Invoice::find()->orderBy('start_date')->all();
-                    $payment = Payment::find()->orderBy('start_date')->all(); 
+                    $invoice = Invoice::find()->orderBy('start_date');
+                    $payment = Payment::find()->orderBy('start_date'); 
                 }
+                if($order_number != ""){
+                    $invoice->joinWith('order');
+                    $payment->joinWith('order');
+                    $invoice->andFilterWhere(['like', 'order_number', $order_number]);
+                    $payment->andFilterWhere(['like', 'order_number', $order_number]);
+                    $invoice = $invoice->all();
+                    $payment = $payment->all();
+                }else{
+                    $invoice = $invoice->all();
+                    $payment = $payment->all();
+                }
+            }else if(Yii::$app->request->get()){
+                $order_number = Yii::$app->request->get('order_id');
+                echo 'only';
+                $invoice = Invoice::find()->where(['order_id' => $order_number])->all();
+                $payment = Payment::find()->where(['order_id' => $order_number])->all();                
             }else{
                 echo 'Normal';
                 $invoice = Invoice::find()->orderBy('start_date')->all();

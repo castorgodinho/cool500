@@ -53,7 +53,9 @@
 <input type="hidden" name="tpsl_txn_id" value="TXN00111"/>
 <input type="hidden" name="reqDetail" class="amount-hidden" value="Test_<?php echo $amount; ?>_0.0"/>
 
-
+<h2><?= $model->invoice_id ?></h2>
+<h2><?= $model->start_date ?></h2>
+<h2><?= $model->order_id ?></h2>
 
 
  <input type="submit" class="submit-btn btn btn-primary" name="submit" value="Pay Now" />

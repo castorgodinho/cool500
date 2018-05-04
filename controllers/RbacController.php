@@ -410,7 +410,7 @@ class RbacController extends Controller
         $auth->add($updateOwnGst);
         $auth->addChild($updateOwnGst, $updateGst);
 
-        //update own gst
+        //update own gst viewLedgerReport
         $rule = new \app\rbac\TdsRule;
         $auth->add($rule);
         $updateOwntds = $auth->createPermission('updateOwntds');
@@ -419,6 +419,14 @@ class RbacController extends Controller
         $auth->add($updateOwntds);
         $auth->addChild($updateOwntds, $uploadtds);
         
+        //view own ledger
+        $rule = new \app\rbac\LedgerRule;
+        $auth->add($rule);
+        $viewOwnLedgerReport = $auth->createPermission('viewOwnLedgerReport');
+        $viewOwnLedgerReport->description = 'view own ledger';
+        $viewOwnLedgerReport->ruleName = $rule->name;
+        $auth->add($viewOwnLedgerReport);
+        $auth->addChild($viewLedgerReport, $viewOwnLedgerReport);
 
         // add "Company" role
         $company = $auth->createRole('company');
@@ -437,6 +445,7 @@ class RbacController extends Controller
         $auth->addChild($company, $viewOwnInvoice);
         $auth->addChild($company, $updateOwnGst);
         $auth->addChild($company, $updateOwntds);
+        $auth->addChild($company, $viewOwnLedgerReport);
 
         //add Staff permissions
         $auth->addChild($staff, $createCompany);

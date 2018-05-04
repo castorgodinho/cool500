@@ -8,7 +8,7 @@
 <?php $form = Html::beginForm(); ?>
 <form action="<?=  \Yii::$app->request->BaseUrl ?>/index.php?r=report%2Fledger" method="POST">
 <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
-
+<?php if(Yii::$app->user->can('admin')){?>
 <div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         <?= Html::label('From Date', 'xxx') ?>
@@ -36,10 +36,14 @@
     </div>
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         <br>
+        <input type="text" class="form-control" name="order_number" placehoder="Order Number">
+    </div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+        <br>
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
     </div>
 </div>
-
+        <?php } ?>
 
 
 
