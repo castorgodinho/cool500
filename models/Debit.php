@@ -11,9 +11,12 @@ use Yii;
  * @property int $penal
  * @property int $invoice_id
  * @property int $payment_id
+ * @property string $start_date
+ * @property int $order_id
  *
  * @property Invoice $invoice
  * @property Payment $payment
+ * @property Orders $order
  */
 class Debit extends \yii\db\ActiveRecord
 {
@@ -32,9 +35,11 @@ class Debit extends \yii\db\ActiveRecord
     {
         return [
             [['penal'], 'required'],
-            [['penal', 'invoice_id', 'payment_id'], 'integer'],
+            [['penal', 'invoice_id', 'payment_id', 'order_id'], 'integer'],
+            [['start_date'], 'safe'],
             [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'invoice_id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::className(), 'targetAttribute' => ['payment_id' => 'payment_id']],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
         ];
     }
 
@@ -48,6 +53,8 @@ class Debit extends \yii\db\ActiveRecord
             'penal' => 'Penal',
             'invoice_id' => 'Invoice ID',
             'payment_id' => 'Payment ID',
+            'start_date' => 'Start Date',
+            'order_id' => 'Order ID',
         ];
     }
 
@@ -65,5 +72,13 @@ class Debit extends \yii\db\ActiveRecord
     public function getPayment()
     {
         return $this->hasOne(Payment::className(), ['payment_id' => 'payment_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrder()
+    {
+        return $this->hasOne(Orders::className(), ['order_id' => 'order_id']);
     }
 }

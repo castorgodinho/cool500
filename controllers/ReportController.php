@@ -94,8 +94,11 @@ class ReportController extends Controller
                     
                     $invoice = $invoice->all();
                     $payment = $payment->all();
-                    echo $invoice->invoice_id;
-                    $debit->andFilterWhere(['invoice_id' => $invoice->invoice_id]);
+                    $order_id = 0;
+                    foreach($invoice as $in){
+                        $order_id = $in->order_id;
+                    }
+                    $debit->andFilterWhere(['order_id' => $order_id]);
                     $debit = $debit->all();
                 }else{
                     $invoice = $invoice->all();

@@ -78,8 +78,11 @@
             $payment_total += $pay->amount;
         } 
         foreach($debit as $deb){
-            array_push($led, new Ledger($deb->debit_id, $deb->start_date, $deb->penal, True ));
-            $invoice_total += $deb->penal;
+            if($deb->penal > 0){
+                array_push($led, new Ledger($deb->debit_id, $deb->start_date, $deb->penal, True ));
+                $invoice_total += $deb->penal;
+            }
+            
         } 
         function cmp($a, $b)
         {
