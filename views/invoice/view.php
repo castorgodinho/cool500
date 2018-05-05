@@ -179,7 +179,7 @@ use yii\widgets\ActiveForm;
       </tr>
 
       <tr>
-        <td class='bold-text'>  Final Total ( C = A + B) (INR) </td>
+        <td class='bold-text'>  Total Dues ( C = A + B) (INR) </td>
         <td> <?= $model->grand_total?>  </td>
       </tr>
 

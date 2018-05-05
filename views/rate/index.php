@@ -25,6 +25,7 @@ $this->title = 'Rates';
 
             'area.name',
             'rate',
+            'extra',
             'date',
             'flag',
 

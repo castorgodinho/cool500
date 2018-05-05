@@ -8,6 +8,11 @@ ALTER TABLE `rate` DROP `from_area`, DROP `to_area`;
 
 ALTER TABLE `rate` ADD `extra` INT(11) NOT NULL AFTER `flag`;
 
------------------
+
+new
+
+alter table payment add column tax int(11) not null;
+
+alter table payment add column lease_rent int(11) not null;
 
 create table order_rate ( order_rate_id int PRIMARY KEY AUTO_INCREMENT, start_date date, end_date date, amount1 int, amount2 int, flag tinyint, order_id int, CONSTRAINT order_rate_fk FOREIGN KEY (order_id) REFERENCES orders(order_id) )

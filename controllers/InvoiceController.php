@@ -9,6 +9,7 @@ use app\models\Area;
 use app\models\Plot;
 use app\models\Tax;
 use app\models\Interest;
+use app\models\OrderRate;
 use app\models\Payment;
 use app\models\Rate;
 use app\models\Invoice;
@@ -71,7 +72,12 @@ class InvoiceController extends Controller
                 $model->save(False);
                 return $this->redirect(['invoice/index']);
               } else{
+
                 $order =  Orders::findOne($order_id);
+                $order_rate = OrderRate::find()
+                ->where(['order_id' => $order->order_id ])
+                ->andWhere(['flag' => 1])
+                ->one();
 
                 $tax = Tax::find()
                 ->where(['name' => 'GST'])
@@ -102,7 +108,7 @@ class InvoiceController extends Controller
                 $model->prev_dues_total=0;
                 $model->prev_tax=0;
 
-               $model->current_lease_rent = $rate->rate * $order->total_area;
+               $model->current_lease_rent = $order_rate->amount1;
                $model->current_tax = $model->current_lease_rent * ($tax->rate/100);
                $currentCGSTAmount = (($tax->rate/2)/100) * $model->current_lease_rent;
                $currentSGSTAmount = $currentCGSTAmount;
@@ -112,6 +118,15 @@ class InvoiceController extends Controller
                ->where(['order_id' => $order_id])
                ->orderBy(['invoice_id' => SORT_DESC])
                ->one();
+
+               $time = strtotime($start_date);
+               $newformat = date('d-m-Y',$time);
+               $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
+               $billDate = $start_date;
+
+               if($start_date > $order_rate->end_date ){
+                $model->current_lease_rent = $model->current_lease_rent + $order_rate->amount1;
+               }
 
                if($invoice){
 
@@ -130,11 +145,6 @@ class InvoiceController extends Controller
                  $previousCGSTAmount =  (($invoice->tax->rate/2)/100) * $invoice->current_lease_rent;
                  $previousSGSTAmount = $previousCGSTAmount;
 
-                 $time = strtotime($invoice->start_date);
-                 $newformat = date('d-m-Y',$time);
-                 $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
-                 $billDate = $start_date;
-
                  $date1 = $invoiceDueDate;
                  $date2 = $start_date;
                  $diff = strtotime($date2) - strtotime($date1);
@@ -146,15 +156,13 @@ class InvoiceController extends Controller
                  $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
                  $prevPeriodTo   = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 day  '));
                  }else{
+
                  $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
                  $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
 
                  $prevPeriodFrom = '-';
                  $prevPeriodTo = '-';
 
-                 $time = strtotime($order->start_date);
-                 $newformat = date('d-m-Y',$time);
-                 $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
                  $billDate = $start_date;
                }
 
@@ -179,7 +187,6 @@ class InvoiceController extends Controller
                          'leasePeriodTo' => $leasePeriodTo,
                          'prevPeriodFrom' => $prevPeriodFrom,
                          'prevPeriodTo' => $prevPeriodTo,
-                         'billDate' => $billDate,
                          'invoiceDueDate' => $invoiceDueDate,
                          'order_id' => $order_id,
                          'interest' => $interest,
