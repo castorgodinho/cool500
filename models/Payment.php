@@ -29,6 +29,7 @@ class Payment extends \yii\db\ActiveRecord
 {
   public $file;
   public $lease_rent;
+  public $penalInterestAmount;
 
     public static function tableName()
     {
@@ -44,6 +45,7 @@ class Payment extends \yii\db\ActiveRecord
             [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'balance_amount', 'penal', 'tax', 'lease_rent'], 'integer'],
             [['start_date', 'lease_rent', 'file'], 'safe'],
             [['file'], 'file'],
+            [['penalInterestAmount'], 'safe'],
             [['balance_amount', 'payment_no', 'penal', 'cheque_no', 'tax', 'lease_rent'], 'required'],
             [['mode'], 'string', 'max' => 50],
             [['payment_no', 'cheque_no'], 'string', 'max' => 100],

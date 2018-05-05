@@ -13,6 +13,7 @@ use app\models\OrderRate;
 use app\models\Payment;
 use app\models\Rate;
 use app\models\Invoice;
+use app\models\MyInvoice;
 use app\models\SearchInvoice;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -138,7 +139,7 @@ class InvoiceController extends Controller
                  ->where(['invoice_id' => $invoice->invoice_id])
                  ->sum('penal');
 
-                 $model->prev_dues_total = $invoice->grand_total - $totalPaid;
+                 $model->prev_dues_total = $invoice->grand_total - $totalPaid + $pi;
 
                  $model->prev_lease_rent = $invoice->current_lease_rent;
                  $model->prev_tax = $invoice->current_tax;
@@ -226,7 +227,6 @@ class InvoiceController extends Controller
     {
         $model = Invoice::findOne($id);
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
-
             $time = strtotime($model->start_date);
             $start_date = date('d-m-Y',$time);
             $invoiceDueDate = date('d-m-Y', strtotime($start_date. ' + 15 days'));
@@ -283,19 +283,22 @@ class InvoiceController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (\Yii::$app->user->can('updateInvoice')){
-            $model = $this->findModel($id);
-
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->invoice_id]);
-            }
-
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }else{
-            throw new \yii\web\ForbiddenHttpException;
-        }
+        $inovice = Invoice::findOne($id);
+        $model = new MyInvoice();
+        $model->generate($inovice);
+        // if (\Yii::$app->user->can('updateInvoice')){
+        //     $model = $this->findModel($id);
+        //
+        //     if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        //         return $this->redirect(['view', 'id' => $model->invoice_id]);
+        //     }
+        //
+        //     return $this->render('update', [
+        //         'model' => $model,
+        //     ]);
+        // }else{
+        //     throw new \yii\web\ForbiddenHttpException;
+        // }
     }
 
     /**

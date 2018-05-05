@@ -16,3 +16,10 @@ alter table payment add column tax int(11) not null;
 alter table payment add column lease_rent int(11) not null;
 
 create table order_rate ( order_rate_id int PRIMARY KEY AUTO_INCREMENT, start_date date, end_date date, amount1 int, amount2 int, flag tinyint, order_id int, CONSTRAINT order_rate_fk FOREIGN KEY (order_id) REFERENCES orders(order_id) )
+
+create table debit(
+debit_id int(11) not null PRIMARY key AUTO_INCREMENT,
+penal int not null,
+invoice_id int,
+FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id)
+);
