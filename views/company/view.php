@@ -160,7 +160,7 @@ use yii\data\ActiveDataProvider;
           <p><?php if(Yii::$app->user->can('admin')){ ?>
             <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
             <?php }?>
-          <?php if(Yii::$app->user->can('company')){ ?>
+          <?php if(Yii::$app->user->can('company') || Yii::$app->user->can('admin')){ ?>
             <a href="index.php?r=report%2Fledger&order_id=<?= $order->order_id; ?>" class="btn btn-success">View Ledger</a>
             <?php }?>
           </p>

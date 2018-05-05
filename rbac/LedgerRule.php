@@ -2,12 +2,12 @@
     namespace app\rbac;
 
     use yii\rbac\Rule;
-    use app\models\Order;
+    use app\models\Orders;
     
     /**
      * Checks if authorID matches user passed via params
      */
-    class ledgerRule extends Rule
+    class LedgerRule extends Rule
     {
         public $name = 'isOwnLedger';
     
@@ -19,7 +19,7 @@
          */
         public function execute($user, $item, $params)
         {
-            $order = Order::findOne($params['order_id']);
+            $order = Orders::findOne($params['order_id']);
             return $order->company->user_id  == $user;
         }
     }

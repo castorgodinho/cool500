@@ -426,7 +426,7 @@ class RbacController extends Controller
         $viewOwnLedgerReport->description = 'view own ledger';
         $viewOwnLedgerReport->ruleName = $rule->name;
         $auth->add($viewOwnLedgerReport);
-        $auth->addChild($viewLedgerReport, $viewOwnLedgerReport);
+        $auth->addChild($viewOwnLedgerReport, $viewLedgerReport);
 
         // add "Company" role
         $company = $auth->createRole('company');

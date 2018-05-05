@@ -109,8 +109,12 @@ class ReportController extends Controller
                 $order_number = Yii::$app->request->get('order_id');
                 echo 'only';
                 $invoice = Invoice::find()->where(['order_id' => $order_number])->all();
-                $payment = Payment::find()->where(['order_id' => $order_number])->all();                
-                $debit = Debit::find()->where(['invoice_id' => $invoice->invoice_id])->all();                
+                $payment = Payment::find()->where(['order_id' => $order_number])->all();   
+                $order_id = 0;
+                foreach($invoice as $in){
+                    $order_id = $in->order_id;
+                }   
+                $debit = Debit::find()->where(['order_id' => $order_id])->all();                
             }else{
                 echo 'Normal';
                 $invoice = Invoice::find()->orderBy('start_date')->all();
