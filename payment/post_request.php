@@ -15,7 +15,7 @@ require_once 'TransactionResponseBean.php';
 
 session_start();
 
-if($_POST && isset($_POST['submit'])){    
+if($_POST){    
     
      $val = $_POST;
     
@@ -93,7 +93,6 @@ if($_POST && isset($_POST['submit'])){
         print_r($response);
         exit;
     }elseif(is_string($response) && preg_match('/^txn_status=/',$response)){
-		
         print_r($response);
         exit;
 	}
@@ -104,7 +103,7 @@ if($_POST && isset($_POST['submit'])){
 }else if($_POST){
 
    
-
+    echo "DEstroyed..";
     session_destroy();
     
 

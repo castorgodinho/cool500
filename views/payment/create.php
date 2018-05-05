@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<?php $form = ActiveForm::begin(['action' => 'index.php?r=payment/create']); ?>
+<?php $form = ActiveForm::begin(['action' => 'index.php?r=payment/create', 'id' => 'form1']); ?>
 
 <table class="table">
   <th></th>
@@ -85,9 +85,11 @@ use yii\widgets\ActiveForm;
 
 </table>
 <?php if($balanceAmount != 0) { ?>
+
+<p> <b>Amount:</b> </p>
 <input id="mypayment-invoice_id" class="form-control" name="MyPayment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
 
-<?= $form->field($model, 'amount')->textInput() ?>
+<input id="mypayment-amount" class="form-control amount-1" name="MyPayment[amount]" type="text">
 
 <input id="mypayment-start_date" class="form-control" name="MyPayment[start_date]" value="<?= $model->start_date?>" type="hidden">
 
@@ -145,9 +147,7 @@ use yii\widgets\ActiveForm;
           $('.hide-div').slideDown();
           $('.hide-div').append(div);
         }
-
       });
-
     });
 JS;
     $this->registerJS($script);
@@ -188,8 +188,62 @@ JS;
   $this->registerJS($script);
 ?>
 <div class="form-group">
-    <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success']) ?>
+    <?= Html::submitButton('SUBMIT', ['class' => 'btn btn-success', 'id' => '']) ?>
 </div>
 <?php ActiveForm::end(); ?>
 
 <?php  } ?>
+
+<?php
+  $strCurDate = date('d-m-Y');
+
+?>
+<form target="_blank" method="post" id="payment-form" action="http://192.168.1.9/gidc/payment/post_request.php">
+
+<br/>
+ 
+<input type="hidden" name="mrctTxtID" value="999999"/>
+<input type="hidden" name="locatorURL" value="https://www.tekprocess.co.in/PaymentGateway/TransactionDetailsNew.wsdl"/>
+<input type="hidden" name="txnDate" value="<?php echo $strCurDate;?>"/>
+<input type="hidden" class="error" name="custID" value="<?= $model->order->company_id ?> "/>
+<input type="hidden" name="custname" value="<?= $model->order->company->name ?>"/><br>
+<input type="hidden" name="test" value="data"/><br>
+<input type="hidden" class='amount' class="form-control" name="amount" value="0"/>
+<input type="hidden" name="reqType" value="T"/>
+<input type="hidden" name="mrctCode" value="T143310"/>
+<input type="hidden" name="currencyType" value="INR"/>
+<input type="hidden" name="bankCode" value="470"/>
+<input type="hidden" name="returnURL" value='http://192.168.1.9/gidc/payment/post_response.php'/>
+<input type="hidden" name="s2SReturnURL" value="https://tpslvksrv6046/LoginModule/Test.jsp"/>   
+<input type="hidden" name="tpsl_txn_id" value="TXN00111"/>
+<input type="hidden" name="reqDetail" class="amount-hidden" value="Test_<?php echo $amount; ?>_0.0"/>
+
+
+<!--  <input type="submit" class="submit-btn btn btn-primary" name="submit" value="Pay Now" /> -->
+
+ </form>
+
+
+<?php
+  $script = <<< JS
+    $(document).ready(function(){
+      $('#form1').submit(function(){
+        var amount = $('.amount-1').val();
+        $('.error').val(amount);
+        if(amount.indexOf(".") == -1){
+            console.log("Decimal");
+            /* amount = Number($('.amount').val()); */
+            amount = amount +'.0';
+            $('.error').val(amount+'.0');
+        }
+        $('.amount').val(amount);
+        console.log(amount.toString());
+        var amt_value = 'Test_'+amount+"_0.0";
+        $('.amount-hidden').val(amt_value);
+        $('.amount').val(amt_value);
+        $('#payment-form').submit();
+      });
+    });
+JS;
+    $this->registerJS($script);
+?>

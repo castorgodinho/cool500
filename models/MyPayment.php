@@ -19,11 +19,7 @@ class MyPayment extends Payment
         $invoice->save();
         /// '$invoice->invoice_id '.$this->invoice_id.'<br>';
 
-        $debit = new Debit();
-        $debit->penal = $this->penal;
-        $debit->invoice_id = $invoice->invoice_id;
-        $debit->save(False);
-
+        
         $totalPreviousPayment = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
         ->sum('amount');
@@ -130,35 +126,41 @@ class MyPayment extends Payment
         $this->tax = $taxPaying;
         $this->lease_rent = $leasePaying;
 
-          if($balanceAmount < 0){
-            Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
-            return $this->redirect(['index']);
+        if($balanceAmount < 0){
+          Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
+          return $this->redirect(['index']);
+        }
+        else if($this->tds_rate > 10.10 ){
+          Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
+          return $this->redirect(['index']);
+        }else{
+          $this->save(False);
+          $payment_no = 'GIDC/';
+          $payment_id = strval($this->payment_id);
+          for ($i=0; $i < (7 - strlen($payment_id)); $i++) {
+            $payment_no = $payment_no .'0';
           }
-          else if($this->tds_rate > 10.10 ){
-            Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
-            return $this->redirect(['index']);
+          $payment_no = $payment_no .''. $payment_id;
+          $this->payment_no = $payment_no;
+          $this->balance_amount = $balanceAmount;
+          $this->file = UploadedFile::getInstance($this, 'file'); #TODO
+          if($this->file){
+            $this->tds_file = 'gstfiles/' . $this->payment_id . '.' . $this->file->extension;
+            $this->file->saveAs('gstfiles/' . $this->payment_id . '.' . $this->file->extension);
           }
-          else{
-              $this->save(False);
-              $payment_no = 'GIDC/';
-              $payment_id = strval($this->payment_id);
-              for ($i=0; $i < (7 - strlen($payment_id)); $i++) {
-                $payment_no = $payment_no .'0';
-              }
-              $payment_no = $payment_no .''. $payment_id;
-              $this->payment_no = $payment_no;
-              $this->balance_amount = $balanceAmount;
+          $lr = $this->invoice->current_lease_rent;
+          $tds_amount = ($lr * ($this->tds_rate/100));
+          $this->tds_amount = $tds_amount;
+          $this->save(False);
 
-              $this->file = UploadedFile::getInstance($this, 'file'); #TODO
-              if($this->file){
-                $this->tds_file = 'gstfiles/' . $this->payment_id . '.' . $this->file->extension;
-                $this->file->saveAs('gstfiles/' . $this->payment_id . '.' . $this->file->extension);
-              }
-              $lr = $this->invoice->current_lease_rent;
-              $tds_amount = ($lr * ($this->tds_rate/100));
-              $this->tds_amount = $tds_amount;
-              $this->save(False);
-          }
+          
+          $debit = new Debit();
+          $debit->penal = $this->penal;
+          $debit->invoice_id = $invoice->invoice_id;
+          $debit->payment_id = $this->payment_id;
+          $debit->start_date = $this->start_date;
+          $debit->save(False);
+        }
       }
  }
 }

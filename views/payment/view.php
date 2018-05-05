@@ -214,6 +214,37 @@ This is a computer-generated document and it does not require a signature. <br>
 
 </div>
 
+<div class="container">
+  <h2 class="text-center">Debit Note</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <p><b>Debit Note Number: </b><?= $debit->debit_id ?></p>
+      <p><b>Invoice Number: </b><?= $invoice->invoice_code ?></p>
+      <p><b>Date: </b><?= $model->start_date ?></p>
+    </div>
+    <div class="col-md-6 text-right">
+      <p><b>Company Name: </b><?= $invoice->order->company->name ?></p>
+      <p><b>GSTIN: </b><?= $invoice->order->company->gstin  ?></p>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered">
+        <tr>
+          <td>Particulars</td>
+          <td>Amount</td>
+        </tr>
+        <tr>
+          <td>Penal Interest of Rs. <?= $debit->penal ?></td>
+          <td> <?= $debit->penal ?></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+
 <?php
   $script = <<< JS
 

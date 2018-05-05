@@ -7,6 +7,7 @@ use app\models\Rate;
 use app\models\Payment;
 use app\models\SearchRate;
 use app\models\Log;
+use app\models\Debit;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -62,6 +63,7 @@ class ReportController extends Controller
         if (\Yii::$app->user->can('viewLedgerReport', ['order_id' => $order_id ])){
             $invoice = '';
             $payment = '';
+            $debit = '';
             $to = 'Records';
             $from = 'All';
             if(Yii::$app->request->post()){
@@ -76,37 +78,48 @@ class ReportController extends Controller
                     ->where(['between', 'start_date', $from, $to ]);
                     $payment = Payment::find()->orderBy('start_date')
                     ->where(['between', 'start_date', $from, $to ]);
+                    $debit = Debit::find()->orderBy('start_date')
+                    ->where(['between', 'start_date', $from, $to ]);
                 }else{
                     echo 'Query without dates';
                     $invoice = Invoice::find()->orderBy('start_date');
                     $payment = Payment::find()->orderBy('start_date'); 
+                    $debit = Debit::find()->orderBy('start_date'); 
                 }
                 if($order_number != ""){
                     $invoice->joinWith('order');
                     $payment->joinWith('order');
                     $invoice->andFilterWhere(['like', 'order_number', $order_number]);
                     $payment->andFilterWhere(['like', 'order_number', $order_number]);
+                    
                     $invoice = $invoice->all();
                     $payment = $payment->all();
+                    echo $invoice->invoice_id;
+                    $debit->andFilterWhere(['invoice_id' => $invoice->invoice_id]);
+                    $debit = $debit->all();
                 }else{
                     $invoice = $invoice->all();
                     $payment = $payment->all();
+                    $debit = $debit->all();
                 }
-            }else if(Yii::$app->request->get()){
+            }else if(Yii::$app->request->get('order_id')){
                 $order_number = Yii::$app->request->get('order_id');
                 echo 'only';
                 $invoice = Invoice::find()->where(['order_id' => $order_number])->all();
                 $payment = Payment::find()->where(['order_id' => $order_number])->all();                
+                $debit = Debit::find()->where(['invoice_id' => $invoice->invoice_id])->all();                
             }else{
                 echo 'Normal';
                 $invoice = Invoice::find()->orderBy('start_date')->all();
                 $payment = Payment::find()->orderBy('start_date')->all();
+                $debit = Debit::find()->all();  
             }
             return $this->render(
                 'ledger',
                 [
                     'invoice' => $invoice,
                     'payment' => $payment,
+                    'debit' => $debit,
                     'to' => $to,
                     'from' => $from,
                 ]

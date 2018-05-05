@@ -23,3 +23,10 @@ penal int not null,
 invoice_id int,
 FOREIGN KEY (invoice_id) REFERENCES invoice(invoice_id)
 );
+
+
+
+
+alter table debit add payment_id int;
+
+alter table debit add CONSTRAINT fk1 FOREIGN KEY (payment_id) REFERENCES payment(payment_id);

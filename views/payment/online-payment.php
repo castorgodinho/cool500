@@ -59,7 +59,7 @@
 
 
  <input type="submit" class="submit-btn btn btn-primary" name="submit" value="Pay Now" />
- 
+
  </form>
 
 <?php 
