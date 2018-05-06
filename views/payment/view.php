@@ -5,10 +5,13 @@ use yii\widgets\DetailView;
 
 
 ?>
-<style>
+<div class='css'>
+
+</div>
+<!-- <style>
   @page
     {
-        size:  auto;   /* auto is the initial value */
+        size:  auto;   
         margin: 20px;  /* this affects the margin in the printer settings */
     }
   table{
@@ -31,8 +34,9 @@ use yii\widgets\DetailView;
     border: 2px solid black;
   }
 }
-</style>
-<input type="button" class="print-btn btn-success"  value="PRINT" /><br><br>
+</style> -->
+<input type="button" class="print-payment btn btn-success"  value="PRINT" /><br><br>
+<input type="button" class="print-debit btn btn-success"  value="PRINT Debit NOTE" /><br><br>
 <div class="cover" id="printableArea" style="border: 1px solid black; padding: 10px;">
 
 
@@ -214,22 +218,22 @@ This is a computer-generated document and it does not require a signature. <br>
 
 </div>
 
-<div class="container">
+<div class="container cover" id="print-debit">
   <h2 class="text-center">Debit Note</h2>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
       <p><b>Debit Note Number: </b><?= $debit->debit_id ?></p>
       <p><b>Invoice Number: </b><?= $invoice->invoice_code ?></p>
       <p><b>Date: </b><?= $model->start_date ?></p>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
       <p><b>Company Name: </b><?= $invoice->order->company->name ?></p>
       <p><b>GSTIN: </b><?= $invoice->order->company->gstin  ?></p>
     </div>
   </div>
   <hr>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
       <table class="table table-bordered">
         <tr>
           <td>Particulars</td>
@@ -246,15 +250,20 @@ This is a computer-generated document and it does not require a signature. <br>
 
 
 <?php
+
   $script = <<< JS
-
+    var cssPayment = " <style>@page {size:  auto;   margin: 20px;}  table{ font-size: 14px; }  @media print {  body * { visibility: hidden; }  #printableArea, #printableArea * { visibility: visible; }  #printableArea { position: absolute; left: 0; top: 0;} body{ border: 2px solid black; } }</style>";
+    var cssDebit = " <style>@page {size:  auto;   margin: 20px;}  table{ font-size: 14px; }  @media print {  body * { visibility: hidden; }  #print-debit, #print-debit * { visibility: visible; }  #print-debit { position: absolute; left: 0; top: 0;} }</style>";
     $(document).ready(function(){
-      $('.print-btn').click(function(){
-
-
+      $('.print-payment').click(function(){
+        $('.css').empty().append(cssPayment);
         window.print();
-          });
-        });
+      });
+      $('.print-debit').click(function(){
+        $('.css').empty().append(cssDebit);
+        window.print();
+      });
+    });
 JS;
 $this->registerJS($script);
 ?>

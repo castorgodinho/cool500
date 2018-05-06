@@ -237,10 +237,11 @@ JS;
             $('.error').val(amount+'.0');
         }
         $('.amount').val(amount);
+        $('.amount').val(amount);
         console.log(amount.toString());
         var amt_value = 'Test_'+amount+"_0.0";
         $('.amount-hidden').val(amt_value);
-        $('.amount').val(amt_value);
+        
         $('#payment-form').submit();
       });
     });
