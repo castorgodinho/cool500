@@ -76,14 +76,14 @@ class ReportController extends Controller
                     echo 'Query with dates';
                     $invoice = Invoice::find()->orderBy('start_date')
                     ->where(['between', 'start_date', $from, $to ]);
-                    $payment = Payment::find()->orderBy('start_date')
+                    $payment = Payment::find()->where(['status' => 1])->orderBy('start_date')
                     ->where(['between', 'start_date', $from, $to ]);
                     $debit = Debit::find()->orderBy('start_date')
                     ->where(['between', 'start_date', $from, $to ]);
                 }else{
                     echo 'Query without dates';
                     $invoice = Invoice::find()->orderBy('start_date');
-                    $payment = Payment::find()->orderBy('start_date'); 
+                    $payment = Payment::find()->where(['status' => 1])->orderBy('start_date'); 
                     $debit = Debit::find()->orderBy('start_date'); 
                 }
                 if($order_number != ""){
@@ -109,7 +109,7 @@ class ReportController extends Controller
                 $order_number = Yii::$app->request->get('order_id');
                 echo 'only';
                 $invoice = Invoice::find()->where(['order_id' => $order_number])->all();
-                $payment = Payment::find()->where(['order_id' => $order_number])->all();   
+                $payment = Payment::find()->where(['order_id' => $order_number])->andWhere(['status' => 1])->all();   
                 $order_id = 0;
                 foreach($invoice as $in){
                     $order_id = $in->order_id;
@@ -118,7 +118,7 @@ class ReportController extends Controller
             }else{
                 echo 'Normal';
                 $invoice = Invoice::find()->orderBy('start_date')->all();
-                $payment = Payment::find()->orderBy('start_date')->all();
+                $payment = Payment::find()->where(['status' => 1])->orderBy('start_date')->all();
                 $debit = Debit::find()->all();  
             }
             return $this->render(

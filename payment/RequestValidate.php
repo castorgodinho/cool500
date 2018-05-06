@@ -1,5 +1,4 @@
 <?php
-namespace app\payment;
 class RequestValidate
 {
     const BLANK_REQUEST_TYPE = 'ERROR008';

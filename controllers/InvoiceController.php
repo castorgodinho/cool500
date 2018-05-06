@@ -133,10 +133,12 @@ class InvoiceController extends Controller
 
                  $totalPaid = Payment::find()
                  ->where(['invoice_id' => $invoice->invoice_id])
+                 ->andWhere(['status' => 1])
                  ->sum('amount');
 
                  $pi = Payment::find()
                  ->where(['invoice_id' => $invoice->invoice_id])
+                 ->andWhere(['status' => 1])
                  ->sum('penal');
 
                  $model->prev_dues_total = $invoice->grand_total - $totalPaid + $pi;

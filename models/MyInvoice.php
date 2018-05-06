@@ -47,10 +47,12 @@ class MyInvoice extends Invoice
 
       $totalPaid = Payment::find()
       ->where(['invoice_id' => $invoice->invoice_id])
+      ->andWhere(['status' => 1])
       ->sum('amount');
 
       $totalPenal = Payment::find()
       ->where(['invoice_id' => $invoice->invoice_id])
+      ->andWhere(['status' => 1])
       ->sum('penal');
 
       // TODO penal interest
@@ -76,10 +78,12 @@ class MyInvoice extends Invoice
 
          $totalPaid = Payment::find()
          ->where(['invoice_id' => $invoice->invoice_id])
+         ->andWhere(['status' => 1])
          ->sum('amount');
 
          $pi = Payment::find()
          ->where(['invoice_id' => $invoice->invoice_id])
+         ->andWhere(['status' => 1])
          ->sum('penal');
 
          $this->prev_dues_total = $invoice->grand_total - $totalPaid + $pi;

@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
             [
                 'label' => 'Amount Paid',
                 'value' => function ($dataProvider) {
-                    $amount = Payment::find()->where(['invoice_id' => $dataProvider->invoice_id])->sum('amount');
+                    $amount = Payment::find()->where(['invoice_id' => $dataProvider->invoice_id])->andWhere(['status' => 1])->sum('amount');
                     
                     if($amount == '')
                      return 0;
@@ -74,7 +74,7 @@ use yii\widgets\ActiveForm;
             [
                 'label' => 'Balance',
                 'value' => function ($dataProvider) {
-                    $amount = Payment::find()->where(['invoice_id' => $dataProvider->invoice_id])->sum('amount');
+                    $amount = Payment::find()->where(['invoice_id' => $dataProvider->invoice_id])->andWhere(['status' => 1])->sum('amount');
                     
                     if($amount == '')
                      return $dataProvider->grand_total;

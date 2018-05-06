@@ -1,6 +1,5 @@
 <?php
 
-namespace app\payment;
 
 ob_start();
 
@@ -58,14 +57,8 @@ if($_POST && isset($_POST['submit'])){
     $invoice_id = str_replace($words, '', $status[7]);
     if(strpos($status[1], 'success') == True){
         echo 'Success';
-        echo "<div class='jumbotron'>" +
-            "<div class='container'>" +
-                "<h1>Transaction Successful</h1>" +
-            "</div>" +
-        "</div>";
-        $payment = Payment::findOne($payment_id);
-        $payment->status = 1;
-        $payment->save(false);
+        header("Location: http://localhost/gidc/web/index.php?r=payment/complete-payment&id=$invoice_id");
+        
     }else{
         
         echo "<div class='jumbotron'>" +

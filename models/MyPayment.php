@@ -22,18 +22,22 @@ class MyPayment extends Payment
         
         $totalPreviousPayment = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
+        ->andWhere(['status' => 1])
         ->sum('amount');
 
         $totalLeaseRentPaid = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
+        ->andWhere(['status' => 1])
         ->sum('lease_rent');
 
         $totalPenalPaid = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
+        ->andWhere(['status' => 1])
         ->sum('penal');
 
         $totalTaxPaid = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
+        ->andWhere(['status' => 1])
         ->sum('tax');
 
         /// '$totalPreviousPayment '.$totalPreviousPayment.'<br>';
