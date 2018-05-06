@@ -1,5 +1,7 @@
 <?php
 
+namespace app\payment;
+
 ob_start();
 
 
@@ -48,7 +50,31 @@ if($_POST && isset($_POST['submit'])){
         echo $data . '<br>';
     } */
     $status = explode("|",$response);
-    echo $status[1];
+    echo '<br>'.$status[7];
+    $index1 = strpos($status[7], '{');
+    $index2 = strpos($status[7], '}');
+    $status[7] = substr($status[7], $index1, $index2);
+    $words = array("{", "}", "custname:");
+    $invoice_id = str_replace($words, '', $status[7]);
+    if(strpos($status[1], 'success') == True){
+        echo 'Success';
+        echo "<div class='jumbotron'>" +
+            "<div class='container'>" +
+                "<h1>Transaction Successful</h1>" +
+            "</div>" +
+        "</div>";
+        $payment = Payment::findOne($payment_id);
+        $payment->status = 1;
+        $payment->save(false);
+    }else{
+        
+        echo "<div class='jumbotron'>" +
+            "<div class='container'>" +
+                "<h1>Transaction Failed</h1>" +
+            "</div>" +
+        "</div>";
+        
+    }
      echo "</pre>";
     echo "<br><br><br><br>";
 

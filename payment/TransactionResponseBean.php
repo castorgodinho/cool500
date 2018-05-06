@@ -1,5 +1,5 @@
 <?php
-
+namespace app\payment;
 require_once 'RequestValidate.php';
 require_once 'AES.php';
 

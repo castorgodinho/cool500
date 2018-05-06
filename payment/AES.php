@@ -1,5 +1,5 @@
 <?php
-
+namespace app\payment;
 class AES
 {
     const M_CBC = 'cbc';
