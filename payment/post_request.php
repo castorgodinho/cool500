@@ -42,7 +42,7 @@ if($_POST){
     
     
     print"<pre>";
-    print_r($val);
+    //print_r($val);
     print"</pre>";
     
     $transactionRequestBean = new TransactionRequestBean();
