@@ -134,6 +134,7 @@ class MyPayment extends Payment
           Yii::$app->session->setFlash('danger', "TDS HAS TO BE LESS THAN 10.10");
           return $this->redirect(['index']);
         }else{
+          //$this->status = 1;
           $this->save(False);
           $payment_no = 'GIDC/';
           $payment_id = strval($this->payment_id);
@@ -151,6 +152,7 @@ class MyPayment extends Payment
           $lr = $this->invoice->current_lease_rent;
           $tds_amount = ($lr * ($this->tds_rate/100));
           $this->tds_amount = $tds_amount;
+          //$this->status = 1;
           $this->save(False);
 
           

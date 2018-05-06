@@ -19,18 +19,19 @@ use Yii;
  * @property string $payment_no
  * @property int $penal
  * @property string $cheque_no
- * @property int $tax
  * @property int $lease_rent
+ * @property int $tax
+ * @property int $status
  *
+ * @property Debit[] $debits
  * @property Invoice $invoice
  * @property Orders $order
  */
 class Payment extends \yii\db\ActiveRecord
 {
-  public $file;
-  public $lease_rent;
-  public $penalInterestAmount;
-
+    /**
+     * @inheritdoc
+     */
     public static function tableName()
     {
         return 'payment';
@@ -39,16 +40,22 @@ class Payment extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+
+
+    public $file;
+    public $lease_rent;
+    public $penalInterestAmount;
+
     public function rules()
     {
         return [
-            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'balance_amount', 'penal', 'tax', 'lease_rent'], 'integer'],
-            [['start_date', 'lease_rent', 'file'], 'safe'],
+            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'balance_amount', 'penal', 'lease_rent', 'tax'], 'integer'],
+            [['start_date'], 'safe'],
             [['file'], 'file'],
-            [['penalInterestAmount'], 'safe'],
-            [['balance_amount', 'payment_no', 'penal', 'cheque_no', 'tax', 'lease_rent'], 'required'],
+            [['balance_amount', 'payment_no', 'penal', 'cheque_no', 'lease_rent', 'tax'], 'required'],
             [['mode'], 'string', 'max' => 50],
             [['payment_no', 'cheque_no'], 'string', 'max' => 100],
+            [['status'], 'string', 'max' => 4],
             [['invoice_id'], 'exist', 'skipOnError' => true, 'targetClass' => Invoice::className(), 'targetAttribute' => ['invoice_id' => 'invoice_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],
         ];
@@ -72,9 +79,18 @@ class Payment extends \yii\db\ActiveRecord
             'payment_no' => 'Payment No',
             'penal' => 'Penal',
             'cheque_no' => 'Cheque No',
-            'tax' => 'Tax',
             'lease_rent' => 'Lease Rent',
+            'tax' => 'Tax',
+            'status' => 'Status',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDebits()
+    {
+        return $this->hasMany(Debit::className(), ['payment_id' => 'payment_id']);
     }
 
     /**

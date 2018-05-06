@@ -89,10 +89,12 @@ class PaymentController extends Controller
      */
     public function actionCreate()
     {
-        if (\Yii::$app->user->can('createPayment')){
+        if (\Yii::$app->user->can('admin') || \Yii::$app->user->can('company')){
             $model = new MyPayment();
             $model->generate();
-            return $this->redirect(['view', 'id' => $model->payment_id ]);
+            if(! \Yii::$app->user->can('company')){
+                return $this->redirect(['view', 'id' => $model->payment_id ]);
+            }
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }

@@ -103,6 +103,14 @@ use yii\widgets\ActiveForm;
 
 <input id="mypayment-balance_amount" class="form-control" name="MyPayment[balance_amount]" value="<?= $balanceAmount ?>" type="hidden">
 
+<?php if(\Yii::$app->user->can('admin')){ ?>
+  <input id="mypayment-status" class="form-control" name="MyPayment[status]" value="1" type="hidden">
+<?php }else{ ?>
+  <input id="mypayment-status" class="form-control" name="MyPayment[status]" value="0" type="hidden">
+<?php } ?>
+
+
+
 <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '', 'class' => 'mode form-control']) ?>
 <div class="cheque-div">
 
@@ -241,8 +249,9 @@ JS;
         console.log(amount.toString());
         var amt_value = 'Test_'+amount+"_0.0";
         $('.amount-hidden').val(amt_value);
-        
+        window.top.close();
         $('#payment-form').submit();
+        
       });
     });
 JS;

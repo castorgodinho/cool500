@@ -44,6 +44,11 @@ if($_POST && isset($_POST['submit'])){
     $response = $transactionResponseBean->getResponsePayload();
     echo "<pre>";
     print_r($response);
+    /* foreach($response as $data){
+        echo $data . '<br>';
+    } */
+    $status = explode("|",$response);
+    echo $status[1];
      echo "</pre>";
     echo "<br><br><br><br>";
 

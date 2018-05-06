@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
 }
 </style>
 
-<input type="button" class="print-btn btn-success"  value="PRINT" /><br><br>
+<input type="button" class="print-btn btn btn-success"  value="PRINT" /><br><br>
 
 <div class="cover" id="printableArea" style=" padding: 10px;">
 <div class="row">
@@ -194,7 +194,7 @@ use yii\widgets\ActiveForm;
 </div>
 </div>
 <br>
-<?php if(Yii::$app->user->can('admin')){
+<?php if(Yii::$app->user->can('admin') || Yii::$app->user->can('company')){
   echo "<center><a href='index.php?r=payment/render-payment&id=". $model->invoice_code  ."' class='btn btn-primary text-center'>Pay Online</a></center>";
 } ?>
 <?php
