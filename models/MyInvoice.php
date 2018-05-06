@@ -11,6 +11,22 @@ use Yii;
 
 class MyInvoice extends Invoice
 {
+
+    public static function createInvoices(){
+      date_default_timezone_set('Asia/Kolkata');
+      $date2 = date('Y-m-d');
+      $invoices = Invoice::find()->all();
+      foreach ($invoices as $invoice) {
+        $date1 = date('Y-m-d', strtotime($invoice->start_date. ' + 15 days'));
+        $diff = strtotime($date2) - strtotime($date1);
+        $diffDate  = $diff / (60*60*24);
+        if($diffDate == 0 ){
+          $model = new MyInvoice();
+          $model->generate($invoice);
+        }
+      }
+    }
+
     public function generate($invoice){
       date_default_timezone_set('Asia/Kolkata');
 
@@ -38,7 +54,7 @@ class MyInvoice extends Invoice
       ->sum('penal');
 
       // TODO penal interest
-      
+
       $this->prev_dues_total = $invoice->grand_total - $totalPaid;
       $this->order_id = $order_id;
       $this->tax_id = $tax->tax_id;

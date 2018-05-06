@@ -108,7 +108,7 @@ class PaymentController extends Controller
 
         if(!$model){
             throw new \yii\web\ForbiddenHttpException;
-        }        
+        }
 
         date_default_timezone_set('Asia/Kolkata');
         $start_date = date('Y-m-d');
@@ -135,7 +135,7 @@ class PaymentController extends Controller
           $balanceAmount = 0;
         }else{
             $balanceAmount = $model->grand_total - $totalPayment - $pi;
-        }        
+        }
 
         $tds_amount = Payment::find()
         ->where(['invoice_id' => $model->invoice_id])
@@ -152,7 +152,7 @@ class PaymentController extends Controller
           $balanceAmount = 0;
         }else{
             $balanceAmount = $model->grand_total - $totalPayment - $pi;
-        }        
+        }
 
         $lease_rent = $in->current_lease_rent;
         $total_tax = $in->current_tax;
@@ -175,11 +175,11 @@ class PaymentController extends Controller
             /// '$balanceAmount '.$balanceAmount.'<br>';
             /// '$amount '.$amount.'<br>';
             /// '$PenalInterestAmount '.$PenalInterestAmount.'<br>';
-        }        
+        }
 
         if($balanceAmount < 0){
           $balanceAmount = 0;
-        }        
+        }
 
         return $this->render('create', [
                 'start_date' => $start_date,

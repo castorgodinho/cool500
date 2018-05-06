@@ -276,9 +276,11 @@ class InvoiceController extends Controller
 
     public function actionUpdate($id)
     {
-        $inovice = Invoice::findOne($id);
-        $model = new MyInvoice();
-        $model->generate($inovice);
+        // $inovice = Invoice::findOne($id);
+        // $model = new MyInvoice();
+        // $model->generate($inovice);
+
+        MyInvoice::createInvoices();
         // if (\Yii::$app->user->can('updateInvoice')){
         //     $model = $this->findModel($id);
         //
