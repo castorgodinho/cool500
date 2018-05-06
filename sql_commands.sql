@@ -34,3 +34,5 @@ alter table debit add CONSTRAINT fk1 FOREIGN KEY (payment_id) REFERENCES payment
 alter table debit add order_id int;
 
 alter table debit add CONSTRAINT fk_debit_order FOREIGN KEY (order_id) REFERENCES orders(order_id);
+
+alter table payment add status tinyint;
