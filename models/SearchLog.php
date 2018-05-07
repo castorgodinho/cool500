@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\OrderRate;
+use app\models\Log;
 
 /**
- * SearchOrderRate represents the model behind the search form of `app\models\OrderRate`.
+ * SearchLog represents the model behind the search form of `app\models\Log`.
  */
-class SearchOrderRate extends OrderRate
+class SearchLog extends Log
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class SearchOrderRate extends OrderRate
     public function rules()
     {
         return [
-            [['order_rate_id', 'amount1', 'amount2'], 'integer'],
-            [['start_date', 'end_date', 'flag', 'order_id'], 'safe'],
+            [['log_id', 'user_id'], 'integer'],
+            [['type', 'create_date', 'updated_date', 'old_value', 'new_value'], 'safe'],
         ];
     }
 
@@ -41,12 +41,17 @@ class SearchOrderRate extends OrderRate
      */
     public function search($params)
     {
-        $query = OrderRate::find();
+        $query = Log::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'log_id' => SORT_DESC,
+                ]
+            ]
         ]);
 
         $this->load($params);
@@ -57,19 +62,17 @@ class SearchOrderRate extends OrderRate
             return $dataProvider;
         }
 
-        $query->joinWith('order');
-
         // grid filtering conditions
         $query->andFilterWhere([
-            'order_rate_id' => $this->order_rate_id,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'amount1' => $this->amount1,
-            'amount2' => $this->amount2,
+            'log_id' => $this->log_id,
+            'create_date' => $this->create_date,
+            'updated_date' => $this->updated_date,
+            'user_id' => $this->user_id,
         ]);
 
-        $query->andFilterWhere(['like', 'flag', $this->flag]);
-        $query->andFilterWhere(['like', 'orders.order_number', $this->order_id]);
+        $query->andFilterWhere(['like', 'type', $this->type])
+            ->andFilterWhere(['like', 'old_value', $this->old_value])
+            ->andFilterWhere(['like', 'new_value', $this->new_value]);
 
         return $dataProvider;
     }

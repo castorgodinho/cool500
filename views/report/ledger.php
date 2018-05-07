@@ -74,7 +74,7 @@
             $invoice_total += $in->grand_total;
         }
         foreach($payment as $pay){
-            array_push($led, new Ledger($pay->payment_id, $pay->start_date, $pay->amount, False ));
+            array_push($led, new Ledger($pay->payment_no, $pay->start_date, $pay->amount, False ));
             $payment_total += $pay->amount;
         } 
         foreach($debit as $deb){

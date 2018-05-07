@@ -276,7 +276,7 @@ class InvoiceController extends Controller
         }
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
         // $inovice = Invoice::findOne($id);
         // $model = new MyInvoice();
@@ -296,6 +296,7 @@ class InvoiceController extends Controller
         // }else{
         //     throw new \yii\web\ForbiddenHttpException;
         // }
+        return $this->render('invoice-generated');
     }
 
     /**

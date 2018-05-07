@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use app\models\Orders;
 use app\models\Invoice;
 use app\models\Payment;
+use app\models\OrderRate;
 use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 
@@ -257,8 +258,73 @@ use yii\data\ActiveDataProvider;
           ]
       ]);
       ?>
+      <h4> <u>Lease Rent</u> </h4>
+      <?php
+        if(Yii::$app->user->can('admin')){
+        $query = OrderRate::find()->where(['order_id' => $order->order_id]);
+        $provider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+              'pageSize' => 10,
+          ],
+      ]);
+      ?>
+    <?= GridView::widget([
+        'dataProvider' => $provider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'start_date',
+            'end_date',
+            'amount1',
+            'amount2',
+            [
+                'attribute' => 'flag',
+                'value' => function($dataProvider){
+                    if($dataProvider->flag == '1'){
+                        return 'Current';
+                    }else{
+                        return 'Old';
+                    }
+                }
+            ],
+            [
+              'class' => 'yii\grid\ActionColumn',
+              'header' => 'Actions',
+              'headerOptions' => ['style' => 'color:#337ab7'],
+              'template' => '{view}{update}{delete}',
+              'buttons' => [
+                'view' => function ($url, $provider) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                'title' => Yii::t('app', 'lead-view'),
+                    ]);
+                },
+    
+                'update' => function ($url, $provider) {
+                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                'title' => Yii::t('app', 'lead-update'),
+                    ]);
+                },
+                
+    
+              ],
+              'urlCreator' => function ($action, $provider, $key, $index) {
+                  if ($action === 'view') {
+                      $url ='/gidc/web/index.php?r=order-rate%2Fupdate&id='.$provider['order_rate_id'];
+                      return $url;
+                  }
+      
+                  if ($action === 'update') {
+                      //$url=$this->createUrl('state/view',['id' => $model['state_code']]);
+                      $url ='/gidc/web/index.php?r=order-rate%2Fupdate&id='.$provider['order_rate_id'];
+                      return $url;
+                  }
+      
+                  }
+          ],
+        ],
+    ]); ?>
 
-
+        <?php } ?>
 
       </div>
     </div>

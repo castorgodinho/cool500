@@ -224,9 +224,18 @@ class PaymentController extends Controller
 
     public function actionCompletePayment($id){
         $payment = Payment::findOne($id);
-        $payment->status = 1;
-        $payment->save();
-        return $this->redirect(['view', 'id' => $id ]);
+        if (\Yii::$app->user->can('viewPayment', ['payment' => $payment])){
+            $response = Yii::$app->getRequest()->getQueryParam('response');
+            $transaction_id = Yii::$app->getRequest()->getQueryParam('transaction_id');
+            echo $response;
+            $payment->transaction_details = $response;
+            $payment->transaction_no = $transaction_id;
+            $payment->status = 1;
+            $payment->save(false);
+            return $this->redirect(['view', 'id' => $id ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

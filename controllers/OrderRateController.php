@@ -35,13 +35,17 @@ class OrderRateController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchOrderRate();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('admin')){
+            $searchModel = new SearchOrderRate();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -52,9 +56,13 @@ class OrderRateController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('admin')){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**
@@ -64,15 +72,19 @@ class OrderRateController extends Controller
      */
     public function actionCreate()
     {
-        $model = new OrderRate();
+        if(Yii::$app->user->can('admin')){
+            $model = new OrderRate();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->order_rate_id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->order_rate_id]);
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -85,25 +97,29 @@ class OrderRateController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            $orderRate = new OrderRate();
-            $oldRecord = OrderRate::findOne($model->order_rate_id);
-            $oldRecord->flag = '0';
-            $oldRecord->save();
-            $orderRate->start_date = $model->start_date;
-            $orderRate->end_date = $model->end_date;
-            $orderRate->amount1 = $model->amount1;
-            $orderRate->amount2 = $model->amount2;
-            $orderRate->order_id = $model->order_id;
-            $orderRate->flag = 1;
-            $orderRate->save(false);
-            return $this->redirect(['view', 'id' => $model->order_rate_id]);
+        if(Yii::$app->user->can('admin')){
+            if ($model->load(Yii::$app->request->post())) {
+                $orderRate = new OrderRate();
+                $oldRecord = OrderRate::findOne($model->order_rate_id);
+                $oldRecord->flag = '0';
+                $oldRecord->save();
+                $orderRate->start_date = $model->start_date;
+                $orderRate->end_date = $model->end_date;
+                $orderRate->amount1 = $model->amount1;
+                $orderRate->amount2 = $model->amount2;
+                $orderRate->order_id = $model->order_id;
+                $orderRate->flag = 1;
+                $orderRate->save(false);
+                return $this->redirect(['company/index']);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        
     }
 
     /**
@@ -115,9 +131,13 @@ class OrderRateController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if(Yii::$app->user->can('admin')){
+            $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+            return $this->redirect(['index']);
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
     }
 
     /**

@@ -36,3 +36,10 @@ alter table debit add order_id int;
 alter table debit add CONSTRAINT fk_debit_order FOREIGN KEY (order_id) REFERENCES orders(order_id);
 
 alter table payment add status tinyint;
+
+
+alter table payment add tds_file text;
+
+alter table payment add transaction_no varchar(50); 
+
+alter table payment add transaction_details text;

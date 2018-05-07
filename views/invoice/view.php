@@ -50,10 +50,10 @@ use yii\widgets\ActiveForm;
 
 <div class="cover" id="printableArea" style=" padding: 10px;">
 <div class="row">
-  <div class="col-md-2 col-sm-2 col-xs-2 ">
-    <h1><b>GIDC LOGO HERE</b></h1>
+  <div class="col-md-3 col-sm-3 col-xs-3 ">
+  <img src="img/logo.jpg" class="img img-responsive" alt="" srcset="">
   </div>
-  <div class="col-md-10 col-sm-10 col-xs-10 text-right" style="">
+  <div class="col-md-9 col-sm-9 col-xs-9 text-right" style="">
     <h3> <b>Goa Industrial Development Corporation</b> </h3>
     <p>(A Goverment of Goa Undertaking)</p>
     <p>Plot No. 13-A-2, EDC Complex, Patto Plaza, Panjim-Goa 403001</p>

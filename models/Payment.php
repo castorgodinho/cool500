@@ -50,9 +50,9 @@ class Payment extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'balance_amount', 'penal', 'lease_rent', 'tax'], 'integer'],
-            [['start_date'], 'safe'],
+            [['start_date', 'tds_file', 'cheque_no', 'transaction_no', 'transaction_details'], 'safe'],
             [['file'], 'file'],
-            [['balance_amount', 'payment_no', 'penal', 'cheque_no', 'lease_rent', 'tax'], 'required'],
+            [['balance_amount', 'payment_no', 'penal',  'lease_rent', 'tax'], 'required'],
             [['mode'], 'string', 'max' => 50],
             [['payment_no', 'cheque_no'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 4],

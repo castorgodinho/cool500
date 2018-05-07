@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<?php $form = ActiveForm::begin(['action' => 'index.php?r=payment/create', 'id' => 'form1']); ?>
+<?php $form = ActiveForm::begin(['action' => 'index.php?r=payment/create', 'id' => 'form1', 'options' => ['enctype' => 'multipart/form-data']]); ?>
 
 <table class="table">
   <th></th>
@@ -112,8 +112,9 @@ use yii\widgets\ActiveForm;
 
 <?php if(\Yii::$app->user->can('admin')){ ?>
   <?= $form->field($model, 'mode')->dropDownList([ 'cash' => 'CASH', 'cheque' => 'CHEQUE','card' => 'CARD' ], ['prompt' => '', 'class' => 'mode form-control']) ?>
+  <?= $form->field($model, 'cheque_no')->textInput(); ?>
 <?php }else{ ?>
-  <?= $form->field($model, 'mode')->dropDownList(['card' => 'CARD' ], ['class' => 'mode form-control']) ?>
+  <?= $form->field($model, 'mode')->dropDownList(['online' => 'ONLINE' ], ['class' => 'mode form-control']) ?>
 <?php } ?>
 
 <div class="cheque-div">
@@ -132,6 +133,7 @@ use yii\widgets\ActiveForm;
     <br>
   <label for="">TDS RATE</label>
     <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
+    <?= $form->field($model, 'file')->fileInput() ?>
   </div>
   <?php
   $script = <<< JS
@@ -154,10 +156,10 @@ use yii\widgets\ActiveForm;
       $('#tds_triger').change(function(){
         if($('#tds_triger').val()=='tds'){
           $('.hide-div').slideUp();
-          $('.field-payment-file').remove();
+          //$('.field-payment-file').remove();
         }else{
           $('.hide-div').slideDown();
-          $('.hide-div').append(div);
+          //$('.hide-div').append(div);
         }
       });
     });
@@ -187,12 +189,14 @@ $script = <<< JS
             "</div>";
     console.log(div);
 
-
+    $('.field-mypayment-cheque_no').hide();
     $('.mode').change(function(){
       if($('.mode').val() == 'cheque'){
-        $('.cheque-div').append(cheque_no);
+        $('.field-mypayment-cheque_no').show();
+        //$('.cheque-div').append(cheque_no);
       }else{
-        $('.cheque-div').children().remove();
+        $('.field-mypayment-cheque_no').hide();
+        //$('.cheque-div').children().remove();
       }
     });
   });

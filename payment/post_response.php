@@ -25,7 +25,6 @@ if($_POST && isset($_POST['submit'])){
     $key="6636259131GPLFAX";
 
     $response = $_POST;
-
     if(is_array($response)){
         $str = $response['msg'];
     }else if(is_string($response) && strstr($response, 'msg=')){
@@ -49,15 +48,18 @@ if($_POST && isset($_POST['submit'])){
         echo $data . '<br>';
     } */
     $status = explode("|",$response);
+    print_r($status);
     echo '<br>'.$status[7];
+    echo '<br>'.$status[5];
     $index1 = strpos($status[7], '{');
     $index2 = strpos($status[7], '}');
     $status[7] = substr($status[7], $index1, $index2);
     $words = array("{", "}", "custname:");
     $invoice_id = str_replace($words, '', $status[7]);
+    $transaction_id = str_replace('tpsl_txn_id=', '', $status[5]);
     if(strpos($status[1], 'success') == True){
         echo 'Success';
-        header("Location: http://localhost/gidc/web/index.php?r=payment/complete-payment&id=$invoice_id");
+        header("Location: http://localhost/gidc/web/index.php?r=payment/complete-payment&id=$invoice_id&response=$response&transaction_id=$transaction_id");
         
     }else{
         

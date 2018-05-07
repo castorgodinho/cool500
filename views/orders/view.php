@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-view">
 
-    <h1><?= Html::encode("Order Details") ?></h1>
+    <h1><?= Html::encode("Unit Details") ?></h1>
     <br>
 
 

@@ -150,9 +150,10 @@ class MyPayment extends Payment
           $this->balance_amount = $balanceAmount;
           $this->file = UploadedFile::getInstance($this, 'file'); #TODO
           if($this->file){
-            $this->tds_file = 'gstfiles/' . $this->payment_id . '.' . $this->file->extension;
-            $this->file->saveAs('gstfiles/' . $this->payment_id . '.' . $this->file->extension);
+            $this->tds_file = 'tdsfiles/' . $this->file->baseName . '.' . $this->file->extension;
+            $this->file->saveAs('tdsfiles/' .$this->file->baseName . '.' . $this->file->extension);
           }
+          //$this->tds_file = ''
           $lr = $this->invoice->current_lease_rent;
           $tds_amount = ($lr * ($this->tds_rate/100));
           $this->tds_amount = $tds_amount;
