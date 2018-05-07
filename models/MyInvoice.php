@@ -93,6 +93,9 @@ class MyInvoice extends Invoice
       echo $invoice->prev_lease_rent.'<br>';
       $this->prev_tax = $invoice->current_tax;
 
+      $invoiceDueDate = date('d-m-Y', strtotime($invoice->due_date. ' + 1 year '));
+      $this->due_date = $invoiceDueDate;
+
       $this->current_total_dues = $this->current_lease_rent + $this->current_tax;
 
       $invoiceCode = '';

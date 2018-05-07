@@ -51,8 +51,8 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return [
             [['rate_id', 'tax_id', 'order_id', 'interest_id', 'total_amount', 'prev_lease_rent', 'grand_total', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues'], 'integer'],
-            [['start_date', 'due_date'], 'safe'],
-            [['invoice_code', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues'], 'required'],
+            [['start_date'], 'safe'],
+            [['invoice_code', 'prev_tax', 'prev_interest', 'prev_dues_total', 'current_lease_rent', 'current_tax', 'current_interest', 'current_dues_total', 'current_total_dues', 'due_date'], 'required'],
             [['invoice_code'], 'string', 'max' => 100],
             [['interest_id'], 'exist', 'skipOnError' => true, 'targetClass' => Interest::className(), 'targetAttribute' => ['interest_id' => 'interest_id']],
             [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'order_id']],

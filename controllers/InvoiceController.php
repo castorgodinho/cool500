@@ -56,6 +56,8 @@ class InvoiceController extends Controller
                 $areaCode = strtoupper(substr($area->name,0,3));
                 $invoiceCode = $areaCode .'/';
 
+                $due_date =  $model->due_date;
+
                 $year = date('Y');
                 $year = substr($year,2,3);
                 $invoiceCode = $areaCode . '/' . $year;
@@ -70,6 +72,7 @@ class InvoiceController extends Controller
                 }
                 $invoiceCode = $invoiceCode . '/' . $invoiceID;
                 $model->invoice_code = $invoiceCode;
+                $model->due_date = date('Y-m-d', strtotime($due_date. ''));
                 $model->save(False);
                 return $this->redirect(['invoice/index']);
               } else{
@@ -115,6 +118,7 @@ class InvoiceController extends Controller
                $currentSGSTAmount = $currentCGSTAmount;
                $model->current_total_dues = $model->current_lease_rent + $model->current_tax;
 
+
                $invoice = Invoice::find()
                ->where(['order_id' => $order_id])
                ->orderBy(['invoice_id' => SORT_DESC])
@@ -123,6 +127,8 @@ class InvoiceController extends Controller
                $time = strtotime($start_date);
                $newformat = date('d-m-Y',$time);
                $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
+               $model->due_date = $invoiceDueDate;
+
                $billDate = $start_date;
 
                if($start_date > $order_rate->end_date ){
@@ -148,12 +154,15 @@ class InvoiceController extends Controller
                  $previousCGSTAmount =  (($invoice->tax->rate/2)/100) * $invoice->current_lease_rent;
                  $previousSGSTAmount = $previousCGSTAmount;
 
+                 $invoiceDueDate = date('d-m-Y', strtotime($invoice->due_date. ' + 1 year '));
+                 $model->due_date = $invoiceDueDate;
+
                  $date1 = $invoiceDueDate;
                  $date2 = $start_date;
                  $diff = strtotime($date2) - strtotime($date1);
                  $diffDate  = $diff / (60*60*24);
 
-                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
+                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));
                  $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
 
                  $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
