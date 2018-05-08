@@ -11,9 +11,6 @@ return [
     'language' => 'en-US',
     'components' => [
         'db' => $db,
-        'mailer' => [
-            'useFileTransport' => true,
-        ],
         'assetManager' => [            
             'basePath' => __DIR__ . '/../web/assets',
         ],

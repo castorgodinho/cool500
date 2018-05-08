@@ -74,6 +74,14 @@ class InvoiceController extends Controller
                 $model->invoice_code = $invoiceCode;
                 $model->due_date = date('Y-m-d', strtotime($due_date. ''));
                 $model->save(False);
+                $status = Yii::$app->mailer->compose()
+                    ->setFrom('castorgodinho22@gmail.com')
+                    ->setTo($model->order->company->user->email)
+                    ->setSubject('GIDC: Invoice generated')
+                    ->setTextBody('http://localhost/gidc/web/index.php?r=invoice%2Fview&id='.$model->invoice_id)
+                    ->send();
+                $model->email_status = $status;
+                $model->save(false);
                 return $this->redirect(['invoice/index']);
               } else{
 

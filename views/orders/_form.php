@@ -56,10 +56,10 @@ use yii\widgets\ActiveForm;
             ]) ?>
         </div>
         <div class="col-md-3">
-            <?= $form->field($orderRate, 'amount1')->textInput(); ?>    
+            <?= $form->field($orderRate, 'amount1')->textInput()->label('Lease Rent',['class'=>'label-class']); ?>    
         </div>
         <div class="col-md-3">
-            <?= $form->field($orderRate, 'amount2')->textInput(); ?>  
+            <?= $form->field($orderRate, 'amount2')->textInput()->label('Increment',['class'=>'label-class']); ?>  
         </div>
     </div>
 

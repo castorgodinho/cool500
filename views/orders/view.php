@@ -53,8 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'start_date',
             'end_date',
-            'amount1',
-            'amount2',
+            [
+                'label' => 'Lease Rent',
+                'value' => 'amount1',
+            ],
+            [
+                'label' => 'Increment',
+                'value' => 'amount2',
+            ],
             [
                 'attribute' => 'flag',
                 'value' => function($dataProvider){

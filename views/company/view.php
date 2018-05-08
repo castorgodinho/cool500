@@ -176,6 +176,11 @@ use yii\data\ActiveDataProvider;
           'pagination' => [
               'pageSize' => 10,
           ],
+          'sort' => [
+            'defaultOrder' => [
+                'invoice_id' => SORT_DESC,
+            ]
+            ],
       ]);
       ?>
       <?=
@@ -220,14 +225,17 @@ use yii\data\ActiveDataProvider;
           'pagination' => [
               'pageSize' => 10,
           ],
+          'sort' => [
+            'defaultOrder' => [
+                'payment_id' => SORT_DESC,
+            ]
+          ],
       ]);
       ?>
       <?=
         yii\grid\GridView::widget([
           'dataProvider' => $provider,
           'columns' => [
-            'payment_id',
-            'order_id',
             'amount',
             'start_date',
             'mode',
@@ -275,8 +283,15 @@ use yii\data\ActiveDataProvider;
             ['class' => 'yii\grid\SerialColumn'],
             'start_date',
             'end_date',
-            'amount1',
-            'amount2',
+            
+            [
+              'label' => 'Lease Rent',
+              'value' => 'amount1',
+          ],
+          [
+              'label' => 'Increment',
+              'value' => 'amount2',
+          ],
             [
                 'attribute' => 'flag',
                 'value' => function($dataProvider){
