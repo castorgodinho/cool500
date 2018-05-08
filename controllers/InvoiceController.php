@@ -247,8 +247,8 @@ class InvoiceController extends Controller
         $model = Invoice::findOne($id);
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
             $time = strtotime($model->start_date);
-            $start_date = date('d-m-Y',$time);
-            $invoiceDueDate = date('d-m-Y', strtotime($start_date. ' + 15 days'));
+            $start_date = $model->start_date;
+            $invoiceDueDate = date('d-m-Y', strtotime($model->due_date. ' + 15 days'));
 
             $leasePeriodFrom = $invoiceDueDate;
             $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
