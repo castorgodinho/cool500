@@ -85,7 +85,12 @@ use yii\widgets\ActiveForm;
             [
                 'label' => 'Email',
                 'value' => function ($dataProvider){
-                    return 'Not Sent';
+                    if($dataProvider->email_status == 1){
+                        return "Sent";
+                    }else{
+                        return 'Not Sent';
+                    }
+                    
                 }
             ],
             //'start_date',

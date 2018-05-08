@@ -82,7 +82,7 @@ class InvoiceController extends Controller
                 $status = Yii::$app->mailer->compose()
                     ->setFrom('castorgodinho22@gmail.com')
                     ->setTo($model->order->company->user->email)
-                    ->setSubject('GIDC: Invoice generated')
+                    ->setSubject('IDC Goa')
                     ->setTextBody($msg)
                     ->send();
                 $model->email_status = $status;

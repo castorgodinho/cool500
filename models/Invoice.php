@@ -113,6 +113,11 @@ class Invoice extends \yii\db\ActiveRecord
         return $this->hasOne(Orders::className(), ['order_id' => 'order_id']);
     }
 
+    public function getCompany()
+    {
+        return $this->hasOne(Company::className(), ['company_id' => 'company_id'])->via('order');
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
