@@ -45,8 +45,7 @@ class InvoiceReport extends Invoice
     public function search($params)
     {
         $query = Invoice::find();
-
-        // add conditions that should always apply here
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,7 +59,7 @@ class InvoiceReport extends Invoice
             // $query->where('0=1');
             return $dataProvider;
         }
-        $query->joinWith(['order']);
+        $query->joinWith(['order', 'company']);
         if($this->from_date == $this->to_date){
             $this->start_date = $this->from_date;
         }
@@ -75,8 +74,8 @@ class InvoiceReport extends Invoice
         // grid filtering conditions
         $query->andFilterWhere(['like', 'invoice_code', $this->search_key])
          ->orFilterWhere(['like', 'orders.order_number', $this->search_key])
-       /* ->orFilterWhere(['like', 'orders.company.name', $this->search_key])
-        ->andFilterWhere(['like', 'competent_mobile', $this->competent_mobile]) */;
+         ->orFilterWhere(['like', 'company.name', $this->search_key])
+        /* ->andFilterWhere(['like', 'competent_mobile', $this->competent_mobile]) */;
 
 
 

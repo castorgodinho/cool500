@@ -45,9 +45,28 @@ use yii\widgets\ActiveForm;
   line-height: 18px;
 }
 </style>
+<div class="row">
+  <div class="col-md-2 text-right">
+    <input type="button" class="print-btn btn btn-success"  value="PRINT" />
+  </div>
+  
 
-<input type="button" class="print-btn btn btn-success"  value="PRINT" /><br><br>
 
+  <div class="col-md-2 text-left">
+  
+    <?php $payments = $model->payments;
+      $flag = 0;
+      foreach($payments as $payment){
+        if($payment->tds_file && $flag == 0){ 
+          echo "<a class='btn btn-success' href='".$payment->tds_file."' />Download TDS file</a>";
+          $flag = 1;
+        }
+        
+      }
+    ?>
+  </div>
+</div>
+<br><br>
 <div class="cover" id="printableArea" style=" padding: 10px;">
 <div class="row">
   <div class="col-md-3 col-sm-3 col-xs-3 ">

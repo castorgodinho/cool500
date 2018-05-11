@@ -99,6 +99,15 @@ class SiteController extends Controller
     {
         echo sprintf("%06d", rand(1, 1000000));
     }
+    public function actionEmail()
+    {
+        echo Yii::$app->mailer->compose()
+            ->setFrom('castorgodinho22@gmail.com')
+            ->setTo('castorgodinho22@gmail.com')
+            ->setSubject('Test Email')
+            ->setTextBody('Body Text')
+            ->send();
+    }
 
     /**
      * Displays contact page.
@@ -126,6 +135,10 @@ class SiteController extends Controller
      * @return string
      */
     public function actionAbout()
+    {
+        return $this->render('about');
+    }
+    public function actionError()
     {
         return $this->render('about');
     }

@@ -31,13 +31,15 @@ $this->title = 'Invoices';
             'order.order_number',
             'order.company.name',
             [
-                'label' => 'Pay',
-                'value' => function(){
-                    return 'a';
+                'label' => 'Email',
+                'value' => function($dataProvider){
+                    if($dataProvider->email_status == 1){
+                        return "Sent";
+                    }else{
+                        return "Not Sent";
+                    }
                 }
             ],
-            //'start_date',
-            //'total_amount',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

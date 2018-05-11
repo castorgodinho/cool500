@@ -43,3 +43,5 @@ alter table payment add tds_file text;
 alter table payment add transaction_no varchar(50); 
 
 alter table payment add transaction_details text;
+
+alter table invoice add email_status tinyint;

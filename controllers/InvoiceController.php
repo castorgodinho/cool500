@@ -74,6 +74,19 @@ class InvoiceController extends Controller
                 $model->invoice_code = $invoiceCode;
                 $model->due_date = date('Y-m-d', strtotime($due_date. ''));
                 $model->save(False);
+                $interest = $model->interest->rate;
+                $msg = "Dear Customer \n\nYour Lease Rent form the period 12/09/2017-11/09/2017 ".
+                "is due on $model->due_date.I kindly request you to pay the same on or before due".
+                 "date.delay payment will charge $interest% penal interest on daily basis.".
+                "Please find copy of invoice for more details.\n\nhttp://localhost/gidc/web/index.php?r=invoice%2Fview&id=".$model->invoice_id;
+                $status = Yii::$app->mailer->compose()
+                    ->setFrom('castorgodinho22@gmail.com')
+                    ->setTo($model->order->company->user->email)
+                    ->setSubject('IDC Goa')
+                    ->setTextBody($msg)
+                    ->send();
+                $model->email_status = $status;
+                $model->save(false);
                 return $this->redirect(['invoice/index']);
               } else{
 
