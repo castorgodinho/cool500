@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 
 ?>
 <div class="panel panel-default">
-  <div class="panel-heading">Unit Details</div>
+  <div class="panel-heading">Company Details</div>
   <div class="panel-body">
     <div class="row">
       <div class="col-md-4">
@@ -150,7 +150,7 @@ use yii\data\ActiveDataProvider;
         </div>
         <div class="col-md-4">
           <p><b>Total Area: </b><?= $order->total_area ?></p><br>
-          <?php if ($order->built_area != ""){ ?><p><b>Built Area: </b><?php  $order->built_area ?></p><?php } ?><br>
+          <?php if ($order->built_area != ""){ ?><p><b>Built Area: </b><?=  $order->built_area ?></p><?php } ?><br>
           <?php if ($order->shed_area != ""){ ?><p><b>Shed Area: </b><?= $order->shed_area ?></p><?php } ?><br>
 
         </div>
