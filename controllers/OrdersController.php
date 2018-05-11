@@ -101,7 +101,11 @@ class OrdersController extends Controller
                     $orderNumber = 'GIDC'. sprintf("%06d", rand(1, 1000000)) . strtoupper($names[0]);
                 }
                 //echo $model->built_area;
-                $model->order_number = $orderNumber;
+                if(strlen($orderNumber) > 15){
+                    $model->order_number = substr($orderNumber, 0, 15);
+                }else{
+                    $model->order_number = $orderNumber;
+                }
                 $model->save();
                 $orderRate->order_id = $model->order_id;
                 $orderRate->flag = '1';

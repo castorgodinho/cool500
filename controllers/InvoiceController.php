@@ -75,7 +75,7 @@ class InvoiceController extends Controller
                 $model->due_date = date('Y-m-d', strtotime($due_date. ''));
                 $model->save(False);
                 $interest = $model->interest->rate;
-                $toDate = date('d-m-Y', strtotime($model->due_date. ' + 1 year '));
+                $toDate = date('d-m-Y', strtotime($model->due_date. ' + 1 year - 1 day'));
                 $msg = "Dear Customer \n\nYour Lease Rent form the period $model->due_date - $toDate ".
                 "is due on $model->due_date.I kindly request you to pay the same on or before due".
                  "date.delay payment will charge $interest% penal interest on daily basis.".
@@ -140,7 +140,7 @@ class InvoiceController extends Controller
 
                $time = strtotime($start_date);
                $newformat = date('d-m-Y',$time);
-               $invoiceDueDate = date('d-m-Y', strtotime($newformat. '15 days'));
+               $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
                $model->due_date = $invoiceDueDate;
 
                $billDate = $start_date;
@@ -254,7 +254,7 @@ class InvoiceController extends Controller
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
             $time = strtotime($model->start_date);
             $start_date = $model->start_date;
-            $invoiceDueDate = date('d-m-Y', strtotime($model->due_date. ''));
+            $invoiceDueDate = date('d-m-Y', strtotime($model->due_date. ' + 15 days'));
 
             $leasePeriodFrom = $invoiceDueDate;
             $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
