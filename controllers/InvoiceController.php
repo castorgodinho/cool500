@@ -139,7 +139,7 @@ class InvoiceController extends Controller
 
                $time = strtotime($start_date);
                $newformat = date('d-m-Y',$time);
-               $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 1 year 15 days'));
+               $invoiceDueDate = date('d-m-Y', strtotime($newformat. '15 days'));
                $model->due_date = $invoiceDueDate;
 
                $billDate = $start_date;

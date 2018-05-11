@@ -120,12 +120,5 @@ class MyInvoice extends Invoice
       $invoiceCode = $invoiceCode . '/' . $invoiceID;
       $this->invoice_code = $invoiceCode;
       $this->save(False);
-      //http://localhost/gidc/web/index.php?r=invoice%2Fview&id=2 send email
-      Yii::$app->mailer->compose()
-            ->setFrom('castorgodinho22@gmail.com')
-            ->setTo($this->order->company->user->email)
-            ->setSubject('Test Email')
-            ->setTextBody('Body Text')
-            ->send();
  }
 }
