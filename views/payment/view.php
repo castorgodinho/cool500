@@ -8,16 +8,10 @@ use yii\widgets\DetailView;
 
 </div>
 <div class="row">
-  <div class="col-md-2">
-    <input type="button" class="print-payment btn btn-success"  value="PRIN RECEIPTT" />  
-  </div>
-  <div class="col-md-2">
-    <input type="button" class="print-debit btn btn-success"  value="PRINT DEBIT NOTE" />
-  </div>
-  <div class="col-md-2">
-    <?php if($model->tds_file){ ?>
+  <div class="col-md-10">
+    <p><input type="button" class="print-payment btn btn-success"  value="PRIN RECEIPTT" /> <input type="button" class="print-debit btn btn-success"  value="PRINT DEBIT NOTE" /><?php if($model->tds_file){ ?>
       <a class="btn btn-success" href="<?= $model->tds_file;  ?>">DOWNLOAD TDS FILE</a>
-    <?php } ?>
+    <?php } ?></p>  
   </div>
 </div>
 <br><br>  

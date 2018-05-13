@@ -47,10 +47,10 @@ use yii\widgets\ActiveForm;
 </style>
 <div class="row">
   <div class="col-md-2 text-right">
-    <input type="button" class="print-btn btn btn-success"  value="Print" />
+    <p><input type="button" class="print-btn btn btn-success"  value="Print" /> <?= "<a class='btn btn-success' href='index.php?r=invoice/mail&id=".$model->invoice_id."' />Send Email</a>"; ?></p>
   </div>
   <div class="col-md-2 text-right">
-    <?= "<a class='btn btn-success' href='index.php?r=invoice/mail&id=".$model->invoice_id."' />Send Email</a>"; ?>
+    
   </div>
   
 
@@ -73,7 +73,7 @@ use yii\widgets\ActiveForm;
 <div class="cover" id="printableArea" style=" padding: 10px;">
 <div class="row">
   <div class="col-md-3 col-sm-3 col-xs-3 ">
-  <img src="img/logo.jpg" class="img img-responsive" alt="" srcset="">
+    <img src="img/logo.jpg" class="img img-responsive" alt="" srcset="">
   </div>
   <div class="col-md-9 col-sm-9 col-xs-9 text-right" style="">
     <h3> <b>Goa Industrial Development Corporation</b> </h3>

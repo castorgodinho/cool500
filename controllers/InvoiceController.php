@@ -27,6 +27,10 @@ class InvoiceController extends Controller
     /**
      * @inheritdoc
      */
+
+    public $sentFrom = 'castorgodinho22@gmail.com';
+    public $serverLocation = 'http://localhost/gidc/';
+    
     public function behaviors()
     {
         return [
@@ -79,11 +83,11 @@ class InvoiceController extends Controller
                 $msg = "Dear Customer \n\nYour Lease Rent form the period $model->due_date - $toDate ".
                 "is due on $model->due_date.I kindly request you to pay the same on or before due".
                  "date.delay payment will charge $interest% penal interest on daily basis.".
-                "Please find copy of invoice for more details.\n\nhttp://localhost/gidc/web/index.php?r=invoice%2Fview&id=".$model->invoice_id;
+                "Please find copy of invoice for more details.\n\n".$this->serverLocation."/web/index.php?r=invoice%2Fview&id=".$model->invoice_id;
                 $status = 0;
                 try{
                     $status = Yii::$app->mailer->compose()
-                        ->setFrom('castorgodinho22@gmail.com')
+                        ->setFrom($this->sentFrom)
                         ->setTo($model->order->company->user->email)
                         ->setSubject('IDC Goa')
                         ->setTextBody($msg)
@@ -244,11 +248,11 @@ class InvoiceController extends Controller
             $msg = "Dear Customer \n\nYour Lease Rent form the period $model->due_date - $toDate ".
                 "is due on $model->due_date.I kindly request you to pay the same on or before due".
                  "date.delay payment will charge $interest% penal interest on daily basis.".
-                "Please find copy of invoice for more details.\n\nhttp://localhost/gidc/web/index.php?r=invoice%2Fview&id=".$model->invoice_id;
+                "Please find copy of invoice for more details.\n\n".$this->serverLocation."/web/index.php?r=invoice%2Fview&id=".$model->invoice_id;
             $status = 0;
             try{
                 $status = Yii::$app->mailer->compose()
-                    ->setFrom('castorgodinho22@gmail.com')
+                    ->setFrom($this->sentFrom)
                     ->setTo($model->order->company->user->email)
                     ->setSubject('IDC Goa')
                     ->setTextBody($msg)

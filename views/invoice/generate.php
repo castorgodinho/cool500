@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="row">
   <div class="col-md-4 col-sm-4 col-xs-4 ">
-    <h1><b>GIDC LOGO HERE</b></h1>
+    <img src="img/logo.jpg" class="img img-responsive" alt="" srcset="">
   </div>
   <div class="col-md-8 col-sm-8 col-xs-8 text-right" style="margin-bottom:10px;">
     <h3> <b>Goa Industrial Development Corporation</b> </h3>
