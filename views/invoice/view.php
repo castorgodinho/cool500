@@ -47,7 +47,10 @@ use yii\widgets\ActiveForm;
 </style>
 <div class="row">
   <div class="col-md-2 text-right">
-    <input type="button" class="print-btn btn btn-success"  value="PRINT" />
+    <input type="button" class="print-btn btn btn-success"  value="Print" />
+  </div>
+  <div class="col-md-2 text-right">
+    <?= "<a class='btn btn-success' href='index.php?r=invoice/mail&id=".$model->invoice_id."' />Send Email</a>"; ?>
   </div>
   
 

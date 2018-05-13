@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 <div class="orders-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
     <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
 
