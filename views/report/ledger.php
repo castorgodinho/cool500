@@ -8,7 +8,7 @@
 <?php $form = Html::beginForm(); ?>
 <form action="<?=  \Yii::$app->request->BaseUrl ?>/index.php?r=report%2Fledger" method="POST">
 <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
-<?php if(Yii::$app->user->can('admin')){?>
+<?php if(Yii::$app->user->can('admin') || Yii::$app->user->can('accounts')){?>
 <div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
         <?= Html::label('From Date', 'xxx') ?>
