@@ -7,8 +7,10 @@ use app\models\Orders;
 use app\models\Company;
 use app\models\Area;
 use app\models\Plot;
+use app\models\Log;
 use app\models\OrderRate;
 use app\models\Tax;
+use yii\helpers\Json;
 use app\models\Invoice;
 use app\models\Interest;
 use app\models\Payment;
@@ -134,28 +136,42 @@ class OrdersController extends Controller
     {
 
         if (\Yii::$app->user->can('updateOrders')){
-            $model =  Orders::find()->where(['order_id' => $id])->all();
+            $model =  Orders::find()->where(['order_id' => $id])->one();
             $company = Company::find()->all();
+            $orderRate = OrderRate::find()->where(['order_id' => $id])->andWhere(['flag' => 1])->one();
             $area = Area::find()->all();
-            $orderDetails = OrderDetails::find()->where(['order_id' => $id])->all();
-            if ($model->load(Yii::$app->request->post()) && $orderDetails->load(Yii::$app->request->post())) {
+            if ($model->load(Yii::$app->request->post()) && $orderRate->load(Yii::$app->request->post())) {
+                $log = new Log();
+                $log->old_value = Json::encode(Orders::find()->where(['order_id' => $id])->all(), $asArray = true) ;
                 $model->save();
-                for($i = 0; $i < sizeof($orderDetails->plot_id); $i++){
-                    $detail = new OrderDetails();
-                    $plot = new Plot();
-                    $plot->name = $orderDetails->plot_id[$i];
-                    $plot->save(false);
-                    $detail->order_id = $model->order_id;
-                    $detail->plot_id = $plot->plot_id;
-                    $detail->save(false);
+                $log->new_value = Json::encode(Orders::find()->where(['order_id' => $id])->all(), $asArray = true) ;
+                $log->user_id = Yii::$app->user->identity->user_id;
+                $log->type = 'Edited Unit';
+                $log->save();
+                
+                $oldOrderRate = OrderRate::find()->where(['order_id' => $id])->andWhere(['flag' => 1])->one();
+                if($oldOrderRate->start_date != $orderRate->start_date || $oldOrderRate->end_date != $orderRate->end_date || $oldOrderRate->amount1 != $orderRate->amount1 || $oldOrderRate->amount2 != $orderRate->amount2){
+                    //Creating new orderRate
+                    echo "Came here..";
+                    $oldOrderRate->flag = 0;
+                    $oldOrderRate->save(false);
+                    $rate = new OrderRate();
+                    $rate->start_date = $orderRate->start_date;
+                    $rate->end_date = $orderRate->end_date;
+                    $rate->amount1 = $orderRate->amount1;
+                    $rate->amount2 = $orderRate->amount2;
+                    $rate->order_id = $id;
+                    $rate->flag = 1;
+                    $rate->save(false);
+
                 }
                 return $this->redirect(['orders/index']);
             } else {
-                return $this->render('update', [
+                return $this->render('_form', [
                     'model' => $model,
                     'company' => $company,
                     'area' => $area,
-                    'orderDetails' => $orderDetails,
+                    'orderRate' => $orderRate,
                 ]);
             }
         }else{

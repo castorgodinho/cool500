@@ -13,8 +13,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name')); ?>
-    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name')); ?>
+    <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name'))->label('Company'); ?>
+    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name'))->label('Industrial Estate'); ?>
 
     <?= $form->field($model, 'total_area')->textInput(); ?>
     <?= $form->field($model, 'plots')->textInput(); ?>  
@@ -64,7 +64,7 @@ use yii\widgets\ActiveForm;
         </div>
     </div>
 
-    <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control" required="required">
+    <select name="" id="input${1/(\w+)/\u\1/g}" class="form-control area-dropdown" required="required">
         <option value="" selected disabled hidden>Choose Area</option>
         <option value="built">Built</option>
         <option value="shed">Shed</option>
@@ -101,7 +101,20 @@ use yii\widgets\ActiveForm;
         $(document).ready(function(){
             $('.hide-div').hide();
             $('.plot-div').hide();
-            $('select').change(function(){
+            if($("#orders-built_area").val() != ""){
+                $('.area-dropdown').val('built');
+                $('.hide-div').hide();
+                $('.built').show();
+            }else if($("#orders-shed_area").val() != "" || $("#orders-shed_no").val() != ""){
+                $('.area-dropdown').val('shed');
+                $('.hide-div').hide();
+                $('.shed').show();
+            }else if($("#orders-godown_areaa").val() != "" || $("#orders-godown_no").val() != ""){
+                $('.area-dropdown').val('godown');
+                $('.hide-div').hide();
+                $('.godown').show();
+            }
+            $('.area-dropdown').change(function(){
                 $('.hide-div').hide();
                 var className = $(this).val();
                 $('.'+className).show();

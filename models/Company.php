@@ -72,8 +72,8 @@ class Company extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => 'User ID',
-            'company_id' => 'Company ID',
+            'user_id' => 'User Name',
+            'company_id' => 'Company Name',
             'name' => 'Name',
             'address' => 'Address',
             'remark' => 'Remark',
