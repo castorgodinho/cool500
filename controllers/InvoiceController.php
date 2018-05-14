@@ -61,7 +61,17 @@ class InvoiceController extends Controller
                 $invoiceCode = $areaCode .'/';
 
                 $due_date =  $model->due_date;
-
+                echo '=>'.date('Y-m-d', strtotime($model->lease_current_start. ''));
+                $model->lease_current_start = date('Y-m-d', strtotime($model->lease_current_start. ''));
+                echo '=> '.$model->lease_prev_start;
+                if($model->lease_prev_start == '-'){
+                    $model->lease_prev_start = null;
+                    echo "setting null";
+                }else{
+                    echo "not seting null";
+                    $model->lease_prev_start = date('Y-m-d', strtotime($model->lease_prev_start. ''));
+                }
+                
                 $year = date('Y');
                 $year = substr($year,2,3);
                 $invoiceCode = $areaCode . '/' . $year;
@@ -99,7 +109,6 @@ class InvoiceController extends Controller
                 }
                 $model->email_status = $status;
                 $model->save(false);
-              
                 return $this->redirect(['invoice/index']);
               } else{
 
@@ -187,16 +196,19 @@ class InvoiceController extends Controller
                  $date2 = $start_date;
                  $diff = strtotime($date2) - strtotime($date1);
                  $diffDate  = $diff / (60*60*24);
+                 $invoiceOld =Invoice::find()
+                    ->where(['order_id' => $order->order_id])
+                    ->orderBy(['invoice_id' => SORT_DESC])
+                    ->one();
+                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceOld->lease_current_start. '+ 1 year'));
+                 $leasePeriodTo = date('d-m-Y', strtotime($invoiceOld->lease_current_start. ' + 2 year - 1 day'));
 
-                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));
-                 $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
-
-                 $prevPeriodFrom = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 year '));
-                 $prevPeriodTo   = date('d-m-Y', strtotime($leasePeriodFrom. ' - 1 day  '));
+                 $prevPeriodFrom = date('d-m-Y', strtotime($invoiceOld->lease_current_start. '  '));
+                 $prevPeriodTo   = date('d-m-Y', strtotime($invoiceOld->lease_current_start. ' - 1 year  '));
                  }else{
 
-                 $leasePeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ''));;
-                 $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
+                 $leasePeriodFrom = date('d-m-Y', strtotime($order->start_date. ''));;
+                 $leasePeriodTo = date('d-m-Y', strtotime($order->start_date. ' + 1 year - 1 day'));
 
                  $prevPeriodFrom = '-';
                  $prevPeriodTo = '-';
@@ -299,11 +311,15 @@ class InvoiceController extends Controller
             $start_date = $model->start_date;
             $invoiceDueDate = date('d-m-Y', strtotime($model->due_date. ' + 15 days'));
 
-            $leasePeriodFrom = $invoiceDueDate;
-            $leasePeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' + 1 year - 1 day'));
-
-            $prevPeriodFrom = date('d-m-Y', strtotime($invoiceDueDate. ' - 1 year'));
-            $prevPeriodTo = date('d-m-Y', strtotime($invoiceDueDate. ' - 1 day'));
+            $leasePeriodFrom = $model->lease_current_start;
+            $leasePeriodTo = date('d-m-Y', strtotime($leasePeriodFrom. ' + 1 year - 1 day'));
+            $prevPeriodFrom = '-';
+            $prevPeriodTo = '-';
+            if($model->lease_prev_start){
+                $prevPeriodFrom = date('d-m-Y', strtotime($model->lease_prev_start. ' '));
+                $prevPeriodTo = date('d-m-Y', strtotime($model->lease_prev_start. ' + 1 year'));
+            }
+            
 
             return $this->render('view', [
                     'start_date' => $start_date,

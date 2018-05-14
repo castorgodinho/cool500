@@ -45,3 +45,7 @@ alter table payment add transaction_no varchar(50);
 alter table payment add transaction_details text;
 
 alter table invoice add email_status tinyint;
+
+alter table invoice add lease_current_start date;
+
+alter table invoice add lease_prev_start date;
