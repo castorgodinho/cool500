@@ -11,6 +11,7 @@ use app\models\Log;
 use app\models\OrderRate;
 use app\models\Tax;
 use yii\helpers\Json;
+use yii\web\UploadedFile;
 use app\models\Invoice;
 use app\models\Interest;
 use app\models\Payment;
@@ -94,6 +95,10 @@ class OrdersController extends Controller
             $company = Company::find()->all();
             $area = Area::find()->all();
             if ($model->load(Yii::$app->request->post()) && $orderRate->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if($model->file){
+                    $model->upload();
+                }
                 $area_update = Area::find()->where(['area_id' => $model->area_id])->one();
                 $area_update->total_area = $area_update->total_area + $model->total_area;
                 $area_update->save();
@@ -141,6 +146,10 @@ class OrdersController extends Controller
             $orderRate = OrderRate::find()->where(['order_id' => $id])->andWhere(['flag' => 1])->one();
             $area = Area::find()->all();
             if ($model->load(Yii::$app->request->post()) && $orderRate->load(Yii::$app->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if($model->file){
+                    $model->upload();
+                }
                 $log = new Log();
                 $log->old_value = Json::encode(Orders::find()->where(['order_id' => $id])->all(), $asArray = true) ;
                 $model->save();

@@ -14,21 +14,21 @@ use yii\data\ActiveDataProvider;
   <div class="panel-body">
     <div class="row">
       <div class="col-md-4">
-        <p> <strong>Company Name </strong> <?= $model->name ?></p>
+        <p> <strong>Company Name: </strong> <?= $model->name ?></p>
         <p></p>
       </div>
       <div class="col-md-4">
-        <p> <strong>GSTIN  </strong> <?= $model->gstin ?> <a href="index.php?r=company/update-gst&id=<?= $model->company_id ?>" >Edit</a></p>
+        <p> <strong>GSTIN:  </strong> <?= $model->gstin ?> <a href="index.php?r=company/update-gst&id=<?= $model->company_id ?>" >Edit</a></p>
         <p></p>
       </div>
       <div class="col-md-4">
-        <p> <strong>Constitution.</strong> <?= $model->constitution ?></p>
+        <p> <strong>Constitution: </strong> <?= $model->constitution ?></p>
         <h4></h4>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4">
-        <p> <strong>Products </strong> <?= $model->products ?></p>
+        <p> <strong>Products: </strong> <?= $model->products ?></p>
         <p></p>
       </div>
       <div class="col-md-4">
@@ -43,11 +43,7 @@ use yii\data\ActiveDataProvider;
       </div>
       <div class="col-md-4">
 
-            <?php
-              if($model->remark_url != ''){
-                echo "<a href='$model->remark_url'>Download Remark</a>";
-              }
-            ?>
+            
 
       </div>
     </div>
@@ -71,46 +67,53 @@ use yii\data\ActiveDataProvider;
   <div class="panel-body">
   <div class="row">
   <div class="col-md-3">
-    <p> <strong>Company Owner </strong> <?= $model->owner_name ?></p>
+    <p> <strong>Contact Person: </strong> <?= $model->owner_name ?></p>
     <p></p>
   </div>
   <div class="col-md-3">
-    <p> <strong>Phone No.  </strong> <?= $model->owner_phone ?></p>
+    <p> <strong>Phone No:  </strong> <?= $model->owner_phone ?></p>
     <p></p>
   </div>
   <div class="col-md-3">
-    <p> <strong>Mobile No.</strong> <?= $model->owner_mobile ?></p>
+    <p> <strong>Mobile No: </strong> <?= $model->owner_mobile ?></p>
     <h4></h4>
   </div>
 </div>
 <div class="row">
   <div class="col-md-3">
-    <p> <strong>Email </strong> <?= $model->user->email ?></p>
+    <p> <strong>Email: </strong> <?= $model->user->email ?></p>
     <h4></h4>
   </div>
   <div class="col-md-3">
-    <p> <strong>Competent Person</strong> <?= $model->competent_name ?></p>
+    <p> <strong>Competent Person: </strong> <?= $model->competent_name ?></p>
     <h4></h4>
   </div>
   <div class="col-md-3">
-    <p> <strong>Competent Person Mobile No</strong> <?= $model->competent_mobile ?></p>
+    <p> <strong>Competent Person Mobile No: </strong> <?= $model->competent_mobile ?></p>
     <h4></h4>
   </div>
 </div>
 <div class="row">
   <div class="col-md-3">
-    <p><strong>Competent Email </strong> <?= $model->competent_email ?></p>
+    <p><strong>Competent Email: </strong> <?= $model->competent_email ?></p>
     <h4></h4>
   </div>
   <div class="col-md-3">
-    <p><strong>Address</strong> <?= $model->address ?></p>
+    <p><strong>Address: </strong> <?= $model->address ?></p>
     <h4></h4>
   </div>
-  <div class="col-md-3">
-    <p><strong>Remark</strong> <?= $model->remark ?></p>
-    <h4></h4>
-  </div>.
+  <?php if(Yii::$app->user->can('admin')){ ?>
+    <div class="col-md-3">
+      <p><strong>Remark: </strong> <?= $model->remark ?></p><?php
+                if($model->remark_url != ''){
+                  echo "<a href='$model->remark_url'>Download Remark</a>";
+                }
+              ?>
+      <h4></h4>
+    </div>
+  <?php } ?>
 </div>
+
   </div>
 </div>
 
@@ -145,6 +148,7 @@ use yii\data\ActiveDataProvider;
       <div class="row">
         <div class="col-md-4">
           <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
+          <p><b>Renewal Date: </b><?= $order->end_date ?></p><br>
           <p><b>Company: </b><?= $order->company->name ?></p><br>
           <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
         </div>
@@ -162,7 +166,7 @@ use yii\data\ActiveDataProvider;
             <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
             <?php }?>
           <?php if(Yii::$app->user->can('company') || Yii::$app->user->can('admin')){ ?>
-            <a href="index.php?r=report%2Fledger&order_id=<?= $order->order_id; ?>" class="btn btn-success">View Ledger</a>
+            <a href="index.php?r=report%2Fledger&order_id=<?= $order->order_id; ?>" class="btn btn-success">Ledger Statment </a>
             <?php }?>
           </p>
         </div>
@@ -266,9 +270,11 @@ use yii\data\ActiveDataProvider;
           ]
       ]);
       ?>
-      <h4> <u>Lease Rent</u> </h4>
+      
+      
       <?php
         if(Yii::$app->user->can('admin')){
+          echo "<h4> <u>Lease Rent</u> </h4>";
         $query = OrderRate::find()->where(['order_id' => $order->order_id]);
         $provider = new ActiveDataProvider([
           'query' => $query,

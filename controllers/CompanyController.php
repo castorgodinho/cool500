@@ -112,9 +112,13 @@ class CompanyController extends Controller
         if (\Yii::$app->user->can('createCompany')){
             $model = new Company();
             $user = new Users();
-            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-                return \yii\widgets\ActiveForm::validate($model);
+                /* print_r(\yii\widgets\ActiveForm::validate($model));
+                if(\yii\widgets\ActiveForm::validate($model)){
+                    return \yii\widgets\ActiveForm::validate($model);
+                }  */
+                return \yii\widgets\ActiveForm::validate($user, $model);
             }
             if (Yii::$app->request->isAjax && $user->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
@@ -122,8 +126,12 @@ class CompanyController extends Controller
             }
 
             if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
+                
                 $model->file = UploadedFile::getInstance($model, 'file');
-                $model->upload();
+                if($model->file){
+                    $model->upload();
+                }
+                
                 
                 $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
                 $user->type = 'company';
@@ -168,7 +176,9 @@ class CompanyController extends Controller
             }
             if ($model->load(Yii::$app->request->post())) {
                 $model->file = UploadedFile::getInstance($model, 'file');
-                $model->upload();
+                if($model->file){
+                    $model->upload();
+                }
                 if($user->password != ''){
                     $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
                 }else{

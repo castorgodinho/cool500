@@ -26,13 +26,6 @@ $this->title = 'Industrial Estate';
 
             'name',
             'total_area',
-            [
-                'label' => 'Rate',
-                'value' => function ($dataProvider) {
-                     return  AreaRate::find()->orderBy('start_date DESC')->one()->area_rate;
-                },
-            ],
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

@@ -29,7 +29,13 @@ $this->title = 'Invoices';
             'tax.rate',
             'interest.rate',
             'order.order_number',
-            'order.company.name',
+            [
+                
+                'attribute' =>'order_id',
+                'label' => 'Company',
+                'value' =>  'order.company.name',
+            ],
+            
             [
                 'label' => 'Email',
                 'value' => function($dataProvider){

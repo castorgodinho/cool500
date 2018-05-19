@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
 /* @var $this yii\web\View */
 /* @var $model app\models\Orders */
 
-$this->title = "Orders";
+$this->title = "Units";
 $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,12 +20,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <br>
 
 
-
+    <?php 
+        if($model->document){
+            echo "<a href='". $model->document ."'>Download unit document</a>";
+        }
+    ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'order_number',
             'company.name',
+            'remark',
             'total_area',
             'start_date',
             'built_area',

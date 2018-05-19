@@ -40,12 +40,14 @@ class Orders extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $file;
     public function rules()
     {
         return [
             [['order_number', 'company_id', 'total_area', 'plots'], 'required'],
             [['company_id', 'built_area', 'shed_area', 'godown_area', 'area_id', 'total_area'], 'integer'],
-            [['start_date', 'end_date'], 'safe'],
+            [['start_date', 'end_date', 'document','remark'], 'safe'],
+            [['file'], 'file'],
             [['order_number'], 'string', 'max' => 20],
             [['shed_no', 'godown_no'], 'string', 'max' => 50],
             [['plots'], 'string', 'max' => 100],
@@ -71,7 +73,7 @@ class Orders extends \yii\db\ActiveRecord
             'shed_no' => 'Shed No',
             'godown_no' => 'Godown No',
             'area_id' => 'Area ID',
-            'total_area' => 'Total Area',
+            'total_area' => 'Plot Area',
             'plots' => 'Plots',
         ];
     }
@@ -116,5 +118,13 @@ class Orders extends \yii\db\ActiveRecord
     public function getPayments()
     {
         return $this->hasMany(Payment::className(), ['order_id' => 'order_id']);
+    }
+
+    public function upload()
+    {
+            $this->document = 'unit_documents/' . $this->file->baseName . '.' . $this->file->extension;
+            $this->file->saveAs('unit_documents/' . $this->file->baseName . '.' . $this->file->extension);
+            echo $this->document;
+            return true;
     }
 }

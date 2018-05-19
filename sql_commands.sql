@@ -49,3 +49,7 @@ alter table invoice add email_status tinyint;
 alter table invoice add lease_current_start date;
 
 alter table invoice add lease_prev_start date;
+
+alter table orders add document text;
+
+alter table orders add remark text;
