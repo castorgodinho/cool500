@@ -84,12 +84,38 @@ $order = Orders::find()->all();
   </div>
 
   <div class="row">
-    <div class="col-md-3">
-    </div>
     <div class="col-md-6">
       <?= $form->field($model, 'grand_total')->textInput() ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
+        <?= $form->field($model, 'due_date')->widget(\yii\jui\DatePicker::classname(), [
+            'options' => [
+              'class' => 'form-control'
+            ],
+            'language' => 'en',
+            'dateFormat' => 'yyyy-MM-dd',
+        ]) ?>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+          <?= $form->field($model, 'lease_current_start')->widget(\yii\jui\DatePicker::classname(), [
+              'options' => [
+                'class' => 'form-control'
+              ],
+              'language' => 'en',
+              'dateFormat' => 'yyyy-MM-dd',
+          ]) ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'lease_prev_start')->widget(\yii\jui\DatePicker::classname(), [
+            'options' => [
+              'class' => 'form-control'
+            ],
+            'language' => 'en',
+            'dateFormat' => 'yyyy-MM-dd',
+        ]) ?>
     </div>
   </div>
 

@@ -4,6 +4,7 @@ namespace app\models;
 use app\models\Invoice;
 use app\models\OrderRate;
 use app\models\Payment;
+use app\models\Debit;
 use app\models\Interest;
 use app\models\Tax;
 
@@ -17,9 +18,13 @@ class MyInvoice extends Invoice
       $date2 = date('Y-m-d');
       $invoices = Invoice::find()->all();
       foreach ($invoices as $invoice) {
-        $date1 = date('Y-m-d', strtotime($invoice->start_date. ' + 15 days'));
+        // $date1 = date('Y-m-d', strtotime($invoice->due_date. ' + 15 days'));
+        $date1 = $date2;
         $diff = strtotime($date2) - strtotime($date1);
         $diffDate  = $diff / (60*60*24);
+        echo '$diffDate'.$diffDate.' ';
+        echo '$date1'.$date1.' ';
+        echo '$date2'.$date2.'<br>';
         if($diffDate == 0 ){
           $model = new MyInvoice();
           $model->generate($invoice);
@@ -50,12 +55,16 @@ class MyInvoice extends Invoice
       ->andWhere(['status' => 1])
       ->sum('amount');
 
-      $totalPenal = Payment::find()
+      $totalPenalPaid = Payment::find()
       ->where(['invoice_id' => $invoice->invoice_id])
       ->andWhere(['status' => 1])
       ->sum('penal');
 
-      // TODO penal interest
+      $totalPenal = Debit::find()
+      ->where(['invoice_id' => $invoice->invoice_id])
+      ->sum('penal');
+
+      $this->$prev_interest = $totalPenal;
 
       $this->prev_dues_total = $invoice->grand_total - $totalPaid;
       $this->order_id = $order_id;
@@ -66,7 +75,7 @@ class MyInvoice extends Invoice
       $this->current_tax = $this->current_lease_rent * ($tax->rate/100);
       $this->current_total_dues = $this->current_lease_rent + $this->current_tax;
 
-      $this->prev_dues_total = $invoice->grand_total -  $totalPaid;
+      $this->prev_dues_total = $invoice->grand_total - $totalPaid;
       $this->grand_total = $this->prev_dues_total + $this->current_total_dues;
 
       $start_date = $invoice->start_date;
@@ -76,27 +85,12 @@ class MyInvoice extends Invoice
        $this->current_lease_rent = $this->current_lease_rent + $order_rate->amount1;
       }
 
-      $totalPaid = Payment::find()
-      ->where(['invoice_id' => $invoice->invoice_id])
-      ->andWhere(['status' => 1])
-      ->sum('amount');
-
-      $pi = Payment::find()
-      ->where(['invoice_id' => $invoice->invoice_id])
-      ->andWhere(['status' => 1])
-      ->sum('penal');
-
-      $this->prev_dues_total = $invoice->grand_total - $totalPaid + $pi;
-      $this->prev_interest = $invoice->current_interest;
-
       $this->prev_lease_rent = $invoice->current_lease_rent;
       echo $invoice->prev_lease_rent.'<br>';
       $this->prev_tax = $invoice->current_tax;
 
       $invoiceDueDate = date('d-m-Y', strtotime($invoice->due_date. ' + 1 year '));
       $this->due_date = $invoiceDueDate;
-
-      $this->current_total_dues = $this->current_lease_rent + $this->current_tax;
 
       $invoiceCode = '';
       $order =  Orders::findOne($order_id);

@@ -50,21 +50,21 @@ use yii\widgets\ActiveForm;
     <p><input type="button" class="print-btn btn btn-success"  value="Print" /> <?= "<a class='btn btn-success' href='index.php?r=invoice/mail&id=".$model->invoice_id."' />Send Email</a>"; ?></p>
   </div>
   <div class="col-md-2 text-right">
-    
+
   </div>
-  
+
 
 
   <div class="col-md-2 text-left">
-  
+
     <?php $payments = $model->payments;
       $flag = 0;
       foreach($payments as $payment){
-        if($payment->tds_file && $flag == 0){ 
+        if($payment->tds_file && $flag == 0){
           echo "<a class='btn btn-success' href='".$payment->tds_file."' />Download TDS file</a>";
           $flag = 1;
         }
-        
+
       }
     ?>
   </div>

@@ -30,7 +30,7 @@ class InvoiceController extends Controller
 
     public $sentFrom = 'castorgodinho22@gmail.com';
     public $serverLocation = 'http://localhost/gidc/';
-    
+
     public function behaviors()
     {
         return [
@@ -71,7 +71,7 @@ class InvoiceController extends Controller
                     echo "not seting null";
                     $model->lease_prev_start = date('Y-m-d', strtotime($model->lease_prev_start. ''));
                 }
-                
+
                 $year = date('Y');
                 $year = substr($year,2,3);
                 $invoiceCode = $areaCode . '/' . $year;
@@ -226,7 +226,6 @@ class InvoiceController extends Controller
                $leftOverAmount = $model->prev_dues_total;
                $previousDueTotal = $leftOverAmount + $penalInterest;
 
-
                  return $this->render('generate', [
                          'previousCGSTAmount' => $previousCGSTAmount,
                          'previousSGSTAmount' => $previousSGSTAmount,
@@ -308,18 +307,17 @@ class InvoiceController extends Controller
         $model = Invoice::findOne($id);
         if (\Yii::$app->user->can('viewInvoice', ['invoice' => $model])){
             $time = strtotime($model->start_date);
-            $start_date = $model->start_date;
-            $invoiceDueDate = date('d-m-Y', strtotime($model->due_date. ' + 15 days'));
+            $start_date = date('d-m-Y', strtotime($model->start_date. ''));
+            $invoiceDueDate = date('d-m-Y', strtotime($model->due_date. ''));
 
-            $leasePeriodFrom = $model->lease_current_start;
+            $leasePeriodFrom = date('d-m-Y', strtotime($model->lease_current_start. ''));
             $leasePeriodTo = date('d-m-Y', strtotime($leasePeriodFrom. ' + 1 year - 1 day'));
             $prevPeriodFrom = '-';
             $prevPeriodTo = '-';
             if($model->lease_prev_start){
                 $prevPeriodFrom = date('d-m-Y', strtotime($model->lease_prev_start. ' '));
-                $prevPeriodTo = date('d-m-Y', strtotime($model->lease_prev_start. ' + 1 year'));
+                $prevPeriodTo = date('d-m-Y', strtotime($model->lease_prev_start. ' + 1 year - 1 day'));
             }
-            
 
             return $this->render('view', [
                     'start_date' => $start_date,
@@ -346,7 +344,8 @@ class InvoiceController extends Controller
             $model = new Invoice();
 
             if ($model->load(Yii::$app->request->post())) {
-                  $model->save();
+                  $model->save(False);
+
                 return $this->redirect(['index']);
             }
 
@@ -378,7 +377,7 @@ class InvoiceController extends Controller
         // }else{
         //     throw new \yii\web\ForbiddenHttpException;
         // }
-        return $this->render('invoice-generated');
+        // return $this->render('invoice-generated');
     }
 
     /**
