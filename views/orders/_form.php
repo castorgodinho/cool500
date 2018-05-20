@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 <div class="orders-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name'))->label('Company'); ?>
     <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name'))->label('Industrial Estate'); ?>
@@ -34,7 +34,8 @@ use yii\widgets\ActiveForm;
         'language' => 'en',
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
-
+    <?= $form->field($model, 'remark')->textarea(['maxlength' => true]) ?>
+    <?= $form->field($model, 'file')->fileInput() ?>
     <hr>
 
     <div class="row">

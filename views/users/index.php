@@ -24,6 +24,20 @@ $this->title = 'Users';
             ['class' => 'yii\grid\SerialColumn'],
 
             'email:email',
+            [
+                'label' => 'Company',
+                'value' => function($dataProvider){
+                    if($dataProvider->companies){
+                        $companies = "";
+                        foreach($dataProvider->companies as $company){
+                            $companies .= $company->name.' ';
+                        }
+                        return $companies;
+                    }else{
+                        return "GIDC User";
+                    }
+                }
+            ],
             'type',
             ['class' => 'yii\grid\ActionColumn'],
         ],

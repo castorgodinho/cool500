@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\SearchPayment */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Payments';
+$this->title = 'Receipt';
 ?>
 <div class="payment-index">
 
@@ -15,7 +15,7 @@ $this->title = 'Payments';
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Payment', ['search'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Receipt', ['search'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -32,7 +32,6 @@ $this->title = 'Payments';
             'start_date',
             'mode',
             'invoice.order.company.name',
-            //'invoice_id',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -74,7 +74,7 @@ class Invoice extends \yii\db\ActiveRecord
             'interest_id' => 'Interest ID',
             'start_date' => 'Start Date',
             'total_amount' => 'Total Amount',
-            'invoice_code' => 'Invoice Code',
+            'invoice_code' => 'Tax Invoice no',
             'prev_lease_rent' => 'Prev Lease Rent',
             'grand_total' => 'Grand Total',
             'prev_tax' => 'Prev Tax',
