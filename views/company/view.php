@@ -144,10 +144,36 @@ use yii\data\ActiveDataProvider;
 
        </div>
       <div class="panel-body-order panel-body">
-
+      <?php 
+        if($order->status == 0){
+            $transfer = Orders::findOne($order->next_order_id);
+    ?>
+            <div class="row" style="border: 1px solid black; padding: 20px;">
+                <h3>Transfer Details</h3>
+                <div class="col-md-6">
+                    <p><b>Transfer Date: </b><?= $transfer->start_date; ?></p>
+                </div>
+                <div class="col-md-6">
+                    <p><b>Transfered Company: </b><?= $transfer->company->name;?></p>
+                </div>
+            
+            </div><br>
+    <?php
+       }
+    ?>
       <div class="row">
         <div class="col-md-4">
-          <p><b>Date of allotment: </b><?= $order->start_date ?></p><br>
+          <p><b>
+            <?php 
+              if(Yii::$app->user->can('company')){
+                echo "Alloted Date";
+              }else{
+                echo "Date of allotment: ";
+              }
+            ?> 
+            
+          
+          </b><?= $order->start_date ?></p><br>
           <p><b>Renewal Date: </b><?= $order->end_date ?></p><br>
           <p><b>Company: </b><?= $order->company->name ?></p><br>
           <p><b>Industrial Area: </b><?= $order->area->name ?></p><br>
@@ -162,7 +188,7 @@ use yii\data\ActiveDataProvider;
           <?php  if ($order->godown_area != ""){ ?><p><b>Godown Area: </b><?= $order->godown_area ?></p><?php } ?><br>
           <?php if ($order->godown_no != ""){ ?><p><b>Godown Number: </b><?= $order->godown_no ?></p><?php } ?><br>
           <?php if ($order->shed_no != ""){ ?><p><b>Shed Number: </b><?= $order->shed_no ?></p> <?php } ?> <br>
-          <p><?php if(Yii::$app->user->can('admin')){ ?>
+          <p><?php if(Yii::$app->user->can('admin') && $order->status == 1){ ?>
             <a href="index.php?r=invoice%2Fgenerate&order_id=<?= $order->order_id; ?>" class="btn btn-success">Generate Invoice</a>
             <?php }?>
           <?php if(Yii::$app->user->can('company') || Yii::$app->user->can('admin')){ ?>
@@ -192,8 +218,14 @@ use yii\data\ActiveDataProvider;
           'dataProvider' => $provider,
           'columns' => [
             'invoice_code',
-            'grand_total',
-            'start_date',
+            [
+              'label' => 'Bill Amount',
+              'value' => 'grand_total',
+            ],
+            [
+              'label' => 'Invoice Bill Date',
+              'value' => 'grand_total',
+            ],
             [
               'class' => 'yii\grid\ActionColumn',
               'header' => 'Actions',

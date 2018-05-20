@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
 use app\models\OrderRate;
+use app\models\Orders;
 use yii\data\ActiveDataProvider;
 
 
@@ -15,8 +16,23 @@ $this->params['breadcrumbs'][] = ['label' => 'Orders', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-view">
-
-    <h1><?= Html::encode("Unit Details") ?></h1>
+    <div class="row">
+        <div class="col-md-6">
+            <h1><?= Html::encode("Unit Details") ?></h1>
+        </div>
+        <div class="col-md-6 text-right">
+            <?php if(Yii::$app->user->can('admin')){
+                if($model->status == 1){
+            ?>
+                    <a href="index.php?r=orders/transfer&id=<?= $model->order_id ?> " class="btn btn-primary">Transfer Unit</a>
+            <?php    
+                }
+            } 
+            ?>
+            
+        </div>
+    </div>
+    
     <br>
 
 
@@ -24,6 +40,24 @@ $this->params['breadcrumbs'][] = $this->title;
         if($model->document){
             echo "<a href='". $model->document ."'>Download unit document</a>";
         }
+    ?>
+    <?php 
+        if($model->status == 0){
+            $transfer = Orders::findOne($model->next_order_id);
+    ?>
+            <div class="row" style="border: 1px solid black; padding: 20px;">
+                <h3>Transfer Details</h3>
+                <div class="col-md-6">
+                    <p><b>Transfer Date: </b><?= $transfer->start_date; ?></p>
+        <p> <?php if($transfer->transfer_url != null){?><a href="<?= $transfer->transfer_url; ?>">Download Transfer Document</a><?php } ?></p>
+                </div>
+                <div class="col-md-6">
+                    <p><b>Transfered Company: </b><?= $transfer->company->name;?></p>
+                </div>
+            
+            </div><br>
+    <?php
+       }
     ?>
     <?= DetailView::widget([
         'model' => $model,

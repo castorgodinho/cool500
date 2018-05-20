@@ -53,3 +53,11 @@ alter table invoice add lease_prev_start date;
 alter table orders add document text;
 
 alter table orders add remark text;
+
+alter table orders add status tinyint default 1; 
+
+alter table orders add next_order_id int;
+
+alter table orders add CONSTRAINT orders_fk1 FOREIGN KEY (next_order_id) REFERENCES orders(order_id);
+
+alter table orders add transfer_url text;

@@ -10,22 +10,15 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="orders-form">
-
+    <h1>Tranfer Unit</h1>
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name'))->label('Company'); ?>
     <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name'))->label('Industrial Estate'); ?>
-
+    <?= $form->field($model, 'transfer_file')->fileInput()->label("Transfer Document"); ?>
     <?= $form->field($model, 'total_area')->textInput(); ?>
     <?= $form->field($model, 'plots')->textInput(); ?>  
-    <?php 
-        if($model->company_id){
-    ?>
-        <?= $form->field($model, 'transfer_file')->fileInput()->label("Transfer Document"); ?>
-    <?php
-        }
-    ?>
-    
+
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => [
           'class' => 'form-control'
@@ -43,6 +36,7 @@ use yii\widgets\ActiveForm;
     ]) ?>
     <?= $form->field($model, 'remark')->textarea(['maxlength' => true]) ?>
     <?= $form->field($model, 'file')->fileInput() ?>
+
     <hr>
 
     <div class="row">
@@ -94,7 +88,7 @@ use yii\widgets\ActiveForm;
 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
+        <?= Html::submitButton('Transfer', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
