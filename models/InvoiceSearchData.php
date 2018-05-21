@@ -8,7 +8,6 @@ use Yii;
  * This is the model class for table "invoice".
  *
  * @property int $invoice_id
- * @property int $rate_id
  * @property int $tax_id
  * @property int $order_id
  * @property int $interest_id
