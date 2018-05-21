@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 <div class="company-form">
 
     <?php $form = ActiveForm::begin(['enableAjaxValidation' => true]); ?>
-
+    <?php if(Yii::$app->user->can('admin')){ ?>
     <div class="panel panel-default">
       <div class="panel-heading">Unit Information</div>
       <div class="panel-body">
@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
         </div>
       </div>
     </div>
-
+          <?php } ?>
 
     <div class="panel panel-default">
       <div class="panel-heading">Contact Information</div>
@@ -40,8 +40,13 @@ use yii\widgets\ActiveForm;
           <div class="col-md-6">
             <?= $form->field($user, 'email')->textInput() ?>
           </div>
+
           <div class="col-md-6">
-            <?= $form->field($user, 'password')->passwordInput() ?>
+          <?php if(Yii::$app->user->can('admin')){ ?>
+            <?= $form->field($user, 'password')->passwordInput(); ?>
+          <?php }else{ ?>
+            <?= $form->field($user, 'password')->hiddenInput()->label(''); ?>
+          <?php } ?>
           </div>
         </div>
         <div class="row">
@@ -73,8 +78,10 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'competent_mobile')->textInput(['maxlength' => true]) ?>
           </div>
           <div class="col-md-6">
+          <?php if(Yii::$app->user->can('admin')){ ?>
             <?= $form->field($model, 'remark')->textarea(['maxlength' => true]) ?>
             <?= $form->field($model, 'file')->fileInput() ?>
+          <?php } ?>
           </div>
           
         </div>

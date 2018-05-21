@@ -63,7 +63,17 @@ use yii\data\ActiveDataProvider;
 
 
 <div class="panel panel-default">
-  <div class="panel-heading">Contact Details</div>
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-md-6">
+        Contact Details
+      </div>
+      <div class="col-md-6 text-right">
+        <a href="index.php?r=company/update&id=<?= $model->company_id ?>"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+      </div>
+    </div>
+    
+  </div>
   <div class="panel-body">
   <div class="row">
   <div class="col-md-3">

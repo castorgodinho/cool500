@@ -162,19 +162,16 @@ class CompanyController extends Controller
      */
     public function actionUpdate($id)
     {
-        if (\Yii::$app->user->can('updateCompany')){
-            $model = $this->findModel($id);
+        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('ViewCompany', ['company' => $model])){
+            
             $user = Users::findOne($model->user_id);
             $user->password = "";
-            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())  && $user->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-                return \yii\widgets\ActiveForm::validate($model);
+                return \yii\widgets\ActiveForm::validate($model, $user);
             }
-            if (Yii::$app->request->isAjax && $user->load(Yii::$app->request->post())) {
-                Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
-                return \yii\widgets\ActiveForm::validate($user);
-            }
-            if ($model->load(Yii::$app->request->post())) {
+            if ($model->load(Yii::$app->request->post()) && $user->load(Yii::$app->request->post())) {
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if($model->file){
                     $model->upload();
@@ -182,7 +179,7 @@ class CompanyController extends Controller
                 if($user->password != ''){
                     $user->password = Yii::$app->getSecurity()->generatePasswordHash($user->password);
                 }else{
-                    $user->password = Users::findOne($user->user_id);
+                    $user->password = Users::findOne($user->user_id)->password;
                 }
                 $log = new Log();
                 $log->old_value = Json::encode(Company::find()->joinWith('user')->where(['company_id' => $model->company_id])->all(), $asArray = true) ;
