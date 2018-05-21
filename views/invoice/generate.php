@@ -140,8 +140,8 @@ use yii\widgets\ActiveForm;
 $time = strtotime($start_date);
 $start_date = date('Y-m-d',$time);
 ?>
-<input value="<?= $leasePeriodFrom ?>" id="leasePeriodFrom" class="form-control" name="Invoice[lease_current_start]" type="hidden"> 
-<input value="<?= $prevPeriodFrom ?>" id="prevPeriodFrom" class="form-control" name="Invoice[lease_prev_start]" type="hidden"> 
+<input value="<?= $leasePeriodFrom ?>" id="leasePeriodFrom" class="form-control" name="Invoice[lease_current_start]" type="hidden">
+<input value="<?= $prevPeriodFrom ?>" id="prevPeriodFrom" class="form-control" name="Invoice[lease_prev_start]" type="hidden">
 <tr>
   <td> <input value="<?= $order_id ?>" id="invoice-order_id" class="form-control" name="Invoice[order_id]" type="hidden"> </td>
   <td> <input value="<?= $order_id ?>" id="invoice-order_id" class="form-control" name="Invoice[order_id]" type="hidden"> </td>

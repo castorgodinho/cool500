@@ -43,7 +43,7 @@ use yii\data\ActiveDataProvider;
       </div>
       <div class="col-md-4">
 
-            
+
 
       </div>
     </div>
@@ -192,7 +192,7 @@ use yii\data\ActiveDataProvider;
           'dataProvider' => $provider,
           'columns' => [
             'invoice_code',
-            'grand_total',
+            'total_amount',
             'start_date',
             [
               'class' => 'yii\grid\ActionColumn',
@@ -270,8 +270,8 @@ use yii\data\ActiveDataProvider;
           ]
       ]);
       ?>
-      
-      
+
+
       <?php
         if(Yii::$app->user->can('admin')){
           echo "<h4> <u>Lease Rent</u> </h4>";
@@ -289,7 +289,7 @@ use yii\data\ActiveDataProvider;
             ['class' => 'yii\grid\SerialColumn'],
             'start_date',
             'end_date',
-            
+
             [
               'label' => 'Lease Rent',
               'value' => 'amount1',
@@ -319,27 +319,27 @@ use yii\data\ActiveDataProvider;
                                 'title' => Yii::t('app', 'lead-view'),
                     ]);
                 },
-    
+
                 'update' => function ($url, $provider) {
                     return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
                                 'title' => Yii::t('app', 'lead-update'),
                     ]);
                 },
-                
-    
+
+
               ],
               'urlCreator' => function ($action, $provider, $key, $index) {
                   if ($action === 'view') {
                       $url ='/gidc/web/index.php?r=order-rate%2Fupdate&id='.$provider['order_rate_id'];
                       return $url;
                   }
-      
+
                   if ($action === 'update') {
                       //$url=$this->createUrl('state/view',['id' => $model['state_code']]);
                       $url ='/gidc/web/index.php?r=order-rate%2Fupdate&id='.$provider['order_rate_id'];
                       return $url;
                   }
-      
+
                   }
           ],
         ],

@@ -197,12 +197,12 @@ use yii\widgets\ActiveForm;
 
       <tr>
         <td class='bold-text'>  Current Due Total (B) (INR) </td>
-        <td> <?= $model->current_total_dues ?>  </td>
+        <td> <?= $model->current_dues_total ?>  </td>
       </tr>
 
       <tr>
         <td class='bold-text'>  Total Dues ( C = A + B) (INR) </td>
-        <td> <?= $model->grand_total?>  </td>
+        <td> <?= $model->total_amount?>  </td>
       </tr>
 
 

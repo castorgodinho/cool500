@@ -25,17 +25,16 @@ $this->title = 'Invoices';
             ['class' => 'yii\grid\SerialColumn'],
 
             'invoice_code',
-            'rate.rate',
             'tax.rate',
             'interest.rate',
             'order.order_number',
             [
-                
+
                 'attribute' =>'order_id',
                 'label' => 'Company',
                 'value' =>  'order.company.name',
             ],
-            
+
             [
                 'label' => 'Email',
                 'value' => function($dataProvider){

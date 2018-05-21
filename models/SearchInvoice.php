@@ -18,7 +18,7 @@ class SearchInvoice extends Invoice
     public function rules()
     {
         return [
-            [['invoice_id', 'rate_id', 'tax_id',  'interest_id', 'total_amount'], 'integer'],
+            [['invoice_id', 'tax_id',  'interest_id', 'total_amount'], 'integer'],
             [['order_id', 'invoice_code'], 'safe'],
             [['start_date'], 'safe'],
         ];
@@ -51,7 +51,7 @@ class SearchInvoice extends Invoice
         ]);
 
         $this->load($params);
-        
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -60,7 +60,6 @@ class SearchInvoice extends Invoice
         $query->joinWith(['order', 'company']);
         // grid filtering conditions
         $query->andFilterWhere([
-            'rate_id' => $this->rate_id,
             'tax_id' => $this->tax_id,
             'interest_id' => $this->interest_id,
             'start_date' => $this->start_date,
