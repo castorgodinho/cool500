@@ -31,12 +31,12 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'password'], 'required', 'on' => 'create'],
+            [['email', 'password', 'mobile'], 'required', 'on' => 'create'],
             [['password', 'password_repeat'], 'string'],
             [['password_repeat'], 'compare', 'compareAttribute'=>'password', 'on' => 'update-password', 'message'=>"Passwords don't match"],
             [['email'], 'string', 'max' => 100],
             [['type'], 'string', 'max' => 50],
-            [['email'], 'unique'],
+            [['email', 'mobile'], 'unique'],
         ];
     }
 
@@ -93,7 +93,11 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findByUsername($username)
     {
-        return static::find()->where(['email' => $username])->one();
+        if($user = static::find()->where(['email' => $username])->one()){
+            return $user;
+        }else{
+            return static::find()->where(['mobile' => $username])->one();
+        }
     }
 
 }

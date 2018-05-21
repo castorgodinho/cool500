@@ -75,7 +75,7 @@ use yii\data\ActiveDataProvider;
     <p></p>
   </div>
   <div class="col-md-3">
-    <p> <strong>Mobile No: </strong> <?= $model->owner_mobile ?></p>
+    <p> <strong>Mobile No: </strong> <?= $model->user->mobile ?></p>
     <h4></h4>
   </div>
 </div>

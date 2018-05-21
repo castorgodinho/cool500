@@ -54,7 +54,7 @@ class Company extends \yii\db\ActiveRecord
             [['remark'], 'string', 'max' => 150],
             [['constitution', 'products'], 'string', 'max' => 60],
             [['gstin'], 'string', 'max' => 30],
-            [['gstin', 'owner_mobile'], 'unique'],
+            [['gstin'], 'unique'],
             [['owner_phone', 'owner_mobile', 'competent_mobile'], 'is10NumbersOnly'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'user_id']],
             [['file'], 'file'],

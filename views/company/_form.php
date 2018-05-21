@@ -57,7 +57,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'owner_phone')->textInput(['maxlength' => true]) ?>
           </div>
           <div class="col-md-6">
-            <?= $form->field($model, 'owner_mobile')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($user, 'mobile')->textInput(['maxlength' => true]) ?>
           </div>
         </div>
         <div class="row">
