@@ -39,7 +39,12 @@ class MyInvoice extends Invoice
       $latestInvoice = Invoice::find()
       ->orderBy(['invoice_id' => SORT_DESC])
       ->one();
-      $invoiceID = strval($latestInvoice->invoice_id+1);
+      if($latestInvoice){
+        $invoiceID = strval($latestInvoice->invoice_id+1);
+      }
+      else{
+        $invoiceID = '1';
+      }
       $len = strlen($invoiceID);
       for ($i=0; $i < (4 - $len); $i++) {
         $invoiceID = '0'. $invoiceID;
@@ -195,7 +200,7 @@ class MyInvoice extends Invoice
         }
         echo 'Not First Invoice <br>';
       }
-
+      return $invoice;
     }
 
 

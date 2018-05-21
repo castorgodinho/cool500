@@ -49,208 +49,9 @@ class InvoiceController extends Controller
      */
 
     public function actionGenerate($order_id){
-              // date_default_timezone_set('Asia/Kolkata');
-              // $model = new MyInvoice();
-              // if ($model->load(Yii::$app->request->post())) {
-              //   $invoiceCode = '';
-              //   $model->total_amount = round($model->total_amount);
-              //   $order =  Orders::findOne($order_id);
-              //   $time = strtotime($order->start_date);
-              //   $area = $model->order->area;
-              //   $areaCode = strtoupper(substr($area->name,0,3));
-              //   $invoiceCode = $areaCode .'/';
-              //
-              //   $due_date =  $model->due_date;
-              //   echo '=>'.date('Y-m-d', strtotime($model->lease_current_start. ''));
-              //   $model->lease_current_start = date('Y-m-d', strtotime($model->lease_current_start. ''));
-              //   echo '=> '.$model->lease_prev_start;
-              //   if($model->lease_prev_start == '-'){
-              //       $model->lease_prev_start = null;
-              //       echo "setting null";
-              //   }else{
-              //       echo "not seting null";
-              //       $model->lease_prev_start = date('Y-m-d', strtotime($model->lease_prev_start. ''));
-              //   }
-              //
-              //   $year = date('Y');
-              //   $year = substr($year,2,3);
-              //   $invoiceCode = $areaCode . '/' . $year;
-              //   $year = intval($year) + 1;
-              //   $invoiceCode = $invoiceCode . '-' . $year;
-              //   $model->invoice_code = 'hello';
-              //   $model->save(False);
-              //   $invoiceID = strval($model->invoice_id);
-              //   $len = strlen($invoiceID);
-              //   for ($i=0; $i < (4 - $len); $i++) {
-              //     $invoiceID = '0'. $invoiceID;
-              //   }
-              //   $invoiceCode = $invoiceCode . '/' . $invoiceID;
-              //   $model->invoice_code = $invoiceCode;
-              //   $model->due_date = date('Y-m-d', strtotime($due_date. ''));
-              //   $model->save(False);
-              //   $interest = $model->interest->rate;
-              //   $toDate = date('d-m-Y', strtotime($model->due_date. ' + 1 year - 1 day'));
-              //   $msg = "Dear Customer \n\nYour Lease Rent form the period $model->due_date - $toDate ".
-              //   "is due on $model->due_date.I kindly request you to pay the same on or before due".
-              //    "date.delay payment will charge $interest% penal interest on daily basis.".
-              //   "Please find copy of invoice for more details.\n\n".$this->serverLocation."/web/index.php?r=invoice%2Fview&id=".$model->invoice_id;
-              //   $status = 0;
-              //   try{
-              //       $status = Yii::$app->mailer->compose()
-              //           ->setFrom($this->sentFrom)
-              //           ->setTo($model->order->company->user->email)
-              //           ->setSubject('IDC Goa')
-              //           ->setTextBody($msg)
-              //           ->send();
-              //   }catch(\Swift_TransportException $e){
-              //       $response = $e->getMessage() ;
-              //   }catch(\Exception $e){
-              //       echo "Mail failed";
-              //   }
-              //   $model->email_status = $status;
-              //   $model->save(false);
-              //   return $this->redirect(['invoice/index']);
-              // } else{
-              //
-              //   $order =  Orders::findOne($order_id);
-              //   $order_rate = OrderRate::find()
-              //   ->where(['order_id' => $order->order_id ])
-              //   ->andWhere(['flag' => 1])
-              //   ->one();
-              //
-              //   $tax = Tax::find()
-              //   ->where(['name' => 'GST'])
-              //   ->where(['flag' => 1])
-              //   ->one();
-              //
-              //   $interest = Interest::find()
-              //   ->where(['name' => 'Penal Interest'])
-              //   ->andWhere(['flag' => 1])
-              //   ->one();
-              //
-              //   $area = $order->area;
-              //   $company = $order->company;
-              //
-              //   $rate = Rate::find()->where(['area_id' => $area->area_id])
-              //   ->andWhere(['flag' => 1])
-              //   ->one();
-              //
-              //   $start_date = date('d-m-Y');
-              //   $diffDate = 0;
-              //
-              //   $previousCGSTAmount = 0;
-              //   $previousSGSTAmount = 0;
-              //
-              //   $model->prev_lease_rent=0;
-              //   $model->prev_tax = 0;
-              //   $model->prev_interest = 0;
-              //   $model->prev_dues_total=0;
-              //   $model->prev_tax=0;
-              //
-              //  $model->current_lease_rent = $order_rate->amount1;
-              //  $model->current_tax = $model->current_lease_rent * ($tax->rate/100);
-              //  $currentCGSTAmount = (($tax->rate/2)/100) * $model->current_lease_rent;
-              //  $currentSGSTAmount = $currentCGSTAmount;
-              //  $model->current_total_dues = $model->current_lease_rent + $model->current_tax;
-              //
-              //
-              //  $invoice = Invoice::find()
-              //  ->where(['order_id' => $order_id])
-              //  ->orderBy(['invoice_id' => SORT_DESC])
-              //  ->one();
-              //
-              //  $time = strtotime($start_date);
-              //  $newformat = date('d-m-Y',$time);
-              //  $invoiceDueDate = date('d-m-Y', strtotime($newformat. ' + 15 days'));
-              //  $model->due_date = $invoiceDueDate;
-              //
-              //  $billDate = $start_date;
-              //
-              //  if($start_date > $order_rate->end_date ){
-              //   $model->current_lease_rent = $model->current_lease_rent + $order_rate->amount1;
-              //  }
-              //
-              //  if($invoice){
-              //
-              //    $totalPaid = Payment::find()
-              //    ->where(['invoice_id' => $invoice->invoice_id])
-              //    ->andWhere(['status' => 1])
-              //    ->sum('amount');
-              //
-              //    $pi = Payment::find()
-              //    ->where(['invoice_id' => $invoice->invoice_id])
-              //    ->andWhere(['status' => 1])
-              //    ->sum('penal');
-              //
-              //    $model->prev_dues_total = $invoice->grand_total - $totalPaid + $pi;
-              //
-              //    $model->prev_lease_rent = $invoice->current_lease_rent;
-              //    $model->prev_tax = $invoice->current_tax;
-              //    $previousCGSTAmount =  (($invoice->tax->rate/2)/100) * $invoice->current_lease_rent;
-              //    $previousSGSTAmount = $previousCGSTAmount;
-              //
-              //    $invoiceDueDate = date('d-m-Y', strtotime($invoice->due_date. ' + 1 year '));
-              //    $model->due_date = $invoiceDueDate;
-              //
-              //    $date1 = $invoiceDueDate;
-              //    $date2 = $start_date;
-              //    $diff = strtotime($date2) - strtotime($date1);
-              //    $diffDate  = $diff / (60*60*24);
-              //    $invoiceOld =Invoice::find()
-              //       ->where(['order_id' => $order->order_id])
-              //       ->orderBy(['invoice_id' => SORT_DESC])
-              //       ->one();
-              //    $leasePeriodFrom = date('d-m-Y', strtotime($invoiceOld->lease_current_start. '+ 1 year'));
-              //    $leasePeriodTo = date('d-m-Y', strtotime($invoiceOld->lease_current_start. ' + 2 year - 1 day'));
-              //
-              //    $prevPeriodFrom = date('d-m-Y', strtotime($invoiceOld->lease_current_start. '  '));
-              //    $prevPeriodTo   = date('d-m-Y', strtotime($invoiceOld->lease_current_start. ' - 1 year  '));
-              //    }else{
-              //
-              //    $leasePeriodFrom = date('d-m-Y', strtotime($order->start_date. ''));;
-              //    $leasePeriodTo = date('d-m-Y', strtotime($order->start_date. ' + 1 year - 1 day'));
-              //
-              //    $prevPeriodFrom = '-';
-              //    $prevPeriodTo = '-';
-              //
-              //    $billDate = $start_date;
-              //  }
-              //
-              //  $model->current_total_dues = $model->current_lease_rent + $model->current_tax;
-              //
-              //  $penalInterest = round((($diffDate  * ($interest->rate + 100 )/100) * $model->prev_dues_total ) / 365);
-              //  if($penalInterest < 0 ){
-              //    $penalInterest = 0;
-              //  }
-              //
-              //  $leftOverAmount = $model->prev_dues_total;
-              //  $previousDueTotal = $leftOverAmount + $penalInterest;
-              //
-              //    return $this->render('generate', [
-              //            'previousCGSTAmount' => $previousCGSTAmount,
-              //            'previousSGSTAmount' => $previousSGSTAmount,
-              //            'currentCGSTAmount' => $currentCGSTAmount,
-              //            'currentSGSTAmount' => $currentSGSTAmount,
-              //            'prevNotPaid' => $leftOverAmount,
-              //            'leasePeriodFrom' => $leasePeriodFrom,
-              //            'leasePeriodTo' => $leasePeriodTo,
-              //            'prevPeriodFrom' => $prevPeriodFrom,
-              //            'prevPeriodTo' => $prevPeriodTo,
-              //            'invoiceDueDate' => $invoiceDueDate,
-              //            'order_id' => $order_id,
-              //            'interest' => $interest,
-              //            'tax' => $tax,
-              //            'rate' => $rate,
-              //            'start_date' => $start_date,
-              //            'company' => $company,
-              //            'order' => $order,
-              //            'model' => $model,
-              //            'penalInterest' => $penalInterest,
-              //        ]);
-              // }
               $order =  Orders::findOne($order_id);
-              MyInvoice::generateInvoice($order);
-              return $this->redirect(['index']);
+              $invoice = MyInvoice::generateInvoice($order);
+              return $this->redirect(['view','id' => $invoice->invoice_id]);
     }
 
 
@@ -349,7 +150,7 @@ class InvoiceController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                   $model->save(False);
 
-                return $this->redirect(['index']);
+                return $this->redirect(['view','id' =>$model->invoice_id ]);
             }
 
              return $this->render('create', [
@@ -392,7 +193,9 @@ class InvoiceController extends Controller
     public function actionDelete($id)
     {
         if (\Yii::$app->user->can('deleteInvoice')){
-            $this->findModel($id)->delete();
+            $invoice = Invoice::findOne($id);
+            $invoice->flag = '0';
+            $invoice->save(False);
             return $this->redirect(['index']);
         }else{
             throw new \yii\web\ForbiddenHttpException;

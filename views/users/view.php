@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'email:email',
+            'mobile',
             'type',
         ],
     ]) ?>

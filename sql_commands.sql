@@ -40,7 +40,7 @@ alter table payment add status tinyint;
 
 alter table payment add tds_file text;
 
-alter table payment add transaction_no varchar(50); 
+alter table payment add transaction_no varchar(50);
 
 alter table payment add transaction_details text;
 
@@ -55,6 +55,7 @@ alter table invoice add lease_prev_start date;
 alter table orders add document text;
 
 alter table orders add remark text;
+
 
 ----------------------------------------------------
 
@@ -80,3 +81,13 @@ alter table invoice add invoice_code varchar(100) not null;
 
 drop table rate;
 
+=======
+alter table orders add status tinyint default 1;
+
+alter table orders add next_order_id int;
+
+alter table orders add CONSTRAINT orders_fk1 FOREIGN KEY (next_order_id) REFERENCES orders(order_id);
+
+alter table orders add transfer_url text;
+
+alter table users add mobile varchar(11) not null;

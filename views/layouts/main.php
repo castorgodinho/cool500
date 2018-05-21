@@ -49,7 +49,7 @@ AppAsset::register($this);
             $link[] = ['label' => 'Receipt', 'url' => ['/payment/index']];
             $link[] = ['label' => 'User', 'url' => ['/users/index']];
             $link[] = ['label' => 'Generate Invoices', 'url' => ['/invoice/update']];
-            
+
             $link[] = [
                 'label' => 'Taxation',
                 'items' => [
@@ -118,7 +118,7 @@ AppAsset::register($this);
 
         });
 JS;
-    $this->registerJS($script);
+    //$this->registerJS($script);
 ?>
 <?php $this->endBody() ?>
 </body>

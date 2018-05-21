@@ -42,7 +42,7 @@ class SearchOrders extends Orders
     public function search($params)
     {
 
-        $query = Orders::find()->select('distinct(order_number), order_id, start_date, company_id')->groupBy('order_number');
+        $query = Orders::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

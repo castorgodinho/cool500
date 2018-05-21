@@ -93,11 +93,11 @@ class PaymentController extends Controller
             $model = new MyPayment();
             $model->generate();
             if(! \Yii::$app->user->can('company')){
-                return $this->redirect(['view', 'id' => $model->payment_id ]);
+                //return $this->redirect(['view', 'id' => $model->payment_id ]);
             }else{
-                return $this->render('online-payment', [
-                    'model' => $model,
-                ]);
+              //  return $this->render('online-payment', [
+              //      'model' => $model,
+              //  ]);
             }
         }else{
             throw new \yii\web\ForbiddenHttpException;
@@ -140,7 +140,7 @@ class PaymentController extends Controller
         if($in->invoice_id != $model->invoice_id){
           $balanceAmount = 0;
         }else{
-            $balanceAmount = $model->grand_total - $totalPayment - $pi;
+            $balanceAmount = $model->total_amount - $totalPayment - $pi;
         }
 
         $tds_amount = Payment::find()
@@ -158,7 +158,7 @@ class PaymentController extends Controller
         if($in->invoice_id != $model->invoice_id){
           $balanceAmount = 0;
         }else{
-            $balanceAmount = $model->grand_total - $totalPayment - $pi;
+            $balanceAmount = $model->total_amount - $totalPayment - $pi;
         }
 
         $lease_rent = $in->current_lease_rent;

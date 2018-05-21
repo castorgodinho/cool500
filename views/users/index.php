@@ -24,6 +24,7 @@ $this->title = 'Users';
             ['class' => 'yii\grid\SerialColumn'],
 
             'email:email',
+            'mobile',
             [
                 'label' => 'Company',
                 'value' => function($dataProvider){

@@ -3,6 +3,7 @@
 namespace app\models;
 use app\models\Payment;
 use app\models\Invoice;
+use app\models\MyInvoice;
 use yii\web\UploadedFile;
 use app\models\Debit;
 
@@ -14,12 +15,11 @@ class MyPayment extends Payment
       if ($this->load(Yii::$app->request->post())) {
 
         $invoice = Invoice::findOne($this->invoice_id);
-        $currentPenalInterest = $invoice->current_interest;
+        $currentPenalInterest = 0;
         /// '$currentPenalInterest '.$currentPenalInterest.'<br>';
         $invoice->save();
         /// '$invoice->invoice_id '.$this->invoice_id.'<br>';
 
-        
         $totalPreviousPayment = Payment::find()
         ->where(['invoice_id' => $this->invoice_id])
         ->andWhere(['status' => 1])
@@ -46,7 +46,10 @@ class MyPayment extends Payment
         /// '$totalLeaseRentPaid '.$totalLeaseRentPaid.'<br>';
         /// '$this->amount '.$this->amount.'<br>';
 
-        $balanceAmount = round($invoice->grand_total - $this->amount - $totalPreviousPayment + $this->penal);
+        $totalAmount = MyInvoice::getTotalAmount($invoice->order);
+        $totalAmountPaid = MyInvoice::getTotalAmountPaid($invoice->order);
+
+        $balanceAmount = $totalAmount - $totalAmountPaid;
         /// '$balanceAmount '.$balanceAmount.'<br>';
         $currentLeaseRent = $invoice->current_lease_rent;
         /// '$currentLeaseRent '.$currentLeaseRent.'<br>';
@@ -76,7 +79,7 @@ class MyPayment extends Payment
         $totalRentPlusTax = $totalTax + $totalLeaseRent;
         /// '$totalRentPlusTax '.$totalRentPlusTax.'<br>';
 
-        $totalInvoiceAmount =  $invoice->grand_total + $totalPenalInterest;
+        $totalInvoiceAmount =  $invoice->total_amount + $totalPenalInterest;
         /// '$totalInvoiceAmount '.$totalInvoiceAmount.'<br>';
         /// '$totalTax '.$totalTax.'<br>';
         /// '$totalLeaseRent '.$totalLeaseRent.'<br>';
@@ -116,6 +119,12 @@ class MyPayment extends Payment
         /// '$totalPaying '.$totalPaying.'<br>';
 
         $penalPayment = 0;
+
+        $leasePaying = MyInvoice::getTotalLeaseRent($invoice->order);
+        echo '$leasePaying'.$leasePaying.'<br>';
+        $this->lease_rent = $leasePaying;
+        $this->save(False);
+        echo '$this->lease_rent'.$this->lease_rent.'<br>';
         if($amountPaying > $totalRentPlusTax ){
 
           $taxPaying = $totalRentPlusTax * ($taxPerectage/100);
@@ -128,7 +137,6 @@ class MyPayment extends Payment
 
         $this->penal = $penalPayment;
         $this->tax = $taxPaying;
-        $this->lease_rent = $leasePaying;
 
         if($balanceAmount < 0){
           Yii::$app->session->setFlash('danger', "TRYING TO PAY EXTRA");
@@ -160,12 +168,10 @@ class MyPayment extends Payment
           //$this->status = 1;
           $this->save(False);
 
-          
           $debit = new Debit();
           $debit->penal = $this->penal;
           $debit->invoice_id = $invoice->invoice_id;
           $debit->payment_id = $this->payment_id;
-          $debit->start_date = $this->start_date;
           $debit->order_id = $invoice->order->order_id;
           $debit->save(False);
         }

@@ -131,6 +131,66 @@ class OrdersController extends Controller
         }
     }
 
+    public function actionTransfer($id){
+        if (\Yii::$app->user->can('updateOrders')){
+            $model =  Orders::find()->where(['order_id' => $id])->one();
+            $company = Company::find()->all();
+            $orderRate = OrderRate::find()->where(['order_id' => $id])->andWhere(['flag' => 1])->one();
+            $area = Area::find()->all();
+            if ($model->load(Yii::$app->request->post()) && $orderRate->load(Yii::$app->request->post())) {
+                $oldOrder = Orders::findOne($model->order_id);
+                
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if($model->file){
+                    $model->upload();
+                }
+                $model->transfer_file = UploadedFile::getInstance($model, 'transfer_file');
+                if($model->transfer_file){
+                    echo "Transfered!";
+                    $model->uploadTranfer();
+                }
+                $newOrder = new Orders();
+                $newOrder->order_number = $model->order_number;
+                $newOrder->company_id = $model->company_id;
+                $newOrder->built_area = $model->built_area;
+                $newOrder->shed_area = $model->shed_area;
+                $newOrder->godown_area = $model->godown_area;
+                $newOrder->start_date = $model->start_date;
+                $newOrder->end_date = $model->end_date;
+                $newOrder->shed_no = $model->shed_no;
+                $newOrder->godown_no = $model->godown_no;
+                $newOrder->area_id = $model->area_id;
+                $newOrder->total_area = $model->total_area;
+                $newOrder->plots = $model->plots;
+                $newOrder->document = $model->document;
+                $newOrder->transfer_url = $model->transfer_url;
+                $newOrder->save();
+                $oldOrder->next_order_id = $newOrder->order_id;
+                $oldOrder->status = 0;
+                $oldOrder->save();
+                //$model->save();
+                $newOrderRate = new OrderRate();
+                $newOrderRate->order_id = $newOrder->order_id;
+                $newOrderRate->start_date = $orderRate->start_date;
+                $newOrderRate->end_date= $orderRate->end_date;
+                $newOrderRate->amount1= $orderRate->amount1;
+                $newOrderRate->amount2= $orderRate->amount2;
+                $newOrderRate->flag = 1;
+                $newOrderRate->save(false);
+                return $this->redirect(['orders/index']);
+            } else {
+                return $this->render('transfer', [
+                    'model' => $model,
+                    'company' => $company,
+                    'area' => $area,
+                    'orderRate' => $orderRate,
+                ]);
+            }
+        }else{
+            throw new \yii\web\ForbiddenHttpException;
+        }
+    }
+
     /**
      * Updates an existing Orders model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -149,6 +209,11 @@ class OrdersController extends Controller
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if($model->file){
                     $model->upload();
+                }
+                $model->transfer_file = UploadedFile::getInstance($model, 'transfer_file');
+                if($model->transfer_file){
+                    echo "Transfered!";
+                    $model->uploadTranfer();
                 }
                 $log = new Log();
                 $log->old_value = Json::encode(Orders::find()->where(['order_id' => $id])->all(), $asArray = true) ;

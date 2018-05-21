@@ -69,12 +69,12 @@ use yii\widgets\ActiveForm;
 
   <tr>
     <td>  Current Due Total </td>
-    <td> <?= $invoice->current_total_dues ?>  </td>
+    <td> <?= $invoice->current_dues_total ?>  </td>
   </tr>
 
   <tr>
     <td>  Final Total ( C = A + B) </td>
-    <td> <?= $invoice->grand_total?>  </td>
+    <td> <?= $invoice->total_amount?>  </td>
   </tr>
 
   <tr>

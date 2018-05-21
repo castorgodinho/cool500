@@ -66,9 +66,12 @@ class SearchInvoice extends Invoice
             'total_amount' => $this->total_amount,
         ]);
 
+
+
         $query->andFilterWhere(['like', 'invoice_code' , $this->invoice_code])
         ->orFilterWhere(['like', 'company.name', $this->order_id]);
 
+        $query->andWhere(['flag' => '1']);
         $query->orderBy(['invoice_id' => SORT_DESC]);
 
         return $dataProvider;
