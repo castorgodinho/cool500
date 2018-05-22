@@ -43,16 +43,15 @@ class Payment extends \yii\db\ActiveRecord
 
 
     public $file;
-    public $lease_rent;
     public $penalInterestAmount;
 
     public function rules()
     {
         return [
-            [['order_id', 'amount', 'invoice_id', 'tds_rate', 'tds_amount', 'balance_amount', 'penal', 'lease_rent', 'tax'], 'integer'],
-            [['start_date', 'tds_file', 'cheque_no', 'transaction_no', 'transaction_details'], 'safe'],
+            [['order_id', 'amount', 'invoice_id', 'balance_amount', 'penal', 'lease_rent', 'tax'], 'integer'],
+            [['start_date', 'tds_file', 'transaction_no', 'transaction_details','tds_rate', 'tds_amount','cheque_no'], 'safe'],
             [['file'], 'file'],
-            [['balance_amount', 'payment_no', 'penal',  'lease_rent', 'tax'], 'required'],
+            [['balance_amount', 'payment_no', 'penal',  'lease_rent', 'tax','mode','amount'], 'required'],
             [['mode'], 'string', 'max' => 50],
             [['payment_no', 'cheque_no'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 4],

@@ -17,6 +17,7 @@ use app\models\ReportSearch;
 use app\models\Interest;
 use app\models\Rate;
 use app\models\Invoice;
+use app\models\MyInvoice;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
@@ -71,7 +72,7 @@ class PaymentController extends Controller
         $model = Payment::findOne($id);
         if (\Yii::$app->user->can('viewPayment', ['payment' => $model])){
             $invoice = $model->invoice;
-            $debit = Debit::find()->where(['payment_id' => $model->payment_id])->one();
+              $debit = Debit::find()->where(['payment_id' => $model->payment_id])->one();
             return $this->render('view', [
                 'model' => $this->findModel($id),
                 'invoice' => $invoice,
@@ -91,115 +92,56 @@ class PaymentController extends Controller
     {
         if (\Yii::$app->user->can('admin') || \Yii::$app->user->can('company')){
             $model = new MyPayment();
-            $model->generate();
             if(! \Yii::$app->user->can('company')){
+                $model->generatePayment('1',$this);
                 //return $this->redirect(['view', 'id' => $model->payment_id ]);
             }else{
-              //  return $this->render('online-payment', [
-              //      'model' => $model,
-              //  ]);
+                $model->generatePayment('0',$this);
+                // return $this->render('online-payment', [
+                //     'model' => $model,
+                // ]);
             }
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
     }
 
-    public function actionRenderPayment($id){
-        $model_payment = new MyPayment();
-        $model = Invoice::find()
-            ->where(['invoice_code' => $id])
-            ->one();
 
+    public function actionRenderPayment($id){
+        date_default_timezone_set('Asia/Kolkata');
+        $model = new MyPayment();
+        $invoice = Invoice::find()->where(['invoice_code' => $id])->one();
+        $order = $invoice->order;
+        $interest =  MyInvoice::getCurrentInterest();
         if(!$model){
             throw new \yii\web\ForbiddenHttpException;
         }
-
-        date_default_timezone_set('Asia/Kolkata');
-        $start_date = date('Y-m-d');
-
-        $model_payment->start_date = $start_date;
-        $model_payment->invoice_id = $model->invoice_id;
-        $model_payment->mode = 'cash';
-        $model_payment->order_id = $model->order_id;
-
-        $totalPayment = Payment::find()
-        ->where(['invoice_id' => $model->invoice_id])
-        ->andWhere(['status' => 1])
-        ->sum('amount');
-
-        $pi = Payment::find()
-        ->where(['invoice_id' => $model->invoice_id])
-        ->andWhere(['status' => 1])
-        ->sum('penal');
-
-        $in = Invoice::find()
-        ->where(['order_id' => $model->order_id])
-        ->orderBy(['invoice_id' => SORT_DESC])
-        ->one();
-
-        if($in->invoice_id != $model->invoice_id){
-          $balanceAmount = 0;
-        }else{
-            $balanceAmount = $model->total_amount - $totalPayment - $pi;
-        }
-
-        $tds_amount = Payment::find()
-        ->where(['invoice_id' => $model->invoice_id])
-        ->andWhere(['status' => 1])
-        ->sum('tds_amount');
-
-        date_default_timezone_set('Asia/Kolkata');
-        $date1 = date('Y-m-d', strtotime($model->start_date. ' + 15 days'));
-        $date2 = date('Y-m-d');
-        $diff = strtotime($date2) - strtotime($date1);
-        // $diff = strtotime($date1) - strtotime($date2);
-        $diffDate  = $diff / (60*60*24);
-
-        if($in->invoice_id != $model->invoice_id){
-          $balanceAmount = 0;
-        }else{
-            $balanceAmount = $model->total_amount - $totalPayment - $pi;
-        }
-
-        $lease_rent = $in->current_lease_rent;
-        $total_tax = $in->current_tax;
-
-        $amount = $balanceAmount;
-        $PenalInterestAmount = 0;
-
-        $totalLeaseRentPaid = Payment::find()
-        ->where(['invoice_id' => $model->invoice_id])
-        ->andWhere(['status' => 1])
-        ->sum('lease_rent');
-
+        $totalAmount = MyInvoice::getTotalAmount($order);
+        $totalAmountPaid = MyPayment::getTotalAmountPaid($order);
+        $totalPenal = MyInvoice::getTotalPenal($order);
+        $totalPenalPaid = MyInvoice::getTotalPenalPaid($order);
+        //$diffDate  = MyInvoice::getDateDifference($invoice->due_date); //TODO
+        $diffDate  = 100;
+        $totalLeaseRent = MyInvoice::getTotalLeaseRent($order);
+        $totalLeaseRentPaid = MyInvoice::getTotalLeaseRentPaid($order);
+        $totalTaxPaid = MyInvoice::getTotalTaxPaid($order);
+        $totalTax = MyInvoice::getTotalTax($order);
+        $penalAmount = 0;
         if( $diffDate > 0 ){
-
-            $perDayPenalInterestAmount  = ($in->current_lease_rent - $totalLeaseRentPaid) * ($in->interest->rate/100)/365;
-            $PenalInterestAmount  = round($perDayPenalInterestAmount * $diffDate) ;
-            $model_payment->penalInterestAmount = $PenalInterestAmount;
-            $model->current_interest = $model->current_interest + $PenalInterestAmount;
-            $model->save(False);
-            $balanceAmount = round($model->current_interest + $amount);
-            /// '$balanceAmount '.$balanceAmount.'<br>';
-            /// '$amount '.$amount.'<br>';
-            /// '$PenalInterestAmount '.$PenalInterestAmount.'<br>';
+          $penalAmount = MyPayment::calculatePenalInterest($order,$interest,$diffDate);
         }
-
-        if($balanceAmount < 0){
-          $balanceAmount = 0;
-        }
-
+        $model->start_date = date('Y-m-d');
+        $model->invoice_id = $invoice->invoice_id;
+        $model->order_id = $order->order_id;
+        $model->penal = $penalAmount;
+        $model->lease_rent = $totalLeaseRent - $totalLeaseRentPaid;
+        $model->tax = $totalTax - $totalTaxPaid;
+        $balancePenal = $totalPenal + $penalAmount - $totalPenalPaid;
+        $balanceAmount = $totalAmount - $totalAmountPaid + $balancePenal +   $totalPenalPaid;
         return $this->render('create', [
-                'start_date' => $start_date,
-                'lease_rent' => $lease_rent,
-                'total_tax' => $total_tax,
-                'PenalInterestAmount' => $PenalInterestAmount,
-                'amount' => $amount,
+                'invoice' => $invoice,
                 'balanceAmount' => $balanceAmount,
-                'tds_amount' => $tds_amount,
-                'invoice' => $model,
-                'model' => $model_payment,
-                'diffDate' => $diffDate
+                'model' => $model,
         ]);
     }
 
@@ -208,10 +150,9 @@ class PaymentController extends Controller
     {
         if (\Yii::$app->user->can('searchInvoice')){
             $model_invoice = new Invoice();
-            if ($model_invoice->load(Yii::$app->request->post()) /* || Yii::$app->request->get() */) {
+            if ($model_invoice->load(Yii::$app->request->post())) {  /* || Yii::$app->request->get() */
                 echo $model_invoice->invoice_code;
                 return $this->redirect(['render-payment', 'id' => $model_invoice->invoice_code]);
-
           }else{
             return $this->render('search', [
                 'model' => $model_invoice,

@@ -129,4 +129,10 @@ class Invoice extends \yii\db\ActiveRecord
           return $this->hasMany(Payment::className(), ['invoice_id' => 'invoice_id']);
       }
 
+      public function getPenal(){
+        $amount = Debit::find()->where(['invoice_id' => $this->invoice_id])
+        ->sum('penal');
+        return $amount;
+      }
+
 }

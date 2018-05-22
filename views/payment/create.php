@@ -68,6 +68,11 @@ use yii\widgets\ActiveForm;
   </tr>
 
   <tr>
+    <td>  Current Penal Amount </td>
+    <td> <?= round($model->penal) ?>  </td>
+  </tr>
+
+  <tr>
     <td>  Current Due Total </td>
     <td> <?= $invoice->current_dues_total ?>  </td>
   </tr>
@@ -79,7 +84,7 @@ use yii\widgets\ActiveForm;
 
   <tr>
     <td>  <h2>BALANCE</h2> </td>
-    <td> <h3><?= $balanceAmount ?></h3>  </td>
+    <td> <h3><?= round($balanceAmount) ?></h3>  </td>
   </tr>
 
 
@@ -87,26 +92,27 @@ use yii\widgets\ActiveForm;
 <?php if($balanceAmount != 0) { ?>
 
 <p> <b>Amount:</b> </p>
+
 <input id="mypayment-invoice_id" class="form-control" name="MyPayment[invoice_id]" value="<?= $model->invoice_id ?>" aria-invalid="false" type="hidden">
 
 <input id="mypayment-amount" class="form-control amount-1" name="MyPayment[amount]" type="text">
-
+<br>
 <input id="mypayment-start_date" class="form-control" name="MyPayment[start_date]" value="<?= $model->start_date?>" type="hidden">
 
 <input id="mypayment-order_id" class="form-control" name="MyPayment[order_id]" value="<?= $model->order_id?>" type="hidden">
 
-<input id="mypayment-penal" class="form-control" name="MyPayment[penal]" value="<?= $PenalInterestAmount?>" type="hidden">
+<input id="mypayment-penal" class="form-control" name="MyPayment[penal]" value="<?= round($model->penal) ?>" type="hidden">
 
-<input id="mypayment-lease_rent" class="form-control" name="MyPayment[lease_rent]" value="<?= $lease_rent?>" type="hidden">
+<input id="mypayment-lease_rent" class="form-control" name="MyPayment[lease_rent]" value="<?= $model->lease_rent ?>" type="hidden">
 
-<input id="mypayment-total_tax" class="form-control" name="MyPayment[total_tax]" value="<?= $total_tax ?>" type="hidden">
+<input id="mypayment-tax" class="form-control" name="MyPayment[tax]" value="<?= $model->tax ?>" type="hidden">
 
-<input id="mypayment-balance_amount" class="form-control" name="MyPayment[balance_amount]" value="<?= $balanceAmount ?>" type="hidden">
+<input id="mypayment-balance_amount" class="form-control" name="MyPayment[balance_amount]" value="<?= round($balanceAmount) ?>" type="hidden">
 
 <?php if(\Yii::$app->user->can('admin')){ ?>
   <input id="mypayment-status" class="form-control" name="MyPayment[status]" value="1" type="hidden">
 <?php }else{ ?>
-  <input id="mypayment-status" class="form-control" name="MyPayment[status]" value="0" type="hidden">
+  <input id="mypayment-status" class="form-control" name="MyPayment[status]" value="0" type="hidden ">
 <?php } ?>
 
 
@@ -120,7 +126,6 @@ use yii\widgets\ActiveForm;
 <div class="cheque-div">
 
 </div>
-<?php if($tds_amount == 0 ) { ?>
 
   <label for="">TDS</label>
   <select id='tds_triger' class="form-control" name="tds">
@@ -131,23 +136,23 @@ use yii\widgets\ActiveForm;
 
   <div class="hide-div">
     <br>
-  <label for="">TDS RATE</label>
-    <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="text">
+  <label for="">TDS AMOUNT</label>
+    <input id="mypayment-tds_amount" class="form-control" name="MyPayment[tds_amount]" value="0" type="text">
     <?= $form->field($model, 'file')->fileInput() ?>
   </div>
   <?php
   $script = <<< JS
     $(document).ready(function(){
-      var cheque_no ="<br><div class=\"form-group field-payment-cheque_no\">"+
-"<label class=\"control-label\" for=\"payment-cheque_no\">Cheque No</label>"+
-"<input id=\"payment-cheque_no\" class=\"form-control\" name=\"Payment[cheque_no]\" type=\"text\">"+
+      var cheque_no ="<br><div class=\"form-group field-mypayment-cheque_no\">"+
+"<label class=\"control-label\" for=\"mypayment-cheque_no\">Cheque No</label>"+
+"<input id=\"mypayment-cheque_no\" class=\"form-control\" name=\"MyPayment[cheque_no]\" type=\"text\">"+
 
 "<div class=\"help-block\"></div>"+
 "</div>";
 
-      var div = "<br><div class=\"form-group field-payment-file required\">"+
-              "<label class=\"control-label\" for=\"payment-file\">File</label>"+
-              "<input type=\"hidden\" name=\"Payment[file]\" value=\"\"><input type=\"file\" id=\"payment-file\" name=\"Payment[file]\" aria-required=\"true\">"+
+      var div = "<br><div class=\"form-group field-mypayment-file required\">"+
+              "<label class=\"control-label\" for=\"mypayment-file\">File</label>"+
+              "<input type=\"text\" name=\"MyPayment[file]\" value=\"\"><input type=\"file\" id=\"mypayment-file\" name=\"MyPayment[file]\" aria-required=\"true\">"+
 
               "<div class=\"help-block\"></div>"+
               "</div>";
@@ -167,23 +172,20 @@ JS;
     $this->registerJS($script);
 ?>
   <br>
-<?php  } else { ?>
-  <input id="payment-tds_rate" class="form-control" name="Payment[tds_rate]" value="0" type="hidden">
-  <br>
-<?php  } ?>
+
 <?php
 $script = <<< JS
   $(document).ready(function(){
-    var cheque_no ="<br><div class=\"form-group field-payment-cheque_no\">"+
-"<label class=\"control-label\" for=\"payment-cheque_no\">Cheque No</label>"+
-"<input id=\"payment-cheque_no\" class=\"form-control\" name=\"Payment[cheque_no]\" type=\"text\">"+
+    var cheque_no ="<br><div class=\"form-group field-mypayment-cheque_no\">"+
+"<label class=\"control-label\" for=\"mypayment-cheque_no\">Cheque No</label>"+
+"<input id=\"mypayment-cheque_no\" class=\"form-control\" name=\"MyPayment[cheque_no]\" type=\"text\">"+
 
 "<div class=\"help-block\"></div>"+
 "</div>";
 
-    var div = "<br><div class=\"form-group field-payment-file\">"+
-            "<label class=\"control-label\" for=\"payment-file\">File</label>"+
-            "<input type=\"\" name=\"Payment[file]\" value=\"\"><input type=\"file\" id=\"payment-file\" name=\"Payment[file]\" >"+
+    var div = "<br><div class=\"form-group field-mypayment-file\">"+
+            "<label class=\"control-label\" for=\"mypayment-file\">File</label>"+
+            "<input type=\"\" name=\"MyPayment[file]\" value=\"\"><input type=\"file\" id=\"mypayment-file\" name=\"MyPayment[file]\" >"+
 
             "<div class=\"help-block\"></div>"+
             "</div>";

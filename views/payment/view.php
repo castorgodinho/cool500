@@ -100,7 +100,7 @@ use yii\widgets\DetailView;
        <td><?= $amount = round($model->amount * 100 / ($model->invoice->tax->rate+100)) ?></td>
 
      </tr> -->
-    <?php if($model->penal != 0) {?>
+
      <tr>
 
        <td>Lease Rent</td>
@@ -115,51 +115,34 @@ use yii\widgets\DetailView;
         <td>  Current SGST <?= ($model->invoice->tax->rate)/2 ?>% (INR)  </td>
         <td> <?= $model->invoice->current_tax / 2 ?>  </td>
       </tr>
+      <tr>
+        <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
+        <td><?= ($invoice->current_tax) ?></td>
+
+      </tr>
      <tr>
        <td>Penal Interest</td>
-       <td><?= $model->invoice->current_interest ?></td>
+       <td><?= $model->invoice->getPenal() ?></td>
 
-       <!-- <td>Penal Interest  (INR) </td>
-       <td><?= $model->penal ?></td> -->
 
      </tr>
-         <?php } ?>
-     <tr>
-       <td>CGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
-       <td><?= ($amount * ($model->invoice->tax->rate/100) / 2 )  ?></td>
-     </tr>
-     <tr>
-       <td>SGST <?= $model->invoice->tax->rate /2  ?> % (INR)</td>
-       <td><?= ($amount * ($model->invoice->tax->rate/100) / 2)?></td>
-     </tr>
-     <tr>
-       <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
-       <td><?= round($amount * ($model->invoice->tax->rate/100) )?></td>
 
-     </tr>
-     <!-- <tr>
-       <td>Total GST <?= $model->invoice->tax->rate   ?> % (INR)</td>
-       <td><?= round(($model->invoice->current_tax) )?></td>
 
-     </tr> -->
-     <!-- <tr>
-       <td>TDS (INR)</td>
-       <td><?= round( ($model->tds_amount )) ?></td>
-     </tr> -->
+
      <tr>
 
        <td> Total Bill Amount </td>
-       <td><?= round($model->balance_amount) ?></td>
+       <td><?= $model->balance_amount ?></td>
      </tr>
 
      <tr>
        <td> Amount Paid </td>
-       <td><?= round($model->amount) ?></td>
+       <td><?= $model->amount ?></td>
      </tr>
 
      <tr>
        <td> Balance Amount </td>
-       <td><?= round($model->amount - $model->balance_amount ) ?></td>
+       <td><?= ($model->balance_amount - $model->amount) ?></td>
      </tr>
 
      <!-- <tr>
@@ -195,7 +178,7 @@ This is a computer-generated document and it does not require a signature. <br>
 </div>
 
 </div>
-
+<? if($debit) {?>
 <div class="container cover" id="print-debit">
   <h1 class="text-center">Goa Industrial Development Corporation</h1>
   <h2 class="text-center">Debit Note</h2>
@@ -226,7 +209,7 @@ This is a computer-generated document and it does not require a signature. <br>
     </div>
   </div>
 </div>
-
+<? } ?>
 
 <?php
 
