@@ -21,7 +21,7 @@ class InvoiceReport extends Invoice
     public function rules()
     {
         return [
-            [['invoice_id', 'rate_id',  'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
+            [['invoice_id',  'tax_id', 'order_id', 'interest_id', 'total_amount'], 'integer'],
             [['start_date', 'from_date','invoice_code', 'to_date', 'search_key'], 'safe'],
         ];
     }
