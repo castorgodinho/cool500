@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 21, 2018 at 05:40 AM
+-- Generation Time: May 23, 2018 at 01:23 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `area` (
 --
 
 INSERT INTO `area` (`area_id`, `name`, `total_area`) VALUES
-(9, 'Verna Industrial Estate', 1573552),
+(9, 'Verna Industrial Estate', 1671552),
 (10, 'Cuncolim Industrial Estate', 15000);
 
 -- --------------------------------------------------------
@@ -90,7 +90,8 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('accounts', '40', 1525053208),
 ('admin', '1', 1525053047),
 ('company', '41', 1525249354),
-('company', '42', 1526017411);
+('company', '42', 1526017411),
+('company', '43', 1526874106);
 
 -- --------------------------------------------------------
 
@@ -345,7 +346,14 @@ CREATE TABLE IF NOT EXISTS `company` (
   `url` text,
   `remark_url` text,
   `tds_url` text
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `company`
+--
+
+INSERT INTO `company` (`user_id`, `company_id`, `name`, `address`, `remark`, `constitution`, `products`, `gstin`, `owner_name`, `owner_phone`, `owner_mobile`, `competent_name`, `competent_email`, `competent_mobile`, `url`, `remark_url`, `tds_url`) VALUES
+(43, 22, 'Googel', 'sdfsd', 'dfsf', 'asdsa', 'asd', 'asdasdas', 'asdasd', '9823431003', NULL, 'sdfsdf', 'sada@hello.com', '9823431003', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -359,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `debit` (
   `invoice_id` int(11) DEFAULT NULL,
   `payment_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -374,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `interest` (
   `rate` int(11) DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `flag` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `interest`
@@ -383,9 +391,10 @@ CREATE TABLE IF NOT EXISTS `interest` (
 INSERT INTO `interest` (`interest_id`, `name`, `type`, `rate`, `start_date`, `flag`) VALUES
 (1, 'Penal Interest', 'Penal Interest', 10, '0000-00-00', 0),
 (2, 'Penal Interest', 'Penal Interest', 20, '2018-04-15', 0),
-(3, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 1),
-(4, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 1),
-(5, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 1);
+(3, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 0),
+(4, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 0),
+(5, 'Penal Interest', 'Penal Interest', 30, '2018-04-20', 0),
+(6, 'Penal Interest', 'Penal Interest', 15, '2018-05-22', 1);
 
 -- --------------------------------------------------------
 
@@ -413,7 +422,14 @@ CREATE TABLE IF NOT EXISTS `invoice` (
   `total_amount` int(11) NOT NULL,
   `flag` tinyint(4) NOT NULL DEFAULT '1',
   `invoice_code` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `tax_id`, `order_id`, `interest_id`, `start_date`, `prev_lease_rent`, `prev_tax`, `prev_interest`, `prev_dues_total`, `current_lease_rent`, `current_tax`, `current_dues_total`, `due_date`, `email_status`, `lease_current_start`, `lease_prev_start`, `total_amount`, `flag`, `invoice_code`) VALUES
+(200, 8, 115, 6, '2018-05-22', 0, 0, 0, 0, 10000, 1800, 11800, '2018-05-01', 0, '2018-05-01', '2018-05-01', 11800, 1, 'VER/18-19/0001');
 
 -- --------------------------------------------------------
 
@@ -429,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `log` (
   `old_value` text,
   `new_value` text,
   `user_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `log`
@@ -479,7 +495,8 @@ INSERT INTO `log` (`log_id`, `type`, `create_date`, `updated_date`, `old_value`,
 (42, 'Edited Industrial Area', '2018-04-26 11:59:36', '2018-04-26 06:29:36', '{"area_id":9,"name":"Verna","total_area":1200000}', '{"area_id":9,"name":"Verna Industrial Estate","total_area":1200000}', 1),
 (43, 'Edited Company', '2018-04-30 06:41:41', '2018-04-30 01:11:41', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dasdasdsa","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/assignment_2 (1).html","tds_url":null}]', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/assignment_2 (1).html","tds_url":null}]', 1),
 (44, 'Edited Company', '2018-04-30 06:42:20', '2018-04-30 01:12:20', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/assignment_2 (1).html","tds_url":null}]', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dssadasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/assignment_2 (1).html","tds_url":null}]', 1),
-(45, 'Edited Company', '2018-04-30 06:51:58', '2018-04-30 01:21:58', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dssadasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/assignment_2 (1).html","tds_url":null}]', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dssadasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/CA 3.pdf","tds_url":null}]', 1);
+(45, 'Edited Company', '2018-04-30 06:51:58', '2018-04-30 01:21:58', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dssadasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/assignment_2 (1).html","tds_url":null}]', '[{"user_id":38,"company_id":18,"name":"Honda","address":"Colmorod Residential Complex, Flat S2","remark":"dssadasdasdads","constitution":"Pvt. Ltd","products":"Printed Corrugated Cartoons","gstin":"BKJK123ds1K23KB","owner_name":"Aloysius","owner_phone":"9604107696","owner_mobile":"9604107696","competent_name":"Jan Doe","competent_email":"castorgodinho22@gmail.com","competent_mobile":"9604107696","url":"remarkfiles\\/assignment_2 (1).html","remark_url":"remarkfiles\\/CA 3.pdf","tds_url":null}]', 1),
+(46, 'Edited Interest', '2018-05-22 21:41:05', '2018-05-22 16:11:05', '[{"interest_id":5,"name":"Penal Interest","type":"Penal Interest","rate":30,"start_date":"2018-04-20","flag":0}]', '[{"interest_id":6,"name":"Penal Interest","type":"Penal Interest","rate":15,"start_date":"2018-05-22","flag":1}]', 1);
 
 -- --------------------------------------------------------
 
@@ -526,7 +543,14 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `status` tinyint(4) DEFAULT '1',
   `next_order_id` int(11) DEFAULT NULL,
   `transfer_url` text
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `order_number`, `company_id`, `built_area`, `shed_area`, `godown_area`, `start_date`, `end_date`, `shed_no`, `godown_no`, `area_id`, `total_area`, `plots`, `document`, `remark`, `status`, `next_order_id`, `transfer_url`) VALUES
+(115, 'GIDC216467VERNA', 22, 333, NULL, NULL, '2018-05-01', '2018-05-22', '', '', 9, 3000, 'p222', NULL, '', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -553,7 +577,14 @@ CREATE TABLE IF NOT EXISTS `order_rate` (
   `amount2` int(11) DEFAULT NULL,
   `flag` tinyint(4) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_rate`
+--
+
+INSERT INTO `order_rate` (`order_rate_id`, `start_date`, `end_date`, `amount1`, `amount2`, `flag`, `order_id`) VALUES
+(55, '2018-05-01', '2018-05-15', 10000, 200, 1, 115);
 
 -- --------------------------------------------------------
 
@@ -580,7 +611,7 @@ CREATE TABLE IF NOT EXISTS `payment` (
   `tds_file` text,
   `transaction_no` varchar(50) DEFAULT NULL,
   `transaction_details` text
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -693,7 +724,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` text NOT NULL,
   `type` varchar(50) DEFAULT NULL,
   `mobile` varchar(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -731,7 +762,8 @@ INSERT INTO `users` (`user_id`, `email`, `password`, `type`, `mobile`) VALUES
 (39, 'apolo@gmail.com', '$2y$13$ghPplH8gkrMI/IxY0nYgZumuGC3ZLnI1FNM0BlxGyj4H8dl7EBAcS', 'company', ''),
 (40, 'accounts@gmail.com', '$2y$13$k86rDj.QyhL3s0LQn1mtgu5pDUKv7/VwTTUKJLxKi5ebuJNzn64j6', 'accounts', ''),
 (41, 'lipton@gmail.com', '$2y$13$ucPUxo6lR8JDNsPSTOdOu.WO5/xTV8Hhxi6YkQl4Jareneof9l2le', 'company', ''),
-(42, 'wendhamgray@gmail.com', '$2y$13$vXhrxBZSvMdiZjXyi9seguxuAMLiRuSgBfe5fuZo9nlwEtQFi1ubu', 'company', '');
+(42, 'wendhamgray@gmail.com', '$2y$13$vXhrxBZSvMdiZjXyi9seguxuAMLiRuSgBfe5fuZo9nlwEtQFi1ubu', 'company', ''),
+(43, 'wendhadmgray@gmail.com', '$2y$13$dHHAWMtOG2w.3iiDr0KqNexsCeBomCkvY2U9U.5maXSJ0E..QHBlu', 'company', '9823431003');
 
 --
 -- Indexes for dumped tables
@@ -889,42 +921,42 @@ ALTER TABLE `area_rate`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `debit`
 --
 ALTER TABLE `debit`
-  MODIFY `debit_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=55;
+  MODIFY `debit_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=110;
 --
 -- AUTO_INCREMENT for table `interest`
 --
 ALTER TABLE `interest`
-  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `interest_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=167;
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=201;
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=116;
 --
 -- AUTO_INCREMENT for table `order_rate`
 --
 ALTER TABLE `order_rate`
-  MODIFY `order_rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
+  MODIFY `order_rate_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=95;
 --
 -- AUTO_INCREMENT for table `plot`
 --
@@ -939,7 +971,7 @@ ALTER TABLE `tax`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=44;
 --
 -- Constraints for dumped tables
 --
