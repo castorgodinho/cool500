@@ -94,12 +94,12 @@ class PaymentController extends Controller
             $model = new MyPayment();
             if(! \Yii::$app->user->can('company')){
                 $model->generatePayment('1',$this);
-                //return $this->redirect(['view', 'id' => $model->payment_id ]);
+                return $this->redirect(['view', 'id' => $model->payment_id ]);
             }else{
                 $model->generatePayment('0',$this);
-                // return $this->render('online-payment', [
-                //     'model' => $model,
-                // ]);
+                return $this->render('online-payment', [
+                    'model' => $model,
+                ]);
             }
         }else{
             throw new \yii\web\ForbiddenHttpException;

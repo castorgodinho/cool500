@@ -118,7 +118,7 @@ class MyInvoice extends Invoice
       return $amount;
     }
 
-  
+
 
     public static function calculateBalancePenalAmount($order){
       $totalPenal = MyInvoice::getTotalPenal($order);
