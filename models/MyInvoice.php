@@ -59,8 +59,6 @@ class MyInvoice extends Invoice
       $today = date('Y-m-d');
       $diff =  strtotime($today) - strtotime($date);
       $diffDate  = $diff / (60*60*24);
-      echo '$diff'.$diff.'<br>';
-      echo '$diffDate'.$diffDate.'<br>';
       return $diffDate;
     }
 
