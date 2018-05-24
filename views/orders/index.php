@@ -28,7 +28,13 @@ $this->title = 'Unit List';
             /* 'built_area',*/
             /* 'shed_area', */
             // 'godown_area',
-             'start_date',
+            [
+                'label' => 'Alloted Date',
+                'value' => function($dataProvider){
+                    return date('d-m-Y', strtotime($dataProvider->start_date));
+                }
+            ],
+             
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

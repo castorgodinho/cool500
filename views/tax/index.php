@@ -25,7 +25,13 @@ $this->title = 'Taxes';
 
             'name',
             'rate',
-            'date',
+            [
+                'label' => 'Date',
+                'attribute' => 'date',
+                'value' => function($dataProvider){
+                    return date('d-m-Y', strtotime($dataProvider->date));
+                }
+            ],
             'flag',
 
             ['class' => 'yii\grid\ActionColumn'],
