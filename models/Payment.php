@@ -66,7 +66,7 @@ class Payment extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'payment_id' => 'Payment ID',
+            'payment_id' => 'Receipt ID',
             'order_id' => 'Order ID',
             'amount' => 'Amount',
             'start_date' => 'Start Date',
@@ -75,7 +75,7 @@ class Payment extends \yii\db\ActiveRecord
             'tds_rate' => 'Tds Rate',
             'tds_amount' => 'Tds Amount',
             'balance_amount' => 'Balance Amount',
-            'payment_no' => 'Payment No',
+            'payment_no' => 'Receipt No',
             'penal' => 'Penal',
             'cheque_no' => 'Cheque No',
             'lease_rent' => 'Lease Rent',

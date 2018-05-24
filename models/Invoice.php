@@ -67,7 +67,7 @@ class Invoice extends \yii\db\ActiveRecord
     {
         return [
             'invoice_id' => 'Invoice ID',
-            'tax_id' => 'Tax Rate %',
+            'tax_id' => 'GST Rate %',
             'order_id' => 'Unit Code',
             'interest_id' => 'Interest Rate %',
             'start_date' => 'Bill Date',
@@ -82,9 +82,9 @@ class Invoice extends \yii\db\ActiveRecord
             'email_status' => 'Email Status',
             'lease_current_start' => 'Lease Current From Date',
             'lease_prev_start' => 'Lease Previous From Date',
-            'total_amount' => 'Total Amount',
+            'total_amount' => 'Bill Amount',
             'flag' => 'Flag',
-            'invoice_code' => 'Invoice Code',
+            'invoice_code' => 'Tax Invoice No',
         ];
     }
 

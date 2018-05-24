@@ -21,8 +21,9 @@ class MyInvoice extends Invoice
         ->orderBy(['invoice_id' => SORT_DESC])
         ->one();
         if($invoice){
-          $diffDate = MyInvoice::getDateDifference($invoice->due_date);
-          if($diffDate == 0 ){
+        $date = date('Y-m-d', strtotime($invoice->due_date. ' - 15 day'));
+        $diffDate = MyInvoice::getDateDifference($date);
+          if($diffDate == -15 ){
             MyInvoice::generateInvoice($order);
           }
         }
@@ -56,8 +57,10 @@ class MyInvoice extends Invoice
     public static function getDateDifference($date){
       date_default_timezone_set('Asia/Kolkata');
       $today = date('Y-m-d');
-      $diff =  - strtotime($date) - strtotime($today);
+      $diff =  strtotime($today) - strtotime($date);
       $diffDate  = $diff / (60*60*24);
+      echo '$diff'.$diff.'<br>';
+      echo '$diffDate'.$diffDate.'<br>';
       return $diffDate;
     }
 
@@ -245,98 +248,6 @@ class MyInvoice extends Invoice
 
       return $interest;
     }
-
-
- //    public function generate($invoice){
- //      date_default_timezone_set('Asia/Kolkata');
- //
- //      $order_id = $invoice->order->order_id;
- //
- //      $order_rate = OrderRate::find()
- //      ->where(['order_id' => $order_id ])
- //      ->andWhere(['flag' => 1])
- //      ->one();
- //
- //      $tax = Tax::find()
- //      ->where(['flag' => 1])
- //      ->one();
- //
- //      $interest = Interest::find()
- //      ->where(['name' => 'Penal Interest'])
- //      ->andWhere(['flag' => 1])
- //      ->one();
- //
- //      $totalPaid = Payment::find()
- //      ->where(['invoice_id' => $invoice->invoice_id])
- //      ->andWhere(['status' => 1])
- //      ->sum('amount');
- //
- //      $totalPenalPaid = Payment::find()
- //      ->where(['invoice_id' => $invoice->invoice_id])
- //      ->andWhere(['status' => 1])
- //      ->sum('penal');
- //
- //      $totalPenal = Debit::find()
- //      ->where(['invoice_id' => $invoice->invoice_id])
- //      ->sum('penal');
- //
- //      $this->$prev_interest = $totalPenal;
- //
- //      $this->prev_dues_total = $invoice->grand_total - $totalPaid;
- //      $this->order_id = $order_id;
- //      $this->tax_id = $tax->tax_id;
- //      $this->interest_id = $interest->interest_id;
- //
- //      $this->current_lease_rent = $order_rate->amount1;
- //      $this->current_tax = $this->current_lease_rent * ($tax->rate/100);
- //      $this->current_total_dues = $this->current_lease_rent + $this->current_tax;
- //
- //      $this->prev_dues_total = $invoice->grand_total - $totalPaid;
- //      $this->grand_total = $this->prev_dues_total + $this->current_total_dues;
- //
- //      $start_date = $invoice->start_date;
- //      $this->start_date = $start_date;
- //
- //      if($start_date > $order_rate->end_date ){
- //       $this->current_lease_rent = $this->current_lease_rent + $order_rate->amount1;
- //      }
- //
- //      $this->prev_lease_rent = $invoice->current_lease_rent;
- //      $this->prev_tax = $invoice->current_tax;
- //
- //      $invoiceDueDate = date('d-m-Y', strtotime($invoice->due_date. ' + 1 year '));
- //      $this->due_date = $invoiceDueDate;
- //
- //      $invoiceCode = '';
- //      $order =  Orders::findOne($order_id);
- //      $time = strtotime($order->start_date);
- //      $area = $invoice->order->area;
- //      $areaCode = strtoupper(substr($area->name,0,3));
- //      $invoiceCode = $areaCode .'/';
- //
- //      $year = date('Y');
- //      $year = substr($year,2,3);
- //      $invoiceCode = $areaCode . '/' . $year;
- //      $year = intval($year) + 1;
- //      $invoiceCode = $invoiceCode . '-' . $year;
- //      $this->invoice_code = 'hello';
- //      $this->save(False);
- //      $invoiceID = strval($this->invoice_id);
- //      $len = strlen($invoiceID);
- //      for ($i=0; $i < (4 - $len); $i++) {
- //        $invoiceID = '0'. $invoiceID;
- //      }
- //      $invoiceCode = $invoiceCode . '/' . $invoiceID;
- //      $this->invoice_code = $invoiceCode;
- //      $this->save(False);
- //      //http://localhost/gidc/web/index.php?r=invoice%2Fview&id=2 send email
- //      Yii::$app->mailer->compose()
- //            ->setFrom('castorgodinho22@gmail.com')
- //            ->setTo($this->order->company->user->email)
- //            ->setSubject('Test Email')
- //            ->setTextBody('Body Text')
- //            ->send();
- // }
 
 
 }
