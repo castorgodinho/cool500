@@ -234,7 +234,9 @@ use yii\data\ActiveDataProvider;
             ],
             [
               'label' => 'Invoice Bill Date',
-              'value' => 'total_amount',
+              'value' => function($provider){
+                  return date('d-m-Y', strtotime($provider->start_date));
+              }
             ],
             [
               'class' => 'yii\grid\ActionColumn',
@@ -283,7 +285,12 @@ use yii\data\ActiveDataProvider;
           'dataProvider' => $provider,
           'columns' => [
             'amount',
-            'start_date',
+            [
+              'label' => 'Start Date',
+              'value' => function($provider){
+                  return date('d-m-Y', strtotime($provider->start_date));
+              }
+            ],
             'mode',
             'invoice.invoice_code',
             [
@@ -329,8 +336,18 @@ use yii\data\ActiveDataProvider;
         'dataProvider' => $provider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'start_date',
-            'end_date',
+            [
+              'label' => 'Start Date',
+              'value' => function($provider){
+                  return date('d-m-Y', strtotime($provider->start_date));
+              }
+            ],
+            [
+              'label' => 'End Date',
+              'value' => function($provider){
+                  return date('d-m-Y', strtotime($provider->end_date));
+              }
+            ],
 
             [
               'label' => 'Lease Rent',

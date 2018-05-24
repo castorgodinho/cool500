@@ -49,8 +49,8 @@ class OrderRate extends \yii\db\ActiveRecord
             'order_rate_id' => 'Order Rate ID',
             'start_date' => 'From Date',
             'end_date' => 'To Date',
-            'Lease rent' => 'Amount1',
-            'Increment' => 'Amount2',
+            'Lease rent' => 'Lease Rent',
+            'Increment' => 'Increment',
             'flag' => 'Flag',
             'order_id' => 'Order ID',
         ];

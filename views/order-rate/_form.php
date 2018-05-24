@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'end_date')->textInput() ?>
 
-    <?= $form->field($model, 'amount1')->textInput() ?>
+    <?= $form->field($model, 'amount1')->textInput()->label("Lease Rent"); ?>
 
-    <?= $form->field($model, 'amount2')->textInput() ?>
+    <?= $form->field($model, 'amount2')->textInput()->label("Increment") ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

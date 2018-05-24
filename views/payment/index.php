@@ -29,7 +29,13 @@ $this->title = 'Receipt';
                 'value' => 'invoice.invoice_code',
             ],
             'amount',
-            'start_date',
+            [
+                'label' => 'Receipt Date',
+                'attribute' => 'start_date',
+                'value' => function($dataProvider){
+                    return date('d-m-Y', strtotime($dataProvider->start_date));
+                }
+            ],
             'mode',
             'invoice.order.company.name',
 
