@@ -51,7 +51,7 @@ class InvoiceController extends Controller
     public function actionGenerate($order_id){
               $order =  Orders::findOne($order_id);
               $invoice = MyInvoice::generateInvoice($order);
-              return $this->redirect(['view','id' => $invoice->invoice_id]);
+            //  return $this->redirect(['view','id' => $invoice->invoice_id]);
     }
 
 

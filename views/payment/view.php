@@ -168,7 +168,7 @@ use yii\widgets\DetailView;
     </tr>
      <tr>
        <td>Date of Receipt</td>
-       <td><?= $model->start_date?></td>
+       <td><?= date('d-m-Y', strtotime($model->start_date. ''))?></td>
      </tr>
 
     </table>
@@ -186,7 +186,7 @@ This is a computer-generated document and it does not require a signature. <br>
     <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
       <p><b>Debit Note Number: </b><?= $debit->debit_id ?></p>
       <p><b>Invoice No: </b><?= $invoice->invoice_code ?></p>
-      <p><b>Date: </b><?= $model->start_date ?></p>
+      <p><b>Date: </b><?= date('d-m-Y', strtotime($model->start_date. '')) ?></p>
     </div>
     <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
       <p><b>Company Name: </b><?= $invoice->order->company->name ?></p>

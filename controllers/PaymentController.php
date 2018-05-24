@@ -120,8 +120,8 @@ class PaymentController extends Controller
         $totalAmountPaid = MyPayment::getTotalAmountPaid($order);
         $totalPenal = MyInvoice::getTotalPenal($order);
         $totalPenalPaid = MyInvoice::getTotalPenalPaid($order);
-        //$diffDate  = MyInvoice::getDateDifference($invoice->due_date); //TODO
-        $diffDate  = 100;
+        $diffDate  = MyInvoice::getDateDifference($invoice->due_date); //TODO
+        //$diffDate  = 100;
         $totalLeaseRent = MyInvoice::getTotalLeaseRent($order);
         $totalLeaseRentPaid = MyInvoice::getTotalLeaseRentPaid($order);
         $totalTaxPaid = MyInvoice::getTotalTaxPaid($order);

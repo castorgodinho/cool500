@@ -112,14 +112,14 @@ class OrderRateController extends Controller
                 $orderRate->save(false);
                 return $this->redirect(['company/index']);
             }
-    
+
             return $this->render('update', [
                 'model' => $model,
             ]);
         }else{
             throw new \yii\web\ForbiddenHttpException;
         }
-        
+
     }
 
     /**
