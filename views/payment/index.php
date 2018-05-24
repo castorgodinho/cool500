@@ -24,7 +24,7 @@ $this->title = 'Receipt';
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             [
-                'label' => 'Invoice Code',
+                'label' => 'Tax Invoice Number',
                 'attribute' => 'invoice_id',
                 'value' => 'invoice.invoice_code',
             ],

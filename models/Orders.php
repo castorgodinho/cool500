@@ -65,7 +65,7 @@ class Orders extends \yii\db\ActiveRecord
         return [
             'order_id' => 'Unit ID',
             'order_number' => 'Unit Number',
-            'company_id' => 'Company ID',
+            'company_id' => 'Company Name',
             'built_area' => 'Built Area',
             'shed_area' => 'Shed Area',
             'godown_area' => 'Godown Area',
@@ -73,7 +73,7 @@ class Orders extends \yii\db\ActiveRecord
             'end_date' => 'Renewal Date',
             'shed_no' => 'Shed No',
             'godown_no' => 'Godown No',
-            'area_id' => 'Area ID',
+            'area_id' => 'Industrial Estate',
             'total_area' => 'Plot Area',
             'plots' => 'Plots',
         ];

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Orders */
@@ -13,9 +14,27 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'company_id')->dropDownList(ArrayHelper::map($company, 'company_id', 'name'))->label('Company'); ?>
-    <?= $form->field($model, 'area_id')->dropDownList(ArrayHelper::map($area, 'area_id', 'name'))->label('Industrial Estate'); ?>
-
+    <?php 
+        echo $form->field($model, 'company_id')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map($company, 'company_id', 'name'),
+            'language' => 'de',
+            'options' => ['placeholder' => 'Company'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+    ?>
+    <?php 
+        echo $form->field($model, 'area_id')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map($area, 'area_id', 'name'),
+            'language' => 'de',
+            'options' => ['placeholder' => 'Industrial Estate'],
+            'pluginOptions' => [
+                'allowClear' => true,
+                
+            ],
+        ]);
+    ?>
     <?= $form->field($model, 'total_area')->textInput(); ?>
     <?= $form->field($model, 'plots')->textInput(); ?>  
     <?php 
